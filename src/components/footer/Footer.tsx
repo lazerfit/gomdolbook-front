@@ -4,13 +4,39 @@ import '../../styles/variables.css'
 
 const Wrapper = styled.div`
   width: 100%;
-  margin: 15px auto 10px auto;
+  max-width: 1180px;
+  margin: 15px auto 0 auto;
   padding: 15px 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Eczar', serif;
+`
+
+const ContentWrapper = styled.div`
+  width: 100%;
+  padding: 45px 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  border-top: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--border-color);
+`
+
+const LinkWrapper = styled.div`
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: 'SUITE Variable', sans-serif;
-  background-color: var(--secondary-background-color);
+  padding-top: 10px;
+`
+
+const MiddleDot = styled.div`
+  font-weight: 600;
+  font-size: 20px;
+  margin: 0 5px;
 `
 
 type Props = {}
@@ -18,7 +44,14 @@ type Props = {}
 function Footer({}: Props) {
   return (
     <Wrapper>
-      <div>Footer</div>
+      <ContentWrapper>
+        <div>@Designed By gomdolbook</div>
+      </ContentWrapper>
+      <LinkWrapper>
+        <div>github</div>
+        <MiddleDot>&#183;</MiddleDot>
+        <div>Linkedin</div>
+      </LinkWrapper>
     </Wrapper>
   )
 }

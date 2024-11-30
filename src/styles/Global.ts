@@ -22,9 +22,9 @@ const GlobalStyle = createGlobalStyle`
     margin: 0 auto;
     font-size: 16px;
     color: var(--text-color);
-    line-height: 160%;
+    line-height: 140%;
     letter-spacing: -0.3px;
-    font-family: "Wanted Sans Variable", "Wanted Sans", -apple-system, BlinkMacSystemFont, system-ui, "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
+    font-family: "Gothic A1", sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     background-color: var(--background-color);

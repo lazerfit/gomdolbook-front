@@ -6,12 +6,12 @@ import {useState} from 'react'
 
 const Wrapper = styled.header`
   width: 100%;
+  max-width: 1180px;
   margin: 0 auto;
-  padding: 0 40px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Eczar', serif;
 `
 
 const NavigationLinkWrapper = styled.div`
@@ -25,11 +25,11 @@ const MainLogo = styled.div`
 `
 
 const MainLink = styled.button`
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Eczar', serif;
   font-size: 16px;
   font-weight: 400;
   line-height: 30px;
-  padding: 0 16px;
+  padding: 0 21px 0 0;
   background-color: transparent;
   cursor: pointer;
 `
@@ -48,7 +48,7 @@ const Signup = styled.div`
 `
 
 const Login = styled.button`
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Eczar', serif;
   font-size: 16px;
   font-weight: 500;
   line-height: 30px;

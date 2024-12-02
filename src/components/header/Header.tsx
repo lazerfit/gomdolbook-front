@@ -91,7 +91,7 @@ function Header({}: Props) {
       </MainLogo>
       <UserMenuWrapper>
         {isLoggedIn ? (
-          <UserProfile />
+          <UserProfile onLoggedOut={() => setIsLoggedIn(false)} />
         ) : (
           <>
             <LoginModal

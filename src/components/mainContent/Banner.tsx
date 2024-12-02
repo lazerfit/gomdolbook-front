@@ -22,7 +22,7 @@ const MainSlogan = styled.div`
 const Banner = (props: Props) => {
   return (
     <Wrapper>
-      <MainSlogan>Collect Your Books</MainSlogan>
+      <MainSlogan>Collect your Books</MainSlogan>
     </Wrapper>
   )
 }

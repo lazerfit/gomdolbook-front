@@ -78,12 +78,13 @@ const EasyLoginButton = styled.button`
 `
 
 type Props = {
-  isOpened: boolean
+  isModalOpened: boolean
   onClose: () => void
+  onLoggedIn: () => void
 }
 
 function LoginModal(props: Props) {
-  if (!props.isOpened) return null
+  if (!props.isModalOpened) return null
   return (
     <>
       <Overlay onClick={props.onClose} />
@@ -92,10 +93,14 @@ function LoginModal(props: Props) {
           <CloseButton onClick={props.onClose}>&times;</CloseButton>
           <Banner>로그인/회원가입</Banner>
           <EasyLoginWrapper>
-            <EasyLoginButton style={{backgroundColor: '#FEE500', color: 'black'}}>
+            <EasyLoginButton
+              style={{backgroundColor: '#FEE500', color: 'black'}}
+              onClick={props.onLoggedIn}>
               카카오로 시작하기
             </EasyLoginButton>
-            <EasyLoginButton style={{backgroundColor: '#00DE5A'}}>
+            <EasyLoginButton
+              style={{backgroundColor: '#00DE5A'}}
+              onClick={props.onLoggedIn}>
               네이버로 시작하기
             </EasyLoginButton>
           </EasyLoginWrapper>

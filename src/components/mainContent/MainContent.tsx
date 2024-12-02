@@ -2,6 +2,8 @@ import React from 'react'
 import styled from 'styled-components'
 import '../../styles/variables.css'
 import Banner from './Banner'
+import SearchBar from './SearchBar'
+import Books from './Books'
 
 type Props = {}
 
@@ -11,7 +13,6 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   margin: 55px auto 0 auto;
-  // border: 1px solid black;
   align-items: center;
   height: 1000px;
 `
@@ -20,7 +21,8 @@ function MainContent({}: Props) {
   return (
     <Wrapper>
       <Banner />
-      <div>MainContent</div>
+      <SearchBar />
+      <Books />
     </Wrapper>
   )
 }

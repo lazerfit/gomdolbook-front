@@ -5,6 +5,7 @@ import '../../styles/variables.css'
 const Wrapper = styled.div`
   width: 100%;
   max-width: 1180px;
+  height: 100px;
   margin: 15px auto 0 auto;
   padding: 15px 10px;
   display: flex;
@@ -16,6 +17,7 @@ const Wrapper = styled.div`
 
 const ContentWrapper = styled.div`
   width: 100%;
+  height: 90px;
   padding: 45px 0;
   display: flex;
   flex-direction: row;
@@ -27,10 +29,10 @@ const ContentWrapper = styled.div`
 
 const LinkWrapper = styled.div`
   width: 100%;
+  height: 10px;
   display: flex;
-  align-items: center;
   justify-content: center;
-  padding-top: 10px;
+  padding-top: 13px;
 `
 
 const MiddleDot = styled.div`

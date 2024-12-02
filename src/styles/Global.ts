@@ -19,7 +19,6 @@ const GlobalStyle = createGlobalStyle`
   }
 
   body {
-    margin: 0 auto;
     font-size: 16px;
     color: var(--text-color);
     line-height: 140%;

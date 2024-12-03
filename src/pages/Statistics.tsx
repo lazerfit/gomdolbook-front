@@ -1,8 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
 import '../styles/variables.css'
-import Header from '../components/header/Header'
-import Footer from '../components/footer/Footer'
 
 const Wrapper = styled.div`
   max-width: 1180px;
@@ -18,11 +16,9 @@ type Props = {}
 function Statistics({}: Props) {
   return (
     <>
-      <Header />
       <Wrapper>
         <div>Statistics</div>
       </Wrapper>
-      <Footer />
     </>
   )
 }

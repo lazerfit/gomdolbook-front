@@ -1,7 +1,7 @@
 import {useNavigate} from 'react-router-dom'
 import {useState} from 'react'
 import styled from 'styled-components'
-import '../../styles/variables.css'
+import '../../../styles/variables.css'
 import LoginModal from './LoginModal'
 import UserProfile from './UserProfile'
 
@@ -22,6 +22,7 @@ const NavigationLinkWrapper = styled.div`
 const MainLogo = styled.div`
   font-family: 'Jim Nightshade', cursive;
   cursor: pointer;
+  margin-right: 60px;
 `
 
 const MainLink = styled.button`
@@ -37,8 +38,10 @@ const MainLink = styled.button`
 const UserMenuWrapper = styled.div`
   padding: 22px 0;
   width: 85px;
+  height: 90px;
   display: flex;
   justify-content: flex-end;
+  align-items: center;
 `
 
 const Login = styled.button`
@@ -59,13 +62,19 @@ const Login = styled.button`
   }
 `
 
-type Props = {}
+type Props = {
+  isLoggedIn: boolean
+  onLoggedIn: () => void
+  onLoggedOut: () => void
+}
 
-function Header({}: Props) {
+function Header(props: Props) {
   const navigate = useNavigate()
   const [isModalOpened, setIsModalOpened] = useState(false)
-  const [isLoggedIn, setIsLoggedIn] = useState(false)
-
+  const handleLogin = () => {
+    props.onLoggedIn()
+    setIsModalOpened(false)
+  }
   return (
     <Wrapper>
       <NavigationLinkWrapper>
@@ -90,24 +99,18 @@ function Header({}: Props) {
         gomdolbook
       </MainLogo>
       <UserMenuWrapper>
-        {isLoggedIn ? (
-          <UserProfile onLoggedOut={() => setIsLoggedIn(false)} />
+        {props.isLoggedIn ? (
+          <UserProfile onLoggedOut={props.onLoggedOut} />
         ) : (
           <>
             <LoginModal
               isModalOpened={isModalOpened}
-              onClose={() => setIsModalOpened(false)}
-              onLoggedIn={() => {
-                setIsLoggedIn(true)
+              onClose={() => {
                 setIsModalOpened(false)
               }}
+              onLoggedIn={handleLogin}
             />
-            <Login
-              onClick={() => {
-                setIsModalOpened(true)
-              }}>
-              Log in
-            </Login>
+            <Login onClick={() => setIsModalOpened(true)}>Log in</Login>
           </>
         )}
       </UserMenuWrapper>

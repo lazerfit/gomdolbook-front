@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import styled from 'styled-components'
-import '../../styles/variables.css'
-import MockupImg from '../../assets/img/avatar-02.jpg'
+import '../../../styles/variables.css'
+import MockupImg from '../../../assets/img/avatar-02.jpg'
 
 const Wrapper = styled.div`
   width: 50px;
@@ -57,7 +57,7 @@ const Item = styled.div`
   cursor: pointer;
 
   &:hover {
-    background-color: black;
+    background-color: var(--text-color);
     color: white;
   }
 `

@@ -1,12 +1,11 @@
 import React from 'react'
 import styled from 'styled-components'
-import '../../styles/variables.css'
+import '../../../styles/variables.css'
 
 const Wrapper = styled.div`
   width: 100%;
-  max-width: 1180px;
   height: 100px;
-  margin: 15px auto 0 auto;
+  margin: 144px auto 0 auto;
   padding: 15px 10px;
   display: flex;
   flex-direction: column;

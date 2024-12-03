@@ -1,8 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
 import '../styles/variables.css'
-import Header from '../components/header/Header'
-import Footer from '../components/footer/Footer'
 
 type Props = {}
 
@@ -18,11 +16,9 @@ const Wrapper = styled.div`
 function Library({}: Props) {
   return (
     <>
-      <Header />
       <Wrapper>
         <div>Library</div>
       </Wrapper>
-      <Footer />
     </>
   )
 }

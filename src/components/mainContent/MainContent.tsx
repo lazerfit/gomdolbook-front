@@ -14,14 +14,14 @@ const Wrapper = styled.div`
   flex-direction: column;
   margin: 55px auto 0 auto;
   align-items: center;
-  height: 1000px;
+  height: 100%;
 `
 
 function MainContent({}: Props) {
   return (
     <Wrapper>
       <Banner />
-      <SearchBar />
+      {/* <SearchBar /> */}
       <Books />
     </Wrapper>
   )

@@ -1,6 +1,6 @@
 import React from 'react'
 import styled, {keyframes} from 'styled-components'
-import '../../styles/variables.css'
+import '../../../styles/variables.css'
 
 const Overlay = styled.div`
   position: fixed;

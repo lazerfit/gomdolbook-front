@@ -24,7 +24,7 @@ const ContentWrapper = styled.div`
 
 const EmptyLibraryWrapper = styled.div`
   width: 100%;
-  height: 55vh;
+  height: 63vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -48,7 +48,8 @@ const SloganAnimation = keyframes`
 
 const Slogan = styled.div`
   text-align: center;
-  font-family: 'NanumSquare Neo', sans-serif;
+  /* font-family: 'NanumSquare Neo', sans-serif; */
+  font-family: 'YES24';
   animation: ${SloganAnimation} 2s ease-in-out;
 `
 

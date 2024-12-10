@@ -5,8 +5,6 @@ import Banner from './Banner'
 import SearchBar from './SearchBar'
 import Books from './Books'
 
-type Props = {}
-
 const Wrapper = styled.div`
   width: 100%;
   max-width: 1180px;
@@ -17,10 +15,12 @@ const Wrapper = styled.div`
   height: 100%;
 `
 
+type Props = {}
+
 function MainContent({}: Props) {
   return (
     <Wrapper>
-      <Banner />
+      {/* <Banner /> */}
       {/* <SearchBar /> */}
       <Books />
     </Wrapper>

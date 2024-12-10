@@ -2,6 +2,20 @@ import {createGlobalStyle} from 'styled-components'
 import './variables.css'
 
 const GlobalStyle = createGlobalStyle`
+  @font-face {
+      font-family: 'YESGothic-Regular';
+      src: url('https://cdn.jsdelivr.net/gh/fontbee/font@main/Yes24/YESGothic-Regular.woff') format('woff');
+      font-weight: 400;
+      font-style: normal;
+  }
+
+  @font-face {
+    font-family: 'YES24';
+    src: url('https://cdn.jsdelivr.net/gh/fontbee/font@main/Yes24/YES24.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+  }
+
   * {
     margin: 0;
     padding: 0;
@@ -23,7 +37,7 @@ const GlobalStyle = createGlobalStyle`
     color: var(--text-color);
     line-height: 140%;
     letter-spacing: -0.3px;
-    font-family: "Gothic A1", sans-serif;
+    font-family: 'YESGothic-Regular';
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     background-color: var(--background-color);

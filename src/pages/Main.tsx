@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import '../styles/variables.css'
 import MainContent from '../components/mainContent/MainContent'
 
-const Wrapper = styled.div`
+const Wrapper = styled.main`
   width: 100%;
   display: flex;
   flex-direction: column;

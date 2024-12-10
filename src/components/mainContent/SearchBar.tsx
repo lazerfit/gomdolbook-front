@@ -1,6 +1,7 @@
 import React, {useState} from 'react'
 import styled from 'styled-components'
 import '../../styles/variables.css'
+import SearchResult from './SearchResult'
 
 const Wrapper = styled.div`
   width: 100%;
@@ -37,8 +38,18 @@ type Props = {}
 
 const SearchBar = (props: Props) => {
   const [searchQuery, setSearchQuery] = useState('')
-  const onChangeValue = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const onChangeQuery = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(event.target.value)
+  }
+  const [showSearchResult, setShowSearchResult] = useState(false)
+  const onKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (searchQuery.trim() !== '' && event.key === 'Enter') {
+      setShowSearchResult(true)
+    }
+  }
+  const onResultClose = () => {
+    setShowSearchResult(false)
+    setSearchQuery('')
   }
 
   return (
@@ -47,10 +58,15 @@ const SearchBar = (props: Props) => {
         <Input
           type="text"
           value={searchQuery}
-          onChange={onChangeValue}
+          onChange={onChangeQuery}
           placeholder="ISBN, NAME, AUTHOR ..."
+          onKeyDown={onKeyDown}
+          autoFocus
         />
       </Search>
+      {showSearchResult && (
+        <SearchResult query={searchQuery} onResultClose={onResultClose} />
+      )}
     </Wrapper>
   )
 }

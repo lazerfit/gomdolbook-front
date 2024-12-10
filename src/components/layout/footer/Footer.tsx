@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import '../../../styles/variables.css'
 
-const Wrapper = styled.div`
+const Wrapper = styled.footer`
   width: 100%;
   height: 100px;
   margin: 144px auto 0 auto;

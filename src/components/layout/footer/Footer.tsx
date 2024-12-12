@@ -42,7 +42,7 @@ const MiddleDot = styled.div`
 
 type Props = {}
 
-function Footer({}: Props) {
+const Footer = (props: Props) => {
   return (
     <Wrapper>
       <ContentWrapper>

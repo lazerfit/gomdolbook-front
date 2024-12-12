@@ -83,7 +83,7 @@ type Props = {
   onLoggedIn: () => void
 }
 
-function LoginModal(props: Props) {
+const LoginModal = (props: Props) => {
   if (!props.isModalOpened) return null
   return (
     <>

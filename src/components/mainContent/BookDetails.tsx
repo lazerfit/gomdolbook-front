@@ -1,7 +1,8 @@
-import React from 'react'
+import {useEffect, useState} from 'react'
 import styled from 'styled-components'
 import '../../styles/variables.css'
 import {FaArrowLeft} from 'react-icons/fa6'
+import Toast from '../common/Toast'
 
 const Wrapper = styled.div`
   width: 100%;
@@ -152,6 +153,25 @@ type Props = {
 }
 
 const BookDetails = (props: Props) => {
+  const [isToastVisible, setIsToastVisible] = useState(false)
+
+  const onShowToast = () => {
+    setIsToastVisible(true)
+  }
+
+  const onCloseToast = () => {
+    setIsToastVisible(false)
+  }
+
+  // useEffect(
+  //   function toastTimeout() {
+  //     const timer = setTimeout(() => setIsToastVisible(false), 3000)
+
+  //     return () => clearTimeout(timer)
+  //   },
+  //   [isToastVisible]
+  // )
+
   return (
     <Wrapper>
       <BackButton onClick={props.onReturnToBookList}>
@@ -182,17 +202,27 @@ const BookDetails = (props: Props) => {
           </div>
         </Description>
         <ButtonWrapper>
-          <SaveButton>
+          <SaveButton onClick={onShowToast}>
             <p>읽는 중</p>
           </SaveButton>
-          <SaveButton>
+          <SaveButton onClick={onShowToast}>
             <p>읽을 예정</p>
           </SaveButton>
-          <SaveButton>
+          <SaveButton onClick={onShowToast}>
             <p>읽기 완료</p>
           </SaveButton>
         </ButtonWrapper>
       </MainContentWrapper>
+
+      <Toast
+        isVisible={isToastVisible}
+        isError={false}
+        onChangeVisibility={onCloseToast}
+        message={{
+          success: '내 서재에 성공적으로 저장하였어요.',
+          error: '다시 시도해주세요.'
+        }}
+      />
     </Wrapper>
   )
 }

@@ -6,7 +6,7 @@ import Library from './pages/Library'
 import Statistics from './pages/Statistics'
 import Layout from './components/layout/Layout'
 
-function App() {
+const App = () => {
   return (
     <>
       <GlobalStyle />

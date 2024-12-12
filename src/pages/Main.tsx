@@ -14,7 +14,7 @@ const Wrapper = styled.main`
 
 type Props = {}
 
-function Main({}: Props) {
+const Main = (props: Props) => {
   return (
     <Wrapper>
       <MainContent />

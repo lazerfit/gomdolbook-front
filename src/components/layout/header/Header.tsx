@@ -68,7 +68,7 @@ type Props = {
   onLoggedOut: () => void
 }
 
-function Header(props: Props) {
+const Header = (props: Props) => {
   const navigate = useNavigate()
   const [isModalOpened, setIsModalOpened] = useState(false)
   const handleLogin = () => {

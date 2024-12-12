@@ -91,6 +91,29 @@ const GlobalStyle = createGlobalStyle`
     font-size: 12px;
     line-height: 140%;
   }
+
+  /* Animation */
+  @keyframes ScaleIn {
+    0% {
+    transform: translate(-50%, -50%) scale(0);
+  }
+
+  50% {
+    transform: translate(-50%, -50%) scale(1.1);
+  }
+
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+  }
+  }
+
+  .scale-in {
+    animation: ScaleIn 0.5s ease-in-out;
+  }
+
+  .scale-out {
+    animation: ScaleIn 0.5s reverse;
+  }
 `
 
 export default GlobalStyle

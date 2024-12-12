@@ -13,7 +13,7 @@ const Wrapper = styled.div`
 
 type Props = {}
 
-function Statistics({}: Props) {
+const Statistics = (props: Props) => {
   return (
     <>
       <Wrapper>

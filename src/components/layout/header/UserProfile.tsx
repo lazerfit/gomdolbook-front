@@ -66,7 +66,7 @@ type Props = {
   onLoggedOut: () => void
 }
 
-function UserProfile(props: Props) {
+const UserProfile = (props: Props) => {
   const [isUserMenuVisible, setIsUserMenuVisible] = useState(false)
 
   return (

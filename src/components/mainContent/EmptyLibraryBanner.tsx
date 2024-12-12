@@ -48,7 +48,6 @@ const SloganAnimation = keyframes`
 
 const Slogan = styled.div`
   text-align: center;
-  /* font-family: 'NanumSquare Neo', sans-serif; */
   font-family: 'YES24';
   animation: ${SloganAnimation} 2s ease-in-out;
 `
@@ -66,7 +65,7 @@ const Image = styled.img`
 
 type Props = {}
 
-function Books(props: Props) {
+const Books = (props: Props) => {
   return (
     <Wrapper>
       <EmptyLibraryWrapper>

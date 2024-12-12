@@ -1,9 +1,9 @@
-import React from 'react'
+import React, {useState} from 'react'
 import styled from 'styled-components'
 import '../../styles/variables.css'
 import Banner from './Banner'
 import SearchBar from './SearchBar'
-import Books from './Books'
+import Books from './EmptyLibraryBanner'
 
 const Wrapper = styled.div`
   width: 100%;
@@ -17,12 +17,18 @@ const Wrapper = styled.div`
 
 type Props = {}
 
-function MainContent({}: Props) {
+const MainContent = (props: Props) => {
+  const [isLibraryEmpty, setIsLibraryEmpty] = useState(false)
   return (
     <Wrapper>
-      {/* <Banner /> */}
-      {/* <SearchBar /> */}
-      <Books />
+      {isLibraryEmpty ? (
+        <Books />
+      ) : (
+        <>
+          <Banner />
+          <SearchBar />
+        </>
+      )}
     </Wrapper>
   )
 }

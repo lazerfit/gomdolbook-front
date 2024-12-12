@@ -5,7 +5,7 @@ import {useOutlet} from 'react-router-dom'
 
 type Props = {}
 
-function Layout(props: Props) {
+const Layout = (props: Props) => {
   const outlet = useOutlet()
   const [isLoggedIn, setIsLoggedIn] = useState(false)
 

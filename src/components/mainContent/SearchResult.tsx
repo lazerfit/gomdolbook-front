@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import styled from 'styled-components'
+import styled, {keyframes} from 'styled-components'
 import '../../styles/variables.css'
 import BookDetails from './BookDetails'
 
@@ -160,7 +160,7 @@ const SearchResult = (props: Props) => {
   return (
     <>
       <Overlay onClick={props.onResultClose} />
-      <Wrapper>
+      <Wrapper className="scale-in">
         {isBookSelected ? (
           <BookDetails onReturnToBookList={onReturnToBookList} />
         ) : (

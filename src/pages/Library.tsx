@@ -13,7 +13,7 @@ const Wrapper = styled.div`
   justify-content: center;
 `
 
-function Library({}: Props) {
+const Library = (props: Props) => {
   return (
     <>
       <Wrapper>

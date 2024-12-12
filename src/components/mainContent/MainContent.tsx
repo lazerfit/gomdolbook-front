@@ -3,9 +3,10 @@ import styled from 'styled-components'
 import '../../styles/variables.css'
 import Banner from './Banner'
 import SearchBar from './SearchBar'
-import Books from './EmptyLibraryBanner'
+import EmptyLibraryBanner from './EmptyLibraryBanner'
+import BookList from './BookList'
 
-const Wrapper = styled.div`
+const Wrapper = styled.section`
   width: 100%;
   max-width: 1180px;
   display: flex;
@@ -22,11 +23,12 @@ const MainContent = (props: Props) => {
   return (
     <Wrapper>
       {isLibraryEmpty ? (
-        <Books />
+        <EmptyLibraryBanner />
       ) : (
         <>
           <Banner />
           <SearchBar />
+          <BookList />
         </>
       )}
     </Wrapper>

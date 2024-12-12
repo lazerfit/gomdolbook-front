@@ -5,6 +5,12 @@ import {IoIosCheckmarkCircleOutline} from 'react-icons/io'
 import {MdErrorOutline} from 'react-icons/md'
 import {createPortal} from 'react-dom'
 
+const ShowUpAnimation = keyframes`
+  50% {
+    bottom: 15px;
+  }
+`
+
 const Wrapper = styled.div`
   position: fixed;
   right: 10px;
@@ -19,6 +25,7 @@ const Wrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  animation: ${ShowUpAnimation} 0.5s ease;
 `
 
 const Icon = styled.div`

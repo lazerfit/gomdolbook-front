@@ -13,7 +13,7 @@ const Overlay = styled.div`
   z-index: 999;
 `
 
-const Wrapper = styled.div`
+const Wrapper = styled.section`
   position: absolute;
   width: 1100px;
   height: 90%;
@@ -98,7 +98,7 @@ const Infomation = styled.div`
   margin: 0 21px;
 `
 
-const Title = styled.div`
+const Title = styled.h3`
   overflow-wrap: break-word;
   font-weight: 700;
 `
@@ -177,7 +177,7 @@ const SearchResult = (props: Props) => {
               <Books onClick={onSelectBook}>
                 <Image src="https://image.yes24.com/goods/139752827/L" />
                 <Infomation>
-                  <Title className="title-sm">
+                  <Title>
                     불가능한 장소에서, 고통의 미메시스와 글쓰기의 드라마마마마마마
                     마마마마마마마마 마마마마마마마글쓰기마마마마마마마
                   </Title>

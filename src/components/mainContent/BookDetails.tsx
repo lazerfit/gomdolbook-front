@@ -4,7 +4,7 @@ import '../../styles/variables.css'
 import {FaArrowLeft} from 'react-icons/fa6'
 import Toast from '../common/Toast'
 
-const Wrapper = styled.div`
+const Wrapper = styled.section`
   width: 100%;
   height: 100%;
   display: flex;
@@ -45,7 +45,7 @@ const Image = styled.img`
     rgba(0, 0, 0, 0.05) 0px 5px 10px;
 `
 
-const Title = styled.div`
+const Title = styled.h3`
   overflow: break-world;
   font-weight: 700;
 `
@@ -163,15 +163,6 @@ const BookDetails = (props: Props) => {
     setIsToastVisible(false)
   }
 
-  // useEffect(
-  //   function toastTimeout() {
-  //     const timer = setTimeout(() => setIsToastVisible(false), 3000)
-
-  //     return () => clearTimeout(timer)
-  //   },
-  //   [isToastVisible]
-  // )
-
   return (
     <Wrapper>
       <BackButton onClick={props.onReturnToBookList}>
@@ -180,7 +171,7 @@ const BookDetails = (props: Props) => {
       <MainContentWrapper>
         <Image src="https://image.yes24.com/goods/122339211/XL" />
         <BasicInformation>
-          <Title className="title-sm">절망하는 이들을 위한 민주주의</Title>
+          <Title>절망하는 이들을 위한 민주주의</Title>
           <PublisherDetail>
             <div>최태현 (지은이)</div>
             <Publisher>창비</Publisher>

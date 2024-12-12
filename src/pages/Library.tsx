@@ -2,9 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import '../styles/variables.css'
 
-type Props = {}
-
-const Wrapper = styled.div`
+const Wrapper = styled.section`
   max-width: 1180px;
   display: flex;
   flex-direction: column;
@@ -12,6 +10,7 @@ const Wrapper = styled.div`
   align-items: center;
   justify-content: center;
 `
+type Props = {}
 
 const Library = (props: Props) => {
   return (

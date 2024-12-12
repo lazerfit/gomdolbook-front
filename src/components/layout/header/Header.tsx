@@ -19,7 +19,7 @@ const NavigationLinkWrapper = styled.div`
   display: flex;
 `
 
-const MainLogo = styled.div`
+const MainLogo = styled.h3`
   font-family: 'Jim Nightshade', cursive;
   cursor: pointer;
   margin-right: 60px;
@@ -92,7 +92,6 @@ const Header = (props: Props) => {
         </MainLink>
       </NavigationLinkWrapper>
       <MainLogo
-        className="title-sm"
         onClick={() => {
           navigate('/')
         }}>

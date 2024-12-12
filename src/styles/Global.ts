@@ -53,19 +53,19 @@ const GlobalStyle = createGlobalStyle`
   }
 
   /* font-size */
-  .title-lg {
+  h1 {
     font-size: 48px;
     font-weight: 600;
     line-height: 120%;
   }
 
-  .title-md {
+  h2 {
     font-size: 36px;
     font-weight: 600;
     line-height: 120%;
   }
 
-  .title-sm {
+  h3 {
     font-size: 24px;
     font-weight: 600;
     line-height: 130%;

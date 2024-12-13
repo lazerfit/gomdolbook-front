@@ -1,10 +1,8 @@
-import React from 'react'
 import styled, {keyframes} from 'styled-components'
 import '../../styles/variables.css'
 import SearchBar from './SearchBar'
 
 const Wrapper = styled.section`
-  width: 100%;
   display: flex;
   flex-direction: row;
   gap: 20px;
@@ -15,7 +13,6 @@ const Wrapper = styled.section`
 `
 
 const EmptyLibraryWrapper = styled.div`
-  width: 100%;
   height: 63vh;
   display: flex;
   flex-direction: column;

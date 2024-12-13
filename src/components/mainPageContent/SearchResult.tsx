@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
-import styled, {keyframes} from 'styled-components'
+import styled from 'styled-components'
 import '../../styles/variables.css'
-import BookDetails from './BookDetails'
+import BookDetails from './BookDetailsInModal'
 
 const Overlay = styled.div`
   position: fixed;
@@ -156,11 +156,16 @@ const SearchResult = (props: Props) => {
   const onReturnToBookList = () => {
     setIsBookSelected(false)
   }
+  const _onKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    if (event.key === 'Escape') {
+      props.onResultClose()
+    }
+  }
   const [isBookSelected, setIsBookSelected] = useState(false)
   return (
     <>
       <Overlay onClick={props.onResultClose} />
-      <Wrapper className="scale-in">
+      <Wrapper className="scale-in" tabIndex={0} onKeyDown={_onKeyDown}>
         {isBookSelected ? (
           <BookDetails onReturnToBookList={onReturnToBookList} />
         ) : (

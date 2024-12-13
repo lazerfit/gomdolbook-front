@@ -1,16 +1,13 @@
-import React from 'react'
 import styled from 'styled-components'
 
 type Props = {}
 
 const Wrapper = styled.div`
-  width: 100%;
   text-align: center;
   display: flex;
 `
 
 const MainSlogan = styled.div`
-  width: 100%;
   max-width: 800px;
   margin: 0 auto;
   font-size: 89px;

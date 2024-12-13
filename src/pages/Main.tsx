@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import '../styles/variables.css'
-import MainContent from '../components/mainContent/MainContent'
+import MainPageContent from '../components/mainPageContent/MainPageContent'
 
 const Wrapper = styled.section`
   width: 100%;
@@ -17,7 +17,7 @@ type Props = {}
 const Main = (props: Props) => {
   return (
     <Wrapper>
-      <MainContent />
+      <MainPageContent />
     </Wrapper>
   )
 }

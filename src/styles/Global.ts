@@ -41,6 +41,8 @@ const GlobalStyle = createGlobalStyle`
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     background-color: var(--background-color);
+    max-width: 1180px;
+    margin: 0 auto;
   }
 
   code {

@@ -1,5 +1,6 @@
 import styled from 'styled-components'
 import '../../styles/variables.css'
+import {useNavigate} from 'react-router-dom'
 
 const Wrapper = styled.section`
   width: 100%;
@@ -44,10 +45,16 @@ const Rating = styled.div`
 type Props = {}
 
 const BookList = (props: Props) => {
+  const navigate = useNavigate()
+  const testId = 123456789101
   return (
     <Wrapper>
       <ContentWrapper>
-        <Image src="https://image.yes24.com/goods/122339211/XL" alt="책 표지" />
+        <Image
+          src="https://image.yes24.com/goods/122339211/XL"
+          alt="책 표지"
+          onClick={() => navigate(`/books/${testId}`)}
+        />
         <Title>절망하는 이들을 위한 민주주의</Title>
         <Rating>⭐⭐⭐⭐⭐</Rating>
       </ContentWrapper>

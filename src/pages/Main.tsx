@@ -1,7 +1,6 @@
-import React from 'react'
-import styled from 'styled-components'
-import '../styles/variables.css'
-import MainPageContent from '../components/mainPageContent/MainPageContent'
+import React from "react";
+import styled from "styled-components";
+import MainPageContent from "../components/mainPageContent/MainPageContent";
 
 const Wrapper = styled.section`
   width: 100%;
@@ -10,16 +9,14 @@ const Wrapper = styled.section`
   margin: 0 auto;
   align-items: center;
   justify-content: center;
-`
+`;
 
-type Props = {}
-
-const Main = (props: Props) => {
+const Main = () => {
   return (
     <Wrapper>
       <MainPageContent />
     </Wrapper>
-  )
-}
+  );
+};
 
-export default Main
+export default Main;

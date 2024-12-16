@@ -1,6 +1,5 @@
-import styled, {keyframes} from 'styled-components'
-import '../../styles/variables.css'
-import SearchBar from './SearchBar'
+import styled, { keyframes } from "styled-components";
+import SearchBar from "./SearchBar";
 
 const Wrapper = styled.section`
   display: flex;
@@ -10,7 +9,7 @@ const Wrapper = styled.section`
   align-items: center;
   justify-content: flex-start;
   margin-top: 48px;
-`
+`;
 
 const EmptyLibraryWrapper = styled.div`
   height: 63vh;
@@ -19,7 +18,7 @@ const EmptyLibraryWrapper = styled.div`
   align-items: center;
   justify-content: center;
   margin: 0 auto;
-`
+`;
 
 const SloganAnimation = keyframes`
   0% {
@@ -33,17 +32,15 @@ const SloganAnimation = keyframes`
   100% {
     transform: scale(1);
   }
-`
+`;
 
 const Slogan = styled.h1`
   text-align: center;
-  font-family: 'YES24';
+  font-family: "YES24";
   animation: ${SloganAnimation} 2s ease-in-out;
-`
+`;
 
-type Props = {}
-
-const Books = (props: Props) => {
+const Books = () => {
   return (
     <Wrapper>
       <EmptyLibraryWrapper>
@@ -52,7 +49,7 @@ const Books = (props: Props) => {
         <SearchBar />
       </EmptyLibraryWrapper>
     </Wrapper>
-  )
-}
+  );
+};
 
-export default Books
+export default Books;

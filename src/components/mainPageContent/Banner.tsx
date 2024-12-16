@@ -1,11 +1,9 @@
-import styled from 'styled-components'
-
-type Props = {}
+import styled from "styled-components";
 
 const Wrapper = styled.div`
   text-align: center;
   display: flex;
-`
+`;
 
 const MainSlogan = styled.div`
   max-width: 800px;
@@ -13,15 +11,15 @@ const MainSlogan = styled.div`
   font-size: 89px;
   font-weight: 600;
   line-height: 120%;
-  font-family: 'Eczar', serif;
-`
+  font-family: "Eczar", serif;
+`;
 
-const Banner = (props: Props) => {
+const Banner = () => {
   return (
     <Wrapper>
       <MainSlogan>Collect your Books</MainSlogan>
     </Wrapper>
-  )
-}
+  );
+};
 
-export default Banner
+export default Banner;

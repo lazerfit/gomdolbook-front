@@ -1,10 +1,9 @@
-import {useState} from 'react'
-import styled from 'styled-components'
-import '../../styles/variables.css'
-import Banner from './Banner'
-import SearchBar from './SearchBar'
-import EmptyLibraryBanner from './EmptyLibraryBanner'
-import BookList from './BookList'
+import { useState } from "react";
+import styled from "styled-components";
+import Banner from "./Banner";
+import SearchBar from "./SearchBar";
+import EmptyLibraryBanner from "./EmptyLibraryBanner";
+import BookList from "./BookList";
 
 const Wrapper = styled.section`
   width: 100%;
@@ -13,12 +12,10 @@ const Wrapper = styled.section`
   margin: 55px auto 0 auto;
   align-items: center;
   height: 100%;
-`
+`;
 
-type Props = {}
-
-const MainContent = (props: Props) => {
-  const [isLibraryEmpty, setIsLibraryEmpty] = useState(false)
+const MainContent = () => {
+  const [isLibraryEmpty, setIsLibraryEmpty] = useState(false);
   return (
     <Wrapper>
       {isLibraryEmpty ? (
@@ -31,7 +28,7 @@ const MainContent = (props: Props) => {
         </>
       )}
     </Wrapper>
-  )
-}
+  );
+};
 
-export default MainContent
+export default MainContent;

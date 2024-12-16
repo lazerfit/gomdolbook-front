@@ -1,6 +1,6 @@
-import React from 'react'
-import styled from 'styled-components'
-import '../styles/variables.css'
+import React from "react";
+import styled from "styled-components";
+import "../styles/variables.css";
 
 const Wrapper = styled.section`
   max-width: 1180px;
@@ -9,17 +9,16 @@ const Wrapper = styled.section`
   margin: 10px auto;
   align-items: center;
   justify-content: center;
-`
-type Props = {}
+`;
 
-const Library = (props: Props) => {
+const Library = () => {
   return (
     <>
       <Wrapper>
         <div>Library</div>
       </Wrapper>
     </>
-  )
-}
+  );
+};
 
-export default Library
+export default Library;

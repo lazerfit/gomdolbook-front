@@ -1,6 +1,5 @@
-import styled from 'styled-components'
-import '../../styles/variables.css'
-import {useNavigate} from 'react-router-dom'
+import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
 
 const Wrapper = styled.section`
   width: 100%;
@@ -11,7 +10,7 @@ const Wrapper = styled.section`
   align-items: center;
   justify-content: flex-start;
   margin-top: 48px;
-`
+`;
 
 const ContentWrapper = styled.article`
   width: 280px;
@@ -20,7 +19,7 @@ const ContentWrapper = styled.article`
   display: flex;
   flex-direction: column;
   text-align: center;
-`
+`;
 
 const Image = styled.img`
   width: 100%;
@@ -32,21 +31,19 @@ const Image = styled.img`
   &:hover {
     filter: none;
   }
-`
+`;
 
 const Title = styled.h5`
   margin-top: 21px;
-`
+`;
 
 const Rating = styled.div`
   margin-top: 8px;
-`
+`;
 
-type Props = {}
-
-const BookList = (props: Props) => {
-  const navigate = useNavigate()
-  const testId = 123456789101
+const BookList = () => {
+  const navigate = useNavigate();
+  const testId = 123456789101;
   return (
     <Wrapper>
       <ContentWrapper>
@@ -59,7 +56,7 @@ const BookList = (props: Props) => {
         <Rating>⭐⭐⭐⭐⭐</Rating>
       </ContentWrapper>
     </Wrapper>
-  )
-}
+  );
+};
 
-export default BookList
+export default BookList;

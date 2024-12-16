@@ -1,5 +1,5 @@
-import {createGlobalStyle} from 'styled-components'
-import './variables.css'
+import { createGlobalStyle } from "styled-components";
+import "./variables.css";
 
 const GlobalStyle = createGlobalStyle`
   @font-face {
@@ -116,6 +116,6 @@ const GlobalStyle = createGlobalStyle`
   .scale-out {
     animation: ScaleIn 0.5s reverse;
   }
-`
+`;
 
-export default GlobalStyle
+export default GlobalStyle;

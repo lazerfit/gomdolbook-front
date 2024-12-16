@@ -1,36 +1,35 @@
-import {useNavigate} from 'react-router-dom'
-import {useState} from 'react'
-import styled from 'styled-components'
-import '../../../styles/variables.css'
-import LoginModal from './LoginModal'
-import UserProfile from './UserProfile'
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import styled from "styled-components";
+import LoginModal from "./LoginModal";
+import UserProfile from "./UserProfile";
 
 const Wrapper = styled.header`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  font-family: 'Eczar', serif;
-`
+  font-family: "Eczar", serif;
+`;
 
 const NavigationLinkWrapper = styled.div`
   display: flex;
-`
+`;
 
 const MainLogo = styled.h3`
-  font-family: 'Jim Nightshade', cursive;
+  font-family: "Jim Nightshade", cursive;
   cursor: pointer;
   margin-right: 60px;
-`
+`;
 
 const MainLink = styled.button`
-  font-family: 'Eczar', serif;
+  font-family: "Eczar", serif;
   font-size: 16px;
   font-weight: 400;
   line-height: 30px;
   padding: 0 21px 0 0;
   background-color: transparent;
   cursor: pointer;
-`
+`;
 
 const UserMenuWrapper = styled.div`
   padding: 22px 0;
@@ -39,10 +38,10 @@ const UserMenuWrapper = styled.div`
   display: flex;
   justify-content: flex-end;
   align-items: center;
-`
+`;
 
 const Login = styled.button`
-  font-family: 'Eczar', serif;
+  font-family: "Eczar", serif;
   font-size: 16px;
   font-weight: 500;
   line-height: 30px;
@@ -57,41 +56,44 @@ const Login = styled.button`
   &:hover {
     transform: translate(-1px, -1px);
   }
-`
+`;
 
-type Props = {
-  isLoggedIn: boolean
-  onLoggedIn: () => void
-  onLoggedOut: () => void
+interface Props {
+  isLoggedIn: boolean;
+  onLoggedIn: () => void;
+  onLoggedOut: () => void;
 }
 
 const Header = (props: Props) => {
-  const navigate = useNavigate()
-  const [isModalOpened, setIsModalOpened] = useState(false)
+  const navigate = useNavigate();
+  const [isModalOpened, setIsModalOpened] = useState(false);
   const handleLogin = () => {
-    props.onLoggedIn()
-    setIsModalOpened(false)
-  }
+    props.onLoggedIn();
+    setIsModalOpened(false);
+  };
   return (
     <Wrapper>
       <NavigationLinkWrapper>
         <MainLink
           onClick={() => {
-            navigate('/library')
-          }}>
+            navigate("/library");
+          }}
+        >
           Library
         </MainLink>
         <MainLink
           onClick={() => {
-            navigate('/statistics')
-          }}>
+            navigate("/statistics");
+          }}
+        >
           Statistics
         </MainLink>
       </NavigationLinkWrapper>
       <MainLogo
         onClick={() => {
-          navigate('/')
-        }}>
+          navigate("/");
+        }}
+      >
         gomdolbook
       </MainLogo>
       <UserMenuWrapper>
@@ -102,7 +104,7 @@ const Header = (props: Props) => {
             <LoginModal
               isModalOpened={isModalOpened}
               onClose={() => {
-                setIsModalOpened(false)
+                setIsModalOpened(false);
               }}
               onLoggedIn={handleLogin}
             />
@@ -111,7 +113,7 @@ const Header = (props: Props) => {
         )}
       </UserMenuWrapper>
     </Wrapper>
-  )
-}
+  );
+};
 
-export default Header
+export default Header;

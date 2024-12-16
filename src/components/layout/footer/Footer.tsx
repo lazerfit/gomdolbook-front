@@ -1,6 +1,5 @@
-import React from 'react'
-import styled from 'styled-components'
-import '../../../styles/variables.css'
+import React from "react";
+import styled from "styled-components";
 
 const Wrapper = styled.footer`
   height: 120px;
@@ -10,8 +9,8 @@ const Wrapper = styled.footer`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-family: 'Eczar', serif;
-`
+  font-family: "Eczar", serif;
+`;
 
 const ContentWrapper = styled.div`
   width: 100%;
@@ -23,18 +22,16 @@ const ContentWrapper = styled.div`
   justify-content: center;
   border-top: 1px solid var(--border-color);
   border-bottom: 1px solid var(--border-color);
-`
+`;
 
-type Props = {}
-
-const Footer = (props: Props) => {
+const Footer = () => {
   return (
     <Wrapper>
       <ContentWrapper>
         <div>@Designed By gomdolbook</div>
       </ContentWrapper>
     </Wrapper>
-  )
-}
+  );
+};
 
-export default Footer
+export default Footer;

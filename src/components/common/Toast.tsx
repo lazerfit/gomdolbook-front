@@ -1,15 +1,14 @@
-import {useEffect} from 'react'
-import styled, {keyframes} from 'styled-components'
-import '../../styles/variables.css'
-import {IoIosCheckmarkCircleOutline} from 'react-icons/io'
-import {MdErrorOutline} from 'react-icons/md'
-import {createPortal} from 'react-dom'
+import { useEffect } from "react";
+import styled, { keyframes } from "styled-components";
+import { IoIosCheckmarkCircleOutline } from "react-icons/io";
+import { MdErrorOutline } from "react-icons/md";
+import { createPortal } from "react-dom";
 
 const ShowUpAnimation = keyframes`
   50% {
     bottom: 15px;
   }
-`
+`;
 
 const Wrapper = styled.div`
   position: fixed;
@@ -26,7 +25,7 @@ const Wrapper = styled.div`
   align-items: center;
   justify-content: center;
   animation: ${ShowUpAnimation} 0.5s ease;
-`
+`;
 
 const Icon = styled.div`
   font-size: 24px;
@@ -34,36 +33,36 @@ const Icon = styled.div`
   margin-bottom: 2px;
   margin-right: 8px;
   color: #4ea699;
-`
+`;
 
-type Props = {
-  isVisible: boolean
-  isError: boolean
-  onChangeVisibility: () => void
+interface Props {
+  isVisible: boolean;
+  isError: boolean;
+  onChangeVisibility: () => void;
   message: {
-    success: string
-    error: string
-  }
+    success: string;
+    error: string;
+  };
 }
 
 const Toast = (props: Props) => {
   useEffect(
     function toastTimeout() {
       if (props.isVisible) {
-        const timer = setTimeout(() => props.onChangeVisibility(), 3000)
+        const timer = setTimeout(() => props.onChangeVisibility(), 3000);
 
-        return () => clearTimeout(timer)
+        return () => clearTimeout(timer);
       }
     },
-    [props.isVisible]
-  )
+    [props.isVisible],
+  );
 
-  if (!props.isVisible) return null
+  if (!props.isVisible) return null;
   return createPortal(
     <Wrapper>
       <Icon>
         {props.isError ? (
-          <MdErrorOutline style={{color: 'red'}} />
+          <MdErrorOutline style={{ color: "red" }} />
         ) : (
           <IoIosCheckmarkCircleOutline />
         )}
@@ -74,8 +73,8 @@ const Toast = (props: Props) => {
         <div>{props.message.success}</div>
       )}
     </Wrapper>,
-    document.body
-  )
-}
+    document.body,
+  );
+};
 
-export default Toast
+export default Toast;

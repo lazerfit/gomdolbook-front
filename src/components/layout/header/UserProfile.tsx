@@ -1,13 +1,12 @@
-import React, {useState} from 'react'
-import styled from 'styled-components'
-import '../../../styles/variables.css'
-import MockupImg from '../../../assets/img/avatar-02.jpg'
+import React, { useState } from "react";
+import styled from "styled-components";
+import MockupImg from "../../../assets/img/avatar-02.jpg";
 
 const Wrapper = styled.div`
   width: 50px;
   height: 50px;
   position: relative;
-`
+`;
 
 const Image = styled.img`
   width: 100%;
@@ -15,7 +14,7 @@ const Image = styled.img`
   object-fit: cover;
   border-radius: 50%;
   cursor: pointer;
-`
+`;
 
 const UserMenu = styled.span`
   width: 180px;
@@ -31,7 +30,7 @@ const UserMenu = styled.span`
     rgba(0, 0, 0, 0.05) 0px 5px 10px;
 
   &::before {
-    content: '';
+    content: "";
     width: 170px;
     height: 30px;
     position: absolute;
@@ -40,7 +39,7 @@ const UserMenu = styled.span`
   }
 
   &::after {
-    content: '';
+    content: "";
     position: absolute;
     background-color: white;
     width: 10px;
@@ -49,7 +48,7 @@ const UserMenu = styled.span`
     transform: rotate(45deg);
     right: 10%;
   }
-`
+`;
 
 const Item = styled.div`
   border-bottom: 1px solid #d3d3d3;
@@ -60,31 +59,32 @@ const Item = styled.div`
     background-color: var(--text-color);
     color: white;
   }
-`
+`;
 
-type Props = {
-  onLoggedOut: () => void
+interface Props {
+  onLoggedOut: () => void;
 }
 
 const UserProfile = (props: Props) => {
-  const [isUserMenuVisible, setIsUserMenuVisible] = useState(false)
+  const [isUserMenuVisible, setIsUserMenuVisible] = useState(false);
 
   return (
     <Wrapper
       onMouseEnter={() => setIsUserMenuVisible(true)}
-      onMouseLeave={() => setIsUserMenuVisible(false)}>
+      onMouseLeave={() => setIsUserMenuVisible(false)}
+    >
       <Image src={MockupImg} alt="User" />
       {isUserMenuVisible && (
         <UserMenu>
           <Item>Profile Setting</Item>
           <Item>My Library</Item>
-          <Item style={{border: 'none'}} onClick={props.onLoggedOut}>
+          <Item style={{ border: "none" }} onClick={props.onLoggedOut}>
             Log out
           </Item>
         </UserMenu>
       )}
     </Wrapper>
-  )
-}
+  );
+};
 
-export default UserProfile
+export default UserProfile;

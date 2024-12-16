@@ -1,6 +1,5 @@
-import React from 'react'
-import styled, {keyframes} from 'styled-components'
-import '../../../styles/variables.css'
+import React from "react";
+import styled, { keyframes } from "styled-components";
 
 const Overlay = styled.div`
   position: fixed;
@@ -10,7 +9,7 @@ const Overlay = styled.div`
   bottom: 0;
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 999;
-`
+`;
 
 const BounceIn = keyframes`
   0% {
@@ -24,7 +23,7 @@ const BounceIn = keyframes`
   100% {
     transform: translate(-50%, -50%) scale(1);
   }
-`
+`;
 
 const Wrapper = styled.div`
   position: fixed;
@@ -37,14 +36,14 @@ const Wrapper = styled.div`
   border-radius: 15px;
   z-index: 1000;
   padding: 30px;
-  font-family: 'Gothic A1', sans-serif;
+  font-family: "Gothic A1", sans-serif;
   animation: ${BounceIn} 0.5s ease;
-`
+`;
 
 const ContentWrapper = styled.div`
   display: flex;
   flex-direction: column;
-`
+`;
 
 const CloseButton = styled.button`
   width: 20px;
@@ -55,36 +54,36 @@ const CloseButton = styled.button`
   background-color: transparent;
   cursor: pointer;
   font-size: 1.4em;
-`
+`;
 
 const Banner = styled.div`
   font-size: 18px;
   font-weight: 600;
   margin-bottom: 34px;
-`
+`;
 
 const EasyLoginWrapper = styled.div`
   display: flex;
   flex-direction: column;
-`
+`;
 
 const EasyLoginButton = styled.button`
   border-radius: 5px;
   padding: 15px;
   margin: 8px 0;
-  font-family: 'Gothic A1', sans-serif;
+  font-family: "Gothic A1", sans-serif;
   cursor: pointer;
   color: white;
-`
+`;
 
-type Props = {
-  isModalOpened: boolean
-  onClose: () => void
-  onLoggedIn: () => void
+interface Props {
+  isModalOpened: boolean;
+  onClose: () => void;
+  onLoggedIn: () => void;
 }
 
 const LoginModal = (props: Props) => {
-  if (!props.isModalOpened) return null
+  if (!props.isModalOpened) return null;
   return (
     <>
       <Overlay onClick={props.onClose} />
@@ -94,20 +93,22 @@ const LoginModal = (props: Props) => {
           <Banner>로그인/회원가입</Banner>
           <EasyLoginWrapper>
             <EasyLoginButton
-              style={{backgroundColor: '#FEE500', color: 'black'}}
-              onClick={props.onLoggedIn}>
+              style={{ backgroundColor: "#FEE500", color: "black" }}
+              onClick={props.onLoggedIn}
+            >
               카카오로 시작하기
             </EasyLoginButton>
             <EasyLoginButton
-              style={{backgroundColor: '#00DE5A'}}
-              onClick={props.onLoggedIn}>
+              style={{ backgroundColor: "#00DE5A" }}
+              onClick={props.onLoggedIn}
+            >
               네이버로 시작하기
             </EasyLoginButton>
           </EasyLoginWrapper>
         </ContentWrapper>
       </Wrapper>
     </>
-  )
-}
+  );
+};
 
-export default LoginModal
+export default LoginModal;

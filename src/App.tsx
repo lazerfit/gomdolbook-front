@@ -1,11 +1,11 @@
-import React from 'react'
-import {Routes, Route} from 'react-router-dom'
-import GlobalStyle from './styles/Global'
-import Main from './pages/Main'
-import Library from './pages/Library'
-import Statistics from './pages/Statistics'
-import Layout from './components/layout/Layout'
-import BookTracker from './pages/BookTracker'
+import React from "react";
+import { Routes, Route } from "react-router-dom";
+import GlobalStyle from "./styles/Global";
+import Main from "./pages/Main";
+import Library from "./pages/Library";
+import Statistics from "./pages/Statistics";
+import Layout from "./components/layout/Layout";
+import BookTracker from "./pages/BookTracker";
 
 const App = () => {
   return (
@@ -20,7 +20,7 @@ const App = () => {
         </Route>
       </Routes>
     </>
-  )
-}
+  );
+};
 
-export default App
+export default App;

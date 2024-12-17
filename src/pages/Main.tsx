@@ -1,5 +1,4 @@
-import React from "react";
-import styled from "styled-components";
+import { styled } from "styled-components";
 import MainPageContent from "../components/mainPageContent/MainPageContent";
 
 const Wrapper = styled.section`

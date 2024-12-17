@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import styled from "styled-components";
+import { useState } from "react";
+import { styled } from "styled-components";
 import MockupImg from "../../../assets/img/avatar-02.jpg";
 
 const Wrapper = styled.div`

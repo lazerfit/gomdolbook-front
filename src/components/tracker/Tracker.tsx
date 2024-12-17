@@ -1,4 +1,4 @@
-import styled, { css } from "styled-components";
+import { styled, css } from "styled-components";
 import { FaRegPenToSquare } from "react-icons/fa6";
 
 const Wrapper = styled.section`
@@ -110,8 +110,7 @@ const Tracker = () => {
   const analyzeContentData: Data[] = [
     {
       title: "1. 무엇을 다룬 책인지 알아내기",
-      placeholder:
-        "중심 내용, 요점정리, 저자가 풀어가려는 문제 등을 적어주세요.",
+      placeholder: "중심 내용, 요점정리, 저자가 풀어가려는 문제 등을 적어주세요.",
     },
     {
       title: "2. 내용 해석하기",

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import styled from "styled-components";
+import { styled } from "styled-components";
 import Banner from "./Banner";
 import SearchBar from "./SearchBar";
 import EmptyLibraryBanner from "./EmptyLibraryBanner";

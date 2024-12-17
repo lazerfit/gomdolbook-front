@@ -1,5 +1,4 @@
-import React from "react";
-import styled from "styled-components";
+import { styled } from "styled-components";
 
 const Wrapper = styled.footer`
   height: 120px;

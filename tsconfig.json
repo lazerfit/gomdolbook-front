@@ -1,8 +1,10 @@
 {
-	"extends": "@tsconfig/create-react-app/tsconfig.json",
-	"compilerOptions": {
-		"preserveConstEnums": true
-	},
-	"include": ["src/**/*", "eslint.config.mjs"],
-	"exclude": ["node_modules", "**/*.spec.ts"]
+  "extends": "./tsconfig.common.json",
+  "compilerOptions": {
+    "types": ["vite/client"],
+    "baseUrl": ".",
+		"paths": {
+			"@/*": ["./src/*"]
+		}
+  }
 }

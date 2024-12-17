@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import styled, { keyframes } from "styled-components";
+import { styled, keyframes } from "styled-components";
 import { IoIosCheckmarkCircleOutline } from "react-icons/io";
 import { MdErrorOutline } from "react-icons/md";
 import { createPortal } from "react-dom";

@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import styled from "styled-components";
+import { styled } from "styled-components";
 import LoginModal from "./LoginModal";
 import UserProfile from "./UserProfile";
 

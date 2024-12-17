@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import styled, { keyframes } from "styled-components";
+import { styled, keyframes } from "styled-components";
 import SearchResult from "./SearchResult";
 
 const ShowUpAnimation = keyframes`

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import styled from "styled-components";
+import { styled } from "styled-components";
 import { FaArrowLeft } from "react-icons/fa6";
 import Toast from "../common/Toast";
 
@@ -186,10 +186,9 @@ const BookDetails = (props: Props) => {
         <Description>
           <div style={{ fontWeight: "bold" }}>책 소개</div>
           <div>
-            고통받는 약자들의 목소리는 여전히 작고 힘이 없다. 더군다나 이런
-            문제를 우리의 제도로는 해결할 수 없을뿐더러 오히려 제도가 그런
-            비극의 원인이 되기도 한다는 점이 절망스럽기도 하다. 희망을 어디에서
-            찾을 수 있을까?
+            고통받는 약자들의 목소리는 여전히 작고 힘이 없다. 더군다나 이런 문제를 우리의
+            제도로는 해결할 수 없을뿐더러 오히려 제도가 그런 비극의 원인이 되기도 한다는
+            점이 절망스럽기도 하다. 희망을 어디에서 찾을 수 있을까?
           </div>
         </Description>
         <ButtonWrapper>

@@ -17,11 +17,7 @@ const Layout = () => {
 
   return (
     <>
-      <Header
-        isLoggedIn={isLoggedIn}
-        onLoggedIn={onLoggedIn}
-        onLoggedOut={onLoggedOut}
-      />
+      <Header isLoggedIn={isLoggedIn} onLoggedIn={onLoggedIn} onLoggedOut={onLoggedOut} />
       <main>{outlet}</main>
       <Footer />
     </>

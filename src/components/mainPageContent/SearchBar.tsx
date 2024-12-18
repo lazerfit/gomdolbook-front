@@ -1,20 +1,6 @@
 import React, { useState } from "react";
-import { styled, keyframes } from "styled-components";
+import { styled } from "styled-components";
 import SearchResult from "./SearchResult";
-
-const ShowUpAnimation = keyframes`
-  0% {
-    transform: translate(-50%, -50%) scale(0);
-  }
-
-  50% {
-    transform: translate(-50%, -50%) scale(1.1);
-  }
-
-  100% {
-    transform: translate(-50%, -50%) scale(1);
-  }
-`;
 
 const Wrapper = styled.div`
   height: 48px;

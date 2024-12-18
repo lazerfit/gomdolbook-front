@@ -52,8 +52,9 @@ const Toast = (props: Props) => {
         const timer = setTimeout(() => props.onChangeVisibility(), 3000);
 
         return () => clearTimeout(timer);
-      }
+      } else return;
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [props.isVisible],
   );
 

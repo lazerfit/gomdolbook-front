@@ -89,10 +89,6 @@ const ButtonWrapper = styled.div`
   gap: 5px;
 `;
 
-const Content = styled.div`
-  margin-top: 10px;
-`;
-
 const EmptyContent = styled.div`
   margin-top: 10px;
   width: 100%;

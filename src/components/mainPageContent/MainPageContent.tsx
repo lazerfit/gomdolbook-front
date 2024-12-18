@@ -15,7 +15,7 @@ const Wrapper = styled.section`
 `;
 
 const MainContent = () => {
-  const [isLibraryEmpty, setIsLibraryEmpty] = useState(false);
+  const [isLibraryEmpty] = useState(false);
   return (
     <Wrapper>
       {isLibraryEmpty ? (

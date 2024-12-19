@@ -1,5 +1,6 @@
-import { styled, css } from "styled-components";
+import { styled } from "styled-components";
 import { FaRegPenToSquare } from "react-icons/fa6";
+import Publisher from "../../ui/Publisher";
 
 const Wrapper = styled.section`
   margin: 34px auto;
@@ -10,31 +11,6 @@ const Wrapper = styled.section`
 `;
 
 const Title = styled.h3``;
-
-const PublisherDetail = styled.div`
-  margin-top: 8px;
-  font-size: 15px;
-  display: flex;
-`;
-
-const PubCommon = css`
-  margin-left: 5px;
-
-  &::before {
-    content: "|";
-    margin-right: 5px;
-    color: var(--gray-4);
-  }
-`;
-
-const Publisher = styled.div`
-  ${PubCommon}
-`;
-
-const Date = styled.div`
-  ${PubCommon}
-  color: var(--text-color-light);
-`;
 
 const ImageWrapper = styled.div`
   width: 200px;
@@ -93,7 +69,7 @@ const EmptyContent = styled.div`
   margin-top: 10px;
   width: 100%;
   height: 150px;
-  color: var(--text-color-disable);
+  color: ${(props) => props.theme.colors.gray5};
   font-size: 15px;
 `;
 
@@ -126,11 +102,7 @@ const Tracker = () => {
         <button>메뉴</button>
       </ButtonWrapper>
       <Title>절망하는 이들을 위한 민주주의 </Title>
-      <PublisherDetail>
-        <div>최태현 (지은이)</div>
-        <Publisher>창비</Publisher>
-        <Date>2023.09.08</Date>
-      </PublisherDetail>
+      <Publisher author="최태현 (지은이)" publisher="창비" date="2023.09.08" />
       <ImageWrapper>
         <Image src="https://image.yes24.com/goods/122339211/XL" />
         <Rating>⭐⭐⭐⭐⭐</Rating>

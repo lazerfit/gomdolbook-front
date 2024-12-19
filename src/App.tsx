@@ -1,15 +1,15 @@
-import React from "react";
 import { Routes, Route } from "react-router-dom";
-import GlobalStyle from "./styles/Global";
-import Main from "./pages/Main";
-import Library from "./pages/Library";
-import Statistics from "./pages/Statistics";
-import Layout from "./components/layout/Layout";
-import BookTracker from "./pages/BookTracker";
+import GlobalStyle from "@/styles/global";
+import Main from "@/pages/Main";
+import Library from "@/pages/Library";
+import Statistics from "@/pages/Statistics";
+import Layout from "@/components/layout/Layout";
+import BookTracker from "@/pages/BookTracker";
+import Theme from "@/styles/theme";
 
 const App = () => {
   return (
-    <>
+    <Theme>
       <GlobalStyle />
       <Routes>
         <Route path="/" element={<Layout />}>
@@ -19,7 +19,7 @@ const App = () => {
           <Route path="/books/:id" element={<BookTracker />} />
         </Route>
       </Routes>
-    </>
+    </Theme>
   );
 };
 

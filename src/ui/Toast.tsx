@@ -74,7 +74,7 @@ const Toast = (props: Props) => {
         <div>{props.message.success}</div>
       )}
     </Wrapper>,
-    document.body,
+    document.getElementById("modal")!,
   );
 };
 

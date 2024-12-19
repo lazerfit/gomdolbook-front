@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { styled } from "styled-components";
 import { FaArrowLeft } from "react-icons/fa6";
-import Toast from "../common/Toast";
+import Toast from "../../ui/Toast";
+import Publisher from "../../ui/Publisher";
 
 const Wrapper = styled.section`
   width: 100%;
@@ -47,33 +48,6 @@ const Image = styled.img`
 const Title = styled.h3`
   overflow: break-world;
   font-weight: 700;
-`;
-
-const PublisherDetail = styled.div`
-  margin-top: 8px;
-  font-size: 15px;
-  display: flex;
-`;
-
-const Publisher = styled.div`
-  margin-left: 5px;
-
-  &::before {
-    content: "|";
-    margin-right: 5px;
-    color: var(--gray-4);
-  }
-`;
-
-const Date = styled.div`
-  margin-left: 5px;
-  color: var(--text-color-light);
-
-  &::before {
-    content: "|";
-    margin-right: 5px;
-    color: var(--gray-4);
-  }
 `;
 
 const SubInfomation = styled.div`
@@ -171,11 +145,7 @@ const BookDetails = (props: Props) => {
         <Image src="https://image.yes24.com/goods/122339211/XL" />
         <BasicInformation>
           <Title>절망하는 이들을 위한 민주주의</Title>
-          <PublisherDetail>
-            <div>최태현 (지은이)</div>
-            <Publisher>창비</Publisher>
-            <Date>2023.09.08</Date>
-          </PublisherDetail>
+          <Publisher author="최태현 (지은이)" publisher="창비" date="2023.09.08" />
           <SubInfomation>
             <div style={{ fontWeight: "bold" }}>기본정보</div>
             <div>ISBN : 9788936479428</div>

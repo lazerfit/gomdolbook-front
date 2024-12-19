@@ -27,7 +27,7 @@
   },
   "lint-staged": {
     "**/*.{ts,tsx}": "eslint .",
-    "**/*": "prettier --ignore-unknown --write ."
+    "**/*,{ts,tsx,mjs}": "prettier --ignore-unknown --write ."
   },
   "browserslist": {
     "production": [

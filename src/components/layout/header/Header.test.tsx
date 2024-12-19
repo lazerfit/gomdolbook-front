@@ -3,11 +3,7 @@ import { BrowserRouter } from "react-router-dom";
 import Header from "./Header";
 
 describe("Header Component", () => {
-  const setup = (
-    isLoggedIn = false,
-    onLoggedIn = jest.fn(),
-    onLoggedOut = jest.fn(),
-  ) => {
+  const setup = (isLoggedIn = false, onLoggedIn = jest.fn(), onLoggedOut = jest.fn()) => {
     render(
       <Header
         isLoggedIn={isLoggedIn}
@@ -29,9 +25,7 @@ describe("Header Component", () => {
   it("로그인 버튼을 클릭하면 로그인 모달의 닫기 버튼이 나타난다.", () => {
     const { loginButton } = setup();
     fireEvent.click(loginButton);
-    expect(
-      screen.getByRole("button", { name: /카카오로 시작하기/ }),
-    ).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /카카오로 시작하기/ })).toBeInTheDocument();
   });
 
   it("로그인 모달에서 닫기 버튼을 클릭하면 모달이 닫힌다.", () => {

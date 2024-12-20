@@ -8,7 +8,7 @@ const Wrapper = styled.footer`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-family: "Eczar", serif;
+  font-family: ${(props) => props.theme.fonts.english}, serif;
 `;
 
 const ContentWrapper = styled.div`
@@ -19,8 +19,8 @@ const ContentWrapper = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  border-top: 1px solid var(--border-color);
-  border-bottom: 1px solid var(--border-color);
+  border-top: 1px solid ${(props) => props.theme.colors.black};
+  border-bottom: 1px solid ${(props) => props.theme.colors.black};
 `;
 
 const Footer = () => {

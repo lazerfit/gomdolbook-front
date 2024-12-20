@@ -3,12 +3,13 @@ import { useState } from "react";
 import { styled } from "styled-components";
 import LoginModal from "./LoginModal";
 import UserProfile from "./UserProfile";
+import { ButtonMd } from "@/styles/common.styled";
 
 const Wrapper = styled.header`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  font-family: "Eczar", serif;
+  font-family: ${(props) => props.theme.fonts.english}, serif;
 `;
 
 const NavigationLinkWrapper = styled.div`
@@ -22,8 +23,8 @@ const MainLogo = styled.h3`
 `;
 
 const MainLink = styled.button`
-  font-family: "Eczar", serif;
-  font-size: 16px;
+  font-family: ${(props) => props.theme.fonts.english}, serif;
+  font-size: 1rem;
   font-weight: 400;
   line-height: 30px;
   padding: 0 21px 0 0;
@@ -40,17 +41,7 @@ const UserMenuWrapper = styled.div`
   align-items: center;
 `;
 
-const Login = styled.button`
-  font-family: "Eczar", serif;
-  font-size: 16px;
-  font-weight: 500;
-  line-height: 30px;
-  padding: 7px 20px;
-  background-color: var(--highlight-color);
-  border-radius: 20px;
-  cursor: pointer;
-  color: white;
-  box-shadow: rgba(0, 0, 0, 0.15) 0px 3px 3px 0px;
+const Login = styled(ButtonMd)`
   transition: transform 0.2s ease;
 
   &:hover {

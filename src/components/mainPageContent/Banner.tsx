@@ -8,10 +8,10 @@ const Wrapper = styled.div`
 const MainSlogan = styled.div`
   max-width: 800px;
   margin: 0 auto;
-  font-size: 89px;
+  font-size: 5.563rem;
   font-weight: 600;
   line-height: 120%;
-  font-family: "Eczar", serif;
+  font-family: ${(props) => props.theme.fonts.english}, serif;
 `;
 
 const Banner = () => {

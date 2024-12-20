@@ -2,7 +2,7 @@ import { styled, css } from "styled-components";
 
 const PublisherWrapper = styled.div`
   margin-top: 8px;
-  font-size: 15px;
+  font-size: 0.938rem;
   display: flex;
 `;
 

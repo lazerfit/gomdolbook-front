@@ -18,7 +18,7 @@ interface IWrapper {
 }
 
 const Wrapper = styled.section<IWrapper>`
-  position: absolute;
+  position: fixed;
   width: ${(props) => props.innerWidth};
   height: ${(props) => props.innerHeight};
   transform: translate(-50%, -50%);

@@ -19,7 +19,7 @@ const CloseButton = styled.button`
   border: none;
   background-color: transparent;
   cursor: pointer;
-  font-size: 2em;
+  font-size: 2rem;
 `;
 
 const InputWrapper = styled.div`
@@ -31,6 +31,7 @@ const InputWrapper = styled.div`
 
 const Input = styled.input`
   width: 430px;
+  min-width: 26.875rem;
   padding: 10px;
   border: 1px solid black;
   border-radius: 8px;
@@ -54,6 +55,7 @@ const MainContentWrapper = styled.div`
 const Books = styled.div`
   width: 850px;
   height: 200px;
+  min-height: 12.5rem;
   margin-top: 13px;
   display: flex;
   justify-content: center;
@@ -65,7 +67,9 @@ const Books = styled.div`
 
 const Image = styled.img`
   width: 100px;
+  min-width: 6.25rem;
   height: 140px;
+  min-height: 8.75rem;
   border-radius: 5px;
 `;
 
@@ -77,7 +81,11 @@ const Infomation = styled.div`
 `;
 
 const Title = styled.h3`
-  overflow-wrap: break-word;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  text-overflow: ellipsis;
   font-weight: 700;
 `;
 
@@ -88,7 +96,7 @@ const Description = styled.div`
   -webkit-line-clamp: 2;
   overflow: hidden;
   text-overflow: ellipsis;
-  color: var(--text-color-light);
+  color: ${(props) => props.theme.colors.gray6};
 `;
 
 interface Props {

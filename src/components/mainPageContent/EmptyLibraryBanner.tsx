@@ -36,7 +36,7 @@ const SloganAnimation = keyframes`
 
 const Slogan = styled.h1`
   text-align: center;
-  font-family: "YES24";
+  font-family: ${(props) => props.theme.fonts.title}, sans-serif;
   animation: ${SloganAnimation} 2s ease-in-out;
 `;
 

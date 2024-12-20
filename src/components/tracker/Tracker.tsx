@@ -1,6 +1,7 @@
 import { styled } from "styled-components";
 import { FaRegPenToSquare } from "react-icons/fa6";
 import Publisher from "../../ui/Publisher";
+import { BsThreeDotsVertical } from "react-icons/bs";
 
 const Wrapper = styled.section`
   margin: 34px auto;
@@ -14,11 +15,13 @@ const Title = styled.h3``;
 
 const ImageWrapper = styled.div`
   width: 200px;
+  min-width: 12.5rem;
   text-align: center;
 `;
 
 const Image = styled.img`
   width: 200px;
+  min-width: 12.5rem;
   box-shadow:
     rgba(0, 0, 0, 0.15) 0px 15px 25px,
     rgba(0, 0, 0, 0.05) 0px 5px 10px;
@@ -28,8 +31,9 @@ const Image = styled.img`
 
 const Rating = styled.div`
   width: 200px;
+  min-width: 12.5rem;
   margin-top: 21px;
-  font-size: 21px;
+  font-size: 1.313rem;
 `;
 
 const ContentWrapper = styled.section`
@@ -42,7 +46,8 @@ const ContentWrapper = styled.section`
 
 const AnalyzeContent = styled.article`
   width: 600px;
-  min-height: 300px;
+  min-width: 37.5rem;
+  min-height: 18.75rem;
   padding: 10px;
   border-radius: 10px;
   box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 15px 0px;
@@ -55,22 +60,32 @@ const ContentTitle = styled.div`
 
 const ModifyButton = styled.div`
   background-color: transparent;
-  font-size: 18px;
+  font-size: 1.125rem;
   cursor: pointer;
 `;
 
 const ButtonWrapper = styled.div`
+  border: 1px solid black;
   display: flex;
-  margin-top: 13px;
-  gap: 5px;
+  align-items: center;
+  justify-content: center;
+  padding: 5px;
+  margin-left: auto;
+  margin-right: 10px;
 `;
 
 const EmptyContent = styled.div`
   margin-top: 10px;
   width: 100%;
   height: 150px;
+  min-height: 9.375rem;
   color: ${(props) => props.theme.colors.gray5};
-  font-size: 15px;
+  font-size: 0.938rem;
+`;
+
+const Menu = styled.button`
+  cursor: pointer;
+  background-color: transparent;
 `;
 
 interface Data {
@@ -99,7 +114,9 @@ const Tracker = () => {
   return (
     <Wrapper>
       <ButtonWrapper>
-        <button>메뉴</button>
+        <Menu>
+          <BsThreeDotsVertical />
+        </Menu>
       </ButtonWrapper>
       <Title>절망하는 이들을 위한 민주주의 </Title>
       <Publisher author="최태현 (지은이)" publisher="창비" date="2023.09.08" />

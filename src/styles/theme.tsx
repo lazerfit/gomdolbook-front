@@ -19,6 +19,14 @@ export interface IColor {
 export interface IFont {
   title: string;
   text: string;
+  english: string;
+  size300: string;
+  size400: string;
+  size500: string;
+  size600: string;
+  size700: string;
+  size800: string;
+  size900: string;
 }
 
 interface ITheme {
@@ -44,6 +52,14 @@ const theme: ITheme = {
   fonts: {
     title: "YES24",
     text: "YESGothic-Regular",
+    english: "Eczar",
+    size300: "0.75rem" /* 12px */,
+    size400: "1rem" /* 16px */,
+    size500: "1.25rem" /* 20px */,
+    size600: "1.5rem" /* 24px */,
+    size700: "1.75rem" /* 28px */,
+    size800: "2rem" /* 32px */,
+    size900: "2.25rem" /* 36px */,
   },
 };
 

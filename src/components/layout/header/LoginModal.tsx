@@ -18,7 +18,7 @@ const CloseButton = styled.button`
 `;
 
 const Banner = styled.div`
-  font-size: 18px;
+  font-size: 1.125rem;
   font-weight: 600;
   margin-bottom: 34px;
 `;
@@ -32,7 +32,8 @@ const EasyLoginButton = styled.button`
   border-radius: 5px;
   padding: 15px;
   margin: 8px 0;
-  font-family: "Gothic A1", sans-serif;
+  font-family: ${(props) => props.theme.fonts.text}, sans-serif;
+  font-size: 1rem;
   cursor: pointer;
   color: white;
 `;
@@ -46,7 +47,7 @@ interface Props {
 const LoginModal = (props: Props) => {
   if (!props.isModalOpened) return null;
   return (
-    <Modal innerWidth="360px" innerHeight="240px" onClose={props.onClose}>
+    <Modal innerWidth="360px" innerHeight="fit-content" onClose={props.onClose}>
       <ContentWrapper>
         <CloseButton onClick={props.onClose}>&times;</CloseButton>
         <Banner>로그인/회원가입</Banner>

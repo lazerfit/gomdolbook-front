@@ -3,6 +3,7 @@ import { styled } from "styled-components";
 import { FaArrowLeft } from "react-icons/fa6";
 import Toast from "../../ui/Toast";
 import Publisher from "../../ui/Publisher";
+import { ButtonMd } from "@/styles/common.styled";
 
 const Wrapper = styled.section`
   width: 100%;
@@ -38,6 +39,7 @@ const BasicInformation = styled.div`
 
 const Image = styled.img`
   width: 150px;
+  min-width: 9.375rem;
   margin: 0 auto;
   border-radius: 8px;
   box-shadow:
@@ -51,7 +53,7 @@ const Title = styled.h3`
 `;
 
 const SubInfomation = styled.div`
-  font-size: 15px;
+  font-size: 0.938rem;
   margin-top: 21px;
   display: flex;
   flex-direction: column;
@@ -62,12 +64,13 @@ const SubInfomation = styled.div`
 `;
 
 const Description = styled.div`
-  font-size: 15px;
+  font-size: 0.938rem;
   margin-top: 21px;
   display: flex;
   flex-direction: column;
   gap: 5px;
   width: 500px;
+  min-width: 31.25rem;
 `;
 
 const ButtonWrapper = styled.div`
@@ -76,19 +79,15 @@ const ButtonWrapper = styled.div`
   margin: 34px auto;
 `;
 
-const SaveButton = styled.button`
-  border: 2px solid var(--text-color);
-  background-color: var(--text-color);
-  font-size: 0.9rem;
-  padding: 10px 20px;
-  color: white;
-  border-radius: 20px;
-  cursor: pointer;
+const SaveButton = styled(ButtonMd)`
+  border: 2px solid ${(porps) => porps.theme.colors.black};
   position: relative;
   overflow: hidden;
+  padding: 7px 20px;
 
   > p {
     position: relative;
+    font-size: 1rem;
   }
 
   &::before {
@@ -173,7 +172,6 @@ const BookDetails = (props: Props) => {
           </SaveButton>
         </ButtonWrapper>
       </MainContentWrapper>
-
       <Toast
         isVisible={isToastVisible}
         isError={false}

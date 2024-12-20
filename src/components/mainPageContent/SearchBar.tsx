@@ -15,10 +15,10 @@ const Search = styled.div`
 
 const Input = styled.input`
   width: 300px;
-  border: 1px solid var(--border-color);
+  border: 1px solid ${(props) => props.theme.colors.black};
   border-radius: 8px;
   background-color: transparent;
-  font-family: "NanumSquare Neo", sans-serif;
+  font-family: ${(props) => props.theme.fonts.text}, sans-serif;
   padding: 10px;
 
   &:focus::placeholder {
@@ -26,9 +26,9 @@ const Input = styled.input`
   }
 
   &::placeholder {
-    color: var(--text-color-light);
+    color: ${(props) => props.theme.colors.gray5};
     transition: opacity 0.3s;
-    font-family: "Eczar", serif;
+    font-family: ${(props) => props.theme.fonts.english}, serif;
   }
 `;
 

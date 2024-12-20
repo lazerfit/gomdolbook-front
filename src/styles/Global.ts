@@ -1,5 +1,4 @@
 import { createGlobalStyle } from "styled-components";
-import "./variables.css";
 
 const GlobalStyle = createGlobalStyle`
   @font-face {
@@ -33,14 +32,14 @@ const GlobalStyle = createGlobalStyle`
   }
 
   body {
-    font-size: 16px;
-    color: var(--text-color);
+    font-size: 100%;
+    color: ${(props) => props.theme.colors.black};
     line-height: 140%;
     letter-spacing: -0.3px;
     font-family: 'YESGothic-Regular';
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    background-color: var(--background-color);
+    background-color: ${(props) => props.theme.colors.white};
     max-width: 1180px;
     margin: 0 auto;
   }
@@ -56,19 +55,19 @@ const GlobalStyle = createGlobalStyle`
 
   /* font-size */
   h1 {
-    font-size: 48px;
+    font-size: 3rem;
     font-weight: 600;
     line-height: 120%;
   }
 
   h2 {
-    font-size: 36px;
+    font-size: ${(props) => props.theme.fonts.size900};
     font-weight: 600;
     line-height: 120%;
   }
 
   h3 {
-    font-size: 24px;
+    font-size: ${(props) => props.theme.fonts.size600};
     font-weight: 600;
     line-height: 130%;
   }
@@ -80,17 +79,17 @@ const GlobalStyle = createGlobalStyle`
   }
 
   .text-md {
-    font-size: 16px;
+    font-size: 1rem;
     line-height: 140%;
   }
 
   .text-sm {
-    font-size: 14px;
+    font-size: 0.9rem;
     line-height: 140%;
   }
 
   .caption {
-    font-size: 12px;
+    font-size: ${(props) => props.theme.fonts.size300};
     line-height: 140%;
   }
 

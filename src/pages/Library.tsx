@@ -1,5 +1,4 @@
 import { styled } from "styled-components";
-import "../styles/variables.css";
 
 const Wrapper = styled.section`
   max-width: 1180px;

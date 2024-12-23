@@ -56,7 +56,7 @@ const Item = styled.div`
   cursor: pointer;
 
   &:hover {
-    background-color: var(--text-color);
+    background-color: ${(props) => props.theme.colors.black};
     color: white;
   }
 `;

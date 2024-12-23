@@ -1,7 +1,7 @@
 import { styled } from "styled-components";
 
 export const ButtonMd = styled.button`
-  font-family: ${(props) => props.theme.fonts.english};
+  font-family: ${(props) => props.theme.fonts.text};
   font-size: 1rem;
   font-weight: 500;
   line-height: 30px;

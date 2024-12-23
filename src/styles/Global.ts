@@ -31,6 +31,10 @@ const GlobalStyle = createGlobalStyle`
     text-decoration: none;
   }
 
+  button {
+    background-color: transparent;
+  }
+
   body {
     font-size: 100%;
     color: ${(props) => props.theme.colors.black};

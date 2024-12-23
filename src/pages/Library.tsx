@@ -1,22 +1,8 @@
 import { styled } from "styled-components";
-
-const Wrapper = styled.section`
-  max-width: 1180px;
-  display: flex;
-  flex-direction: column;
-  margin: 10px auto;
-  align-items: center;
-  justify-content: center;
-`;
+import MyLibrary from "@/components/myLibrary/MyLibrary";
 
 const Library = () => {
-  return (
-    <>
-      <Wrapper>
-        <div>Library</div>
-      </Wrapper>
-    </>
-  );
+  return <MyLibrary />;
 };
 
 export default Library;

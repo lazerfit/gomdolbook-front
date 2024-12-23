@@ -121,7 +121,7 @@ const SaveButton = styled(ButtonMd)`
 `;
 
 interface Props {
-  onReturnToBookList: () => void;
+  onClose: () => void;
 }
 
 const BookDetails = (props: Props) => {
@@ -137,7 +137,7 @@ const BookDetails = (props: Props) => {
 
   return (
     <Wrapper>
-      <BackButton onClick={props.onReturnToBookList}>
+      <BackButton onClick={props.onClose}>
         <FaArrowLeft style={{ fontSize: "20px" }} />
       </BackButton>
       <MainContentWrapper>

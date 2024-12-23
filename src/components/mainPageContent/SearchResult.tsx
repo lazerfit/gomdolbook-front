@@ -120,7 +120,7 @@ const SearchResult = (props: Props) => {
   return (
     <Modal innerWidth="1180px" innerHeight="90%" onClose={props.onResultClose}>
       {isBookSelected ? (
-        <BookDetails onReturnToBookList={onReturnToBookList} />
+        <BookDetails onClose={onReturnToBookList} />
       ) : (
         <ContentWrapper>
           <CloseButton onClick={props.onResultClose}>&times;</CloseButton>

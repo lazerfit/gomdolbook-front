@@ -9,7 +9,7 @@ const Wrapper = styled.section`
   flex-wrap: wrap;
   align-items: center;
   justify-content: flex-start;
-  margin-top: 48px;
+  margin-top: 32px;
 `;
 
 const ContentWrapper = styled.article`
@@ -27,6 +27,9 @@ const Image = styled.img`
   filter: grayscale(100%);
   transition: all 0.5s ease;
   cursor: pointer;
+  box-shadow:
+    rgba(0, 0, 0, 0.15) 0px 15px 25px,
+    rgba(0, 0, 0, 0.05) 0px 5px 10px;
 
   &:hover {
     filter: none;

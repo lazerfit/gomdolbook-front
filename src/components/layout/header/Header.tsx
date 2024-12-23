@@ -43,6 +43,7 @@ const UserMenuWrapper = styled.div`
 
 const Login = styled(ButtonMd)`
   transition: transform 0.2s ease;
+  font-family: ${(props) => props.theme.fonts.english};
 
   &:hover {
     transform: translate(-1px, -1px);

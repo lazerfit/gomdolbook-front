@@ -75,10 +75,10 @@ const Header = (props: Props) => {
         </MainLink>
         <MainLink
           onClick={() => {
-            navigate("/statistics");
+            navigate("/collections");
           }}
         >
-          Statistics
+          Collections
         </MainLink>
       </NavigationLinkWrapper>
       <MainLogo

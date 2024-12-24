@@ -37,9 +37,9 @@ const Item = styled.button`
 const SortBar = () => {
   return (
     <Wrapper>
-      <Item>읽기 완료</Item>
       <Item>읽는 중</Item>
       <Item>읽을 예정</Item>
+      <Item>읽기 완료</Item>
     </Wrapper>
   );
 };

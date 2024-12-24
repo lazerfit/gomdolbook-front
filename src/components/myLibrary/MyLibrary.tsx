@@ -1,5 +1,5 @@
 import { styled } from "styled-components";
-import SortBar from "./SortBar";
+import SortBar from "./StatusNavBar";
 import BookList from "../mainPageContent/BookList";
 
 const Wrapper = styled.section`

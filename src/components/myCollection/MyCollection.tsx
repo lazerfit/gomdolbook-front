@@ -1,6 +1,7 @@
 import { styled } from "styled-components";
+import MainContent from "./MainContent";
 
-const Wrapper = styled.div`
+const Wrapper = styled.section`
   max-width: 1180px;
   display: flex;
   flex-direction: column;
@@ -9,14 +10,12 @@ const Wrapper = styled.div`
   justify-content: center;
 `;
 
-const Statistics = () => {
+const MyStatistic = () => {
   return (
-    <>
-      <Wrapper>
-        <div>Statistics</div>
-      </Wrapper>
-    </>
+    <Wrapper>
+      <MainContent />
+    </Wrapper>
   );
 };
 
-export default Statistics;
+export default MyStatistic;

@@ -1,7 +1,7 @@
-import MainPageContent from "@/components/mainPageContent/MainPageContent";
+import Index from "@/components/mainPageContent/MainPageContent";
 
 const Main = () => {
-  return <MainPageContent />;
+  return <Index />;
 };
 
 export default Main;

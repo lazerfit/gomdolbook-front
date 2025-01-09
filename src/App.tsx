@@ -4,7 +4,7 @@ import Main from "@/pages/Main";
 import Library from "@/pages/Library";
 import Collection from "@/pages/Collection";
 import Layout from "@/components/layout/Layout";
-import BookTracker from "@/pages/BookTracker";
+import BookTracker from "@/pages/ReadingLog";
 import Theme from "@/styles/theme";
 import Details from "./components/myCollection/Details";
 

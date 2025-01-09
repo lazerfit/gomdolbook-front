@@ -1,7 +1,7 @@
-import MyCollection from "@/components/myCollection/MyCollection";
+import Index from "@/components/myCollection/MyCollection";
 
 const Statistics = () => {
-  return <MyCollection />;
+  return <Index />;
 };
 
 export default Statistics;

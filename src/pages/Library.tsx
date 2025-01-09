@@ -1,7 +1,7 @@
-import MyLibrary from "@/components/myLibrary/MyLibrary";
+import Index from "@/components/myLibrary/MyLibrary";
 
 const Library = () => {
-  return <MyLibrary />;
+  return <Index />;
 };
 
 export default Library;

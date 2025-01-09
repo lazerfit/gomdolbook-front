@@ -58,6 +58,15 @@ const BookList = () => {
         <Title>절망하는 이들을 위한 민주주의</Title>
         <Rating>⭐⭐⭐⭐⭐</Rating>
       </ContentWrapper>
+      <ContentWrapper>
+        <Image
+          src="https://image.yes24.com/goods/122339211/XL"
+          alt="책 표지"
+          onClick={() => navigate(`/books/${testId}`)}
+        />
+        <Title>절망하는 이들을 위한 민주주의</Title>
+        <Rating>⭐⭐⭐⭐⭐</Rating>
+      </ContentWrapper>
     </Wrapper>
   );
 };

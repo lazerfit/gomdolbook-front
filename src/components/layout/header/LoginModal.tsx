@@ -47,9 +47,11 @@ interface Props {
 const LoginModal = (props: Props) => {
   if (!props.isModalOpened) return null;
   return (
-    <Modal innerWidth="360px" innerHeight="fit-content" onClose={props.onClose}>
+    <Modal $innerWidth="360px" $innerHeight="fit-content" onClose={props.onClose}>
       <ContentWrapper>
-        <CloseButton onClick={props.onClose}>&times;</CloseButton>
+        <CloseButton data-testid="closeBtn" onClick={props.onClose}>
+          &times;
+        </CloseButton>
         <Banner>로그인/회원가입</Banner>
         <EasyLoginWrapper>
           <EasyLoginButton

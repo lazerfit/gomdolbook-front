@@ -9,14 +9,26 @@ export const client = (() => {
   });
 })();
 
+interface ApiError {
+  status: string;
+  errors: string[] | string;
+}
+
 const request = async <T>(options: AxiosRequestConfig): Promise<T> => {
   const onSuccess = (response: AxiosResponse<T>) => {
     const { data } = response;
     return data;
   };
 
-  const onError = function (error: AxiosError) {
-    const errorPromise = new Error(error.message, { cause: error.cause });
+  const onError = function (error: AxiosError<ApiError>) {
+    const serverResponse = error.response?.data;
+    console.log(serverResponse?.errors);
+    const errorPromise = new Error(error.message, {
+      cause: {
+        status: serverResponse?.status ?? "Unknown status",
+        errors: serverResponse?.errors ?? ["Unknown error"],
+      },
+    });
     return Promise.reject(errorPromise);
   };
 

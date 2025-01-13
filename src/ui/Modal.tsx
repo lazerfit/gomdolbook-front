@@ -13,14 +13,14 @@ const Overlay = styled.div`
 `;
 
 interface IWrapper {
-  innerWidth: string;
-  innerHeight: string;
+  $innerWidth: string;
+  $innerHeight: string;
 }
 
 const Wrapper = styled.section<IWrapper>`
   position: fixed;
-  width: ${(props) => props.innerWidth};
-  height: ${(props) => props.innerHeight};
+  width: ${(props) => props.$innerWidth};
+  height: ${(props) => props.$innerHeight};
   transform: translate(-50%, -50%);
   background-color: ${(props) => props.theme.colors.white};
   z-index: 1000;
@@ -33,8 +33,8 @@ const Wrapper = styled.section<IWrapper>`
 
 interface Props {
   children: ReactNode;
-  innerWidth: string;
-  innerHeight: string;
+  $innerWidth: string;
+  $innerHeight: string;
   onClose: () => void;
 }
 
@@ -52,8 +52,8 @@ const Modal = (props: Props) => {
         className="scale-in"
         tabIndex={0}
         onKeyDown={_onKeyDown}
-        innerWidth={props.innerWidth}
-        innerHeight={props.innerHeight}
+        $innerWidth={props.$innerWidth}
+        $innerHeight={props.$innerHeight}
       >
         {props.children}
       </Wrapper>

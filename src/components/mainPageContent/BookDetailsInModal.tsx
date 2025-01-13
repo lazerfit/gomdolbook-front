@@ -4,6 +4,7 @@ import { FaArrowLeft } from "react-icons/fa6";
 import Toast from "../../ui/Toast";
 import Publisher from "../../ui/Publisher";
 import { ButtonMd } from "@/styles/common.styled";
+import { useBookQuery } from "@/hooks/queries/useBook";
 
 const Wrapper = styled.section`
   width: 100%;
@@ -121,12 +122,16 @@ const SaveButton = styled(ButtonMd)`
 `;
 
 interface Props {
+  isbn: string;
   onClose: () => void;
 }
 
 const BookDetails = (props: Props) => {
   const [isToastVisible, setIsToastVisible] = useState(false);
-
+  const { data, isError, error } = useBookQuery(props.isbn);
+  if (isError) {
+    console.log(error);
+  }
   const onShowToast = () => {
     setIsToastVisible(true);
   };
@@ -137,28 +142,27 @@ const BookDetails = (props: Props) => {
 
   return (
     <Wrapper>
-      <BackButton onClick={props.onClose}>
+      <BackButton data-testid="backBtn" onClick={props.onClose}>
         <FaArrowLeft style={{ fontSize: "20px" }} />
       </BackButton>
       <MainContentWrapper>
-        <Image src="https://image.yes24.com/goods/122339211/XL" />
+        <Image src={data?.cover} />
         <BasicInformation>
-          <Title>절망하는 이들을 위한 민주주의</Title>
-          <Publisher author="최태현 (지은이)" publisher="창비" date="2023.09.08" />
+          <Title>{data?.title}</Title>
+          <Publisher
+            author={data?.author ?? "author"}
+            publisher={data?.publisher ?? "publisher"}
+            date={data?.pubDate ?? "pubDate"}
+          />
           <SubInfomation>
             <div style={{ fontWeight: "bold" }}>기본정보</div>
-            <div>ISBN : 9788936479428</div>
-            <div>페이지 수 : 416</div>
-            <div>카테고리 : 국내도서.사회과학.사회사상/사회사상사.민주주의</div>
+            <div>ISBN : {data?.isbn13}</div>
+            <div>카테고리 : {data?.categoryName}</div>
           </SubInfomation>
         </BasicInformation>
         <Description>
           <div style={{ fontWeight: "bold" }}>책 소개</div>
-          <div>
-            고통받는 약자들의 목소리는 여전히 작고 힘이 없다. 더군다나 이런 문제를 우리의
-            제도로는 해결할 수 없을뿐더러 오히려 제도가 그런 비극의 원인이 되기도 한다는
-            점이 절망스럽기도 하다. 희망을 어디에서 찾을 수 있을까?
-          </div>
+          <div>{data?.description}</div>
         </Description>
         <ButtonWrapper>
           <SaveButton onClick={onShowToast}>

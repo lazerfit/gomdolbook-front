@@ -118,9 +118,9 @@ const SearchResult = (props: Props) => {
 
   const [isBookSelected, setIsBookSelected] = useState(false);
   return (
-    <Modal innerWidth="1180px" innerHeight="90%" onClose={props.onResultClose}>
+    <Modal $innerWidth="1180px" $innerHeight="90%" onClose={props.onResultClose}>
       {isBookSelected ? (
-        <BookDetails onClose={onReturnToBookList} />
+        <BookDetails isbn="9788936434120" onClose={onReturnToBookList} />
       ) : (
         <ContentWrapper>
           <CloseButton onClick={props.onResultClose}>&times;</CloseButton>

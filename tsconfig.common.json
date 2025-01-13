@@ -23,22 +23,9 @@
     "target": "ES5",
     "module": "ESNext",
     "moduleResolution": "node",
-    "lib": [
-      "DOM",
-      "DOM.Iterable",
-      "ESNext"
-    ],
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],
     "preserveConstEnums": true
   },
-  "include": [
-    "src",
-    "eslint.config.mjs"
-  ],
-  "exclude": [
-    "node_modules",
-    "dist",
-    "coverage",
-    ".vscode",
-    "**/__test__/*"
-  ]
+  "include": ["src", "eslint.config.mjs"],
+  "exclude": ["node_modules", "dist", "coverage", ".vscode", "**/__test__/*"]
 }

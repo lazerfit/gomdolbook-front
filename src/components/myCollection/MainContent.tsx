@@ -131,7 +131,9 @@ const MainContent = () => {
             />
           </InputWrapper>
         ) : (
-          <AddButton onClick={onOpenAddNewCollection}>새로 추가하기</AddButton>
+          <AddButton data-testId="addBtn" onClick={onOpenAddNewCollection}>
+            새로 추가하기
+          </AddButton>
         )}
       </AddItem>
     </Wrapper>

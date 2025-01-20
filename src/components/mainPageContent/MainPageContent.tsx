@@ -11,7 +11,7 @@ const Wrapper = styled.section`
   flex-direction: column;
   margin: 55px auto 0 auto;
   align-items: center;
-  height: 100%;
+  min-height: calc(100vh - 410px);
 `;
 
 const MainContent = () => {

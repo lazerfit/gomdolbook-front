@@ -228,7 +228,7 @@ const Tracker = () => {
         ))}
       </ContentWrapper>
       {isModalOpened && (
-        <Modal innerHeight="fit-content" innerWidth="330px" onClose={onCloseModal}>
+        <Modal $innerHeight="fit-content" $innerWidth="330px" onClose={onCloseModal}>
           <ModalWrapper>
             <div>정말 삭제하시겠습니까?</div>
             <ModalButtonWrapper>

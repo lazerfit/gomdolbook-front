@@ -4,7 +4,11 @@ import { FaArrowLeft } from "react-icons/fa6";
 import Toast from "../../ui/Toast";
 import Publisher from "../../ui/Publisher";
 import { ButtonMd } from "@/styles/common.styled";
-import { useBookQuery } from "@/hooks/queries/useBook";
+import { useGetBookQuery } from "@/hooks/queries/useBook";
+import { BookStatus } from "@/api/services/BoookService";
+import { useGetStatus, useSaveReadingLogQuery } from "@/hooks/queries/useReadingLog";
+import translateBookStatus from "@/utils/TranslateBookStatus";
+import BookDetailSkeleton from "@/ui/BookDetailSkeleton";
 
 const Wrapper = styled.section`
   width: 100%;
@@ -80,6 +84,19 @@ const ButtonWrapper = styled.div`
   margin: 34px auto;
 `;
 
+const ReadingStatus = styled.div`
+  border: 1px solid black;
+  width: 100px;
+  height: 40px;
+  padding: 20px;
+  border-radius: 20px;
+  background-color: ${(props) => props.theme.colors.black};
+  color: ${(props) => props.theme.colors.white};
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
 const SaveButton = styled(ButtonMd)`
   border: 2px solid ${(porps) => porps.theme.colors.black};
   position: relative;
@@ -128,16 +145,61 @@ interface Props {
 
 const BookDetails = (props: Props) => {
   const [isToastVisible, setIsToastVisible] = useState(false);
-  const { data, isError, error } = useBookQuery(props.isbn);
+  const [isErrorToast, setIsErrorToast] = useState(false);
+  const { data: aladin, isError, error, isLoading } = useGetBookQuery(props.isbn);
+  const { data: statusData } = useGetStatus(props.isbn);
+  const { mutate: saveReadingLogWithStatus } = useSaveReadingLogQuery();
   if (isError) {
     console.log(error);
   }
+  const bookStatus = statusData?.data ?? "NEW";
+  const aladinData = aladin?.data ?? {
+    title: "default title",
+    author: "default author",
+    pubDate: "default pubDate",
+    description: "default description",
+    isbn13: "default isbn13",
+    cover: "default cover",
+    categoryName: "default categoryName",
+    publisher: "default publisher",
+    status: BookStatus.TO_READ,
+  };
   const onShowToast = () => {
     setIsToastVisible(true);
+    setIsErrorToast(false);
   };
-
+  const onShowErrorToast = () => {
+    setIsErrorToast(true);
+  };
   const onCloseToast = () => {
     setIsToastVisible(false);
+  };
+
+  const getReadingLogSaveRequest = (status: BookStatus) => {
+    return {
+      title: aladinData.title,
+      author: aladinData.author,
+      pubDate: aladinData.pubDate,
+      description: aladinData.description,
+      isbn13: aladinData.isbn13,
+      cover: aladinData.cover,
+      categoryName: aladinData.categoryName,
+      publisher: aladinData.publisher,
+      status: status,
+    };
+  };
+
+  const saveReadingLog = (status: BookStatus) => {
+    const saveRequest = getReadingLogSaveRequest(status);
+    saveReadingLogWithStatus(saveRequest, {
+      onSuccess: () => {
+        onShowToast();
+      },
+      onError: (error) => {
+        onShowErrorToast();
+        console.log(error);
+      },
+    });
   };
 
   return (
@@ -146,39 +208,56 @@ const BookDetails = (props: Props) => {
         <FaArrowLeft style={{ fontSize: "20px" }} />
       </BackButton>
       <MainContentWrapper>
-        <Image src={data?.cover} />
-        <BasicInformation>
-          <Title>{data?.title}</Title>
-          <Publisher
-            author={data?.author ?? "author"}
-            publisher={data?.publisher ?? "publisher"}
-            date={data?.pubDate ?? "pubDate"}
-          />
-          <SubInfomation>
-            <div style={{ fontWeight: "bold" }}>기본정보</div>
-            <div>ISBN : {data?.isbn13}</div>
-            <div>카테고리 : {data?.categoryName}</div>
-          </SubInfomation>
-        </BasicInformation>
-        <Description>
-          <div style={{ fontWeight: "bold" }}>책 소개</div>
-          <div>{data?.description}</div>
-        </Description>
-        <ButtonWrapper>
-          <SaveButton onClick={onShowToast}>
-            <p>읽는 중</p>
-          </SaveButton>
-          <SaveButton onClick={onShowToast}>
-            <p>읽을 예정</p>
-          </SaveButton>
-          <SaveButton onClick={onShowToast}>
-            <p>읽기 완료</p>
-          </SaveButton>
-        </ButtonWrapper>
+        {isLoading ? (
+          <BookDetailSkeleton />
+        ) : (
+          <>
+            <Image src={aladinData.cover} />
+            <BasicInformation>
+              <Title>{aladinData.title}</Title>
+              <Publisher
+                author={aladinData.author ?? "author"}
+                publisher={aladinData.publisher ?? "publisher"}
+                date={aladinData.pubDate ?? "pubDate"}
+              />
+              <SubInfomation>
+                <div style={{ fontWeight: "bold" }}>기본정보</div>
+                <div>ISBN : {aladinData.isbn13}</div>
+                <div>카테고리 : {aladinData.categoryName}</div>
+              </SubInfomation>
+            </BasicInformation>
+            <Description>
+              <div style={{ fontWeight: "bold" }}>책 소개</div>
+              <div>{aladinData.description}</div>
+            </Description>
+            <ButtonWrapper>
+              {bookStatus != "NEW" ? (
+                <ReadingStatus data-testid="readingStatus">
+                  {translateBookStatus(bookStatus)}
+                </ReadingStatus>
+              ) : (
+                <>
+                  <SaveButton
+                    data-testid="saveReadingLog"
+                    onClick={() => saveReadingLog(BookStatus.READING)}
+                  >
+                    <p>읽는 중</p>
+                  </SaveButton>
+                  <SaveButton onClick={() => saveReadingLog(BookStatus.TO_READ)}>
+                    <p>읽을 예정</p>
+                  </SaveButton>
+                  <SaveButton onClick={() => saveReadingLog(BookStatus.FINISHED)}>
+                    <p>읽기 완료</p>
+                  </SaveButton>
+                </>
+              )}
+            </ButtonWrapper>
+          </>
+        )}
       </MainContentWrapper>
       <Toast
         isVisible={isToastVisible}
-        isError={false}
+        isError={isErrorToast}
         onChangeVisibility={onCloseToast}
         message={{
           success: "내 서재에 성공적으로 저장하였어요.",

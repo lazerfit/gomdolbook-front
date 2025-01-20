@@ -1,6 +1,10 @@
 import request from "../Request";
 import { BookEndPoint } from "./config/apiEndpoints";
 
+export interface IApiResponse<T> {
+  data: T;
+}
+
 export interface IBookResponse {
   title: string;
   author: string;
@@ -8,21 +12,51 @@ export interface IBookResponse {
   description: string;
   isbn13: string;
   cover: string;
-  categoryName: string;
+  categoryName?: string;
   publisher: string;
 }
 
+export interface IBookSaveRequest extends IBookResponse {
+  status: BookStatus;
+}
+
+export enum BookStatus {
+  READING = "READING",
+  TO_READ = "TO_READ",
+  FINISHED = "FINISHED",
+}
+
 export const BookService = {
-  getBook: async (isbn: string) => {
-    return request<IBookResponse>({
+  getBook: (isbn: string) => {
+    return request<IApiResponse<IBookResponse>>({
       url: BookEndPoint.getBook(isbn),
       method: "GET",
     });
   },
-  getReadingLog: async (isbn: string) => {
+  getReadingLog: (isbn: string) => {
     return request({
       url: BookEndPoint.getReadingLog(isbn),
       method: "GET",
+    });
+  },
+  saveReadingLog: (data: IBookSaveRequest) => {
+    return request<void>({
+      url: BookEndPoint.saveReadingLog(),
+      method: "POST",
+      data: data,
+    });
+  },
+  getStatus: (isbn: string) => {
+    return request<IApiResponse<string>>({
+      url: BookEndPoint.getStatus(isbn),
+      method: "GET",
+    });
+  },
+  getBookSearchResult: (q: string) => {
+    return request<IApiResponse<IBookResponse[]>>({
+      url: BookEndPoint.getBookSearchResult(),
+      method: "GET",
+      params: { q: q },
     });
   },
 };

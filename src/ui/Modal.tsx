@@ -29,6 +29,7 @@ const Wrapper = styled.section<IWrapper>`
   padding: 30px;
   border-radius: 8px;
   font-family: ${(props) => props.theme.fonts.text};
+  overflow-y: auto;
 `;
 
 interface Props {

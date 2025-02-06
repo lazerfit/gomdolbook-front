@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { styled } from "styled-components";
 import { FaArrowLeft } from "react-icons/fa6";
 import Toast from "../../ui/Toast.tsx";
@@ -9,6 +9,7 @@ import { BookStatus } from "@/api/services/BoookService.ts";
 import { useGetStatus, useSaveReadingLogQuery } from "@/hooks/queries/useReadingLog.ts";
 import translateBookStatus from "@/utils/TranslateBookStatus.ts";
 import BookDetailSkeleton from "@/ui/BookDetailSkeleton.tsx";
+import { useKeycloak } from "@react-keycloak/web";
 
 const Wrapper = styled.section`
   width: 100%;
@@ -86,7 +87,7 @@ const ButtonWrapper = styled.div`
 
 const ReadingStatus = styled.div`
   border: 1px solid black;
-  width: 100px;
+  width: 110px;
   height: 40px;
   padding: 20px;
   border-radius: 20px;
@@ -146,13 +147,19 @@ interface Props {
 const BookDetails = (props: Props) => {
   const [isToastVisible, setIsToastVisible] = useState(false);
   const [isErrorToast, setIsErrorToast] = useState(false);
+  const [bookStatus, setBookStatus] = useState("");
   const { data: aladin, isError, error, isLoading } = useGetBookQuery(props.isbn);
   const { data: statusData } = useGetStatus(props.isbn);
   const { mutate: saveReadingLogWithStatus } = useSaveReadingLogQuery();
+  const { keycloak } = useKeycloak();
   if (isError) {
     console.log(error);
   }
-  const bookStatus = statusData?.data ?? "NEW";
+
+  useEffect(() => {
+    setBookStatus(statusData?.data ?? "NEW");
+  }, [statusData]);
+
   const aladinData = aladin?.data ?? {
     title: "default title",
     author: "default author",
@@ -175,7 +182,7 @@ const BookDetails = (props: Props) => {
     setIsToastVisible(false);
   };
 
-  const getReadingLogSaveRequest = (status: BookStatus) => {
+  const getReadingLogSaveRequest = (status: BookStatus, email: string) => {
     return {
       title: aladinData.title,
       author: aladinData.author,
@@ -186,11 +193,13 @@ const BookDetails = (props: Props) => {
       categoryName: aladinData.categoryName,
       publisher: aladinData.publisher,
       status: status,
+      email: email,
     };
   };
 
   const saveReadingLog = (status: BookStatus) => {
-    const saveRequest = getReadingLogSaveRequest(status);
+    const email = keycloak.idTokenParsed?.email as string;
+    const saveRequest = getReadingLogSaveRequest(status, email);
     saveReadingLogWithStatus(saveRequest, {
       onSuccess: () => {
         onShowToast();

@@ -32,6 +32,9 @@ const server = setupServer(
   http.get("http://localhost:8080/api/v1/book/isbn", () => {
     return HttpResponse.json(MOCK_BOOK_RESPONSE);
   }),
+  http.post("http://localhost:8080/api/v1/book/save?email=test@daum.net", () => {
+    return HttpResponse.json({ data: "OK" });
+  }),
 );
 
 beforeAll(() => server.listen());

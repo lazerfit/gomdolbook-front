@@ -18,6 +18,7 @@ export interface IBookResponse {
 
 export interface IBookSaveRequest extends IBookResponse {
   status: BookStatus;
+  email: string;
 }
 
 export enum BookStatus {

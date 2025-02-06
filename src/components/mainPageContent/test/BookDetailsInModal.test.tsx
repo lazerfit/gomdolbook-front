@@ -1,10 +1,10 @@
-import { renderHook, waitFor, render, screen, fireEvent } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import { beforeEach, expect, it, describe, vi } from "vitest";
-import BookDetails from "../BookDetailsInModal";
-import Toast from "@/ui/Toast";
+import BookDetails from "../BookDetailsInModal.tsx";
+import Toast from "@/ui/Toast.tsx";
 import { QueryClientProvider } from "@tanstack/react-query";
-import { testQueryClient } from "@/api/services/config/testQueryClient";
-import Theme from "@/styles/theme";
+import { testQueryClient } from "@/api/services/config/testQueryClient.ts";
+import Theme from "@/styles/theme.tsx";
 import { setupServer } from "msw/node";
 import { http, HttpResponse } from "msw";
 

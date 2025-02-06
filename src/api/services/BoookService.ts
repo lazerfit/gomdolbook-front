@@ -1,5 +1,5 @@
-import request from "../Request";
-import { BookEndPoint } from "./config/apiEndpoints";
+import request from "@/api/Request.ts";
+import { BookEndPoint } from "@/api/services/config/apiEndpoints.ts";
 
 export interface IApiResponse<T> {
   data: T;
@@ -34,7 +34,7 @@ export const BookService = {
     });
   },
   getReadingLog: (isbn: string) => {
-    return request({
+    return request<void>({
       url: BookEndPoint.getReadingLog(isbn),
       method: "GET",
     });

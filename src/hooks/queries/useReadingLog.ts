@@ -1,4 +1,4 @@
-import { BookService, IBookSaveRequest } from "@/api/services/BoookService";
+import { BookService, IBookSaveRequest } from "@/api/services/BoookService.ts";
 import { useMutation, useQuery } from "@tanstack/react-query";
 
 export const useSaveReadingLogQuery = () => {

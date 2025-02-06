@@ -1,4 +1,4 @@
-import Index from "@/components/myCollection/MyCollection";
+import Index from "@/components/myCollection/MyCollection.tsx";
 
 const Statistics = () => {
   return <Index />;

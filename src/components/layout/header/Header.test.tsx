@@ -1,8 +1,8 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { expect, vi, beforeAll, describe } from "vitest";
-import Header from "./Header";
+import Header from "./Header.tsx";
 import { BrowserRouter } from "react-router-dom";
-import Theme from "@/styles/theme";
+import Theme from "@/styles/theme.tsx";
 
 describe("Header Component", () => {
   beforeAll(() => {

@@ -1,40 +1,8 @@
 import { ReactNode } from "react";
-import { ThemeProvider } from "styled-components";
+import { ThemeProvider, DefaultTheme } from "styled-components";
+import "./styled.d.ts";
 
-export interface IColor {
-  black: string;
-  white: string;
-  gray0: string;
-  gray1: string;
-  gray2: string;
-  gray3: string;
-  gray4: string;
-  gray5: string;
-  gray6: string;
-  gray7: string;
-  gray8: string;
-  gray9: string;
-}
-
-export interface IFont {
-  title: string;
-  text: string;
-  english: string;
-  size300: string;
-  size400: string;
-  size500: string;
-  size600: string;
-  size700: string;
-  size800: string;
-  size900: string;
-}
-
-interface ITheme {
-  colors: IColor;
-  fonts: IFont;
-}
-
-const theme: ITheme = {
+const theme: DefaultTheme = {
   colors: {
     black: "#262627",
     white: "#fafafa",

@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { styled } from "styled-components";
-import Banner from "./Banner";
-import SearchBar from "./SearchBar";
-import EmptyLibraryBanner from "./EmptyLibraryBanner";
-import BookList from "./BookList";
+import Banner from "./Banner.tsx";
+import SearchBar from "./SearchBar.tsx";
+import EmptyLibraryBanner from "./EmptyLibraryBanner.tsx";
+import BookList from "./BookList.tsx";
 
 const Wrapper = styled.section`
   width: 100%;

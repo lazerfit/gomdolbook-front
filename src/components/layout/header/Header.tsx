@@ -1,9 +1,9 @@
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
 import { styled } from "styled-components";
-import LoginModal from "./LoginModal";
-import UserProfile from "./UserProfile";
-import { ButtonMd } from "@/styles/common.styled";
+import UserProfile from "./UserProfile.tsx";
+import { ButtonMd } from "@/styles/common.styled.ts";
+import { useKeycloak } from "@react-keycloak/web";
+import { useEffect } from "react";
 
 const Wrapper = styled.header`
   display: flex;
@@ -50,6 +50,8 @@ const Login = styled(ButtonMd)`
   }
 `;
 
+const TemtBtn = styled(ButtonMd)``;
+
 interface Props {
   isLoggedIn: boolean;
   onLoggedIn: () => void;
@@ -58,11 +60,27 @@ interface Props {
 
 const Header = (props: Props) => {
   const navigate = useNavigate();
-  const [isModalOpened, setIsModalOpened] = useState(false);
-  const handleLogin = () => {
-    props.onLoggedIn();
-    setIsModalOpened(false);
+  const { keycloak } = useKeycloak();
+
+  const login = async () => {
+    try {
+      await keycloak.login({
+        redirectUri: "http://localhost:3000/",
+        idpHint: "github",
+      });
+    } catch (e) {
+      console.log(e);
+    }
   };
+
+  const logout = async () => {
+    await keycloak.logout();
+  };
+
+  useEffect(() => {
+    console.log("🔑 로그인 상태:", keycloak.authenticated);
+  }, [keycloak.authenticated]);
+
   return (
     <Wrapper>
       <NavigationLinkWrapper>
@@ -92,17 +110,9 @@ const Header = (props: Props) => {
         {props.isLoggedIn ? (
           <UserProfile onLoggedOut={props.onLoggedOut} />
         ) : (
-          <>
-            <LoginModal
-              isModalOpened={isModalOpened}
-              onClose={() => {
-                setIsModalOpened(false);
-              }}
-              onLoggedIn={handleLogin}
-            />
-            <Login onClick={() => setIsModalOpened(true)}>Log in</Login>
-          </>
+          <Login onClick={() => void login()}>Log in</Login>
         )}
+        <TemtBtn onClick={() => void logout()}>Log out</TemtBtn>
       </UserMenuWrapper>
     </Wrapper>
   );

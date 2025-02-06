@@ -1,9 +1,9 @@
-import { useGetBookSearchResult } from "@/hooks/queries/useBook";
+import { useGetBookSearchResult } from "@/hooks/queries/useBook.ts";
 import { beforeEach, beforeAll, afterAll, afterEach, describe } from "vitest";
 import { renderHook, waitFor } from "@testing-library/react";
 import { bypass, http, HttpResponse } from "msw";
 import { setupServer } from "msw/node";
-import { testQueryClient } from "@/api/services/config/testQueryClient";
+import { testQueryClient } from "@/api/services/config/testQueryClient.ts";
 import { QueryClientProvider } from "@tanstack/react-query";
 
 const MOCK_BOOK_SEARCH_RESULT = {

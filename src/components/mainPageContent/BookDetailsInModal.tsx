@@ -1,14 +1,14 @@
 import { useState } from "react";
 import { styled } from "styled-components";
 import { FaArrowLeft } from "react-icons/fa6";
-import Toast from "../../ui/Toast";
-import Publisher from "../../ui/Publisher";
-import { ButtonMd } from "@/styles/common.styled";
-import { useGetBookQuery } from "@/hooks/queries/useBook";
-import { BookStatus } from "@/api/services/BoookService";
-import { useGetStatus, useSaveReadingLogQuery } from "@/hooks/queries/useReadingLog";
-import translateBookStatus from "@/utils/TranslateBookStatus";
-import BookDetailSkeleton from "@/ui/BookDetailSkeleton";
+import Toast from "../../ui/Toast.tsx";
+import Publisher from "../../ui/Publisher.tsx";
+import { ButtonMd } from "@/styles/common.styled.ts";
+import { useGetBookQuery } from "@/hooks/queries/useBook.ts";
+import { BookStatus } from "@/api/services/BoookService.ts";
+import { useGetStatus, useSaveReadingLogQuery } from "@/hooks/queries/useReadingLog.ts";
+import translateBookStatus from "@/utils/TranslateBookStatus.ts";
+import BookDetailSkeleton from "@/ui/BookDetailSkeleton.tsx";
 
 const Wrapper = styled.section`
   width: 100%;

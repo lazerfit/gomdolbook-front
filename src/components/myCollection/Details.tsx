@@ -1,6 +1,6 @@
 import { styled } from "styled-components";
 import { useParams } from "react-router-dom";
-import BookList from "../mainPageContent/BookList";
+import BookList from "../mainPageContent/BookList.tsx";
 
 const Wrapper = styled.div`
   margin-top: 34px;

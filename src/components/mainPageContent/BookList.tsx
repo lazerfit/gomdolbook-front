@@ -7,7 +7,7 @@ const Wrapper = styled.section`
   flex-direction: row;
   gap: 20px;
   flex-wrap: wrap;
-  align-items: center;
+  align-items: flex-start;
   justify-content: flex-start;
   margin-top: 32px;
 `;

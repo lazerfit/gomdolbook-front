@@ -1,5 +1,5 @@
 import { styled, keyframes } from "styled-components";
-import SearchBar from "./SearchBar";
+import SearchBar from "./SearchBar.tsx";
 
 const Wrapper = styled.section`
   display: flex;

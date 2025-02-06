@@ -1,13 +1,14 @@
 {
   "compilerOptions": {
     "allowSyntheticDefaultImports": true,
+    "allowImportingTsExtensions": true,
     "alwaysStrict": true,
     "declaration": true,
     "declarationMap": true,
     "downlevelIteration": true,
     "esModuleInterop": true,
     "experimentalDecorators": true,
-    "noEmit": false,
+    "noEmit": true,
     "noFallthroughCasesInSwitch": false,
     "noImplicitAny": true,
     "noImplicitReturns": true,
@@ -20,12 +21,24 @@
     "strictNullChecks": true,
     "suppressImplicitAnyIndexErrors": false,
     "jsx": "react-jsx",
-    "target": "ES5",
-    "module": "ESNext",
-    "moduleResolution": "node",
-    "lib": ["DOM", "DOM.Iterable", "ESNext"],
+    "target": "ES6",
+    "module": "NodeNext",
+    "moduleResolution": "nodenext",
+    "lib": [
+      "DOM",
+      "DOM.Iterable",
+      "ESNext"
+    ],
     "preserveConstEnums": true
   },
-  "include": ["src", "eslint.config.mjs"],
-  "exclude": ["node_modules", "dist", "coverage", ".vscode", "**/__test__/*"]
+  "include": [
+    "src",
+  ],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "coverage",
+    ".vscode",
+    "**/__test__/*"
+  ]
 }

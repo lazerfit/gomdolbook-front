@@ -6,7 +6,7 @@ import { FaArrowLeft } from "react-icons/fa6";
 const Wrapper = styled.section`
   width: 100%;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: flex-start;
   margin-top: 32px;
   gap: 20px;

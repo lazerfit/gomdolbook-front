@@ -1,12 +1,12 @@
 import { Routes, Route } from "react-router-dom";
-import GlobalStyle from "@/styles/global";
-import Main from "@/pages/Main";
-import Library from "@/pages/Library";
-import Collection from "@/pages/Collection";
-import Layout from "@/components/layout/Layout";
-import BookTracker from "@/pages/ReadingLog";
-import Theme from "@/styles/theme";
-import Details from "./components/myCollection/Details";
+import GlobalStyle from "@/styles/global.ts";
+import Main from "@/pages/Main.tsx";
+import Library from "@/pages/Library.tsx";
+import Collection from "@/pages/Collection.tsx";
+import Layout from "@/components/layout/Layout.tsx";
+import BookTracker from "@/pages/ReadingLog.tsx";
+import Theme from "@/styles/theme.tsx";
+import Details from "./components/myCollection/Details.js";
 
 const App = () => {
   return (

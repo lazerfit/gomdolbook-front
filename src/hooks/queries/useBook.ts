@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { BookService } from "@/api/services/BoookService";
+import { BookService } from "@/api/services/BoookService.ts";
 
 export const useGetBookQuery = (isbn: string) => {
   const { data, isLoading, isError, error } = useQuery({

@@ -22,14 +22,17 @@ const request = async <T>(options: AxiosRequestConfig): Promise<T> => {
 
   const onError = function (error: AxiosError<ApiError>) {
     const serverResponse = error.response?.data;
-    console.log(serverResponse?.errors);
-    const errorPromise = new Error(error.message, {
-      cause: {
-        status: serverResponse?.status ?? "Unknown status",
-        errors: serverResponse?.errors ?? ["Unknown error"],
-      },
-    });
-    return Promise.reject(errorPromise);
+    if (serverResponse) {
+      console.log(serverResponse?.errors);
+      const errorPromise = new Error(error.message, {
+        cause: {
+          status: serverResponse?.status ?? "Unknown status",
+          errors: serverResponse?.errors ?? ["Unknown error"],
+        },
+      });
+      return Promise.reject(errorPromise);
+    }
+    return Promise.reject(error);
   };
 
   return client(options).then(onSuccess).catch(onError);

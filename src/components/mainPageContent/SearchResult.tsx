@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { styled } from "styled-components";
-import BookDetails from "./BookDetailsInModal";
-import Publisher from "@/ui/Publisher";
-import Modal from "@/ui/Modal";
-import { useGetBookSearchResult } from "@/hooks/queries/useBook";
-import SimpleSkeletonLoader from "@/ui/SimpleSkeletonLoader";
+import BookDetails from "./BookDetailsInModal.tsx";
+import Publisher from "@/ui/Publisher.tsx";
+import Modal from "@/ui/Modal.tsx";
+import { useGetBookSearchResult } from "@/hooks/queries/useBook.ts";
+import SimpleSkeletonLoader from "@/ui/SimpleSkeletonLoader.tsx";
 
 const ContentWrapper = styled.div`
   width: 100%;

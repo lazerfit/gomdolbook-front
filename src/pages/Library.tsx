@@ -1,4 +1,4 @@
-import Index from "@/components/myLibrary/MyLibrary";
+import Index from "@/components/myLibrary/MyLibrary.tsx";
 
 const Library = () => {
   return <Index />;

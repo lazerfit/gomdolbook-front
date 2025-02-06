@@ -1,5 +1,5 @@
 import { styled } from "styled-components";
-import Modal from "@/ui/Modal";
+import Modal from "@/ui/Modal.tsx";
 
 const ContentWrapper = styled.div`
   display: flex;

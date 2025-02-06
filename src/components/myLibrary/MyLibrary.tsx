@@ -1,6 +1,6 @@
 import { styled } from "styled-components";
-import SortBar from "./StatusNavBar";
-import BookList from "../mainPageContent/BookList";
+import SortBar from "./StatusNavBar.tsx";
+import BookList from "../mainPageContent/BookList.tsx";
 
 const Wrapper = styled.section`
   max-width: 1180px;

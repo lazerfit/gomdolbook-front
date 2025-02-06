@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { styled } from "styled-components";
-import SearchResult from "./SearchResult";
+import SearchResult from "./SearchResult.tsx";
 
 const Wrapper = styled.div`
   height: 48px;

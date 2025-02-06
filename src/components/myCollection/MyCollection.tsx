@@ -1,5 +1,5 @@
 import { styled } from "styled-components";
-import MainContent from "./MainContent";
+import MainContent from "./MainContent.tsx";
 
 const Wrapper = styled.section`
   max-width: 1180px;

@@ -23,9 +23,11 @@ export default tseslint.config(
     languageOptions: {
       parser: tseslint.parser,
       parserOptions: {
-        ecmaFeatures: { jsx: true },
+        ecmaVersion: "latest",
         projectService: true,
         tsconfigRootDir: import.meta.dirname,
+        project: "./tsconfig.json",
+        sourceType: "module",
       },
       globals: { ...globals.browser },
     },

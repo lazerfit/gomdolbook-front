@@ -1,6 +1,7 @@
 import { styled } from "styled-components";
 
 const Wrapper = styled.footer`
+  width: 100%;
   height: 120px;
   margin: 144px auto 0 auto;
   padding: 15px 10px;
@@ -9,6 +10,9 @@ const Wrapper = styled.footer`
   align-items: center;
   justify-content: center;
   font-family: ${(props) => props.theme.fonts.english}, serif;
+  position: fixed;
+  bottom: 0;
+  left: 0;
 `;
 
 const ContentWrapper = styled.div`

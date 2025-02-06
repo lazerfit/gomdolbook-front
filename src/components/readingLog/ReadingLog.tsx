@@ -1,10 +1,10 @@
 import { styled } from "styled-components";
 import { FaRegPenToSquare } from "react-icons/fa6";
-import Publisher from "../../ui/Publisher";
+import Publisher from "../../ui/Publisher.tsx";
 import { BsThreeDotsVertical } from "react-icons/bs";
-import Modal from "@/ui/Modal";
+import Modal from "@/ui/Modal.tsx";
 import { useState } from "react";
-import { ButtonMd } from "@/styles/common.styled";
+import { ButtonMd } from "@/styles/common.styled.ts";
 
 const Wrapper = styled.section`
   margin: 34px auto;

@@ -3,7 +3,9 @@ import { styled } from "styled-components";
 import UserProfile from "./UserProfile.tsx";
 import { ButtonMd } from "@/styles/common.styled.ts";
 import { useKeycloak } from "@react-keycloak/web";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import LoginModal from "./LoginModal.tsx";
+import { setToken } from "@/api/services/config/RequestInterceptor.ts";
 
 const Wrapper = styled.header`
   display: flex;
@@ -50,23 +52,16 @@ const Login = styled(ButtonMd)`
   }
 `;
 
-const TemtBtn = styled(ButtonMd)``;
-
-interface Props {
-  isLoggedIn: boolean;
-  onLoggedIn: () => void;
-  onLoggedOut: () => void;
-}
-
-const Header = (props: Props) => {
+const Header = () => {
   const navigate = useNavigate();
-  const { keycloak } = useKeycloak();
+  const { keycloak, initialized } = useKeycloak();
+  const [isModalOpened, setIsModalOpened] = useState(false);
 
-  const login = async () => {
+  const login = async (idp: string) => {
     try {
       await keycloak.login({
         redirectUri: "http://localhost:3000/",
-        idpHint: "github",
+        idpHint: idp,
       });
     } catch (e) {
       console.log(e);
@@ -78,8 +73,21 @@ const Header = (props: Props) => {
   };
 
   useEffect(() => {
-    console.log("🔑 로그인 상태:", keycloak.authenticated);
-  }, [keycloak.authenticated]);
+    if (initialized && keycloak.authenticated) {
+      setToken(keycloak.idToken!);
+    }
+
+    keycloak.onTokenExpired = () => {
+      keycloak
+        .updateToken(30)
+        .then((refreshed) => {
+          if (refreshed) {
+            setToken(keycloak.idToken!);
+          }
+        })
+        .catch((e) => console.log(e));
+    };
+  }, [keycloak, initialized]);
 
   return (
     <Wrapper>
@@ -107,13 +115,19 @@ const Header = (props: Props) => {
         gomdolbook
       </MainLogo>
       <UserMenuWrapper>
-        {props.isLoggedIn ? (
-          <UserProfile onLoggedOut={props.onLoggedOut} />
+        {keycloak.authenticated ? (
+          <UserProfile onLoggedOut={() => void logout()} />
         ) : (
-          <Login onClick={() => void login()}>Log in</Login>
+          <Login onClick={() => setIsModalOpened(true)}>Log in</Login>
         )}
-        <TemtBtn onClick={() => void logout()}>Log out</TemtBtn>
       </UserMenuWrapper>
+      <LoginModal
+        isModalOpened={isModalOpened}
+        onClose={() => setIsModalOpened(false)}
+        github={() => void login("github")}
+        kakao={() => void login("kakao")}
+        google={() => void login("google")}
+      />
     </Wrapper>
   );
 };

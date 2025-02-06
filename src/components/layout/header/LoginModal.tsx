@@ -1,5 +1,8 @@
 import { styled } from "styled-components";
 import Modal from "@/ui/Modal.tsx";
+import kakaoLoginImage from "@/assets/img/kakaotalk_sharing_btn_medium.png";
+import googleLoginImage from "@/assets/img/web_light_sq_na@1x.png";
+import githubLoginImgae from "@/assets/img/github-mark.png";
 
 const ContentWrapper = styled.div`
   display: flex;
@@ -25,23 +28,22 @@ const Banner = styled.div`
 
 const EasyLoginWrapper = styled.div`
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  justify-content: center;
+  gap: 20px;
 `;
 
-const EasyLoginButton = styled.button`
-  border-radius: 5px;
-  padding: 15px;
-  margin: 8px 0;
-  font-family: ${(props) => props.theme.fonts.text}, sans-serif;
-  font-size: 1rem;
+const LoginButton = styled.button`
   cursor: pointer;
-  color: white;
+  margin: 8px 0%;
 `;
 
 interface Props {
   isModalOpened: boolean;
   onClose: () => void;
-  onLoggedIn: () => void;
+  github: () => void;
+  kakao: () => void;
+  google: () => void;
 }
 
 const LoginModal = (props: Props) => {
@@ -54,18 +56,23 @@ const LoginModal = (props: Props) => {
         </CloseButton>
         <Banner>로그인/회원가입</Banner>
         <EasyLoginWrapper>
-          <EasyLoginButton
-            style={{ backgroundColor: "#FEE500", color: "black" }}
-            onClick={props.onLoggedIn}
-          >
-            카카오로 시작하기
-          </EasyLoginButton>
-          <EasyLoginButton
-            style={{ backgroundColor: "#00DE5A" }}
-            onClick={props.onLoggedIn}
-          >
-            네이버로 시작하기
-          </EasyLoginButton>
+          <LoginButton onClick={props.kakao} style={{ cursor: "pointer" }}>
+            <img
+              src={kakaoLoginImage}
+              style={{ width: "40px", height: "40px" }}
+              alt="카카오 로그인"
+            />
+          </LoginButton>
+          <LoginButton onClick={props.github}>
+            <img
+              src={githubLoginImgae}
+              style={{ width: "40px", height: "40px" }}
+              alt="깃헙 로그인"
+            />
+          </LoginButton>
+          <LoginButton onClick={props.google} style={{ cursor: "pointer" }}>
+            <img src={googleLoginImage} alt="구글 로그인" />
+          </LoginButton>
         </EasyLoginWrapper>
       </ContentWrapper>
     </Modal>

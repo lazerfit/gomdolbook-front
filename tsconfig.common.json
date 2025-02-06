@@ -24,21 +24,9 @@
     "target": "ES6",
     "module": "NodeNext",
     "moduleResolution": "nodenext",
-    "lib": [
-      "DOM",
-      "DOM.Iterable",
-      "ESNext"
-    ],
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],
     "preserveConstEnums": true
   },
-  "include": [
-    "src",
-  ],
-  "exclude": [
-    "node_modules",
-    "dist",
-    "coverage",
-    ".vscode",
-    "**/__test__/*"
-  ]
+  "include": ["src"],
+  "exclude": ["node_modules", "dist", "coverage", ".vscode", "**/__test__/*"]
 }

@@ -1,4 +1,4 @@
-import { BookStatus } from "@/api/services/BoookService";
+import { BookStatus } from "@/api/services/BoookService.ts";
 
 describe("함수 테스트", () => {
   it("switch book status test", () => {

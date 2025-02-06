@@ -1,4 +1,4 @@
-import request from "@/api/Request.ts";
+import request from "@/api/services/config/Request.ts";
 import { BookEndPoint } from "@/api/services/config/apiEndpoints.ts";
 
 export interface IApiResponse<T> {

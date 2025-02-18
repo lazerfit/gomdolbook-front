@@ -4,6 +4,8 @@ import Banner from "./Banner.tsx";
 import SearchBar from "./SearchBar.tsx";
 import EmptyLibraryBanner from "./EmptyLibraryBanner.tsx";
 import BookList from "./BookList.tsx";
+import MainpageSkeleton from "@/ui/MainpageSkeleton.tsx";
+import { useKeycloak } from "@react-keycloak/web";
 
 const Wrapper = styled.section`
   width: 100%;
@@ -16,6 +18,12 @@ const Wrapper = styled.section`
 
 const MainContent = () => {
   const [isLibraryEmpty] = useState(false);
+  const { initialized } = useKeycloak();
+
+  if (!initialized) {
+    return <MainpageSkeleton />;
+  }
+
   return (
     <Wrapper>
       {isLibraryEmpty ? (
@@ -24,7 +32,7 @@ const MainContent = () => {
         <>
           <Banner />
           <SearchBar />
-          <BookList />
+          <BookList data={undefined} />
         </>
       )}
     </Wrapper>

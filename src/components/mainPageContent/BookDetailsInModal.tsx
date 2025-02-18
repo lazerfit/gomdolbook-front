@@ -9,7 +9,6 @@ import { BookStatus } from "@/api/services/BoookService.ts";
 import { useGetStatus, useSaveReadingLogQuery } from "@/hooks/queries/useReadingLog.ts";
 import translateBookStatus from "@/utils/TranslateBookStatus.ts";
 import BookDetailSkeleton from "@/ui/BookDetailSkeleton.tsx";
-import { useKeycloak } from "@react-keycloak/web";
 
 const Wrapper = styled.section`
   width: 100%;
@@ -151,7 +150,6 @@ const BookDetails = (props: Props) => {
   const { data: aladin, isError, error, isLoading } = useGetBookQuery(props.isbn);
   const { data: statusData } = useGetStatus(props.isbn);
   const { mutate: saveReadingLogWithStatus } = useSaveReadingLogQuery();
-  const { keycloak } = useKeycloak();
   if (isError) {
     console.log(error);
   }
@@ -182,7 +180,7 @@ const BookDetails = (props: Props) => {
     setIsToastVisible(false);
   };
 
-  const getReadingLogSaveRequest = (status: BookStatus, email: string) => {
+  const getReadingLogSaveRequest = (status: BookStatus) => {
     return {
       title: aladinData.title,
       author: aladinData.author,
@@ -193,13 +191,11 @@ const BookDetails = (props: Props) => {
       categoryName: aladinData.categoryName,
       publisher: aladinData.publisher,
       status: status,
-      email: email,
     };
   };
 
   const saveReadingLog = (status: BookStatus) => {
-    const email = keycloak.idTokenParsed?.email as string;
-    const saveRequest = getReadingLogSaveRequest(status, email);
+    const saveRequest = getReadingLogSaveRequest(status);
     saveReadingLogWithStatus(saveRequest, {
       onSuccess: () => {
         onShowToast();

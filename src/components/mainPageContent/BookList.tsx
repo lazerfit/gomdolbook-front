@@ -1,28 +1,28 @@
 import { styled } from "styled-components";
 import { useNavigate } from "react-router-dom";
+import type { IApiResponse, ILibraryResponse } from "@/api/services/BoookService.ts";
 
 const Wrapper = styled.section`
   width: 100%;
   display: flex;
   flex-direction: row;
-  gap: 20px;
   flex-wrap: wrap;
   align-items: flex-start;
   justify-content: flex-start;
+  gap: 45px;
   margin-top: 32px;
 `;
 
 const ContentWrapper = styled.article`
-  width: 280px;
-  height: 410px;
   margin-top: 36px;
   display: flex;
   flex-direction: column;
   text-align: center;
+  width: 200px;
 `;
 
 const Image = styled.img`
-  width: 100%;
+  width: 200px;
   border-radius: 8px;
   filter: grayscale(100%);
   transition: all 0.5s ease;
@@ -44,29 +44,46 @@ const Rating = styled.div`
   margin-top: 8px;
 `;
 
-const BookList = () => {
+const EmptyLibraryWrapper = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 100px;
+`;
+
+const EmptyLibraryBanner = styled.div`
+  font: ${(props) => props.theme.fonts.title};
+  font-size: 3rem;
+`;
+
+interface Props {
+  data: void | IApiResponse<ILibraryResponse[]> | undefined;
+}
+
+const BookList = (props: Props) => {
   const navigate = useNavigate();
-  const testId = 123456789101;
+  const books = props.data?.data ?? [];
   return (
     <Wrapper>
-      <ContentWrapper>
-        <Image
-          src="https://image.yes24.com/goods/122339211/XL"
-          alt="책 표지"
-          onClick={() => navigate(`/books/${testId}`)}
-        />
-        <Title>절망하는 이들을 위한 민주주의</Title>
-        <Rating>⭐⭐⭐⭐⭐</Rating>
-      </ContentWrapper>
-      <ContentWrapper>
-        <Image
-          src="https://image.yes24.com/goods/122339211/XL"
-          alt="책 표지"
-          onClick={() => navigate(`/books/${testId}`)}
-        />
-        <Title>절망하는 이들을 위한 민주주의</Title>
-        <Rating>⭐⭐⭐⭐⭐</Rating>
-      </ContentWrapper>
+      {books.length === 0 ? (
+        <EmptyLibraryWrapper>
+          <EmptyLibraryBanner>책을 추가해 독서기록을 시작해보세요.</EmptyLibraryBanner>
+        </EmptyLibraryWrapper>
+      ) : (
+        books.map((book) => (
+          <ContentWrapper key={book.isbn}>
+            <Image
+              src={book.cover}
+              alt="책 표지"
+              onClick={() => navigate(`/books/${book.isbn}`)}
+            />
+            <Title>{book.title}</Title>
+            <Rating>⭐⭐⭐⭐⭐</Rating>
+          </ContentWrapper>
+        ))
+      )}
     </Wrapper>
   );
 };

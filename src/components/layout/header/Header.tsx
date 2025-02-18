@@ -5,7 +5,8 @@ import { ButtonMd } from "@/styles/common.styled.ts";
 import { useKeycloak } from "@react-keycloak/web";
 import { useEffect, useState } from "react";
 import LoginModal from "./LoginModal.tsx";
-import { setToken } from "@/api/services/config/RequestInterceptor.ts";
+import { setToken } from "@/api/services/config/Interceptor.ts";
+import LoginRequireModal from "@/ui/LoginRequireModal.tsx";
 
 const Wrapper = styled.header`
   display: flex;
@@ -56,6 +57,7 @@ const Header = () => {
   const navigate = useNavigate();
   const { keycloak, initialized } = useKeycloak();
   const [isModalOpened, setIsModalOpened] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
   const login = async (idp: string) => {
     try {
@@ -89,21 +91,21 @@ const Header = () => {
     };
   }, [keycloak, initialized]);
 
+  const validateLoginStatus = (uri: string) => {
+    if (!keycloak.authenticated) {
+      setShowModal(true);
+      return;
+    } else {
+      navigate(uri);
+    }
+  };
+
   return (
     <Wrapper>
+      {showModal && <LoginRequireModal close={() => setShowModal(false)} />}
       <NavigationLinkWrapper>
-        <MainLink
-          onClick={() => {
-            navigate("/library");
-          }}
-        >
-          Library
-        </MainLink>
-        <MainLink
-          onClick={() => {
-            navigate("/collections");
-          }}
-        >
+        <MainLink onClick={() => validateLoginStatus("/library")}>Library</MainLink>
+        <MainLink onClick={() => validateLoginStatus("/collections")}>
           Collections
         </MainLink>
       </NavigationLinkWrapper>

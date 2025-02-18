@@ -10,7 +10,6 @@ const keycloak = new Keycloak(keycloakConfig);
 
 export const keycloakInitOptions = {
   onLoad: "check-sso",
-  checkLoginIframe: false,
 };
 
 export default keycloak;

@@ -2,6 +2,9 @@ import { styled } from "styled-components";
 import { useNavigate } from "react-router-dom";
 import React, { useState } from "react";
 import { FaArrowLeft } from "react-icons/fa6";
+import CollectionSkeleton from "@/ui/CollectionSkeleton.tsx";
+import { useGetListQuery, useCreateQuery } from "@/hooks/queries/useCollection.ts";
+import { useKeycloak } from "@react-keycloak/web";
 
 const Wrapper = styled.section`
   width: 100%;
@@ -92,6 +95,11 @@ const MainContent = () => {
   const navigate = useNavigate();
   const [isAddNewCollection, setIsAddNewCollection] = useState(false);
   const [inputQuery, setInputQuery] = useState("");
+  const { data: listData, isLoading } = useGetListQuery();
+  const { mutate: createCollection } = useCreateQuery();
+  const { initialized } = useKeycloak();
+  const collectionList = listData?.data ?? [];
+
   const onChaneQuery = (event: React.ChangeEvent<HTMLInputElement>) => {
     setInputQuery(event.target.value);
   };
@@ -101,21 +109,36 @@ const MainContent = () => {
   const onCloseAddNewCollection = () => {
     setIsAddNewCollection(false);
   };
+  const onKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (inputQuery.trim() !== "" && event.key === "Enter") {
+      createCollection(inputQuery, {
+        onSuccess: () => {
+          setIsAddNewCollection(false);
+        },
+        onError: (error) => {
+          console.log(error);
+        },
+      });
+    }
+  };
+
+  if (!initialized && isLoading) {
+    return <CollectionSkeleton />;
+  }
 
   return (
     <Wrapper>
-      <ItemWrapper
-        $collectionName="한강"
-        onClick={() => navigate(`${encodeURIComponent("한강")}`)}
-      >
-        <Image src="https://image.aladin.co.kr/product/4086/97/cover500/8936434128_2.jpg" />
-        <Image src="https://image.aladin.co.kr/product/27877/5/cover500/8954682154_3.jpg" />
-        <Image src="https://image.aladin.co.kr/product/29137/2/cover500/8936434594_2.jpg" />
-        <Image src="https://image.aladin.co.kr/product/14322/3/cover500/8954651135_3.jpg" />
-      </ItemWrapper>
-      <ItemWrapper $collectionName="test2">MainContent2</ItemWrapper>
-      <ItemWrapper $collectionName="test3">MainContent3</ItemWrapper>
-      <ItemWrapper $collectionName="test4">MainContent4</ItemWrapper>
+      {collectionList.map((collection) => (
+        <ItemWrapper
+          key={collection.name}
+          $collectionName={collection.name}
+          onClick={() => navigate(`${encodeURIComponent(collection.name)}`)}
+        >
+          {collection.books.covers.map((cover, index) => (
+            <Image src={cover} key={index} alt="책 표지" />
+          ))}
+        </ItemWrapper>
+      ))}
       <AddItem>
         {isAddNewCollection ? (
           <InputWrapper>
@@ -128,10 +151,11 @@ const MainContent = () => {
               placeholder="이름을 입력하세요"
               value={inputQuery}
               onChange={onChaneQuery}
+              onKeyDown={onKeyDown}
             />
           </InputWrapper>
         ) : (
-          <AddButton data-testId="addBtn" onClick={onOpenAddNewCollection}>
+          <AddButton data-testid="addBtn" onClick={onOpenAddNewCollection}>
             새로 추가하기
           </AddButton>
         )}

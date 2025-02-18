@@ -1,4 +1,5 @@
 import { styled } from "styled-components";
+import { useState } from "react";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -16,30 +17,49 @@ const Item = styled.button`
   cursor: pointer;
   font-size: 1rem;
   position: relative;
-
-  &::before {
-    content: "";
-    width: 0;
-    height: 2px;
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: ${(props) => props.theme.colors.gray7};
-    transition: 0.5s ease;
-  }
-
-  &:hover::before {
-    width: 100%;
-  }
+  padding: 8px;
+  border-radius: 7px;
 `;
 
-const SortBar = () => {
+interface Props {
+  setFilter: React.Dispatch<React.SetStateAction<string>>;
+}
+
+const SortBar = (props: Props) => {
+  const [selectedStatus, setSelectedStatus] = useState(1);
+  const getSelectedButtonStyle = (isSelected: boolean) => ({
+    backgroundColor: isSelected ? "black" : "transparent",
+    color: isSelected ? "white" : "black",
+  });
   return (
     <Wrapper>
-      <Item>읽는 중</Item>
-      <Item>읽을 예정</Item>
-      <Item>읽기 완료</Item>
+      <Item
+        style={getSelectedButtonStyle(selectedStatus === 1)}
+        onClick={() => {
+          setSelectedStatus(1);
+          props.setFilter("READING");
+        }}
+      >
+        읽는 중
+      </Item>
+      <Item
+        style={getSelectedButtonStyle(selectedStatus === 2)}
+        onClick={() => {
+          setSelectedStatus(2);
+          props.setFilter("TO_READ");
+        }}
+      >
+        읽을 예정
+      </Item>
+      <Item
+        style={getSelectedButtonStyle(selectedStatus === 3)}
+        onClick={() => {
+          setSelectedStatus(3);
+          props.setFilter("FINISHED");
+        }}
+      >
+        읽기 완료
+      </Item>
     </Wrapper>
   );
 };

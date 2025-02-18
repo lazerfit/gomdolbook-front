@@ -18,3 +18,12 @@ export const useGetBookSearchResult = (q: string) => {
 
   return { data, isError, error, isLoading };
 };
+
+export const useGetLibrary = (status: string) => {
+  const { data, error, isLoading } = useQuery({
+    queryKey: ["Library", status],
+    queryFn: () => BookService.getLibrary(status),
+  });
+
+  return { data, error, isLoading };
+};

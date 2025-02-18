@@ -1,5 +1,5 @@
 import { client } from "./Request.ts";
-import type { InternalAxiosRequestConfig, AxiosError } from "axios";
+import type { InternalAxiosRequestConfig, AxiosError, AxiosResponse } from "axios";
 
 let token: string | null = null;
 
@@ -18,4 +18,14 @@ client.interceptors.request.use(
   (error: AxiosError) => {
     return Promise.reject(error);
   },
+);
+
+client.interceptors.response.use(
+  (res: AxiosResponse) => {
+    if (res.status === 204) {
+      return { ...res, data: [] };
+    }
+    return res;
+  },
+  (error: AxiosError) => Promise.reject(error),
 );

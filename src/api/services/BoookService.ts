@@ -18,7 +18,12 @@ export interface IBookResponse {
 
 export interface IBookSaveRequest extends IBookResponse {
   status: BookStatus;
-  email: string;
+}
+
+export interface ILibraryResponse {
+  cover: string;
+  title: string;
+  isbn: string;
 }
 
 export enum BookStatus {
@@ -58,6 +63,13 @@ export const BookService = {
       url: BookEndPoint.getBookSearchResult(),
       method: "GET",
       params: { q: q },
+    });
+  },
+  getLibrary: (status: string) => {
+    return request<IApiResponse<ILibraryResponse[]> | void>({
+      url: BookEndPoint.getLibrary(),
+      method: "GET",
+      params: { status: status },
     });
   },
 };

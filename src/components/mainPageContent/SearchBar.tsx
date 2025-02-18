@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { styled } from "styled-components";
 import SearchResult from "./SearchResult.tsx";
 import { useKeycloak } from "@react-keycloak/web";
-import Modal from "@/ui/Modal.tsx";
+import LoginRequireModal from "@/ui/LoginRequireModal.tsx";
 
 const Wrapper = styled.div`
   height: 48px;
@@ -32,21 +32,6 @@ const Input = styled.input`
     transition: opacity 0.3s;
     font-family: ${(props) => props.theme.fonts.english}, serif;
   }
-`;
-
-const ModalContent = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-`;
-
-const ModalBtn = styled.button`
-  margin-left: auto;
-  background-color: ${(prop) => prop.theme.colors.black};
-  padding: 10px;
-  border-radius: 10px;
-  color: ${(prop) => prop.theme.colors.white};
-  cursor: pointer;
 `;
 
 const SearchBar = () => {
@@ -85,18 +70,7 @@ const SearchBar = () => {
       {showSearchResult && (
         <SearchResult query={searchQuery} onResultClose={onResultClose} />
       )}
-      {showModal && (
-        <Modal
-          $innerWidth="300px"
-          $innerHeight="140px"
-          onClose={() => setShowModal(false)}
-        >
-          <ModalContent>
-            <div>로그인이 필요합니다.</div>
-            <ModalBtn onClick={() => setShowModal(false)}>확인</ModalBtn>
-          </ModalContent>
-        </Modal>
-      )}
+      {showModal && <LoginRequireModal close={() => setShowModal(false)} />}
     </Wrapper>
   );
 };

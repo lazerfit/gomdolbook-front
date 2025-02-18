@@ -1,6 +1,9 @@
+import { useState } from "react";
 import { styled } from "styled-components";
 import SortBar from "./StatusNavBar.tsx";
 import BookList from "../mainPageContent/BookList.tsx";
+import { useGetLibrary } from "@/hooks/queries/useBook.ts";
+import BookListSkeleton from "@/ui/BookListSkeleton.tsx";
 
 const Wrapper = styled.section`
   max-width: 1180px;
@@ -12,10 +15,13 @@ const Wrapper = styled.section`
 `;
 
 const MyLibrary = () => {
+  const [filter, setfilter] = useState("READING");
+  const { data, isLoading } = useGetLibrary(filter);
+
   return (
     <Wrapper>
-      <SortBar />
-      <BookList />
+      <SortBar setFilter={setfilter} />
+      {isLoading ? <BookListSkeleton /> : <BookList data={data} />}
     </Wrapper>
   );
 };

@@ -7,6 +7,7 @@ import Layout from "@/components/layout/Layout.tsx";
 import BookTracker from "@/pages/ReadingLog.tsx";
 import Theme from "@/styles/theme.tsx";
 import Details from "./components/myCollection/Details.js";
+import TestPage from "./ui/MainpageSkeleton.tsx";
 
 const App = () => {
   return (
@@ -19,6 +20,7 @@ const App = () => {
           <Route path="/collections" element={<Collection />} />
           <Route path="/collections/:name" element={<Details />} />
           <Route path="/books/:id" element={<BookTracker />} />
+          <Route path="/test" element={<TestPage />} />
         </Route>
       </Routes>
     </Theme>

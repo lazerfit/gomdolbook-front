@@ -5,12 +5,21 @@ import reportWebVitals from "./reportWebVitals.ts";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { queryClient } from "./api/services/config/queryClient.ts";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import keycloak, { keycloakInitOptions } from "./auth/keycloak.ts";
+import keycloak, { keycloakInitOptions, eventHandler } from "./auth/keycloak.ts";
 import { ReactKeycloakProvider } from "@react-keycloak/web";
+import { setToken } from "@/api/services/config/Interceptor.ts";
 
 const root = createRoot(document.getElementById("root")!);
 root.render(
-  <ReactKeycloakProvider authClient={keycloak} initOptions={keycloakInitOptions}>
+  <ReactKeycloakProvider
+    authClient={keycloak}
+    initOptions={keycloakInitOptions}
+    // eslint-disable-next-line @typescript-eslint/no-misused-promises
+    onEvent={eventHandler}
+    onTokens={(tokens) => {
+      setToken(tokens.idToken!);
+    }}
+  >
     <QueryClientProvider client={queryClient}>
       <ReactQueryDevtools initialIsOpen={false} />
       <BrowserRouter>

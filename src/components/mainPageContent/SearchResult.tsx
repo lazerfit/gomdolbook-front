@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { styled } from "styled-components";
 import BookDetails from "./BookDetailsInModal.tsx";
 import Publisher from "@/ui/Publisher.tsx";
@@ -108,21 +108,11 @@ interface Props {
 
 const SearchResult = (props: Props) => {
   const [searchQuery, setSearchQuery] = useState(props.query);
-  const [reFetchQuery, setRefetchQuery] = useState(props.query);
-  const [getIsbn, setGetIsbn] = useState("");
-  const { data, isLoading } = useGetBookSearchResult(reFetchQuery);
   const [isBookSelected, setIsBookSelected] = useState(false);
-  const searchResult = data?.data ?? [
-    {
-      title: "title",
-      author: "author",
-      pubDate: "pubDate",
-      description: "desc",
-      isbn13: "isbn",
-      cover: "cover",
-      publisher: "pub",
-    },
-  ];
+  const [getIsbn, setGetIsbn] = useState("");
+  const [reFetchQuery, setRefetchQuery] = useState(props.query);
+  const { data, isLoading } = useGetBookSearchResult(reFetchQuery);
+  const searchResult = data?.data ?? [];
 
   const onChangeQuery = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(event.target.value);

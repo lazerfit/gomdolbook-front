@@ -54,6 +54,7 @@ const Image = styled.img`
 
 const Title = styled.h3`
   overflow: break-world;
+  width: 500px;
   font-weight: 700;
 `;
 

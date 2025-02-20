@@ -84,7 +84,7 @@ const NewCollectionInput = styled.input`
   border: 1px solid black;
 `;
 
-const AddButton = styled.button`
+export const AddButton = styled.button`
   padding: 20px;
   font-size: 2rem;
   height: 200px;
@@ -95,7 +95,7 @@ const MainContent = () => {
   const navigate = useNavigate();
   const [isAddNewCollection, setIsAddNewCollection] = useState(false);
   const [inputQuery, setInputQuery] = useState("");
-  const { data: listData, isLoading } = useGetListQuery();
+  const { data: listData, isLoading, refetch: listRefetch } = useGetListQuery();
   const { mutate: createCollection } = useCreateQuery();
   const { initialized } = useKeycloak();
   const collectionList = listData?.data ?? [];
@@ -113,7 +113,9 @@ const MainContent = () => {
     if (inputQuery.trim() !== "" && event.key === "Enter") {
       createCollection(inputQuery, {
         onSuccess: () => {
-          setIsAddNewCollection(false);
+          listRefetch()
+            .then(() => setIsAddNewCollection(false))
+            .catch((error) => console.log(error));
         },
         onError: (error) => {
           console.log(error);
@@ -122,23 +124,12 @@ const MainContent = () => {
     }
   };
 
-  if (!initialized && isLoading) {
+  if (!initialized || isLoading) {
     return <CollectionSkeleton />;
   }
 
   return (
     <Wrapper>
-      {collectionList.map((collection) => (
-        <ItemWrapper
-          key={collection.name}
-          $collectionName={collection.name}
-          onClick={() => navigate(`${encodeURIComponent(collection.name)}`)}
-        >
-          {collection.books.covers.map((cover, index) => (
-            <Image src={cover} key={index} alt="책 표지" />
-          ))}
-        </ItemWrapper>
-      ))}
       <AddItem>
         {isAddNewCollection ? (
           <InputWrapper>
@@ -160,6 +151,17 @@ const MainContent = () => {
           </AddButton>
         )}
       </AddItem>
+      {collectionList.map((collection) => (
+        <ItemWrapper
+          key={collection.name}
+          $collectionName={collection.name}
+          onClick={() => navigate(`${encodeURIComponent(collection.name)}`)}
+        >
+          {collection.books.covers.map((cover, index) => (
+            <Image src={cover} key={index} alt="책 표지" />
+          ))}
+        </ItemWrapper>
+      ))}
     </Wrapper>
   );
 };

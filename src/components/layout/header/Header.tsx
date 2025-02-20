@@ -71,24 +71,17 @@ const Header = () => {
   };
 
   const logout = async () => {
-    await keycloak.logout();
+    try {
+      await keycloak.logout({ redirectUri: "http://localhost:3000" });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   useEffect(() => {
     if (initialized && keycloak.authenticated) {
       setToken(keycloak.idToken!);
     }
-
-    keycloak.onTokenExpired = () => {
-      keycloak
-        .updateToken(30)
-        .then((refreshed) => {
-          if (refreshed) {
-            setToken(keycloak.idToken!);
-          }
-        })
-        .catch((e) => console.log(e));
-    };
   }, [keycloak, initialized]);
 
   const validateLoginStatus = (uri: string) => {

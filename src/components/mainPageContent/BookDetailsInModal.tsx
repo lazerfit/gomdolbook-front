@@ -3,12 +3,11 @@ import { styled } from "styled-components";
 import { FaArrowLeft } from "react-icons/fa6";
 import Toast from "../../ui/Toast.tsx";
 import Publisher from "../../ui/Publisher.tsx";
-import { ButtonMd } from "@/styles/common.styled.ts";
 import { useGetBookQuery } from "@/hooks/queries/useBook.ts";
 import { BookStatus } from "@/api/services/BoookService.ts";
-import { useGetStatus, useSaveReadingLogQuery } from "@/hooks/queries/useReadingLog.ts";
-import translateBookStatus from "@/utils/TranslateBookStatus.ts";
+import { useGetStatus } from "@/hooks/queries/useReadingLog.ts";
 import BookDetailSkeleton from "@/ui/BookDetailSkeleton.tsx";
+import BookDeatilButtonActions from "@/ui/BookDeatilButtonActions.tsx";
 
 const Wrapper = styled.section`
   width: 100%;
@@ -85,60 +84,6 @@ const ButtonWrapper = styled.div`
   margin: 34px auto;
 `;
 
-const ReadingStatus = styled.div`
-  border: 1px solid black;
-  width: 110px;
-  height: 40px;
-  padding: 20px;
-  border-radius: 20px;
-  background-color: ${(props) => props.theme.colors.black};
-  color: ${(props) => props.theme.colors.white};
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
-
-const SaveButton = styled(ButtonMd)`
-  border: 2px solid ${(porps) => porps.theme.colors.black};
-  position: relative;
-  overflow: hidden;
-  padding: 7px 20px;
-
-  > p {
-    position: relative;
-    font-size: 1rem;
-  }
-
-  &::before {
-    content: "";
-    position: absolute;
-    width: 0;
-    height: 100%;
-    background-color: red;
-    border-radius: 20px;
-    top: 0;
-    left: 0;
-  }
-
-  &:nth-child(1)::before {
-    background-color: #acd7ec;
-  }
-
-  &:nth-child(2)::before {
-    background-color: #f4989c;
-  }
-
-  &:nth-child(3)::before {
-    background-color: #4ea699;
-  }
-
-  &:hover::before {
-    content: "";
-    width: 100%;
-    transition: 0.5s;
-  }
-`;
-
 interface Props {
   isbn: string;
   onClose: () => void;
@@ -150,7 +95,6 @@ const BookDetails = (props: Props) => {
   const [bookStatus, setBookStatus] = useState("");
   const { data: aladin, isError, error, isLoading } = useGetBookQuery(props.isbn);
   const { data: statusData } = useGetStatus(props.isbn);
-  const { mutate: saveReadingLogWithStatus } = useSaveReadingLogQuery();
   if (isError) {
     console.log(error);
   }
@@ -179,33 +123,6 @@ const BookDetails = (props: Props) => {
   };
   const onCloseToast = () => {
     setIsToastVisible(false);
-  };
-
-  const getReadingLogSaveRequest = (status: BookStatus) => {
-    return {
-      title: aladinData.title,
-      author: aladinData.author,
-      pubDate: aladinData.pubDate,
-      description: aladinData.description,
-      isbn13: aladinData.isbn13,
-      cover: aladinData.cover,
-      categoryName: aladinData.categoryName,
-      publisher: aladinData.publisher,
-      status: status,
-    };
-  };
-
-  const saveReadingLog = (status: BookStatus) => {
-    const saveRequest = getReadingLogSaveRequest(status);
-    saveReadingLogWithStatus(saveRequest, {
-      onSuccess: () => {
-        onShowToast();
-      },
-      onError: (error) => {
-        onShowErrorToast();
-        console.log(error);
-      },
-    });
   };
 
   return (
@@ -237,26 +154,12 @@ const BookDetails = (props: Props) => {
               <div>{aladinData.description}</div>
             </Description>
             <ButtonWrapper>
-              {bookStatus != "NEW" ? (
-                <ReadingStatus data-testid="readingStatus">
-                  {translateBookStatus(bookStatus)}
-                </ReadingStatus>
-              ) : (
-                <>
-                  <SaveButton
-                    data-testid="saveReadingLog"
-                    onClick={() => saveReadingLog(BookStatus.READING)}
-                  >
-                    <p>읽는 중</p>
-                  </SaveButton>
-                  <SaveButton onClick={() => saveReadingLog(BookStatus.TO_READ)}>
-                    <p>읽을 예정</p>
-                  </SaveButton>
-                  <SaveButton onClick={() => saveReadingLog(BookStatus.FINISHED)}>
-                    <p>읽기 완료</p>
-                  </SaveButton>
-                </>
-              )}
+              <BookDeatilButtonActions
+                bookStatus={bookStatus}
+                bookData={aladinData}
+                showToast={() => onShowToast()}
+                showErrorToast={() => onShowErrorToast}
+              />
             </ButtonWrapper>
           </>
         )}

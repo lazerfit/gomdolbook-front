@@ -17,7 +17,7 @@ export interface IBookResponse {
 }
 
 export interface IBookSaveRequest extends IBookResponse {
-  status: BookStatus;
+  status?: BookStatus | null;
 }
 
 export interface ILibraryResponse {

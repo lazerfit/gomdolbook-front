@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { beforeEach, expect, it, describe, vi } from "vitest";
 import BookDetails from "../BookDetailsInModal.tsx";
 import Toast from "@/ui/Toast.tsx";
@@ -10,6 +10,10 @@ import { http, HttpResponse } from "msw";
 
 const MOCK_STATUS_RESPONSE = {
   data: "READING",
+};
+
+const MOCK_NEW_STATUS_RESPONSE = {
+  data: "NEW",
 };
 
 const MOCK_BOOK_RESPONSE = {

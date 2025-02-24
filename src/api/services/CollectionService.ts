@@ -19,7 +19,7 @@ export const collectionService = {
     });
   },
   getOne: (name: string) => {
-    return request<IApiResponse<ILibraryResponse>>({
+    return request<IApiResponse<ILibraryResponse[]>>({
       url: CollectionEndPoint.getOne(name),
       method: "GET",
     });
@@ -33,7 +33,7 @@ export const collectionService = {
   },
   addBook: (data: IBookSaveRequest, name: string) => {
     return request<void>({
-      url: CollectionEndPoint.addBooks(name),
+      url: CollectionEndPoint.addBook(name),
       data: data,
       method: "POST",
     });

@@ -10,9 +10,6 @@ const Wrapper = styled.footer`
   align-items: center;
   justify-content: center;
   font-family: ${(props) => props.theme.fonts.english}, serif;
-  position: fixed;
-  bottom: 0;
-  left: 0;
 `;
 
 const ContentWrapper = styled.div`

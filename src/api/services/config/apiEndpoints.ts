@@ -11,5 +11,5 @@ export const CollectionEndPoint = {
   getList: () => `/collection/list`,
   getOne: (name: string) => `/collection/${name}`,
   create: () => `/collection/create`,
-  addBooks: (name: string) => `/collection/${name}/addBook`,
+  addBook: (name: string) => `/collection/${name}/addBook`,
 };

@@ -3,10 +3,11 @@ import { ButtonMd } from "@/styles/common.styled.ts";
 import { useSaveReadingLogQuery } from "@/hooks/queries/useReadingLog.ts";
 import { BookStatus } from "@/api/services/BoookService.ts";
 import translateBookStatus from "@/utils/TranslateBookStatus.ts";
-import type { IBookResponse, IBookSaveRequest } from "@/api/services/BoookService.ts";
+import type { IBookResponse } from "@/api/services/BoookService.ts";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useAddBook } from "@/hooks/queries/useCollection.ts";
+import { useRefetch } from "@/api/contexts/hooks/useRefetch.ts";
 
 const ButtonWrapper = styled.div`
   display: flex;
@@ -81,6 +82,7 @@ const BookDeatilButtonActions = (props: Props) => {
   const { mutate: addbook } = useAddBook();
   const [getCollectionName, setGetCollectionName] = useState("");
   const [isCollection, setIsCollection] = useState(false);
+  const { refetch } = useRefetch();
 
   useEffect(() => {
     if (params.name) {
@@ -118,10 +120,12 @@ const BookDeatilButtonActions = (props: Props) => {
 
   const onAddBook = () => {
     addbook(
-      { dto: getReadingLogSaveRequest(), name: getCollectionName },
+      { dto: getReadingLogSaveRequest(), name: encodeURIComponent(getCollectionName) },
       {
         onSuccess: () => {
-          setIsCollection(false);
+          refetch()
+            .then(() => setIsCollection(false))
+            .catch((error) => console.log(error));
         },
         onError: (error) => {
           props.showErrorToast();

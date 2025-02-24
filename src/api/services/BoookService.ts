@@ -24,6 +24,7 @@ export interface ILibraryResponse {
   cover: string;
   title: string;
   isbn: string;
+  isReadingLogExists: boolean;
 }
 
 export enum BookStatus {

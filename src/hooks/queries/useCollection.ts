@@ -3,21 +3,21 @@ import { useQuery, useMutation } from "@tanstack/react-query";
 import type { IBookSaveRequest } from "@/api/services/BoookService.ts";
 
 export const useGetListQuery = () => {
-  const { data, isLoading, error, refetch } = useQuery({
+  const { data, isLoading, isError, refetch } = useQuery({
     queryKey: ["list"],
     queryFn: () => collectionService.getList(),
   });
 
-  return { data, isLoading, error, refetch };
+  return { data, isLoading, isError, refetch };
 };
 
 export const useGetOneQuery = (name: string) => {
-  const { data, isLoading, error } = useQuery({
+  const { data, isLoading, isError, refetch } = useQuery({
     queryKey: ["collection", name],
     queryFn: () => collectionService.getOne(name),
   });
 
-  return { data, isLoading, error };
+  return { data, isLoading, isError, refetch };
 };
 
 export const useCreateQuery = () => {

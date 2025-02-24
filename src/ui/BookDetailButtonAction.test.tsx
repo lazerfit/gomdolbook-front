@@ -7,6 +7,7 @@ import { http, HttpResponse } from "msw";
 import Theme from "@/styles/theme.tsx";
 import BookDeatilButtonActions from "./BookDeatilButtonActions.tsx";
 import { MemoryRouter, Routes, Route } from "react-router-dom";
+import RefetchContextProvider from "@/api/contexts/RefetchProvider.tsx";
 
 const server = setupServer();
 const MOCK_BOOK_RESPONSE = {
@@ -25,6 +26,7 @@ const bookStatus = "NEW";
 const bookData = MOCK_BOOK_RESPONSE;
 const showToast = vi.fn();
 const showErrorToast = vi.fn();
+const mockRefetch = vi.fn().mockResolvedValue(Promise.resolve("refetch called"));
 
 beforeAll(() => server.listen());
 beforeEach(() => {
@@ -32,12 +34,14 @@ beforeEach(() => {
     <Theme>
       <QueryClientProvider client={testQueryClient}>
         <div id="modal"></div>
-        <BookDeatilButtonActions
-          bookStatus={bookStatus}
-          bookData={bookData}
-          showToast={showToast}
-          showErrorToast={showErrorToast}
-        />
+        <RefetchContextProvider refetch={mockRefetch}>
+          <BookDeatilButtonActions
+            bookStatus={bookStatus}
+            bookData={bookData}
+            showToast={showToast}
+            showErrorToast={showErrorToast}
+          />
+        </RefetchContextProvider>
       </QueryClientProvider>
     </Theme>,
   );
@@ -117,12 +121,14 @@ describe("컬렉션에 추가하기 버튼이 생긴다", () => {
               <Route
                 path="/collection/:name"
                 element={
-                  <BookDeatilButtonActions
-                    bookStatus={bookStatus}
-                    bookData={bookData}
-                    showToast={showToast}
-                    showErrorToast={showErrorToast}
-                  />
+                  <RefetchContextProvider refetch={mockRefetch}>
+                    <BookDeatilButtonActions
+                      bookStatus={bookStatus}
+                      bookData={bookData}
+                      showToast={showToast}
+                      showErrorToast={showErrorToast}
+                    />
+                  </RefetchContextProvider>
                 }
               />
             </Routes>
@@ -161,5 +167,13 @@ describe("컬렉션에 추가하기 버튼이 생긴다", () => {
     fireEvent.click(btn);
 
     await waitFor(() => expect(screen.getByTestId("saveReadingLog")).toBeTruthy());
+  });
+
+  it("추가하기 버튼 누르면 refetch가 일어난다.", async () => {
+    const btn = await screen.findByTestId("collectionBtn");
+    fireEvent.click(btn);
+
+    await waitFor(() => expect(screen.getByTestId("saveReadingLog")).toBeTruthy());
+    await waitFor(() => expect(mockRefetch).toBeCalledTimes(1));
   });
 });

@@ -1,6 +1,9 @@
 import { styled } from "styled-components";
 import { useNavigate } from "react-router-dom";
 import type { IApiResponse, ILibraryResponse } from "@/api/services/BoookService.ts";
+import Modal from "@/ui/Modal.tsx";
+import { useState } from "react";
+import BookDetails from "./BookDetailsInModal.tsx";
 
 const Wrapper = styled.section`
   width: 100%;
@@ -63,8 +66,23 @@ interface Props {
 }
 
 const BookList = (props: Props) => {
+  const [isModalOpened, setIsModalOpened] = useState(false);
+  const [isbn, setIsbn] = useState("");
   const navigate = useNavigate();
   const books = props.data?.data ?? [];
+
+  const handleOnClick = (book: ILibraryResponse) => {
+    if (!book.isReadingLogExists) {
+      setIsbn(book.isbn);
+      setIsModalOpened(true);
+    } else {
+      navigate(`/books/${book.isbn}`);
+    }
+  };
+
+  const onModalClose = () => {
+    setIsModalOpened(false);
+  };
   return (
     <Wrapper>
       {books.length === 0 ? (
@@ -74,15 +92,16 @@ const BookList = (props: Props) => {
       ) : (
         books.map((book) => (
           <ContentWrapper key={book.isbn}>
-            <Image
-              src={book.cover}
-              alt="책 표지"
-              onClick={() => navigate(`/books/${book.isbn}`)}
-            />
+            <Image src={book.cover} alt="책 표지" onClick={() => handleOnClick(book)} />
             <Title>{book.title}</Title>
             <Rating>⭐⭐⭐⭐⭐</Rating>
           </ContentWrapper>
         ))
+      )}
+      {isModalOpened && (
+        <Modal $innerWidth="1180px" $innerHeight="90%" onClose={() => onModalClose}>
+          <BookDetails isbn={isbn} onClose={onModalClose} />
+        </Modal>
       )}
     </Wrapper>
   );

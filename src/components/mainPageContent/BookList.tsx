@@ -72,7 +72,7 @@ const BookList = (props: Props) => {
   const books = props.data?.data ?? [];
 
   const handleOnClick = (book: ILibraryResponse) => {
-    if (!book.isReadingLogExists) {
+    if (book.status === "NEW") {
       setIsbn(book.isbn);
       setIsModalOpened(true);
     } else {
@@ -99,7 +99,7 @@ const BookList = (props: Props) => {
         ))
       )}
       {isModalOpened && (
-        <Modal $innerWidth="1180px" $innerHeight="90%" onClose={() => onModalClose}>
+        <Modal $innerWidth="1180px" $innerHeight="90%" onClose={onModalClose}>
           <BookDetails isbn={isbn} onClose={onModalClose} />
         </Modal>
       )}

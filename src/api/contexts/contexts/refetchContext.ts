@@ -5,4 +5,10 @@ export interface RefetchContextType {
   refetch: (options?: RefetchOptions) => Promise<QueryObserverResult<unknown, Error>>;
 }
 
-export const RefetchContext = createContext<RefetchContextType | null>(null);
+export interface DefaultValue {
+  refetch: () => Promise<{ data: undefined; error: null }>;
+}
+
+export const RefetchContext = createContext<RefetchContextType | DefaultValue>({
+  refetch: async () => Promise.resolve({ data: undefined, error: null }),
+});

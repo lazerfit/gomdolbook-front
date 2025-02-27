@@ -38,4 +38,11 @@ export const collectionService = {
       method: "POST",
     });
   },
+  removeBook: (isbn: string, name: string) => {
+    return request<void>({
+      url: CollectionEndPoint.deleteBook(name),
+      params: { isbn: isbn },
+      method: "DELETE",
+    });
+  },
 };

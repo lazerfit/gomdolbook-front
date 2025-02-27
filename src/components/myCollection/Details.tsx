@@ -33,12 +33,12 @@ const Details = () => {
   return (
     <Wrapper>
       <Title>{name}</Title>
-      <SearchWrapper>
-        <RefetchProvider refetch={refetch}>
+      <RefetchProvider refetch={refetch}>
+        <SearchWrapper>
           <SearchBar />
-        </RefetchProvider>
-      </SearchWrapper>
-      {isError ? <BookList data={{ data: [] }} /> : <BookList data={collectonList} />}
+        </SearchWrapper>
+        {isError ? <BookList data={{ data: [] }} /> : <BookList data={collectonList} />}
+      </RefetchProvider>
     </Wrapper>
   );
 };

@@ -16,7 +16,7 @@ const MOCK_BOOK_WITH_READINGLOG = {
       cover: "cover",
       title: "title",
       isbn: "isbn",
-      isReadingLogExists: true,
+      status: "READING",
     },
   ],
 };
@@ -27,7 +27,7 @@ const MOCK_BOOK_WITHOUT_READINGLOG = {
       cover: "cover",
       title: "title",
       isbn: "isbn",
-      isReadingLogExists: false,
+      status: "NEW",
     },
   ],
 };

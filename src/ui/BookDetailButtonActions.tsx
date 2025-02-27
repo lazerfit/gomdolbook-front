@@ -1,13 +1,13 @@
 import { styled } from "styled-components";
 import { ButtonMd } from "@/styles/common.styled.ts";
-import { useSaveReadingLogQuery } from "@/hooks/queries/useReadingLog.ts";
+import { useSaveReadingLogQuery, useGetStatus } from "@/hooks/queries/useReadingLog.ts";
 import { BookStatus } from "@/api/services/BoookService.ts";
 import translateBookStatus from "@/utils/TranslateBookStatus.ts";
 import type { IBookResponse } from "@/api/services/BoookService.ts";
 import { useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useAddBook } from "@/hooks/queries/useCollection.ts";
-import { useRefetch } from "@/api/contexts/hooks/useRefetch.ts";
+import { RefetchContext } from "@/api/contexts/contexts/refetchContext.ts";
 
 const ButtonWrapper = styled.div`
   display: flex;
@@ -70,7 +70,7 @@ const SaveButton = styled(ButtonMd)`
 `;
 
 interface Props {
-  bookStatus: string;
+  isbn: string;
   bookData: IBookResponse;
   showToast: () => void;
   showErrorToast: () => void;
@@ -82,7 +82,9 @@ const BookDeatilButtonActions = (props: Props) => {
   const { mutate: addbook } = useAddBook();
   const [getCollectionName, setGetCollectionName] = useState("");
   const [isCollection, setIsCollection] = useState(false);
-  const { refetch } = useRefetch();
+  const { refetch: collectionBookListRefetch } = useContext(RefetchContext);
+  const { data: statusData, refetch: statusRefetch } = useGetStatus(props.isbn);
+  const status = statusData?.data ?? "NEW";
 
   useEffect(() => {
     if (params.name) {
@@ -109,7 +111,9 @@ const BookDeatilButtonActions = (props: Props) => {
     const saveRequest = getReadingLogSaveRequest(status);
     saveReadingLogWithStatus(saveRequest, {
       onSuccess: () => {
-        props.showToast();
+        statusRefetch()
+          .then(() => props.showToast())
+          .catch((error) => console.log(error));
       },
       onError: (error) => {
         props.showErrorToast();
@@ -123,7 +127,7 @@ const BookDeatilButtonActions = (props: Props) => {
       { dto: getReadingLogSaveRequest(), name: encodeURIComponent(getCollectionName) },
       {
         onSuccess: () => {
-          refetch()
+          collectionBookListRefetch()
             .then(() => setIsCollection(false))
             .catch((error) => console.log(error));
         },
@@ -137,32 +141,31 @@ const BookDeatilButtonActions = (props: Props) => {
 
   return (
     <ButtonWrapper>
-      {isCollection && (
+      {isCollection && status === "NEW" && (
         <SaveButton data-testid="collectionBtn" onClick={onAddBook}>
           <p>추가하기</p>
         </SaveButton>
       )}
-      {!isCollection &&
-        (props.bookStatus != "NEW" ? (
-          <ReadingStatus data-testid="readingStatus">
-            {translateBookStatus(props.bookStatus)}
-          </ReadingStatus>
-        ) : (
-          <>
-            <SaveButton
-              data-testid="saveReadingLog"
-              onClick={() => saveReadingLog(BookStatus.READING)}
-            >
-              <p>읽는 중</p>
-            </SaveButton>
-            <SaveButton onClick={() => saveReadingLog(BookStatus.TO_READ)}>
-              <p>읽을 예정</p>
-            </SaveButton>
-            <SaveButton onClick={() => saveReadingLog(BookStatus.FINISHED)}>
-              <p>읽기 완료</p>
-            </SaveButton>
-          </>
-        ))}
+      {status !== "NEW" ? (
+        <ReadingStatus data-testid="readingStatus">
+          {translateBookStatus(status)}
+        </ReadingStatus>
+      ) : (
+        <>
+          <SaveButton
+            data-testid="saveReadingLog"
+            onClick={() => saveReadingLog(BookStatus.READING)}
+          >
+            <p>읽는 중</p>
+          </SaveButton>
+          <SaveButton onClick={() => saveReadingLog(BookStatus.TO_READ)}>
+            <p>읽을 예정</p>
+          </SaveButton>
+          <SaveButton onClick={() => saveReadingLog(BookStatus.FINISHED)}>
+            <p>읽기 완료</p>
+          </SaveButton>
+        </>
+      )}
     </ButtonWrapper>
   );
 };

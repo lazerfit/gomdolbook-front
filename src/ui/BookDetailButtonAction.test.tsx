@@ -5,7 +5,7 @@ import { testQueryClient } from "@/api/services/config/testQueryClient.ts";
 import { setupServer } from "msw/node";
 import { http, HttpResponse } from "msw";
 import Theme from "@/styles/theme.tsx";
-import BookDeatilButtonActions from "./BookDeatilButtonActions.tsx";
+import BookDetailButtonActions from "./BookDetailButtonActions.tsx";
 import { MemoryRouter, Routes, Route } from "react-router-dom";
 import RefetchContextProvider from "@/api/contexts/RefetchProvider.tsx";
 
@@ -22,40 +22,42 @@ const MOCK_BOOK_RESPONSE = {
   status: "status",
 };
 
-const bookStatus = "NEW";
 const bookData = MOCK_BOOK_RESPONSE;
+const isbn = "isbn";
 const showToast = vi.fn();
 const showErrorToast = vi.fn();
 const mockRefetch = vi.fn().mockResolvedValue(Promise.resolve("refetch called"));
 
 beforeAll(() => server.listen());
-beforeEach(() => {
-  render(
-    <Theme>
-      <QueryClientProvider client={testQueryClient}>
-        <div id="modal"></div>
-        <RefetchContextProvider refetch={mockRefetch}>
-          <BookDeatilButtonActions
-            bookStatus={bookStatus}
-            bookData={bookData}
-            showToast={showToast}
-            showErrorToast={showErrorToast}
-          />
-        </RefetchContextProvider>
-      </QueryClientProvider>
-    </Theme>,
-  );
-});
-
 afterEach(() => server.resetHandlers());
 afterAll(() => server.close());
 
 describe("버튼 클릭 후 에러 토스트가 호출된다.", () => {
-  beforeEach(() => {
+  beforeAll(() => {
     server.use(
       http.post("http://localhost:8080/api/v1/book/save", () => {
         return HttpResponse.error();
       }),
+      http.get("http://localhost:8080/api/v1/status/isbn", () => {
+        return HttpResponse.json({ data: "NEW" });
+      }),
+    );
+  });
+  beforeEach(() => {
+    render(
+      <Theme>
+        <QueryClientProvider client={testQueryClient}>
+          <div id="modal"></div>
+          <RefetchContextProvider refetch={mockRefetch}>
+            <BookDetailButtonActions
+              bookData={bookData}
+              isbn={isbn}
+              showToast={showToast}
+              showErrorToast={showErrorToast}
+            />
+          </RefetchContextProvider>
+        </QueryClientProvider>
+      </Theme>,
     );
   });
 
@@ -83,6 +85,21 @@ describe("버튼 클릭 후 에러 토스트가 호출된다.", () => {
 
 describe("버튼을 하나씩 클릭해본다", () => {
   beforeEach(() => {
+    render(
+      <Theme>
+        <QueryClientProvider client={testQueryClient}>
+          <div id="modal"></div>
+          <RefetchContextProvider refetch={mockRefetch}>
+            <BookDetailButtonActions
+              isbn={isbn}
+              bookData={bookData}
+              showToast={showToast}
+              showErrorToast={showErrorToast}
+            />
+          </RefetchContextProvider>
+        </QueryClientProvider>
+      </Theme>,
+    );
     server.use(
       http.post("http://localhost:8080/api/v1/book/save", () => {
         return HttpResponse.json({ data: "OK" });
@@ -122,8 +139,8 @@ describe("컬렉션에 추가하기 버튼이 생긴다", () => {
                 path="/collection/:name"
                 element={
                   <RefetchContextProvider refetch={mockRefetch}>
-                    <BookDeatilButtonActions
-                      bookStatus={bookStatus}
+                    <BookDetailButtonActions
+                      isbn={isbn}
                       bookData={bookData}
                       showToast={showToast}
                       showErrorToast={showErrorToast}

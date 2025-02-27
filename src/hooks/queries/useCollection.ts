@@ -28,7 +28,16 @@ export const useCreateQuery = () => {
 
 export const useAddBook = () => {
   return useMutation({
+    mutationKey: ["addBookToCollection"],
     mutationFn: ({ dto, name }: { dto: IBookSaveRequest; name: string }) =>
       collectionService.addBook(dto, name),
+  });
+};
+
+export const useRemoveBook = () => {
+  return useMutation({
+    mutationKey: ["removeBookFromCollection"],
+    mutationFn: ({ isbn, name }: { isbn: string; name: string }) =>
+      collectionService.removeBook(isbn, name),
   });
 };

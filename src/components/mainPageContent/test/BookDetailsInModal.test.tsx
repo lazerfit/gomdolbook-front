@@ -7,6 +7,7 @@ import { testQueryClient } from "@/api/services/config/testQueryClient.ts";
 import Theme from "@/styles/theme.tsx";
 import { setupServer } from "msw/node";
 import { http, HttpResponse } from "msw";
+import RefetchContextProvider from "@/api/contexts/RefetchProvider.tsx";
 
 const MOCK_STATUS_RESPONSE = {
   data: "READING",
@@ -24,6 +25,8 @@ const MOCK_BOOK_RESPONSE = {
     publisher: "pub",
   },
 };
+
+const mockRefetch = vi.fn().mockResolvedValue(Promise.resolve("refetch called"));
 
 const server = setupServer(
   http.get("http://localhost:8080/api/v1/status/isbn", () => {
@@ -45,17 +48,19 @@ beforeEach(() => {
   render(
     <Theme>
       <QueryClientProvider client={testQueryClient}>
-        <div id="modal"></div>
-        <BookDetails isbn="isbn" onClose={mockOnClose} />
-        <Toast
-          isVisible={isToastVisible}
-          isError={false}
-          onChangeVisibility={onCloseToast}
-          message={{
-            success: "내 서재에 성공적으로 저장하였어요.",
-            error: "다시 시도해주세요.",
-          }}
-        />
+        <RefetchContextProvider refetch={mockRefetch}>
+          <div id="modal"></div>
+          <BookDetails isbn="isbn" onClose={mockOnClose} />
+          <Toast
+            isVisible={isToastVisible}
+            isError={false}
+            onChangeVisibility={onCloseToast}
+            message={{
+              success: "내 서재에 성공적으로 저장하였어요.",
+              error: "다시 시도해주세요.",
+            }}
+          />
+        </RefetchContextProvider>
       </QueryClientProvider>
     </Theme>,
   );

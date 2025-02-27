@@ -7,7 +7,7 @@ import { useGetBookQuery } from "@/hooks/queries/useBook.ts";
 import { BookStatus } from "@/api/services/BoookService.ts";
 import { useGetStatus } from "@/hooks/queries/useReadingLog.ts";
 import BookDetailSkeleton from "@/ui/BookDetailSkeleton.tsx";
-import BookDeatilButtonActions from "@/ui/BookDeatilButtonActions.tsx";
+import BookDetailButtonActions from "@/ui/BookDetailButtonActions.tsx";
 
 const Wrapper = styled.section`
   width: 100%;
@@ -31,6 +31,7 @@ const MainContentWrapper = styled.div`
   flex-direction: column;
   align-items: flex-start;
   padding: 21px;
+  width: 500px;
 `;
 
 const BasicInformation = styled.div`
@@ -92,16 +93,10 @@ interface Props {
 const BookDetails = (props: Props) => {
   const [isToastVisible, setIsToastVisible] = useState(false);
   const [isErrorToast, setIsErrorToast] = useState(false);
-  const [bookStatus, setBookStatus] = useState("");
   const { data: aladin, isError, error, isLoading } = useGetBookQuery(props.isbn);
-  const { data: statusData } = useGetStatus(props.isbn);
   if (isError) {
     console.log(error);
   }
-
-  useEffect(() => {
-    setBookStatus(statusData?.data ?? "NEW");
-  }, [statusData]);
 
   const aladinData = aladin?.data ?? {
     title: "default title",
@@ -154,8 +149,8 @@ const BookDetails = (props: Props) => {
               <div>{aladinData.description}</div>
             </Description>
             <ButtonWrapper>
-              <BookDeatilButtonActions
-                bookStatus={bookStatus}
+              <BookDetailButtonActions
+                isbn={props.isbn}
                 bookData={aladinData}
                 showToast={() => onShowToast()}
                 showErrorToast={() => onShowErrorToast}

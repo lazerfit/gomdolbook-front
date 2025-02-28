@@ -15,6 +15,8 @@ const Overlay = styled.div`
 interface IWrapper {
   $innerWidth: string;
   $innerHeight: string;
+  $bgc: string;
+  $color: string;
 }
 
 const Wrapper = styled.section<IWrapper>`
@@ -22,7 +24,8 @@ const Wrapper = styled.section<IWrapper>`
   width: ${(props) => props.$innerWidth};
   height: ${(props) => props.$innerHeight};
   transform: translate(-50%, -50%);
-  background-color: ${(props) => props.theme.colors.white};
+  background-color: ${(props) => props.$bgc};
+  color: ${(props) => props.$color};
   z-index: 1000;
   top: 50%;
   left: 50%;
@@ -34,29 +37,40 @@ const Wrapper = styled.section<IWrapper>`
 
 interface Props {
   children: ReactNode;
-  $innerWidth: string;
-  $innerHeight: string;
+  innerWidth: string;
+  innerHeight: string;
+  bgc?: string;
+  color?: string;
   onClose: () => void;
 }
 
-const Modal = (props: Props) => {
+const Modal = ({
+  children,
+  innerHeight,
+  innerWidth,
+  bgc = "#fafafa",
+  color = "#262627",
+  onClose,
+}: Props) => {
   const _onKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
     if (event.key === "Escape") {
-      props.onClose();
+      onClose();
     }
   };
 
   return createPortal(
     <>
-      <Overlay onClick={props.onClose} />
+      <Overlay onClick={onClose} />
       <Wrapper
         className="scale-in"
         tabIndex={0}
         onKeyDown={_onKeyDown}
-        $innerWidth={props.$innerWidth}
-        $innerHeight={props.$innerHeight}
+        $innerWidth={innerWidth}
+        $innerHeight={innerHeight}
+        $bgc={bgc}
+        $color={color}
       >
-        {props.children}
+        {children}
       </Wrapper>
     </>,
     document.getElementById("modal")!,

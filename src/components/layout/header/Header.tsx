@@ -6,7 +6,7 @@ import { useKeycloak } from "@react-keycloak/web";
 import { useEffect, useState } from "react";
 import LoginModal from "./LoginModal.tsx";
 import { setToken } from "@/api/services/config/Interceptor.ts";
-import LoginRequireModal from "@/ui/LoginRequireModal.tsx";
+import { LoginRequireModal } from "@/ui/index.ts";
 
 const Wrapper = styled.header`
   display: flex;

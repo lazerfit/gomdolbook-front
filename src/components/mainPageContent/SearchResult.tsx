@@ -1,10 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { styled } from "styled-components";
-import BookDetails from "./BookDetailsInModal.tsx";
-import Publisher from "@/ui/Publisher.tsx";
-import Modal from "@/ui/Modal.tsx";
+import { BookDetails } from "../shared/index.ts";
 import { useGetBookSearchResult } from "@/hooks/queries/useBook.ts";
-import SimpleSkeletonLoader from "@/ui/SimpleSkeletonLoader.tsx";
+import { Publisher, Modal, SimpleSkeletonLoader } from "@/ui/index.ts";
 
 const ContentWrapper = styled.div`
   width: 100%;
@@ -131,7 +129,7 @@ const SearchResult = (props: Props) => {
   };
 
   return (
-    <Modal $innerWidth="1180px" $innerHeight="90%" onClose={props.onResultClose}>
+    <Modal innerWidth="1180px" innerHeight="90%" onClose={props.onResultClose}>
       {isBookSelected ? (
         <BookDetails isbn={getIsbn} onClose={onReturnToBookList} />
       ) : (

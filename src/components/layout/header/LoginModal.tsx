@@ -1,5 +1,5 @@
 import { styled } from "styled-components";
-import Modal from "@/ui/Modal.tsx";
+import { Modal } from "@/ui/index.ts";
 import kakaoLoginImage from "@/assets/img/kakaotalk_sharing_btn_medium.png";
 import googleLoginImage from "@/assets/img/web_light_sq_na@1x.png";
 import githubLoginImgae from "@/assets/img/github-mark.png";
@@ -49,7 +49,7 @@ interface Props {
 const LoginModal = (props: Props) => {
   if (!props.isModalOpened) return null;
   return (
-    <Modal $innerWidth="360px" $innerHeight="fit-content" onClose={props.onClose}>
+    <Modal innerWidth="360px" innerHeight="fit-content" onClose={props.onClose}>
       <ContentWrapper>
         <CloseButton data-testid="closeBtn" onClick={props.onClose}>
           &times;

@@ -3,12 +3,12 @@ import { beforeEach, expect, it, describe, vi } from "vitest";
 import Theme from "@/styles/theme.tsx";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { testQueryClient } from "@/api/services/config/testQueryClient.ts";
-import BookList from "../BookList.tsx";
+import BookList from "../../shared/BookList.tsx";
 import { MemoryRouter, Routes, Route } from "react-router-dom";
 import BookTracker from "@/pages/ReadingLog.tsx";
 import { setupServer } from "msw/node";
 import { http, HttpResponse } from "msw";
-import RefetchContextProvider from "@/api/contexts/RefetchProvider.tsx";
+import RefetchContextProvider from "@/api/contextProviders/RefetchProvider.tsx";
 
 const MOCK_BOOK_WITH_READINGLOG = {
   data: [

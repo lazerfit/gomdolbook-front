@@ -1,19 +1,24 @@
-import { useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { styled } from "styled-components";
 import { FaArrowLeft } from "react-icons/fa6";
-import Toast from "../../ui/Toast.tsx";
-import Publisher from "../../ui/Publisher.tsx";
 import { useGetBookQuery } from "@/hooks/queries/useBook.ts";
 import { BookStatus } from "@/api/services/BoookService.ts";
-import { useGetStatus } from "@/hooks/queries/useReadingLog.ts";
-import BookDetailSkeleton from "@/ui/BookDetailSkeleton.tsx";
-import BookDetailButtonActions from "@/ui/BookDetailButtonActions.tsx";
+import { BookDetailSkeleton, Toast, Publisher, ThreeDotMenu } from "@/ui/index.ts";
+import BookDetailButtonActions from "@/components/myCollection/ui/button/BookDetailButtonActions.tsx";
+import { ParamContext } from "@/api/contextProviders/contexts/collectionParamContext.ts";
+import { useRemoveBook } from "@/hooks/queries/useCollection.ts";
+import { RefetchContext } from "@/api/contextProviders/contexts/refetchContext.ts";
 
 const Wrapper = styled.section`
   width: 100%;
   height: 100%;
   display: flex;
   flex-direction: column;
+`;
+
+const NavButtonWrapper = styled.div`
+  display: flex;
+  align-items: center;
 `;
 
 const BackButton = styled.button`
@@ -94,6 +99,9 @@ const BookDetails = (props: Props) => {
   const [isToastVisible, setIsToastVisible] = useState(false);
   const [isErrorToast, setIsErrorToast] = useState(false);
   const { data: aladin, isError, error, isLoading } = useGetBookQuery(props.isbn);
+  const { isCollection, name } = useContext(ParamContext);
+  const { refetch: collectionBookListRefetch } = useContext(RefetchContext);
+  const { mutate: removeBook, isPending } = useRemoveBook();
   if (isError) {
     console.log(error);
   }
@@ -120,11 +128,30 @@ const BookDetails = (props: Props) => {
     setIsToastVisible(false);
   };
 
+  const onRemoveBook = () => {
+    removeBook(
+      { isbn: aladinData.isbn13, name: name },
+      {
+        onSuccess: () => {
+          collectionBookListRefetch()
+            .then(() => props.onClose())
+            .catch((error) => console.log(error));
+        },
+        onError: (error) => {
+          console.log(error);
+        },
+      },
+    );
+  };
+
   return (
     <Wrapper>
-      <BackButton data-testid="backBtn" onClick={props.onClose}>
-        <FaArrowLeft style={{ fontSize: "20px" }} />
-      </BackButton>
+      <NavButtonWrapper>
+        <BackButton data-testid="backBtn" onClick={props.onClose}>
+          <FaArrowLeft style={{ fontSize: "20px" }} />
+        </BackButton>
+        {isCollection && <ThreeDotMenu onSubmit={onRemoveBook} isLoading={isPending} />}
+      </NavButtonWrapper>
       <MainContentWrapper>
         {isLoading ? (
           <BookDetailSkeleton />
@@ -137,6 +164,7 @@ const BookDetails = (props: Props) => {
                 author={aladinData.author ?? "author"}
                 publisher={aladinData.publisher ?? "publisher"}
                 date={aladinData.pubDate ?? "pubDate"}
+                align="flex-start"
               />
               <SubInfomation>
                 <div style={{ fontWeight: "bold" }}>기본정보</div>

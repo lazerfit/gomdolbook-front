@@ -1,9 +1,15 @@
 import { styled, css } from "styled-components";
 
-const PublisherWrapper = styled.div`
+interface SProps {
+  $justifyContent: string;
+}
+
+const PublisherWrapper = styled.div<SProps>`
   margin-top: 8px;
   font-size: 0.938rem;
   display: flex;
+  align-items: center;
+  justify-content: ${(props) => props.$justifyContent};
   width: 500px;
 `;
 
@@ -45,12 +51,12 @@ interface Props {
   author: string;
   publisher: string;
   date: string;
+  align?: string;
 }
 
-const Publisher = (props: Props) => {
-  const { author, publisher, date } = props;
+const Publisher = ({ author, publisher, date, align = "center" }: Props) => {
   return (
-    <PublisherWrapper>
+    <PublisherWrapper $justifyContent={align}>
       <Author>{author}</Author>
       <PublisherInfo>{publisher}</PublisherInfo>
       <Date>{date}</Date>

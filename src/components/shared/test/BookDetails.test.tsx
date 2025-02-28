@@ -1,13 +1,13 @@
 import { render, screen } from "@testing-library/react";
 import { beforeEach, expect, it, describe, vi } from "vitest";
-import BookDetails from "../BookDetailsInModal.tsx";
+import BookDetails from "../BookDetails.tsx";
 import Toast from "@/ui/Toast.tsx";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { testQueryClient } from "@/api/services/config/testQueryClient.ts";
 import Theme from "@/styles/theme.tsx";
 import { setupServer } from "msw/node";
 import { http, HttpResponse } from "msw";
-import RefetchContextProvider from "@/api/contexts/RefetchProvider.tsx";
+import RefetchContextProvider from "@/api/contextProviders/RefetchProvider.tsx";
 
 const MOCK_STATUS_RESPONSE = {
   data: "READING",

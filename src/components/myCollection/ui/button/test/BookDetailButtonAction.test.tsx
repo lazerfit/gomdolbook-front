@@ -5,9 +5,9 @@ import { testQueryClient } from "@/api/services/config/testQueryClient.ts";
 import { setupServer } from "msw/node";
 import { http, HttpResponse } from "msw";
 import Theme from "@/styles/theme.tsx";
-import BookDetailButtonActions from "./BookDetailButtonActions.tsx";
+import BookDetailButtonActions from "../BookDetailButtonActions.tsx";
 import { MemoryRouter, Routes, Route } from "react-router-dom";
-import RefetchContextProvider from "@/api/contexts/RefetchProvider.tsx";
+import RefetchContextProvider from "@/api/contextProviders/RefetchProvider.tsx";
 
 const server = setupServer();
 const MOCK_BOOK_RESPONSE = {

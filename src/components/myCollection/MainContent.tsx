@@ -2,7 +2,7 @@ import { styled } from "styled-components";
 import { useNavigate } from "react-router-dom";
 import React, { useState } from "react";
 import { FaArrowLeft } from "react-icons/fa6";
-import CollectionSkeleton from "@/ui/CollectionSkeleton.tsx";
+import { CollectionSkeleton } from "@/ui/index.ts";
 import { useGetListQuery, useCreateQuery } from "@/hooks/queries/useCollection.ts";
 import { useKeycloak } from "@react-keycloak/web";
 
@@ -157,7 +157,7 @@ const MainContent = () => {
           $collectionName={collection.name}
           onClick={() => navigate(`${encodeURIComponent(collection.name)}`)}
         >
-          {collection.books.covers.map((cover, index) => (
+          {collection.books.covers.slice(0, 4).map((cover, index) => (
             <Image src={cover} key={index} alt="책 표지" />
           ))}
         </ItemWrapper>

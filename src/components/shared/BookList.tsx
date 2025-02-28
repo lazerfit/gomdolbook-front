@@ -1,9 +1,9 @@
 import { styled } from "styled-components";
 import { useNavigate } from "react-router-dom";
 import type { IApiResponse, ILibraryResponse } from "@/api/services/BoookService.ts";
-import Modal from "@/ui/Modal.tsx";
+import { Modal } from "@/ui/index.ts";
 import { useState } from "react";
-import BookDetails from "./BookDetailsInModal.tsx";
+import BookDetails from "./BookDetails.tsx";
 
 const Wrapper = styled.section`
   width: 100%;
@@ -72,7 +72,7 @@ const BookList = (props: Props) => {
   const books = props.data?.data ?? [];
 
   const handleOnClick = (book: ILibraryResponse) => {
-    if (book.status === "NEW") {
+    if (book.status === "NEW" || book.status !== "READING") {
       setIsbn(book.isbn);
       setIsModalOpened(true);
     } else {
@@ -99,7 +99,7 @@ const BookList = (props: Props) => {
         ))
       )}
       {isModalOpened && (
-        <Modal $innerWidth="1180px" $innerHeight="90%" onClose={onModalClose}>
+        <Modal innerWidth="900px" innerHeight="80%" onClose={onModalClose}>
           <BookDetails isbn={isbn} onClose={onModalClose} />
         </Modal>
       )}

@@ -3,8 +3,8 @@ import { styled } from "styled-components";
 import Banner from "./Banner.tsx";
 import SearchBar from "./SearchBar.tsx";
 import EmptyLibraryBanner from "./EmptyLibraryBanner.tsx";
-import BookList from "./BookList.tsx";
-import MainpageSkeleton from "@/ui/MainpageSkeleton.tsx";
+import { BookList } from "../shared/index.ts";
+import { MainpageSkeleton } from "@/ui/index.ts";
 import { useKeycloak } from "@react-keycloak/web";
 
 const Wrapper = styled.section`

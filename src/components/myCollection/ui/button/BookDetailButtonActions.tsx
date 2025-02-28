@@ -4,10 +4,11 @@ import { useSaveReadingLogQuery, useGetStatus } from "@/hooks/queries/useReading
 import { BookStatus } from "@/api/services/BoookService.ts";
 import translateBookStatus from "@/utils/TranslateBookStatus.ts";
 import type { IBookResponse } from "@/api/services/BoookService.ts";
-import { useParams } from "react-router-dom";
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import { useAddBook } from "@/hooks/queries/useCollection.ts";
-import { RefetchContext } from "@/api/contexts/contexts/refetchContext.ts";
+import { RefetchContext } from "@/api/contextProviders/contexts/refetchContext.ts";
+import { ParamContext } from "@/api/contextProviders/contexts/collectionParamContext.ts";
+import BookDetailSaveButton from "./BookDetailSaveButton.tsx";
 
 const ButtonWrapper = styled.div`
   display: flex;
@@ -77,21 +78,12 @@ interface Props {
 }
 
 const BookDeatilButtonActions = (props: Props) => {
-  const params = useParams();
   const { mutate: saveReadingLogWithStatus } = useSaveReadingLogQuery();
   const { mutate: addbook } = useAddBook();
-  const [getCollectionName, setGetCollectionName] = useState("");
-  const [isCollection, setIsCollection] = useState(false);
+  const { isCollection, name } = useContext(ParamContext);
   const { refetch: collectionBookListRefetch } = useContext(RefetchContext);
   const { data: statusData, refetch: statusRefetch } = useGetStatus(props.isbn);
-  const status = statusData?.data ?? "NEW";
-
-  useEffect(() => {
-    if (params.name) {
-      setIsCollection(true);
-      setGetCollectionName(params.name);
-    }
-  }, [params.name]);
+  const status = statusData?.data ?? "EMPTY";
 
   const getReadingLogSaveRequest = (status?: BookStatus) => {
     return {
@@ -106,6 +98,12 @@ const BookDeatilButtonActions = (props: Props) => {
       status: status ?? null,
     };
   };
+
+  const saveBtnArgs = [
+    { status: BookStatus.READING, label: <p>읽는 중</p> },
+    { status: BookStatus.TO_READ, label: <p>읽을 예정</p> },
+    { status: BookStatus.FINISHED, label: <p>읽기 완료</p> },
+  ];
 
   const saveReadingLog = (status: BookStatus) => {
     const saveRequest = getReadingLogSaveRequest(status);
@@ -124,11 +122,11 @@ const BookDeatilButtonActions = (props: Props) => {
 
   const onAddBook = () => {
     addbook(
-      { dto: getReadingLogSaveRequest(), name: encodeURIComponent(getCollectionName) },
+      { dto: getReadingLogSaveRequest(), name: encodeURIComponent(name) },
       {
         onSuccess: () => {
           collectionBookListRefetch()
-            .then(() => setIsCollection(false))
+            .then()
             .catch((error) => console.log(error));
         },
         onError: (error) => {
@@ -141,30 +139,21 @@ const BookDeatilButtonActions = (props: Props) => {
 
   return (
     <ButtonWrapper>
-      {isCollection && status === "NEW" && (
+      {isCollection && status === "EMPTY" && (
         <SaveButton data-testid="collectionBtn" onClick={onAddBook}>
           <p>추가하기</p>
         </SaveButton>
       )}
-      {status !== "NEW" ? (
+      {status !== "NEW" && status !== "EMPTY" ? (
         <ReadingStatus data-testid="readingStatus">
           {translateBookStatus(status)}
         </ReadingStatus>
       ) : (
-        <>
-          <SaveButton
-            data-testid="saveReadingLog"
-            onClick={() => saveReadingLog(BookStatus.READING)}
-          >
-            <p>읽는 중</p>
-          </SaveButton>
-          <SaveButton onClick={() => saveReadingLog(BookStatus.TO_READ)}>
-            <p>읽을 예정</p>
-          </SaveButton>
-          <SaveButton onClick={() => saveReadingLog(BookStatus.FINISHED)}>
-            <p>읽기 완료</p>
-          </SaveButton>
-        </>
+        saveBtnArgs.map((arg, index) => (
+          <BookDetailSaveButton onClick={() => saveReadingLog(arg.status)} key={index}>
+            {arg.label}
+          </BookDetailSaveButton>
+        ))
       )}
     </ButtonWrapper>
   );

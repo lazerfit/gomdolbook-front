@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { styled } from "styled-components";
 import SortBar from "./StatusNavBar.tsx";
-import BookList from "../mainPageContent/BookList.tsx";
+import { BookList } from "../shared/index.ts";
 import { useGetLibrary } from "@/hooks/queries/useBook.ts";
-import BookListSkeleton from "@/ui/BookListSkeleton.tsx";
+import { BookListSkeleton } from "@/ui/index.ts";
 
 const Wrapper = styled.section`
   max-width: 1180px;

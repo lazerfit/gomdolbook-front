@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { styled } from "styled-components";
 import SearchResult from "./SearchResult.tsx";
 import { useKeycloak } from "@react-keycloak/web";
-import LoginRequireModal from "@/ui/LoginRequireModal.tsx";
+import { LoginRequireModal } from "@/ui/index.ts";
 
 const Wrapper = styled.div`
   height: 48px;

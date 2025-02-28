@@ -40,7 +40,7 @@ export const collectionService = {
   },
   removeBook: (isbn: string, name: string) => {
     return request<void>({
-      url: CollectionEndPoint.deleteBook(name),
+      url: CollectionEndPoint.removeBook(name),
       params: { isbn: isbn },
       method: "DELETE",
     });

@@ -1,10 +1,6 @@
 import { styled } from "styled-components";
 import { FaRegPenToSquare } from "react-icons/fa6";
-import Publisher from "../../ui/Publisher.tsx";
-import { BsThreeDotsVertical } from "react-icons/bs";
-import Modal from "@/ui/Modal.tsx";
-import { useState } from "react";
-import { ButtonMd } from "@/styles/common.styled.ts";
+import { ThreeDotMenu, Publisher } from "@/ui/index.ts";
 
 const Wrapper = styled.section`
   margin: 34px auto;
@@ -76,94 +72,6 @@ const EmptyContent = styled.div`
   font-size: 0.938rem;
 `;
 
-const ButtonWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-left: auto;
-  margin-right: 10px;
-  position: relative;
-`;
-
-const Menu = styled.div`
-  padding: 10px;
-  width: 90px;
-  min-width: 5.625rem;
-  box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 15px 0px;
-  position: absolute;
-  text-align: center;
-  border-radius: 8px;
-  top: 40px;
-  right: 5px;
-  display: none;
-  cursor: pointer;
-
-  &::after {
-    content: "";
-    position: absolute;
-    background-color: ${(props) => props.theme.colors.white};
-    width: 10px;
-    height: 10px;
-    top: -5px;
-    transform: rotate(45deg);
-    right: 10%;
-  }
-`;
-
-const ButtonInput = styled.input`
-  display: none;
-
-  &:checked ~ ${Menu} {
-    display: block;
-  }
-`;
-
-const ButtonLabel = styled.label`
-  display: block;
-  width: 40px;
-  height: 30px;
-  text-align: center;
-  padding: 5px;
-  position: relative;
-  cursor: pointer;
-`;
-
-const DeleteButton = styled.button`
-  background-color: transparent;
-  cursor: pointer;
-  padding: 5px;
-  border-radius: 3px;
-
-  &:hover {
-    background-color: ${(props) => props.theme.colors.black};
-    color: ${(props) => props.theme.colors.white};
-  }
-`;
-
-const ModalWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-
-  > div {
-    font-size: ${(props) => props.theme.fonts.size600};
-  }
-`;
-
-const ModalButtonWrapper = styled.div`
-  display: flex;
-  margin-top: 20px;
-  gap: 10px;
-  justify-content: center;
-  align-items: center;
-`;
-
-const ModalCloseButton = styled(ButtonMd)`
-  color: ${(props) => props.theme.colors.gray6};
-  background-color: ${(props) => props.theme.colors.gray4};
-`;
-
 interface Data {
   title: string;
   placeholder: string;
@@ -187,27 +95,9 @@ const Tracker = () => {
     },
   ];
 
-  const [isModalOpened, setIsModalOpened] = useState(false);
-
-  const onCloseModal = () => {
-    setIsModalOpened(false);
-  };
-
-  const onOpenModal = () => {
-    setIsModalOpened(true);
-  };
-
   return (
     <Wrapper>
-      <ButtonWrapper>
-        <ButtonInput type="checkbox" id="trigger" />
-        <ButtonLabel htmlFor="trigger">
-          <BsThreeDotsVertical />
-        </ButtonLabel>
-        <Menu>
-          <DeleteButton onClick={onOpenModal}>삭제하기</DeleteButton>
-        </Menu>
-      </ButtonWrapper>
+      <ThreeDotMenu onSubmit={() => void 0} isLoading={false} />
       <Title>절망하는 이들을 위한 민주주의 </Title>
       <Publisher author="최태현 (지은이)" publisher="창비" date="2023.09.08" />
       <ImageWrapper>
@@ -227,17 +117,6 @@ const Tracker = () => {
           </AnalyzeContent>
         ))}
       </ContentWrapper>
-      {isModalOpened && (
-        <Modal $innerHeight="fit-content" $innerWidth="330px" onClose={onCloseModal}>
-          <ModalWrapper>
-            <div>정말 삭제하시겠습니까?</div>
-            <ModalButtonWrapper>
-              <ButtonMd>삭제</ButtonMd>
-              <ModalCloseButton onClick={onCloseModal}>취소</ModalCloseButton>
-            </ModalButtonWrapper>
-          </ModalWrapper>
-        </Modal>
-      )}
     </Wrapper>
   );
 };

@@ -128,7 +128,7 @@ const ThreeDotMenu = (props: Props) => {
       <ButtonWrapper>
         <ButtonInput type="checkbox" id="trigger" />
         <ButtonLabel htmlFor="trigger">
-          <BsThreeDotsVertical />
+          <BsThreeDotsVertical data-tesid="threedot" />
         </ButtonLabel>
         <Menu>
           <DeleteButton onClick={onOpenModal}>삭제하기</DeleteButton>

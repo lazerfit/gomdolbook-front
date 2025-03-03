@@ -12,6 +12,7 @@ afterEach(() => server.resetHandlers());
 afterAll(() => server.close());
 
 const onSubmit = vi.fn();
+const statusUpdate = vi.fn();
 
 describe("display render", () => {
   server.use(
@@ -20,7 +21,9 @@ describe("display render", () => {
     }),
   );
   beforeEach(() => {
-    customRender(<ThreeDotMenu onSubmit={onSubmit} isLoading={false} />);
+    customRender(
+      <ThreeDotMenu onRemove={onSubmit} isLoading={false} statusUpdate={statusUpdate} />,
+    );
   });
 
   it("화면 렌더링이 정상적으로 된다.", async () => {
@@ -43,5 +46,11 @@ describe("display render", () => {
     fireEvent.click(confirmBtn);
     await waitFor(() => expect(screen.queryByText("정말 삭제하시겠습니까?")).toBeNull());
     expect(onSubmit).toBeCalledTimes(1);
+  });
+
+  it("수정하기 버튼 클릭 후 statusUpdate fn이 실행된다.", async () => {
+    const btn = await screen.findByText("상태변경");
+    fireEvent.click(btn);
+    await waitFor(() => expect(statusUpdate).toBeCalledTimes(1));
   });
 });

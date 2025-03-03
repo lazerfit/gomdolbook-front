@@ -13,3 +13,10 @@ export const useGetStatus = (isbn: string) => {
     queryFn: () => BookService.getStatus(isbn),
   });
 };
+
+export const useGetReadinglog = (isbn: string) => {
+  return useQuery({
+    queryKey: ["readingLog", isbn],
+    queryFn: () => BookService.getReadingLog(isbn),
+  });
+};

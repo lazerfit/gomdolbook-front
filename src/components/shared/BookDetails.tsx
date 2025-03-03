@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import { styled } from "styled-components";
 import { FaArrowLeft } from "react-icons/fa6";
 import { useGetBookQuery } from "@/hooks/queries/useBook.ts";
@@ -8,6 +8,7 @@ import BookDetailButtonActions from "@/components/myCollection/ui/button/BookDet
 import { ParamContext } from "@/api/contextProviders/contexts/collectionParamContext.ts";
 import { useRemoveBook } from "@/hooks/queries/useCollection.ts";
 import { RefetchContext } from "@/api/contextProviders/contexts/refetchContext.ts";
+import { useGetStatus } from "@/hooks/queries/useReadingLog.ts";
 
 const Wrapper = styled.section`
   width: 100%;
@@ -99,9 +100,20 @@ const BookDetails = (props: Props) => {
   const [isToastVisible, setIsToastVisible] = useState(false);
   const [isErrorToast, setIsErrorToast] = useState(false);
   const { data: aladin, isError, error, isLoading } = useGetBookQuery(props.isbn);
-  const { isCollection, name } = useContext(ParamContext);
+  const { name } = useContext(ParamContext);
   const { refetch: collectionBookListRefetch } = useContext(RefetchContext);
   const { mutate: removeBook, isPending } = useRemoveBook();
+  const { data: statusData, refetch: statusRefetch } = useGetStatus(props.isbn);
+  const [status, setStatus] = useState("");
+
+  useEffect(() => {
+    if (statusData?.data) {
+      setStatus(statusData?.data);
+    } else {
+      setStatus("EMPTY");
+    }
+  }, [statusData]);
+
   if (isError) {
     console.log(error);
   }
@@ -144,13 +156,21 @@ const BookDetails = (props: Props) => {
     );
   };
 
+  const makeStatusUpdatable = () => {
+    setStatus("NEW");
+  };
+
   return (
     <Wrapper>
       <NavButtonWrapper>
         <BackButton data-testid="backBtn" onClick={props.onClose}>
           <FaArrowLeft style={{ fontSize: "20px" }} />
         </BackButton>
-        {isCollection && <ThreeDotMenu onSubmit={onRemoveBook} isLoading={isPending} />}
+        <ThreeDotMenu
+          onRemove={onRemoveBook}
+          isLoading={isPending}
+          statusUpdate={makeStatusUpdatable}
+        />
       </NavButtonWrapper>
       <MainContentWrapper>
         {isLoading ? (
@@ -178,10 +198,11 @@ const BookDetails = (props: Props) => {
             </Description>
             <ButtonWrapper>
               <BookDetailButtonActions
-                isbn={props.isbn}
                 bookData={aladinData}
+                statusRefetch={statusRefetch}
+                status={status}
                 showToast={() => onShowToast()}
-                showErrorToast={() => onShowErrorToast}
+                showErrorToast={() => onShowErrorToast()}
               />
             </ButtonWrapper>
           </>

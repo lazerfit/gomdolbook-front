@@ -1,31 +1,56 @@
-import { fireEvent, render, screen } from "@testing-library/react";
-import { expect, vi, beforeAll, describe } from "vitest";
+import { fireEvent, screen, waitFor } from "@testing-library/react";
+import { expect, describe, vi } from "vitest";
 import Header from "./Header.tsx";
-import { BrowserRouter } from "react-router-dom";
-import Theme from "@/styles/theme.tsx";
+import { MemoryRouter, Routes, Route } from "react-router-dom";
+import { customRender } from "@/utils/CustomRender.tsx";
+import { ReactKeycloakProvider } from "@react-keycloak/web";
+import keycloak from "@/auth/keycloak.ts";
+import Library from "@/pages/Library.tsx";
+import Collection from "@/pages/Collection.tsx";
+
+vi.mock("@react-keycloak/web", async (importOrigianl) => {
+  return {
+    ...(await importOrigianl<typeof import("@react-keycloak/web")>()),
+    useKeycloak: () => ({
+      keycloak: {
+        authenticated: true,
+        token: "test-token",
+        idToken: "test-token",
+        login: vi.fn(),
+        logout: vi.fn(),
+      },
+    }),
+    ReactKeycloakProvider: ({ children }: { children: React.ReactNode }) => (
+      <>{children}</>
+    ),
+  };
+});
 
 describe("Header Component", () => {
-  beforeAll(() => {
-    const isLoggedIn = false;
-    const onLoggedIn = vi.fn();
-    const onLoggedOut = vi.fn();
-
-    render(
-      <Theme>
-        <div id="modal"></div>
-        <Header
-          isLoggedIn={isLoggedIn}
-          onLoggedIn={onLoggedIn}
-          onLoggedOut={onLoggedOut}
-        />
-      </Theme>,
-      { wrapper: BrowserRouter },
+  beforeEach(() => {
+    customRender(
+      <MemoryRouter initialEntries={["/"]}>
+        <ReactKeycloakProvider authClient={keycloak}>
+          <Routes>
+            <Route path="/library/reading" element={<Library />} />
+            <Route path="/collections" element={<Collection />} />
+            <Route path="/" element={<Header />} />
+          </Routes>
+        </ReactKeycloakProvider>
+      </MemoryRouter>,
     );
   });
 
-  it("로그인 버튼을 클릭하면 로그인 모달의 닫기 버튼이 나타난다.", () => {
-    const loginButton = screen.getByRole("button", { name: /Log in/ });
-    fireEvent.click(loginButton);
-    expect(screen.getByRole("button", { name: /카카오로 시작하기/ })).toBeTruthy();
+  it("렌더링이 된다.", async () => {
+    expect(await screen.findByText("gomdolbook")).toBeTruthy();
+  });
+
+  it("Library 클릭", async () => {
+    const btn = await screen.findByText("Library");
+    expect(btn).toBeTruthy();
+    fireEvent.click(btn);
+    await waitFor(() => {
+      expect(screen.getByText("읽을 예정")).toBeTruthy();
+    });
   });
 });

@@ -45,12 +45,12 @@ const SaveButton = styled(ButtonMd)`
 `;
 
 interface Props {
-  onClick: (status: BookStatus) => void;
+  saveFn: (status: BookStatus) => void;
   children: ReactNode;
 }
 
-const BookDetailSaveButtons = ({ onClick, children }: Props) => {
-  return <SaveButton onClick={() => onClick}>{children}</SaveButton>;
+const BookDetailSaveButtons = ({ saveFn, children }: Props) => {
+  return <SaveButton onClick={() => saveFn}>{children}</SaveButton>;
 };
 
 export default BookDetailSaveButtons;

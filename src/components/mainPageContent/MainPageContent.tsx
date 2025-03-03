@@ -1,11 +1,10 @@
-import { useState } from "react";
 import { styled } from "styled-components";
 import Banner from "./Banner.tsx";
 import SearchBar from "./SearchBar.tsx";
-import EmptyLibraryBanner from "./EmptyLibraryBanner.tsx";
 import { BookList } from "../shared/index.ts";
 import { MainpageSkeleton } from "@/ui/index.ts";
 import { useKeycloak } from "@react-keycloak/web";
+import { useGetLibrary } from "@/hooks/queries/useBook.ts";
 
 const Wrapper = styled.section`
   width: 100%;
@@ -17,24 +16,18 @@ const Wrapper = styled.section`
 `;
 
 const MainContent = () => {
-  const [isLibraryEmpty] = useState(false);
   const { initialized } = useKeycloak();
+  const { data, isLoading } = useGetLibrary("READING");
 
-  if (!initialized) {
+  if (!initialized || isLoading) {
     return <MainpageSkeleton />;
   }
 
   return (
     <Wrapper>
-      {isLibraryEmpty ? (
-        <EmptyLibraryBanner />
-      ) : (
-        <>
-          <Banner />
-          <SearchBar />
-          <BookList data={undefined} />
-        </>
-      )}
+      <Banner />
+      <SearchBar />
+      <BookList data={data} />
     </Wrapper>
   );
 };

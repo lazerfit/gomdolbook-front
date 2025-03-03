@@ -1,6 +1,6 @@
 import { styled } from "styled-components";
 import { useNavigate } from "react-router-dom";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FaArrowLeft } from "react-icons/fa6";
 import { CollectionSkeleton } from "@/ui/index.ts";
 import { useGetListQuery, useCreateQuery } from "@/hooks/queries/useCollection.ts";

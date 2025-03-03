@@ -27,6 +27,18 @@ export interface ILibraryResponse {
   status: string;
 }
 
+export interface IReadinglogResponse {
+  title: string;
+  author: string;
+  pubDate: string;
+  cover: string;
+  publisher: string;
+  status: string;
+  note1: string;
+  note2: string;
+  note3: string;
+}
+
 export enum BookStatus {
   READING = "READING",
   TO_READ = "TO_READ",
@@ -41,9 +53,10 @@ export const BookService = {
     });
   },
   getReadingLog: (isbn: string) => {
-    return request<void>({
-      url: BookEndPoint.getReadingLog(isbn),
+    return request<IApiResponse<IReadinglogResponse>>({
+      url: BookEndPoint.getReadingLog(),
       method: "GET",
+      params: { isbn: isbn },
     });
   },
   saveReadingLog: (data: IBookSaveRequest) => {

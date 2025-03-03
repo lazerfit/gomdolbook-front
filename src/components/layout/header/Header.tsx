@@ -97,7 +97,9 @@ const Header = () => {
     <Wrapper>
       {showModal && <LoginRequireModal close={() => setShowModal(false)} />}
       <NavigationLinkWrapper>
-        <MainLink onClick={() => validateLoginStatus("/library")}>Library</MainLink>
+        <MainLink onClick={() => validateLoginStatus("/library/reading")}>
+          Library
+        </MainLink>
         <MainLink onClick={() => validateLoginStatus("/collections")}>
           Collections
         </MainLink>

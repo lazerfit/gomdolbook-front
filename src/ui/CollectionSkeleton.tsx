@@ -75,7 +75,7 @@ const Line = styled.div`
 
 const CollectionSkeleton = () => {
   return (
-    <BookList>
+    <BookList data-testid="skeleton">
       {Array.from({ length: 4 }).map((_, index) => (
         <Book key={index}>
           <Square $width="280px" $height="280px" />

@@ -1,5 +1,6 @@
 import { styled } from "styled-components";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -21,11 +22,8 @@ const Item = styled.button`
   border-radius: 7px;
 `;
 
-interface Props {
-  setFilter: React.Dispatch<React.SetStateAction<string>>;
-}
-
-const SortBar = (props: Props) => {
+const SortBar = () => {
+  const navigate = useNavigate();
   const [selectedStatus, setSelectedStatus] = useState(1);
   const getSelectedButtonStyle = (isSelected: boolean) => ({
     backgroundColor: isSelected ? "black" : "transparent",
@@ -37,7 +35,7 @@ const SortBar = (props: Props) => {
         style={getSelectedButtonStyle(selectedStatus === 1)}
         onClick={() => {
           setSelectedStatus(1);
-          props.setFilter("READING");
+          navigate("/library/reading");
         }}
       >
         읽는 중
@@ -46,7 +44,7 @@ const SortBar = (props: Props) => {
         style={getSelectedButtonStyle(selectedStatus === 2)}
         onClick={() => {
           setSelectedStatus(2);
-          props.setFilter("TO_READ");
+          navigate("/library/to_read");
         }}
       >
         읽을 예정
@@ -55,7 +53,7 @@ const SortBar = (props: Props) => {
         style={getSelectedButtonStyle(selectedStatus === 3)}
         onClick={() => {
           setSelectedStatus(3);
-          props.setFilter("FINISHED");
+          navigate("/library/finished");
         }}
       >
         읽기 완료

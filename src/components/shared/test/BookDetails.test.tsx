@@ -80,10 +80,3 @@ describe("api test", () => {
     expect(status).toBeTruthy();
   });
 });
-
-describe("collection이 아니다.", () => {
-  it("threedot이 렌더링되지 않는다.", () => {
-    const threedotBtn = screen.queryByTestId("threedot");
-    expect(threedotBtn).toBeFalsy();
-  });
-});

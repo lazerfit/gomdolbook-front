@@ -1,6 +1,10 @@
 import { styled } from "styled-components";
 import { FaRegPenToSquare } from "react-icons/fa6";
-import { ThreeDotMenu, Publisher } from "@/ui/index.ts";
+import { ThreeDotMenu, Publisher, BookListSkeleton, Modal } from "@/ui/index.ts";
+import { useParams } from "react-router-dom";
+import { useGetReadinglog } from "@/hooks/queries/useReadingLog.ts";
+import { useState } from "react";
+import { GrClose } from "react-icons/gr";
 
 const Wrapper = styled.section`
   margin: 34px auto;
@@ -72,44 +76,112 @@ const EmptyContent = styled.div`
   font-size: 0.938rem;
 `;
 
+const ModalWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const CloseButton = styled.button`
+  margin: 10px 10px 0 auto;
+  cursor: pointer;
+  padding: 5px;
+  font-size: 1.2rem;
+`;
+
+const ModalContentWrapper = styled.section`
+  display: flex;
+  flex-direction: column;
+  margin: 100px 100px;
+`;
+
+const ModalTitle = styled.h1`
+  font-size: 1.5rem;
+`;
+
+const ModalWysiwyg = styled.div`
+  border: 1px solid black;
+  height: 700px;
+  margin-top: 30px;
+`;
+
 interface Data {
+  id: number;
   title: string;
   placeholder: string;
 }
 
 const Tracker = () => {
+  const params = useParams();
+  const isbn = params.id ?? "";
+  const [isModalOpened, setIsModalOpened] = useState(false);
+  const [noteId, setNoteId] = useState(0);
+  const [noteTitle, setNoteTitle] = useState("");
+  const { data, isLoading } = useGetReadinglog(isbn);
+  const response = data?.data ?? {
+    title: "default",
+    author: "default",
+    pubDate: "default",
+    cover: "default",
+    publisher: "default",
+    status: "default",
+    note1: "default",
+    note2: "default",
+    note3: "default",
+  };
+
+  const onCloseModal = () => {
+    setIsModalOpened(false);
+  };
+
+  const onOpenReadingLog = (id: number, title: string) => {
+    setIsModalOpened(true);
+    setNoteId(id);
+    setNoteTitle(title);
+  };
+
   const analyzeContentData: Data[] = [
     {
+      id: 1,
       title: "1. 무엇을 다룬 책인지 알아내기",
       placeholder: "중심 내용, 요점정리, 저자가 풀어가려는 문제 등을 적어주세요.",
     },
     {
+      id: 2,
       title: "2. 내용 해석하기",
       placeholder:
         "중요한 단어를 저자가 어떤 의미로 사용하는지, 주요 명제, 논증, 풀어낸 문제와 그렇지 못한 문제를 구분하고, 풀지 못한 문제를 저자도 아는지 파악해보세요.",
     },
     {
+      id: 3,
       title: "3. 비평하기",
       placeholder:
         "저자가 잘 알지 못하는 부분, 잘못 알고 있는 부분, 논리적이지 못한 부분, 분석한 내용이나 설명이 불완전한 부분을 적어보세요.",
     },
   ];
 
+  if (isLoading) {
+    return <BookListSkeleton />;
+  }
+
   return (
     <Wrapper>
-      <ThreeDotMenu onSubmit={() => void 0} isLoading={false} />
-      <Title>절망하는 이들을 위한 민주주의 </Title>
-      <Publisher author="최태현 (지은이)" publisher="창비" date="2023.09.08" />
+      <ThreeDotMenu onRemove={() => void 0} isLoading={false} />
+      <Title>{response.title}</Title>
+      <Publisher
+        author={response.author}
+        publisher={response.publisher}
+        date={response.pubDate}
+      />
       <ImageWrapper>
-        <Image src="https://image.yes24.com/goods/122339211/XL" />
+        <Image src={response.cover} />
         <Rating>⭐⭐⭐⭐⭐</Rating>
       </ImageWrapper>
       <ContentWrapper>
-        {analyzeContentData.map((content, index) => (
-          <AnalyzeContent key={index}>
+        {analyzeContentData.map((content) => (
+          <AnalyzeContent key={content.id}>
             <ContentTitle>
               <h4>{content.title}</h4>
-              <ModifyButton>
+              <ModifyButton onClick={() => onOpenReadingLog(content.id, content.title)}>
                 <FaRegPenToSquare />
               </ModifyButton>
             </ContentTitle>
@@ -117,6 +189,21 @@ const Tracker = () => {
           </AnalyzeContent>
         ))}
       </ContentWrapper>
+      {isModalOpened && (
+        <Modal innerWidth="1180px" innerHeight="90%" onClose={onCloseModal}>
+          <ModalWrapper>
+            <CloseButton onClick={() => onCloseModal()}>
+              <GrClose />
+            </CloseButton>
+            <ModalContentWrapper>
+              <ModalTitle>{noteTitle}</ModalTitle>
+              <ModalWysiwyg>
+                <div>Hi</div>
+              </ModalWysiwyg>
+            </ModalContentWrapper>
+          </ModalWrapper>
+        </Modal>
+      )}
     </Wrapper>
   );
 };

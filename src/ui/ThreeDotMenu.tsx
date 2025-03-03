@@ -56,7 +56,7 @@ const ButtonLabel = styled.label`
   cursor: pointer;
 `;
 
-const DeleteButton = styled.button`
+const MenuButton = styled.button`
   background-color: transparent;
   cursor: pointer;
   padding: 5px;
@@ -98,11 +98,16 @@ const SubmitButton = styled(ButtonMd)`
 `;
 
 interface Props {
-  onSubmit: () => void;
+  onRemove: () => void;
+  statusUpdate?: () => void;
   isLoading: boolean;
 }
 
-const ThreeDotMenu = (props: Props) => {
+const ThreeDotMenu = ({
+  onRemove = () => void 0,
+  isLoading,
+  statusUpdate = () => void 0,
+}: Props) => {
   const [isModalOpened, setIsModalOpened] = useState(false);
 
   const onCloseModal = () => {
@@ -115,7 +120,7 @@ const ThreeDotMenu = (props: Props) => {
 
   const onSubmit = () => {
     try {
-      props.onSubmit();
+      onRemove();
     } catch (error) {
       console.log(error);
     } finally {
@@ -131,7 +136,8 @@ const ThreeDotMenu = (props: Props) => {
           <BsThreeDotsVertical data-tesid="threedot" />
         </ButtonLabel>
         <Menu>
-          <DeleteButton onClick={onOpenModal}>삭제하기</DeleteButton>
+          <MenuButton onClick={onOpenModal}>삭제하기</MenuButton>
+          <MenuButton onClick={statusUpdate}>상태변경</MenuButton>
         </Menu>
       </ButtonWrapper>
       {isModalOpened && (
@@ -145,7 +151,7 @@ const ThreeDotMenu = (props: Props) => {
           <ModalWrapper>
             <div>정말 삭제하시겠습니까?</div>
             <ModalButtonWrapper>
-              <SubmitButton onClick={onSubmit} disabled={props.isLoading}>
+              <SubmitButton onClick={onSubmit} disabled={isLoading}>
                 삭제
               </SubmitButton>
               <ModalCloseButton onClick={onCloseModal}>취소</ModalCloseButton>

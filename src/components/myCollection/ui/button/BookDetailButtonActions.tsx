@@ -4,11 +4,10 @@ import { BookStatus } from "@/api/services/BoookService.ts";
 import translateBookStatus from "@/utils/TranslateBookStatus.ts";
 import type { IBookResponse } from "@/api/services/BoookService.ts";
 import { useContext } from "react";
-import { useAddBook } from "@/hooks/queries/useCollection.ts";
 import { RefetchContext } from "@/api/contextProviders/contexts/refetchContext.ts";
 import { ParamContext } from "@/api/contextProviders/contexts/collectionParamContext.ts";
 import { QueryObserverResult, RefetchOptions } from "@tanstack/react-query";
-import { useSaveBook } from "@/hooks/queries/useBook.ts";
+import { useBook, useCollection } from "@/hooks/queries/index.ts";
 
 const ButtonWrapper = styled.div`
   display: flex;
@@ -80,8 +79,8 @@ const BookDeatilButtonActions = ({
   showErrorToast = () => void 0,
   status = "NEW",
 }: Props) => {
-  const { mutate: saveBook } = useSaveBook();
-  const { mutate: addbook } = useAddBook();
+  const { saveBook } = useBook();
+  const { addBook } = useCollection();
   const { isCollection, name } = useContext(ParamContext);
   const { refetch: collectionBookListRefetch } = useContext(RefetchContext);
 
@@ -121,7 +120,7 @@ const BookDeatilButtonActions = ({
   };
 
   const onAddBook = () => {
-    addbook(
+    addBook(
       { dto: getReadingLogSaveRequest(), name: encodeURIComponent(name) },
       {
         onSuccess: () => {

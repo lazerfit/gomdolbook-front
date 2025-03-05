@@ -62,17 +62,16 @@ const EmptyLibraryBanner = styled.div`
 `;
 
 interface Props {
-  data: void | IApiResponse<ILibraryResponse[]> | undefined;
+  books: ILibraryResponse[];
 }
 
-const BookList = (props: Props) => {
+const BookList = ({ books }: Props) => {
   const [isModalOpened, setIsModalOpened] = useState(false);
   const [isbn, setIsbn] = useState("");
   const navigate = useNavigate();
-  const books = props.data?.data ?? [];
 
   const handleOnClick = (book: ILibraryResponse) => {
-    if (book.status === "NEW" || book.status !== "READING") {
+    if (book.status === "NEW" || book.status === "TO_READ") {
       setIsbn(book.isbn);
       setIsModalOpened(true);
     } else {

@@ -2,9 +2,9 @@ import { useEffect, useState } from "react";
 import { styled } from "styled-components";
 import StatusNavBar from "./StatusNavBar.tsx";
 import { BookList } from "../shared/index.ts";
-import { useGetLibrary } from "@/hooks/queries/useBook.ts";
 import { BookListSkeleton } from "@/ui/index.ts";
 import { useParams } from "react-router-dom";
+import { useBook } from "@/hooks/queries/index.ts";
 
 const Wrapper = styled.section`
   max-width: 1180px;
@@ -19,7 +19,7 @@ const MyLibrary = () => {
   const params = useParams();
   const status = params.status ?? "";
   const [filter, setfilter] = useState(status);
-  const { data, isLoading } = useGetLibrary(filter);
+  const { library, isLibraryLoading } = useBook({ status: filter });
 
   useEffect(() => {
     if (status !== "") {
@@ -30,7 +30,7 @@ const MyLibrary = () => {
   return (
     <Wrapper>
       <StatusNavBar />
-      {isLoading ? <BookListSkeleton /> : <BookList data={data} />}
+      {isLibraryLoading ? <BookListSkeleton /> : <BookList books={library} />}
     </Wrapper>
   );
 };

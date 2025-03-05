@@ -1,14 +1,11 @@
-import { useContext, useState, useEffect } from "react";
+import { useContext, useState } from "react";
 import { styled } from "styled-components";
 import { FaArrowLeft } from "react-icons/fa6";
-import { useGetBookQuery } from "@/hooks/queries/useBook.ts";
-import { BookStatus } from "@/api/services/BoookService.ts";
 import { BookDetailSkeleton, Toast, Publisher, ThreeDotMenu } from "@/ui/index.ts";
 import BookDetailButtonActions from "@/components/myCollection/ui/button/BookDetailButtonActions.tsx";
 import { ParamContext } from "@/api/contextProviders/contexts/collectionParamContext.ts";
-import { useRemoveBook } from "@/hooks/queries/useCollection.ts";
 import { RefetchContext } from "@/api/contextProviders/contexts/refetchContext.ts";
-import { useGetStatus } from "@/hooks/queries/useReadingLog.ts";
+import { useBook, useCollection, useReadingLog } from "@/hooks/queries/index.ts";
 
 const Wrapper = styled.section`
   width: 100%;
@@ -99,36 +96,12 @@ interface Props {
 const BookDetails = (props: Props) => {
   const [isToastVisible, setIsToastVisible] = useState(false);
   const [isErrorToast, setIsErrorToast] = useState(false);
-  const { data: aladin, isError, error, isLoading } = useGetBookQuery(props.isbn);
+  const { book, isBookLoading } = useBook({ isbn: props.isbn });
+  const { removeBook, isRemoveBookPending } = useCollection();
+  const { status, statusRefetch, makeUpdatable } = useReadingLog(props.isbn);
   const { name } = useContext(ParamContext);
   const { refetch: collectionBookListRefetch } = useContext(RefetchContext);
-  const { mutate: removeBook, isPending } = useRemoveBook();
-  const { data: statusData, refetch: statusRefetch } = useGetStatus(props.isbn);
-  const [status, setStatus] = useState("");
 
-  useEffect(() => {
-    if (statusData?.data) {
-      setStatus(statusData?.data);
-    } else {
-      setStatus("EMPTY");
-    }
-  }, [statusData]);
-
-  if (isError) {
-    console.log(error);
-  }
-
-  const aladinData = aladin?.data ?? {
-    title: "default title",
-    author: "default author",
-    pubDate: "default pubDate",
-    description: "default description",
-    isbn13: "default isbn13",
-    cover: "default cover",
-    categoryName: "default categoryName",
-    publisher: "default publisher",
-    status: BookStatus.TO_READ,
-  };
   const onShowToast = () => {
     setIsToastVisible(true);
     setIsErrorToast(false);
@@ -142,7 +115,7 @@ const BookDetails = (props: Props) => {
 
   const onRemoveBook = () => {
     removeBook(
-      { isbn: aladinData.isbn13, name: name },
+      { isbn: book.isbn13, name: name },
       {
         onSuccess: () => {
           collectionBookListRefetch()
@@ -156,10 +129,6 @@ const BookDetails = (props: Props) => {
     );
   };
 
-  const makeStatusUpdatable = () => {
-    setStatus("NEW");
-  };
-
   return (
     <Wrapper>
       <NavButtonWrapper>
@@ -168,37 +137,37 @@ const BookDetails = (props: Props) => {
         </BackButton>
         <ThreeDotMenu
           onRemove={onRemoveBook}
-          isLoading={isPending}
-          statusUpdate={makeStatusUpdatable}
+          isLoading={isRemoveBookPending}
+          statusUpdate={makeUpdatable}
         />
       </NavButtonWrapper>
       <MainContentWrapper>
-        {isLoading ? (
+        {isBookLoading ? (
           <BookDetailSkeleton />
         ) : (
           <>
-            <Image src={aladinData.cover} />
+            <Image src={book.cover} />
             <BasicInformation>
-              <Title>{aladinData.title}</Title>
+              <Title>{book.title}</Title>
               <Publisher
-                author={aladinData.author ?? "author"}
-                publisher={aladinData.publisher ?? "publisher"}
-                date={aladinData.pubDate ?? "pubDate"}
+                author={book.author}
+                publisher={book.publisher}
+                date={book.pubDate}
                 align="flex-start"
               />
               <SubInfomation>
                 <div style={{ fontWeight: "bold" }}>기본정보</div>
-                <div>ISBN : {aladinData.isbn13}</div>
-                <div>카테고리 : {aladinData.categoryName}</div>
+                <div>ISBN : {book.isbn13}</div>
+                <div>카테고리 : {book.categoryName}</div>
               </SubInfomation>
             </BasicInformation>
             <Description>
               <div style={{ fontWeight: "bold" }}>책 소개</div>
-              <div>{aladinData.description}</div>
+              <div>{book.description}</div>
             </Description>
             <ButtonWrapper>
               <BookDetailButtonActions
-                bookData={aladinData}
+                bookData={book}
                 statusRefetch={statusRefetch}
                 status={status}
                 showToast={() => onShowToast()}

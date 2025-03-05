@@ -22,7 +22,7 @@ interface Props {
 
 const LoginRequireModal = (props: Props) => {
   return (
-    <Modal $innerWidth="300px" $innerHeight="140px" onClose={props.close}>
+    <Modal innerWidth="300px" innerHeight="140px" onClose={props.close}>
       <ModalContent>
         <div>로그인이 필요합니다.</div>
         <ModalBtn onClick={props.close}>확인</ModalBtn>

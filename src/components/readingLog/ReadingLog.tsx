@@ -2,11 +2,13 @@ import { styled } from "styled-components";
 import { FaRegPenToSquare } from "react-icons/fa6";
 import { ThreeDotMenu, Publisher, BookListSkeleton, Modal, Toast } from "@/ui/index.ts";
 import { useParams } from "react-router-dom";
-import { useGetReadinglog, useUpdateReadingLog } from "@/hooks/queries/useReadingLog.ts";
+import { useReadingLog } from "@/hooks/queries/useReadingLog.ts";
 import { useState } from "react";
 import { GrClose } from "react-icons/gr";
 import TinyMCE from "@/utils/TinyMCE.tsx";
 import sanitizeHtml from "sanitize-html";
+import { ModalTypes, useModal } from "@/hooks/useModal.ts";
+import { useToast } from "@/hooks/useToast.ts";
 
 const Wrapper = styled.section`
   margin: 34px auto;
@@ -135,43 +137,18 @@ interface Data {
 const ReadingLog = () => {
   const params = useParams();
   const isbn = params.isbn ?? "";
-  const [isModalOpened, setIsModalOpened] = useState(false);
-  const [isToastVisible, setIsToastVisible] = useState(false);
-  const [isErrorToast, setIsErrorToast] = useState(false);
+  const { modalType, openModal, closeModal } = useModal();
+  const { isToastVisible, isErrorToast, onShowToast, onShowErrorToast, onCloseToast } =
+    useToast();
   const [noteId, setNoteId] = useState("");
   const [noteTitle, setNoteTitle] = useState("");
   const [placeholder, setPlaceholder] = useState("");
   const [value, setValue] = useState("");
-  const { data, isLoading, refetch: readingLogRefetch } = useGetReadinglog(isbn);
-  const { mutate: saveReadingLog } = useUpdateReadingLog();
-  const response = data?.data ?? {
-    title: "default",
-    author: "default",
-    pubDate: "default",
-    cover: "default",
-    publisher: "default",
-    status: "default",
-    note1: "default note1",
-    note2: "default note2",
-    note3: "default note3",
-  };
-
-  const onCloseModal = () => {
-    setIsModalOpened(false);
-  };
-  const onShowToast = () => {
-    setIsToastVisible(true);
-    setIsErrorToast(false);
-  };
-  const onShowErrorToast = () => {
-    setIsErrorToast(true);
-  };
-  const onCloseToast = () => {
-    setIsToastVisible(false);
-  };
+  const { readingLog, isReadingLogLoading, readingLogRefetch, updateReadingLog } =
+    useReadingLog(isbn);
 
   const onOpenReadingLog = (id: string, title: string, placeholder: string) => {
-    setIsModalOpened(true);
+    openModal(ModalTypes.WYSIWYG);
     setNoteId(id);
     setNoteTitle(title);
     setPlaceholder(placeholder);
@@ -190,11 +167,11 @@ const ReadingLog = () => {
       value: value,
     };
 
-    saveReadingLog(data, {
+    updateReadingLog(data, {
       onSuccess: () => {
         readingLogRefetch()
           .then(() => {
-            setIsModalOpened(false);
+            openModal(ModalTypes.WYSIWYG);
             onShowToast();
           })
           .catch((error) => console.log(error));
@@ -217,43 +194,43 @@ const ReadingLog = () => {
       note: "note1",
       title: "1. 무엇을 다룬 책인지 알아내기",
       value:
-        response.note1 === ""
+        readingLog.note1 === ""
           ? "중심 내용, 요점정리, 저자가 풀어가려는 문제 등을 적어주세요."
-          : response.note1,
+          : readingLog.note1,
     },
     {
       note: "note2",
       title: "2. 내용 해석하기",
       value:
-        response.note2 === ""
+        readingLog.note2 === ""
           ? "중요한 단어를 저자가 어떤 의미로 사용하는지, 주요 명제, 논증, 풀어낸 문제와 그렇지 못한 문제를 구분하고, 풀지 못한 문제를 저자도 아는지 파악해보세요."
-          : response.note2,
+          : readingLog.note2,
     },
     {
       note: "note3",
       title: "3. 비평하기",
       value:
-        response.note3 === ""
+        readingLog.note3 === ""
           ? "저자가 잘 알지 못하는 부분, 잘못 알고 있는 부분, 논리적이지 못한 부분, 분석한 내용이나 설명이 불완전한 부분을 적어보세요."
-          : response.note3,
+          : readingLog.note3,
     },
   ];
 
-  if (isLoading) {
+  if (isReadingLogLoading) {
     return <BookListSkeleton />;
   }
 
   return (
     <Wrapper>
       <ThreeDotMenu onRemove={() => void 0} isLoading={false} />
-      <Title>{response.title}</Title>
+      <Title>{readingLog.title}</Title>
       <Publisher
-        author={response.author}
-        publisher={response.publisher}
-        date={response.pubDate}
+        author={readingLog.author}
+        publisher={readingLog.publisher}
+        date={readingLog.pubDate}
       />
       <ImageWrapper>
-        <Image src={response.cover} />
+        <Image src={readingLog.cover} />
         <Rating>⭐⭐⭐⭐⭐</Rating>
       </ImageWrapper>
       <ContentWrapper>
@@ -274,10 +251,10 @@ const ReadingLog = () => {
           </AnalyzeContent>
         ))}
       </ContentWrapper>
-      {isModalOpened && (
-        <Modal innerWidth="1180px" innerHeight="90%" onClose={onCloseModal}>
+      {modalType === ModalTypes.WYSIWYG && (
+        <Modal innerWidth="1180px" innerHeight="90%" onClose={closeModal}>
           <ModalWrapper>
-            <CloseButton onClick={() => onCloseModal()}>
+            <CloseButton onClick={closeModal}>
               <GrClose />
             </CloseButton>
             <ModalContentWrapper>
@@ -285,7 +262,7 @@ const ReadingLog = () => {
               <ModalWysiwyg>
                 <TinyMCE placeholder={placeholder} onChangeValue={onChangeValue} />
                 <ModalButtonWrapper>
-                  <ModalSaveButton onClick={onCloseModal}>취소하기</ModalSaveButton>
+                  <ModalSaveButton onClick={closeModal}>취소하기</ModalSaveButton>
                   <ModalSaveButton onClick={onSaveValue}>저장하기</ModalSaveButton>
                 </ModalButtonWrapper>
               </ModalWysiwyg>

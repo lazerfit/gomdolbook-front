@@ -4,7 +4,7 @@ import SearchBar from "./SearchBar.tsx";
 import { BookList } from "../shared/index.ts";
 import { MainpageSkeleton } from "@/ui/index.ts";
 import { useKeycloak } from "@react-keycloak/web";
-import { useGetLibrary } from "@/hooks/queries/useBook.ts";
+import { useBook } from "@/hooks/queries/index.ts";
 
 const Wrapper = styled.section`
   width: 100%;
@@ -17,9 +17,9 @@ const Wrapper = styled.section`
 
 const MainContent = () => {
   const { initialized } = useKeycloak();
-  const { data, isLoading } = useGetLibrary("READING");
+  const { library, isLibraryLoading } = useBook({ status: "READING" });
 
-  if (!initialized || isLoading) {
+  if (!initialized || isLibraryLoading) {
     return <MainpageSkeleton />;
   }
 
@@ -27,7 +27,7 @@ const MainContent = () => {
     <Wrapper>
       <Banner />
       <SearchBar />
-      <BookList data={data} />
+      <BookList books={library} />
     </Wrapper>
   );
 };

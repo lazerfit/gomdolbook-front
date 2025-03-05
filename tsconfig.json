@@ -1,15 +1,10 @@
 {
   "extends": "./tsconfig.common.json",
   "compilerOptions": {
-    "types": [
-      "vite/client",
-      "@types/sanitize-html"
-    ],
+    "types": ["vite/client", "@types/sanitize-html"],
     "baseUrl": ".",
     "paths": {
-      "@/*": [
-        "./src/*"
-      ]
+      "@/*": ["./src/*"]
     }
   }
 }

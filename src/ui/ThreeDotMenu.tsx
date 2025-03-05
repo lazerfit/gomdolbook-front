@@ -3,6 +3,7 @@ import Modal from "./Modal.tsx";
 import { ButtonMd } from "@/styles/common.styled.ts";
 import { useState } from "react";
 import { BsThreeDotsVertical } from "react-icons/bs";
+import { ModalTypes, useModal } from "@/hooks/useModal.ts";
 
 const ButtonWrapper = styled.div`
   display: flex;
@@ -108,15 +109,7 @@ const ThreeDotMenu = ({
   isLoading,
   statusUpdate = () => void 0,
 }: Props) => {
-  const [isModalOpened, setIsModalOpened] = useState(false);
-
-  const onCloseModal = () => {
-    setIsModalOpened(false);
-  };
-
-  const onOpenModal = () => {
-    setIsModalOpened(true);
-  };
+  const { modalType, openModal, closeModal } = useModal();
 
   const onSubmit = () => {
     try {
@@ -124,7 +117,7 @@ const ThreeDotMenu = ({
     } catch (error) {
       console.log(error);
     } finally {
-      setIsModalOpened(false);
+      closeModal();
     }
   };
 
@@ -136,15 +129,15 @@ const ThreeDotMenu = ({
           <BsThreeDotsVertical data-tesid="threedot" />
         </ButtonLabel>
         <Menu>
-          <MenuButton onClick={onOpenModal}>삭제하기</MenuButton>
+          <MenuButton onClick={() => openModal(ModalTypes.DELETE)}>삭제하기</MenuButton>
           <MenuButton onClick={statusUpdate}>상태변경</MenuButton>
         </Menu>
       </ButtonWrapper>
-      {isModalOpened && (
+      {modalType === ModalTypes.DELETE && (
         <Modal
           innerHeight="fit-content"
           innerWidth="330px"
-          onClose={onCloseModal}
+          onClose={closeModal}
           bgc="#262627"
           color="#fafafa"
         >
@@ -154,7 +147,7 @@ const ThreeDotMenu = ({
               <SubmitButton onClick={onSubmit} disabled={isLoading}>
                 삭제
               </SubmitButton>
-              <ModalCloseButton onClick={onCloseModal}>취소</ModalCloseButton>
+              <ModalCloseButton onClick={closeModal}>취소</ModalCloseButton>
             </ModalButtonWrapper>
           </ModalWrapper>
         </Modal>

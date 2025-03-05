@@ -1,10 +1,10 @@
 import { styled } from "styled-components";
 import { useNavigate } from "react-router-dom";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { FaArrowLeft } from "react-icons/fa6";
 import { CollectionSkeleton } from "@/ui/index.ts";
-import { useGetListQuery, useCreateQuery } from "@/hooks/queries/useCollection.ts";
 import { useKeycloak } from "@react-keycloak/web";
+import { useCollection } from "@/hooks/queries/index.ts";
 
 const Wrapper = styled.section`
   width: 100%;
@@ -95,10 +95,13 @@ const MainContent = () => {
   const navigate = useNavigate();
   const [isAddNewCollection, setIsAddNewCollection] = useState(false);
   const [inputQuery, setInputQuery] = useState("");
-  const { data: listData, isLoading, refetch: listRefetch } = useGetListQuery();
-  const { mutate: createCollection } = useCreateQuery();
   const { initialized } = useKeycloak();
-  const collectionList = listData?.data ?? [];
+  const {
+    collectionList,
+    isCollectionListLoading,
+    collectionListRefetch,
+    createCollection,
+  } = useCollection();
 
   const onChaneQuery = (event: React.ChangeEvent<HTMLInputElement>) => {
     setInputQuery(event.target.value);
@@ -113,7 +116,7 @@ const MainContent = () => {
     if (inputQuery.trim() !== "" && event.key === "Enter") {
       createCollection(inputQuery, {
         onSuccess: () => {
-          listRefetch()
+          collectionListRefetch()
             .then(() => setIsAddNewCollection(false))
             .catch((error) => console.log(error));
         },
@@ -124,7 +127,7 @@ const MainContent = () => {
     }
   };
 
-  if (!initialized || isLoading) {
+  if (!initialized || isCollectionListLoading) {
     return <CollectionSkeleton />;
   }
 

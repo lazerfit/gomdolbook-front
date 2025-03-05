@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { styled } from "styled-components";
 import { BookDetails } from "../shared/index.ts";
-import { useGetBookSearchResult } from "@/hooks/queries/useBook.ts";
 import { Publisher, Modal, SimpleSkeletonLoader } from "@/ui/index.ts";
+import { useBook } from "@/hooks/queries/index.ts";
 
 const ContentWrapper = styled.div`
   width: 100%;
@@ -109,8 +109,7 @@ const SearchResult = (props: Props) => {
   const [isBookSelected, setIsBookSelected] = useState(false);
   const [getIsbn, setGetIsbn] = useState("");
   const [reFetchQuery, setRefetchQuery] = useState(props.query);
-  const { data, isLoading } = useGetBookSearchResult(reFetchQuery);
-  const searchResult = data?.data ?? [];
+  const { searchResult, isSearchResultLoading } = useBook({ q: reFetchQuery });
 
   const onChangeQuery = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(event.target.value);
@@ -144,7 +143,7 @@ const SearchResult = (props: Props) => {
             />
           </InputWrapper>
           <MainContentWrapper>
-            {isLoading ? (
+            {isSearchResultLoading ? (
               <SimpleSkeletonLoader $width="700px" $n={6} />
             ) : (
               searchResult.map((book) => (

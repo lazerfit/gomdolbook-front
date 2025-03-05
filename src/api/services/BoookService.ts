@@ -39,6 +39,12 @@ export interface IReadinglogResponse {
   note3: string;
 }
 
+export interface IReadingLogUpdateRequest {
+  isbn: string;
+  note: string;
+  value: string;
+}
+
 export enum BookStatus {
   READING = "READING",
   TO_READ = "TO_READ",
@@ -59,9 +65,16 @@ export const BookService = {
       params: { isbn: isbn },
     });
   },
-  saveReadingLog: (data: IBookSaveRequest) => {
+  updateReadingLog: (data: IReadingLogUpdateRequest) => {
     return request<void>({
-      url: BookEndPoint.saveReadingLog(),
+      url: BookEndPoint.updateReadingLog(),
+      method: "POST",
+      data: data,
+    });
+  },
+  saveBook: (data: IBookSaveRequest) => {
+    return request<void>({
+      url: BookEndPoint.saveBook(),
       method: "POST",
       data: data,
     });

@@ -19,7 +19,7 @@ const App = () => {
           <Route path="/library/:status" element={<Library />} />
           <Route path="/collections" element={<Collection />} />
           <Route path="/collections/:name" element={<Details />} />
-          <Route path="/books/:id" element={<BookTracker />} />
+          <Route path="/readingLog/:isbn" element={<BookTracker />} />
           <Route path="/test" element={<TestPage />} />
         </Route>
       </Routes>

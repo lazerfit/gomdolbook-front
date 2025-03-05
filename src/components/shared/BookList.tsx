@@ -76,7 +76,7 @@ const BookList = (props: Props) => {
       setIsbn(book.isbn);
       setIsModalOpened(true);
     } else {
-      navigate(`/books/${book.isbn}`);
+      navigate(`/readingLog/${book.isbn}`);
     }
   };
 

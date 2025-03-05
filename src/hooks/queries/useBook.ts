@@ -1,5 +1,5 @@
-import { useQuery } from "@tanstack/react-query";
-import { BookService } from "@/api/services/BoookService.ts";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { BookService, IBookSaveRequest } from "@/api/services/BoookService.ts";
 
 export const useGetBookQuery = (isbn: string) => {
   const { data, isLoading, isError, error } = useQuery({
@@ -26,4 +26,10 @@ export const useGetLibrary = (status: string) => {
   });
 
   return { data, error, isLoading };
+};
+
+export const useSaveBook = () => {
+  return useMutation({
+    mutationFn: (data: IBookSaveRequest) => BookService.saveBook(data),
+  });
 };

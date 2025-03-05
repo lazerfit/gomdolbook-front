@@ -1,6 +1,5 @@
 import { styled } from "styled-components";
 import { ButtonMd } from "@/styles/common.styled.ts";
-import { useSaveReadingLogQuery } from "@/hooks/queries/useReadingLog.ts";
 import { BookStatus } from "@/api/services/BoookService.ts";
 import translateBookStatus from "@/utils/TranslateBookStatus.ts";
 import type { IBookResponse } from "@/api/services/BoookService.ts";
@@ -9,6 +8,7 @@ import { useAddBook } from "@/hooks/queries/useCollection.ts";
 import { RefetchContext } from "@/api/contextProviders/contexts/refetchContext.ts";
 import { ParamContext } from "@/api/contextProviders/contexts/collectionParamContext.ts";
 import { QueryObserverResult, RefetchOptions } from "@tanstack/react-query";
+import { useSaveBook } from "@/hooks/queries/useBook.ts";
 
 const ButtonWrapper = styled.div`
   display: flex;
@@ -80,7 +80,7 @@ const BookDeatilButtonActions = ({
   showErrorToast = () => void 0,
   status = "NEW",
 }: Props) => {
-  const { mutate: saveReadingLogWithStatus } = useSaveReadingLogQuery();
+  const { mutate: saveBook } = useSaveBook();
   const { mutate: addbook } = useAddBook();
   const { isCollection, name } = useContext(ParamContext);
   const { refetch: collectionBookListRefetch } = useContext(RefetchContext);
@@ -107,7 +107,7 @@ const BookDeatilButtonActions = ({
 
   const saveReadingLog = (status: BookStatus) => {
     const saveRequest = getReadingLogSaveRequest(status);
-    saveReadingLogWithStatus(saveRequest, {
+    saveBook(saveRequest, {
       onSuccess: () => {
         statusRefetch()
           .then(() => showToast())

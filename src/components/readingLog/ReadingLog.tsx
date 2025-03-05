@@ -1,10 +1,12 @@
 import { styled } from "styled-components";
 import { FaRegPenToSquare } from "react-icons/fa6";
-import { ThreeDotMenu, Publisher, BookListSkeleton, Modal } from "@/ui/index.ts";
+import { ThreeDotMenu, Publisher, BookListSkeleton, Modal, Toast } from "@/ui/index.ts";
 import { useParams } from "react-router-dom";
-import { useGetReadinglog } from "@/hooks/queries/useReadingLog.ts";
+import { useGetReadinglog, useUpdateReadingLog } from "@/hooks/queries/useReadingLog.ts";
 import { useState } from "react";
 import { GrClose } from "react-icons/gr";
+import TinyMCE from "@/utils/TinyMCE.tsx";
+import sanitizeHtml from "sanitize-html";
 
 const Wrapper = styled.section`
   margin: 34px auto;
@@ -67,13 +69,14 @@ const ModifyButton = styled.div`
   cursor: pointer;
 `;
 
-const EmptyContent = styled.div`
+const Content = styled.div`
   margin-top: 10px;
   width: 100%;
-  height: 150px;
+  max-height: 300px;
   min-height: 9.375rem;
   color: ${(props) => props.theme.colors.gray5};
   font-size: 0.938rem;
+  overflow-y: scroll;
 `;
 
 const ModalWrapper = styled.div`
@@ -99,24 +102,48 @@ const ModalTitle = styled.h1`
 `;
 
 const ModalWysiwyg = styled.div`
-  border: 1px solid black;
-  height: 700px;
   margin-top: 30px;
 `;
 
+const ModalButtonWrapper = styled.div`
+  display: flex;
+  margin-top: 20px;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+`;
+
+const ModalSaveButton = styled.button`
+  padding: 10px;
+  cursor: pointer;
+  border: 1px solid ${(props) => props.theme.colors.gray4};
+  border-radius: 10px;
+  transition: all 0.5s ease;
+
+  &:hover {
+    transform: translate(5px, -5px);
+    box-shadow: -3px 3px #cd6133;
+  }
+`;
+
 interface Data {
-  id: number;
+  note: string;
   title: string;
-  placeholder: string;
+  value: string;
 }
 
-const Tracker = () => {
+const ReadingLog = () => {
   const params = useParams();
-  const isbn = params.id ?? "";
+  const isbn = params.isbn ?? "";
   const [isModalOpened, setIsModalOpened] = useState(false);
-  const [noteId, setNoteId] = useState(0);
+  const [isToastVisible, setIsToastVisible] = useState(false);
+  const [isErrorToast, setIsErrorToast] = useState(false);
+  const [noteId, setNoteId] = useState("");
   const [noteTitle, setNoteTitle] = useState("");
-  const { data, isLoading } = useGetReadinglog(isbn);
+  const [placeholder, setPlaceholder] = useState("");
+  const [value, setValue] = useState("");
+  const { data, isLoading, refetch: readingLogRefetch } = useGetReadinglog(isbn);
+  const { mutate: saveReadingLog } = useUpdateReadingLog();
   const response = data?.data ?? {
     title: "default",
     author: "default",
@@ -124,38 +151,91 @@ const Tracker = () => {
     cover: "default",
     publisher: "default",
     status: "default",
-    note1: "default",
-    note2: "default",
-    note3: "default",
+    note1: "default note1",
+    note2: "default note2",
+    note3: "default note3",
   };
 
   const onCloseModal = () => {
     setIsModalOpened(false);
   };
+  const onShowToast = () => {
+    setIsToastVisible(true);
+    setIsErrorToast(false);
+  };
+  const onShowErrorToast = () => {
+    setIsErrorToast(true);
+  };
+  const onCloseToast = () => {
+    setIsToastVisible(false);
+  };
 
-  const onOpenReadingLog = (id: number, title: string) => {
+  const onOpenReadingLog = (id: string, title: string, placeholder: string) => {
     setIsModalOpened(true);
     setNoteId(id);
     setNoteTitle(title);
+    setPlaceholder(placeholder);
+  };
+
+  const onChangeValue = (text: string) => {
+    if (text.trim() !== "") {
+      setValue(text);
+    }
+  };
+
+  const onSaveValue = () => {
+    const data = {
+      isbn: isbn,
+      note: noteId,
+      value: value,
+    };
+
+    saveReadingLog(data, {
+      onSuccess: () => {
+        readingLogRefetch()
+          .then(() => {
+            setIsModalOpened(false);
+            onShowToast();
+          })
+          .catch((error) => console.log(error));
+      },
+      onError: (error) => {
+        console.log(error);
+        onShowErrorToast();
+      },
+    });
+  };
+
+  const onSanitize = (text: string) => {
+    const sanitized = sanitizeHtml(text);
+
+    return { __html: sanitized };
   };
 
   const analyzeContentData: Data[] = [
     {
-      id: 1,
+      note: "note1",
       title: "1. 무엇을 다룬 책인지 알아내기",
-      placeholder: "중심 내용, 요점정리, 저자가 풀어가려는 문제 등을 적어주세요.",
+      value:
+        response.note1 === ""
+          ? "중심 내용, 요점정리, 저자가 풀어가려는 문제 등을 적어주세요."
+          : response.note1,
     },
     {
-      id: 2,
+      note: "note2",
       title: "2. 내용 해석하기",
-      placeholder:
-        "중요한 단어를 저자가 어떤 의미로 사용하는지, 주요 명제, 논증, 풀어낸 문제와 그렇지 못한 문제를 구분하고, 풀지 못한 문제를 저자도 아는지 파악해보세요.",
+      value:
+        response.note2 === ""
+          ? "중요한 단어를 저자가 어떤 의미로 사용하는지, 주요 명제, 논증, 풀어낸 문제와 그렇지 못한 문제를 구분하고, 풀지 못한 문제를 저자도 아는지 파악해보세요."
+          : response.note2,
     },
     {
-      id: 3,
+      note: "note3",
       title: "3. 비평하기",
-      placeholder:
-        "저자가 잘 알지 못하는 부분, 잘못 알고 있는 부분, 논리적이지 못한 부분, 분석한 내용이나 설명이 불완전한 부분을 적어보세요.",
+      value:
+        response.note3 === ""
+          ? "저자가 잘 알지 못하는 부분, 잘못 알고 있는 부분, 논리적이지 못한 부분, 분석한 내용이나 설명이 불완전한 부분을 적어보세요."
+          : response.note3,
     },
   ];
 
@@ -178,14 +258,19 @@ const Tracker = () => {
       </ImageWrapper>
       <ContentWrapper>
         {analyzeContentData.map((content) => (
-          <AnalyzeContent key={content.id}>
+          <AnalyzeContent key={content.note}>
             <ContentTitle>
               <h4>{content.title}</h4>
-              <ModifyButton onClick={() => onOpenReadingLog(content.id, content.title)}>
+              <ModifyButton
+                data-testid={"modifyBtn-" + content.note}
+                onClick={() =>
+                  onOpenReadingLog(content.note, content.title, content.value)
+                }
+              >
                 <FaRegPenToSquare />
               </ModifyButton>
             </ContentTitle>
-            <EmptyContent>{content.placeholder}</EmptyContent>
+            <Content dangerouslySetInnerHTML={onSanitize(content.value)}></Content>
           </AnalyzeContent>
         ))}
       </ContentWrapper>
@@ -198,14 +283,27 @@ const Tracker = () => {
             <ModalContentWrapper>
               <ModalTitle>{noteTitle}</ModalTitle>
               <ModalWysiwyg>
-                <div>Hi</div>
+                <TinyMCE placeholder={placeholder} onChangeValue={onChangeValue} />
+                <ModalButtonWrapper>
+                  <ModalSaveButton onClick={onCloseModal}>취소하기</ModalSaveButton>
+                  <ModalSaveButton onClick={onSaveValue}>저장하기</ModalSaveButton>
+                </ModalButtonWrapper>
               </ModalWysiwyg>
             </ModalContentWrapper>
           </ModalWrapper>
         </Modal>
       )}
+      <Toast
+        isVisible={isToastVisible}
+        isError={isErrorToast}
+        onChangeVisibility={onCloseToast}
+        message={{
+          success: "성공적으로 저장하였어요.",
+          error: "다시 시도해주세요.",
+        }}
+      />
     </Wrapper>
   );
 };
 
-export default Tracker;
+export default ReadingLog;

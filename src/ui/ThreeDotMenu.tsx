@@ -1,9 +1,9 @@
 import { styled } from "styled-components";
 import Modal from "./Modal.tsx";
 import { ButtonMd } from "@/styles/common.styled.ts";
-import { useState } from "react";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { ModalTypes, useModal } from "@/hooks/useModal.ts";
+import { ReactNode } from "react";
 
 const ButtonWrapper = styled.div`
   display: flex;
@@ -57,7 +57,7 @@ const ButtonLabel = styled.label`
   cursor: pointer;
 `;
 
-const MenuButton = styled.button`
+export const MenuButton = styled.button`
   background-color: transparent;
   cursor: pointer;
   padding: 5px;
@@ -102,13 +102,10 @@ interface Props {
   onRemove: () => void;
   statusUpdate?: () => void;
   isLoading: boolean;
+  children?: ReactNode;
 }
 
-const ThreeDotMenu = ({
-  onRemove = () => void 0,
-  isLoading,
-  statusUpdate = () => void 0,
-}: Props) => {
+const ThreeDotMenu = ({ onRemove = () => void 0, isLoading, children }: Props) => {
   const { modalType, openModal, closeModal } = useModal();
 
   const onSubmit = () => {
@@ -130,7 +127,7 @@ const ThreeDotMenu = ({
         </ButtonLabel>
         <Menu>
           <MenuButton onClick={() => openModal(ModalTypes.DELETE)}>삭제하기</MenuButton>
-          <MenuButton onClick={statusUpdate}>상태변경</MenuButton>
+          {children}
         </Menu>
       </ButtonWrapper>
       {modalType === ModalTypes.DELETE && (

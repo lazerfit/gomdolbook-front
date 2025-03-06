@@ -6,6 +6,7 @@ import BookDetailButtonActions from "@/components/myCollection/ui/button/BookDet
 import { ParamContext } from "@/api/contextProviders/contexts/collectionParamContext.ts";
 import { RefetchContext } from "@/api/contextProviders/contexts/refetchContext.ts";
 import { useBook, useCollection, useReadingLog } from "@/hooks/queries/index.ts";
+import { MenuButton } from "@/ui/ThreeDotMenu.tsx";
 
 const Wrapper = styled.section`
   width: 100%;
@@ -98,7 +99,7 @@ const BookDetails = (props: Props) => {
   const [isErrorToast, setIsErrorToast] = useState(false);
   const { book, isBookLoading } = useBook({ isbn: props.isbn });
   const { removeBook, isRemoveBookPending } = useCollection();
-  const { status, statusRefetch, makeUpdatable } = useReadingLog(props.isbn);
+  const { status, statusRefetch, makeUpdatable } = useReadingLog({ isbn: props.isbn });
   const { name } = useContext(ParamContext);
   const { refetch: collectionBookListRefetch } = useContext(RefetchContext);
 
@@ -135,11 +136,9 @@ const BookDetails = (props: Props) => {
         <BackButton data-testid="backBtn" onClick={props.onClose}>
           <FaArrowLeft style={{ fontSize: "20px" }} />
         </BackButton>
-        <ThreeDotMenu
-          onRemove={onRemoveBook}
-          isLoading={isRemoveBookPending}
-          statusUpdate={makeUpdatable}
-        />
+        <ThreeDotMenu onRemove={onRemoveBook} isLoading={isRemoveBookPending}>
+          <MenuButton onClick={makeUpdatable}>상태변경</MenuButton>
+        </ThreeDotMenu>
       </NavButtonWrapper>
       <MainContentWrapper>
         {isBookLoading ? (

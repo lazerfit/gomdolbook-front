@@ -4,6 +4,7 @@ export const BookEndPoint = {
   updateReadingLog: () => `/readingLog/update`,
   saveBook: () => "/book/save",
   getStatus: (isbn: string) => `/status/${isbn}`,
+  updateStatus: (isbn: string) => `/status/${isbn}/update`,
   getBookSearchResult: () => "/book/search",
   getLibrary: () => "/book/Library",
 };

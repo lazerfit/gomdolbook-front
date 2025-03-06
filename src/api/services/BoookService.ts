@@ -85,6 +85,13 @@ export const BookService = {
       method: "GET",
     });
   },
+  updateStatus: (isbn: string, status: string) => {
+    return request<void>({
+      url: BookEndPoint.updateStatus(isbn),
+      method: "POST",
+      params: { status: status },
+    });
+  },
   getBookSearchResult: (q: string) => {
     return request<IApiResponse<IBookResponse[]>>({
       url: BookEndPoint.getBookSearchResult(),

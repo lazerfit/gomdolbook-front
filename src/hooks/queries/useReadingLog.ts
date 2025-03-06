@@ -41,6 +41,15 @@ const useGetStatus = (isbn: string) => {
   return { status, statusRefetch, makeUpdatable };
 };
 
+const useUpdateStatus = () => {
+  const { mutate: updateStatus } = useMutation({
+    mutationFn: ({ isbn, status }: { isbn: string; status: string }) =>
+      BookService.updateStatus(isbn, status),
+  });
+
+  return { updateStatus };
+};
+
 const useGetReadinglog = (isbn: string) => {
   const {
     data,
@@ -56,10 +65,16 @@ const useGetReadinglog = (isbn: string) => {
   return { readingLog, readingLogRefetch, isReadingLogLoading };
 };
 
-export const useReadingLog = (isbn: string) => {
+interface Args {
+  isbn?: string;
+  statusValue?: string;
+}
+
+export const useReadingLog = ({ isbn = "" }: Args = {}) => {
   const { readingLog, readingLogRefetch, isReadingLogLoading } = useGetReadinglog(isbn);
   const { status, statusRefetch, makeUpdatable } = useGetStatus(isbn);
   const { updateReadingLog } = useUpdateReadingLog();
+  const { updateStatus } = useUpdateStatus();
   return {
     readingLog,
     readingLogRefetch,
@@ -68,5 +83,6 @@ export const useReadingLog = (isbn: string) => {
     statusRefetch,
     makeUpdatable,
     updateReadingLog,
+    updateStatus,
   };
 };

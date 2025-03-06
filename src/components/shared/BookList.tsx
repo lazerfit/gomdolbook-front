@@ -1,6 +1,6 @@
 import { styled } from "styled-components";
 import { useNavigate } from "react-router-dom";
-import type { IApiResponse, ILibraryResponse } from "@/api/services/BoookService.ts";
+import type { ILibraryResponse } from "@/api/services/BoookService.ts";
 import { Modal } from "@/ui/index.ts";
 import { useState } from "react";
 import BookDetails from "./BookDetails.tsx";

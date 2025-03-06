@@ -31,7 +31,6 @@ const server = setupServer(
         },
       });
     }
-
     return HttpResponse.error();
   }),
   http.options("http://localhost:8080/api/v1/readingLog", () => {
@@ -54,6 +53,33 @@ const server = setupServer(
     });
   }),
   http.options("http://localhost:8080/api/v1/readingLog/update", () => {
+    return new HttpResponse(null, {
+      status: 200,
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "POST, OPTIONS, GET",
+        "Access-Control-Allow-Headers": "Content-Type",
+      },
+    });
+  }),
+  http.get("http://localhost:8080/api/v1/status/9791194330424", () => {
+    return HttpResponse.json({ data: "READING" });
+  }),
+  http.post("http://localhost:8080/api/v1/status/9791194330424/update", ({ request }) => {
+    const url = new URL(request.url);
+    const param = url.searchParams.get("status");
+
+    if (param === "FINISHED") {
+      return new HttpResponse(JSON.stringify({ data: "FINISHED" }), {
+        status: 200,
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+        },
+      });
+    }
+    return HttpResponse.json({ data: "READING" });
+  }),
+  http.options("http://localhost:8080/api/v1/status/9791194330424", () => {
     return new HttpResponse(null, {
       status: 200,
       headers: {
@@ -95,5 +121,14 @@ describe("render", () => {
     expect(btn).toBeTruthy();
     fireEvent.click(btn);
     await waitFor(() => expect(screen.getByText("저장하기")).toBeTruthy());
+  });
+
+  it("threedot 버튼을 클릭한다.", async () => {
+    const btn = await screen.findByText("상태변경");
+    expect(btn).toBeTruthy();
+    expect(await screen.findByText("읽는 중"));
+    fireEvent.click(btn);
+    const updateBtn = await screen.findByText("다 읽었어요");
+    fireEvent.click(updateBtn);
   });
 });

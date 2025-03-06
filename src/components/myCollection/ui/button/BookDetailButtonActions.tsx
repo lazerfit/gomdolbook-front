@@ -22,6 +22,7 @@ const ReadingStatus = styled.div`
   padding: 20px;
   border-radius: 20px;
   background-color: ${(props) => props.theme.colors.black};
+  color: ${(props) => props.theme.colors.white};
   display: flex;
   align-items: center;
   justify-content: center;
@@ -32,7 +33,6 @@ const SaveButton = styled(ButtonMd)`
   position: relative;
   overflow: hidden;
   padding: 7px 20px;
-  /* color: ${(props) => props.theme.colors.white}; */
 
   > p {
     position: relative;

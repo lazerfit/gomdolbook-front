@@ -9,6 +9,8 @@ import TinyMCE from "@/utils/TinyMCE.tsx";
 import sanitizeHtml from "sanitize-html";
 import { ModalTypes, useModal } from "@/hooks/useModal.ts";
 import { useToast } from "@/hooks/useToast.ts";
+import { MenuButton } from "@/ui/ThreeDotMenu.tsx";
+import { TranslateBookStatus } from "@/utils/index.ts";
 
 const Wrapper = styled.section`
   margin: 34px auto;
@@ -41,6 +43,21 @@ const Rating = styled.div`
   min-width: 12.5rem;
   margin-top: 21px;
   font-size: 1.313rem;
+`;
+
+const Status = styled.div`
+  margin-top: 20px;
+  width: 90px;
+  padding: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  background-color: ${(props) => props.theme.colors.gray3};
+  color: ${(props) => props.theme.colors.gray6};
+  box-shadow:
+    rgba(0, 0, 0, 0.15) 0px 15px 25px,
+    rgba(0, 0, 0, 0.05) 0px 5px 10px;
 `;
 
 const ContentWrapper = styled.section`
@@ -128,6 +145,22 @@ const ModalSaveButton = styled.button`
   }
 `;
 
+const ModalUpdateButton = styled.button`
+  padding: 15px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  border: 1px solid black;
+  border-radius: 8px;
+  background-color: ${(props) => props.theme.colors.black};
+  color: ${(props) => props.theme.colors.white};
+  transition: all 0.5s ease;
+
+  &:hover {
+    transform: translate(5px, -5px);
+    box-shadow: -3px 3px #cd6133;
+  }
+`;
+
 interface Data {
   note: string;
   title: string;
@@ -144,8 +177,15 @@ const ReadingLog = () => {
   const [noteTitle, setNoteTitle] = useState("");
   const [placeholder, setPlaceholder] = useState("");
   const [value, setValue] = useState("");
-  const { readingLog, isReadingLogLoading, readingLogRefetch, updateReadingLog } =
-    useReadingLog(isbn);
+  const {
+    readingLog,
+    isReadingLogLoading,
+    readingLogRefetch,
+    updateReadingLog,
+    status,
+    statusRefetch,
+    updateStatus,
+  } = useReadingLog({ isbn: isbn });
 
   const onOpenReadingLog = (id: string, title: string, placeholder: string) => {
     openModal(ModalTypes.WYSIWYG);
@@ -181,6 +221,20 @@ const ReadingLog = () => {
         onShowErrorToast();
       },
     });
+  };
+
+  const onUpdateStatus = (status: string) => {
+    updateStatus(
+      { isbn: isbn, status: status },
+      {
+        onSuccess: () => {
+          statusRefetch()
+            .then(() => closeModal())
+            .catch((error) => console.log(error));
+        },
+        onError: (error) => console.log(error),
+      },
+    );
   };
 
   const onSanitize = (text: string) => {
@@ -222,7 +276,13 @@ const ReadingLog = () => {
 
   return (
     <Wrapper>
-      <ThreeDotMenu onRemove={() => void 0} isLoading={false} />
+      <ThreeDotMenu onRemove={() => void 0} isLoading={false}>
+        {status === "READING" && (
+          <MenuButton onClick={() => openModal(ModalTypes.STATUS_UPDATE)}>
+            상태변경
+          </MenuButton>
+        )}
+      </ThreeDotMenu>
       <Title>{readingLog.title}</Title>
       <Publisher
         author={readingLog.author}
@@ -233,6 +293,7 @@ const ReadingLog = () => {
         <Image src={readingLog.cover} />
         <Rating>⭐⭐⭐⭐⭐</Rating>
       </ImageWrapper>
+      <Status>{TranslateBookStatus(status)}</Status>
       <ContentWrapper>
         {analyzeContentData.map((content) => (
           <AnalyzeContent key={content.note}>
@@ -268,6 +329,15 @@ const ReadingLog = () => {
               </ModalWysiwyg>
             </ModalContentWrapper>
           </ModalWrapper>
+        </Modal>
+      )}
+      {modalType === ModalTypes.STATUS_UPDATE && (
+        <Modal innerHeight="fit-content" innerWidth="300px" onClose={closeModal}>
+          <div style={{ display: "flex", justifyContent: "center", padding: "20px" }}>
+            <ModalUpdateButton onClick={() => onUpdateStatus("FINISHED")}>
+              다 읽었어요
+            </ModalUpdateButton>
+          </div>
         </Modal>
       )}
       <Toast

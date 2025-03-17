@@ -5,6 +5,7 @@ import { BookList } from "../shared/index.ts";
 import { MainpageSkeleton } from "@/ui/index.ts";
 import { useKeycloak } from "@react-keycloak/web";
 import { useBook } from "@/hooks/queries/index.ts";
+import { useEffect, useState } from "react";
 
 const Wrapper = styled.section`
   width: 100%;
@@ -16,8 +17,15 @@ const Wrapper = styled.section`
 `;
 
 const MainContent = () => {
-  const { initialized } = useKeycloak();
-  const { library, isLibraryLoading } = useBook({ status: "READING" });
+  const { initialized, keycloak } = useKeycloak();
+  const [filter, setFilter] = useState("");
+  const { library, isLibraryLoading } = useBook({ status: filter });
+
+  useEffect(() => {
+    if (initialized && keycloak.authenticated) {
+      setFilter("READING");
+    }
+  }, [keycloak, initialized]);
 
   if (!initialized || isLibraryLoading) {
     return <MainpageSkeleton />;

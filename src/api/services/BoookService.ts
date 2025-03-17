@@ -37,6 +37,7 @@ export interface IReadinglogResponse {
   note1: string;
   note2: string;
   note3: string;
+  rating: number;
 }
 
 export interface IReadingLogUpdateRequest {
@@ -70,6 +71,13 @@ export const BookService = {
       url: BookEndPoint.updateReadingLog(),
       method: "POST",
       data: data,
+    });
+  },
+  updateRating: (isbn: string, star: number) => {
+    return request<void>({
+      url: BookEndPoint.updateRating(),
+      method: "POST",
+      params: { isbn: isbn, star: star },
     });
   },
   saveBook: (data: IBookSaveRequest) => {

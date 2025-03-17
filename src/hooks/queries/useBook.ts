@@ -21,6 +21,7 @@ const useGetBook = (isbn: string) => {
   const { data, isLoading: isBookLoading } = useQuery({
     queryKey: ["book", isbn],
     queryFn: () => BookService.getBook(isbn),
+    enabled: !!isbn,
   });
 
   const book = data?.data ?? DEFAULT_BOOK;
@@ -32,6 +33,7 @@ const useGetBookSearchResult = (q: string) => {
   const { data, isLoading: isSearchResultLoading } = useQuery({
     queryKey: ["search", q],
     queryFn: () => BookService.getBookSearchResult(q),
+    enabled: !!q,
   });
 
   const searchResult = data?.data ?? [];
@@ -42,7 +44,10 @@ const useGetBookSearchResult = (q: string) => {
 const useGetLibrary = (status: string) => {
   const { data, isLoading: isLibraryLoading } = useQuery({
     queryKey: ["Library", status],
-    queryFn: () => BookService.getLibrary(status),
+    queryFn: () => {
+      return BookService.getLibrary(status);
+    },
+    enabled: !!status,
   });
 
   const library = data?.data ?? [];
@@ -64,7 +69,7 @@ interface Args {
   status?: string;
 }
 
-export const useBook = ({ isbn = "", q = "", status = "READING" }: Args = {}) => {
+export const useBook = ({ isbn = "", q = "", status = "" }: Args = {}) => {
   const { book, isBookLoading } = useGetBook(isbn);
   const { searchResult, isSearchResultLoading } = useGetBookSearchResult(q);
   const { library, isLibraryLoading } = useGetLibrary(status);

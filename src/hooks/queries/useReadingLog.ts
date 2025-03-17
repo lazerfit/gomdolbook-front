@@ -1,8 +1,9 @@
 import { BookService, IReadingLogUpdateRequest } from "@/api/services/BoookService.ts";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useState, useEffect } from "react";
+import type { IReadinglogResponse } from "@/api/services/BoookService.ts";
 
-const DEFAULT_READING_LOG = {
+const DEFAULT_READING_LOG: IReadinglogResponse = {
   title: "default",
   author: "default",
   pubDate: "default",
@@ -12,6 +13,7 @@ const DEFAULT_READING_LOG = {
   note1: "default note1",
   note2: "default note2",
   note3: "default note3",
+  rating: 0,
 };
 
 const useUpdateReadingLog = () => {
@@ -30,6 +32,7 @@ const useGetStatus = (isbn: string) => {
   const { data, refetch: statusRefetch } = useQuery({
     queryKey: ["status", isbn],
     queryFn: () => BookService.getStatus(isbn),
+    enabled: !!isbn,
   });
 
   useEffect(() => {
@@ -58,11 +61,21 @@ const useGetReadinglog = (isbn: string) => {
   } = useQuery({
     queryKey: ["readingLog", isbn],
     queryFn: () => BookService.getReadingLog(isbn),
+    enabled: !!isbn,
   });
 
   const readingLog = data?.data ?? DEFAULT_READING_LOG;
 
   return { readingLog, readingLogRefetch, isReadingLogLoading };
+};
+
+const useUpdateRating = () => {
+  const { mutate: updateRating } = useMutation({
+    mutationFn: ({ isbn, star }: { isbn: string; star: number }) =>
+      BookService.updateRating(isbn, star),
+  });
+
+  return { updateRating };
 };
 
 interface Args {
@@ -75,6 +88,7 @@ export const useReadingLog = ({ isbn = "" }: Args = {}) => {
   const { status, statusRefetch, makeUpdatable } = useGetStatus(isbn);
   const { updateReadingLog } = useUpdateReadingLog();
   const { updateStatus } = useUpdateStatus();
+  const { updateRating } = useUpdateRating();
   return {
     readingLog,
     readingLogRefetch,
@@ -84,5 +98,6 @@ export const useReadingLog = ({ isbn = "" }: Args = {}) => {
     makeUpdatable,
     updateReadingLog,
     updateStatus,
+    updateRating,
   };
 };

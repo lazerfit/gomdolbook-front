@@ -148,8 +148,8 @@ const BookDeatilButtonActions = ({
           {translateBookStatus(status)}
         </ReadingStatus>
       ) : (
-        saveBtnArgs.map((arg, index) => (
-          <SaveButton onClick={() => saveReadingLog(arg.status)} key={index}>
+        saveBtnArgs.map((arg) => (
+          <SaveButton onClick={() => saveReadingLog(arg.status)} key={arg.status}>
             {arg.label}
           </SaveButton>
         ))

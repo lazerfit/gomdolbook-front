@@ -155,6 +155,7 @@ const SearchResult = (props: Props) => {
                       author={book.author}
                       publisher={book.publisher}
                       date={book.pubDate}
+                      align="flex-start"
                     />
                     <Description>{book.description}</Description>
                   </Infomation>

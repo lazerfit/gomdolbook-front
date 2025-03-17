@@ -3,7 +3,7 @@ import { FaRegPenToSquare } from "react-icons/fa6";
 import { ThreeDotMenu, Publisher, BookListSkeleton, Modal, Toast } from "@/ui/index.ts";
 import { useParams } from "react-router-dom";
 import { useReadingLog } from "@/hooks/queries/useReadingLog.ts";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { GrClose } from "react-icons/gr";
 import TinyMCE from "@/utils/TinyMCE.tsx";
 import sanitizeHtml from "sanitize-html";
@@ -11,6 +11,7 @@ import { ModalTypes, useModal } from "@/hooks/useModal.ts";
 import { useToast } from "@/hooks/useToast.ts";
 import { MenuButton } from "@/ui/ThreeDotMenu.tsx";
 import { TranslateBookStatus } from "@/utils/index.ts";
+import Ratings from "./Ratings.tsx";
 
 const Wrapper = styled.section`
   margin: 34px auto;
@@ -36,13 +37,6 @@ const Image = styled.img`
     rgba(0, 0, 0, 0.05) 0px 5px 10px;
   border-radius: 8px;
   margin-top: 13px;
-`;
-
-const Rating = styled.div`
-  width: 200px;
-  min-width: 12.5rem;
-  margin-top: 21px;
-  font-size: 1.313rem;
 `;
 
 const Status = styled.div`
@@ -145,9 +139,19 @@ const ModalSaveButton = styled.button`
   }
 `;
 
+const ModalUpdateButtonWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px;
+  flex-direction: column;
+  gap: 10px;
+`;
+
 const ModalUpdateButton = styled.button`
-  padding: 15px;
+  padding: 10px;
   font-size: 1.2rem;
+  min-width: 100px;
   cursor: pointer;
   border: 1px solid black;
   border-radius: 8px;
@@ -186,6 +190,13 @@ const ReadingLog = () => {
     statusRefetch,
     updateStatus,
   } = useReadingLog({ isbn: isbn });
+  const [ratings, setRatings] = useState(readingLog.rating);
+
+  useEffect(() => {
+    if (readingLog) {
+      setRatings(readingLog.rating);
+    }
+  }, [readingLog]);
 
   const onOpenReadingLog = (id: string, title: string, placeholder: string) => {
     openModal(ModalTypes.WYSIWYG);
@@ -235,6 +246,11 @@ const ReadingLog = () => {
         onError: (error) => console.log(error),
       },
     );
+  };
+
+  const onModifyStar = () => {
+    setRatings(0);
+    closeModal();
   };
 
   const onSanitize = (text: string) => {
@@ -291,8 +307,8 @@ const ReadingLog = () => {
       />
       <ImageWrapper>
         <Image src={readingLog.cover} />
-        <Rating>⭐⭐⭐⭐⭐</Rating>
       </ImageWrapper>
+      <Ratings isbn={isbn} initialStar={ratings} refetch={readingLogRefetch} />
       <Status>{TranslateBookStatus(status)}</Status>
       <ContentWrapper>
         {analyzeContentData.map((content) => (
@@ -333,11 +349,12 @@ const ReadingLog = () => {
       )}
       {modalType === ModalTypes.STATUS_UPDATE && (
         <Modal innerHeight="fit-content" innerWidth="300px" onClose={closeModal}>
-          <div style={{ display: "flex", justifyContent: "center", padding: "20px" }}>
+          <ModalUpdateButtonWrapper>
             <ModalUpdateButton onClick={() => onUpdateStatus("FINISHED")}>
               다 읽었어요
             </ModalUpdateButton>
-          </div>
+            <ModalUpdateButton onClick={onModifyStar}>별점 수정</ModalUpdateButton>
+          </ModalUpdateButtonWrapper>
         </Modal>
       )}
       <Toast

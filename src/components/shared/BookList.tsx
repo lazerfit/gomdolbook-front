@@ -43,10 +43,6 @@ const Title = styled.h5`
   margin-top: 21px;
 `;
 
-const Rating = styled.div`
-  margin-top: 8px;
-`;
-
 const EmptyLibraryWrapper = styled.div`
   width: 100%;
   height: 100%;
@@ -93,7 +89,6 @@ const BookList = ({ books }: Props) => {
           <ContentWrapper key={book.isbn}>
             <Image src={book.cover} alt="책 표지" onClick={() => handleOnClick(book)} />
             <Title>{book.title}</Title>
-            <Rating>⭐⭐⭐⭐⭐</Rating>
           </ContentWrapper>
         ))
       )}

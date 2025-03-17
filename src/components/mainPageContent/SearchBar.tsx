@@ -36,12 +36,12 @@ const Input = styled.input`
 
 const SearchBar = () => {
   const [searchQuery, setSearchQuery] = useState("");
-  const onChangeQuery = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchQuery(event.target.value);
-  };
   const [showSearchResult, setShowSearchResult] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const { keycloak } = useKeycloak();
+  const onChangeQuery = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchQuery(event.target.value);
+  };
   const onKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (searchQuery.trim() !== "" && event.key === "Enter") {
       if (!keycloak.authenticated) {

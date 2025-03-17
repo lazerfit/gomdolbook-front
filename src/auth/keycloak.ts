@@ -17,8 +17,11 @@ export const keycloakInitOptions = {
 export const eventHandler = async (event: AuthClientEvent) => {
   switch (event) {
     case "onTokenExpired":
+      if (!keycloak.authenticated) {
+        await keycloak.logout({ redirectUri: "http://localhost:3000" });
+      }
       try {
-        const refreshed = await keycloak.updateToken(30);
+        const refreshed = await keycloak.updateToken(-1);
         if (refreshed) {
           setToken(keycloak.idToken!);
         } else {

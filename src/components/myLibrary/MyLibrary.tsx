@@ -18,7 +18,7 @@ const Wrapper = styled.section`
 const MyLibrary = () => {
   const params = useParams();
   const status = params.status ?? "";
-  const [filter, setfilter] = useState(status);
+  const [filter, setfilter] = useState("");
   const { library, isLibraryLoading } = useBook({ status: filter });
 
   useEffect(() => {

@@ -25,6 +25,7 @@ const useGetOne = (name: string) => {
   } = useQuery({
     queryKey: ["collection", name],
     queryFn: () => collectionService.getOne(name),
+    enabled: !!name,
   });
 
   const collection = data?.data ?? [

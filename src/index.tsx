@@ -8,6 +8,7 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import keycloak, { keycloakInitOptions, eventHandler } from "./auth/keycloak.ts";
 import { ReactKeycloakProvider } from "@react-keycloak/web";
 import { setToken } from "@/api/services/config/Interceptor.ts";
+import { StrictMode } from "react";
 
 const root = createRoot(document.getElementById("root")!);
 root.render(
@@ -23,7 +24,9 @@ root.render(
     <QueryClientProvider client={queryClient}>
       <ReactQueryDevtools initialIsOpen={false} />
       <BrowserRouter>
-        <App />
+        <StrictMode>
+          <App />
+        </StrictMode>
       </BrowserRouter>
     </QueryClientProvider>
   </ReactKeycloakProvider>,

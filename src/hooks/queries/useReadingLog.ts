@@ -79,13 +79,15 @@ const useUpdateRating = () => {
 };
 
 interface Args {
-  isbn?: string;
+  statusIsbn?: string;
+  readingLogIsbn?: string;
   statusValue?: string;
 }
 
-export const useReadingLog = ({ isbn = "" }: Args = {}) => {
-  const { readingLog, readingLogRefetch, isReadingLogLoading } = useGetReadinglog(isbn);
-  const { status, statusRefetch, makeUpdatable } = useGetStatus(isbn);
+export const useReadingLog = ({ statusIsbn = "", readingLogIsbn = "" }: Args = {}) => {
+  const { readingLog, readingLogRefetch, isReadingLogLoading } =
+    useGetReadinglog(readingLogIsbn);
+  const { status, statusRefetch, makeUpdatable } = useGetStatus(statusIsbn);
   const { updateReadingLog } = useUpdateReadingLog();
   const { updateStatus } = useUpdateStatus();
   const { updateRating } = useUpdateRating();

@@ -35,6 +35,12 @@ const GlobalStyle = createGlobalStyle`
     background-color: transparent;
   }
 
+  #root {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+  }
+
   body {
     font-size: 100%;
     color: ${(props) => props.theme.colors.black};
@@ -46,6 +52,7 @@ const GlobalStyle = createGlobalStyle`
     background-color: ${(props) => props.theme.colors.white};
     max-width: 1180px;
     margin: 0 auto;
+    height: 100%;
   }
 
   code {

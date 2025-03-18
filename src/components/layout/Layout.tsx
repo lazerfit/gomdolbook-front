@@ -1,6 +1,11 @@
 import Header from "./header/Header.tsx";
 import Footer from "./footer/Footer.tsx";
 import { useOutlet } from "react-router-dom";
+import { styled } from "styled-components";
+
+const Main = styled.section`
+  flex: 1;
+`;
 
 const Layout = () => {
   const outlet = useOutlet();
@@ -8,7 +13,7 @@ const Layout = () => {
   return (
     <>
       <Header />
-      <main>{outlet}</main>
+      <Main>{outlet}</Main>
       <Footer />
     </>
   );

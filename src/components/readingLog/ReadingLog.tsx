@@ -189,7 +189,7 @@ const ReadingLog = () => {
     status,
     statusRefetch,
     updateStatus,
-  } = useReadingLog({ isbn: isbn });
+  } = useReadingLog({ statusIsbn: isbn, readingLogIsbn: isbn });
   const [ratings, setRatings] = useState(readingLog.rating);
 
   useEffect(() => {

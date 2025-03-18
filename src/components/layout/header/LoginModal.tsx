@@ -1,7 +1,7 @@
 import { styled } from "styled-components";
 import { Modal } from "@/ui/index.ts";
-import kakaoLoginImage from "@/assets/img/kakaotalk_sharing_btn_medium.png";
-import googleLoginImage from "@/assets/img/web_light_sq_na@1x.png";
+import kakaoLoginImage from "@/assets/img/kakaotalk.png";
+import googleLoginImage from "@/assets/img/web_light_rd_na@1x.png";
 import githubLoginImgae from "@/assets/img/github-mark.png";
 
 const ContentWrapper = styled.div`
@@ -38,6 +38,12 @@ const LoginButton = styled.button`
   margin: 8px 0%;
 `;
 
+const Img = styled.img`
+  width: 40px;
+  height: 40px;
+  /* border-radius: 15px; */
+`;
+
 interface Props {
   isModalOpened: boolean;
   onClose: () => void;
@@ -57,21 +63,21 @@ const LoginModal = (props: Props) => {
         <Banner>로그인/회원가입</Banner>
         <EasyLoginWrapper>
           <LoginButton onClick={props.kakao} style={{ cursor: "pointer" }}>
-            <img
+            <Img
               src={kakaoLoginImage}
               style={{ width: "40px", height: "40px" }}
               alt="카카오 로그인"
             />
           </LoginButton>
           <LoginButton onClick={props.github}>
-            <img
+            <Img
               src={githubLoginImgae}
               style={{ width: "40px", height: "40px" }}
               alt="깃헙 로그인"
             />
           </LoginButton>
           <LoginButton onClick={props.google} style={{ cursor: "pointer" }}>
-            <img src={googleLoginImage} alt="구글 로그인" />
+            <Img src={googleLoginImage} alt="구글 로그인" />
           </LoginButton>
         </EasyLoginWrapper>
       </ContentWrapper>

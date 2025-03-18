@@ -99,7 +99,9 @@ const BookDetails = (props: Props) => {
   const [isErrorToast, setIsErrorToast] = useState(false);
   const { book, isBookLoading } = useBook({ isbn: props.isbn });
   const { removeBook, isRemoveBookPending } = useCollection();
-  const { status, statusRefetch, makeUpdatable } = useReadingLog({ isbn: props.isbn });
+  const { status, statusRefetch, makeUpdatable } = useReadingLog({
+    statusIsbn: props.isbn,
+  });
   const { name } = useContext(ParamContext);
   const { refetch: collectionBookListRefetch } = useContext(RefetchContext);
 

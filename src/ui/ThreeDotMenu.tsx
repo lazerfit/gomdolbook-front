@@ -1,11 +1,13 @@
 import { styled } from "styled-components";
+import { motion } from "framer-motion";
 import Modal from "./Modal.tsx";
 import { ButtonMd } from "@/styles/common.styled.ts";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { ModalTypes, useModal } from "@/hooks/useModal.ts";
-import { ReactNode } from "react";
+import { ReactNode, useState } from "react";
+import { itemVariants } from "./frameMotion/variants.ts";
 
-const ButtonWrapper = styled.div`
+const ButtonWrapper = styled(motion.section)`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -14,54 +16,37 @@ const ButtonWrapper = styled.div`
   position: relative;
 `;
 
-const Menu = styled.div`
+const ThreeDot = styled(motion.nav)`
+  cursor: pointer;
+`;
+
+const Menu = styled(motion.ul)`
   padding: 10px;
   width: 90px;
   min-width: 5.625rem;
-  box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 15px 0px;
+  box-shadow:
+    rgba(0, 0, 0, 0.15) 0px 15px 25px,
+    rgba(0, 0, 0, 0.05) 0px 5px 10px;
   position: absolute;
   text-align: center;
   border-radius: 8px;
   top: 40px;
   right: 5px;
-  display: none;
   cursor: pointer;
-
-  &::after {
-    content: "";
-    position: absolute;
-    background-color: ${(props) => props.theme.colors.white};
-    width: 10px;
-    height: 10px;
-    top: -5px;
-    transform: rotate(45deg);
-    right: 10%;
-  }
+  background-color: white;
+  list-style: none;
 `;
 
-const ButtonInput = styled.input`
-  display: none;
-
-  &:checked ~ ${Menu} {
-    display: block;
-  }
-`;
-
-const ButtonLabel = styled.label`
-  display: block;
-  width: 40px;
-  height: 30px;
-  text-align: center;
-  padding: 5px;
-  position: relative;
-  cursor: pointer;
-`;
-
-export const MenuButton = styled.button`
-  background-color: transparent;
+export const Item = styled(motion.li)`
   cursor: pointer;
   padding: 5px;
   border-radius: 3px;
+  border-bottom: 1px solid #d3d3d3;
+  list-style: none;
+
+  &:last-child {
+    border-bottom: none;
+  }
 
   &:hover {
     background-color: ${(props) => props.theme.colors.black};
@@ -107,6 +92,7 @@ interface Props {
 
 const ThreeDotMenu = ({ onRemove = () => void 0, isLoading, children }: Props) => {
   const { modalType, openModal, closeModal } = useModal();
+  const [isOpen, setIsOpen] = useState(false);
 
   const onSubmit = () => {
     try {
@@ -120,13 +106,42 @@ const ThreeDotMenu = ({ onRemove = () => void 0, isLoading, children }: Props) =
 
   return (
     <>
-      <ButtonWrapper>
-        <ButtonInput type="checkbox" id="trigger" />
-        <ButtonLabel htmlFor="trigger">
+      <ButtonWrapper initial={false} animate={isOpen ? "open" : "closed"}>
+        <ThreeDot
+          initial="closed"
+          animate={isOpen ? "open" : "closed"}
+          onClick={() => setIsOpen(!isOpen)}
+        >
           <BsThreeDotsVertical data-tesid="threedot" />
-        </ButtonLabel>
-        <Menu>
-          <MenuButton onClick={() => openModal(ModalTypes.DELETE)}>삭제하기</MenuButton>
+        </ThreeDot>
+        <Menu
+          animate={isOpen ? "open" : "closed"}
+          variants={{
+            open: {
+              clipPath: "inset(0% 0% 0% 0% round 10px)",
+              transition: {
+                type: "spring",
+                bounce: 0,
+                duration: 0.5,
+                delayChildren: 0.3,
+                staggerChildren: 0.05,
+              },
+            },
+            closed: {
+              clipPath: "inset(0% 0% 100% 100% round 10px)",
+              transition: {
+                type: "spring",
+                bounce: 0,
+                duration: 0.3,
+              },
+            },
+          }}
+          style={{ pointerEvents: isOpen ? "auto" : "none" }}
+          initial="closed"
+        >
+          <Item variants={itemVariants} onClick={() => openModal(ModalTypes.DELETE)}>
+            삭제하기
+          </Item>
           {children}
         </Menu>
       </ButtonWrapper>

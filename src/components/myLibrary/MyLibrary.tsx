@@ -5,8 +5,9 @@ import { BookList } from "../shared/index.ts";
 import { BookListSkeleton } from "@/ui/index.ts";
 import { useParams } from "react-router-dom";
 import { useBook } from "@/hooks/queries/index.ts";
+import { motion } from "framer-motion";
 
-const Wrapper = styled.section`
+const Wrapper = styled(motion.section)`
   max-width: 1180px;
   display: flex;
   flex-direction: column;
@@ -30,7 +31,17 @@ const MyLibrary = () => {
   return (
     <Wrapper>
       <StatusNavBar />
-      {isLibraryLoading ? <BookListSkeleton /> : <BookList books={library} />}
+      <motion.div
+        initial={{ y: -300, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{
+          type: "spring",
+          stiffness: 400,
+          damping: 20,
+        }}
+      >
+        {isLibraryLoading ? <BookListSkeleton /> : <BookList books={library} />}
+      </motion.div>
     </Wrapper>
   );
 };

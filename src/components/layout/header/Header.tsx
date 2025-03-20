@@ -1,28 +1,22 @@
 import { useNavigate } from "react-router-dom";
 import { styled } from "styled-components";
 import UserProfile from "./UserProfile.tsx";
-import { ButtonMd } from "@/styles/common.styled.ts";
 import { useKeycloak } from "@react-keycloak/web";
 import { useEffect, useState } from "react";
 import LoginModal from "./LoginModal.tsx";
 import { setToken } from "@/api/services/config/Interceptor.ts";
 import { LoginRequireModal } from "@/ui/index.ts";
+import { motion, useScroll, useTransform } from "framer-motion";
 
-const Wrapper = styled.header`
+const NavigationLinkWrapper = styled.nav`
   display: flex;
-  align-items: center;
-  justify-content: space-between;
+`;
+
+const MainLogo = styled.div`
   font-family: ${(props) => props.theme.fonts.english}, serif;
-`;
-
-const NavigationLinkWrapper = styled.div`
-  display: flex;
-`;
-
-const MainLogo = styled.h3`
-  font-family: "Jim Nightshade", cursive;
   cursor: pointer;
-  margin-right: 60px;
+  margin-right: 90px;
+  font-size: 1.4rem;
 `;
 
 const MainLink = styled.button`
@@ -44,13 +38,17 @@ const UserMenuWrapper = styled.div`
   align-items: center;
 `;
 
-const Login = styled(ButtonMd)`
+const Login = styled(motion.button)`
   transition: transform 0.2s ease;
   font-family: ${(props) => props.theme.fonts.english};
-
-  &:hover {
-    transform: translate(-1px, -1px);
-  }
+  font-weight: 500;
+  line-height: 30px;
+  padding: 10px 15px;
+  background-color: ${(props) => props.theme.colors.black};
+  border-radius: 20px;
+  cursor: pointer;
+  color: ${(props) => props.theme.colors.white};
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 3px 3px 0px;
 `;
 
 const Header = () => {
@@ -58,6 +56,8 @@ const Header = () => {
   const { keycloak, initialized } = useKeycloak();
   const [isModalOpened, setIsModalOpened] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const { scrollY } = useScroll();
+  const height = useTransform(scrollY, [0, 100], [100, 60]);
 
   const login = async (idp: string) => {
     try {
@@ -94,7 +94,7 @@ const Header = () => {
   };
 
   return (
-    <Wrapper>
+    <motion.header id="navigation" style={{ height }}>
       {showModal && <LoginRequireModal close={() => setShowModal(false)} />}
       <NavigationLinkWrapper>
         <MainLink onClick={() => validateLoginStatus("/library/reading")}>
@@ -115,7 +115,9 @@ const Header = () => {
         {keycloak.authenticated ? (
           <UserProfile onLoggedOut={() => void logout()} />
         ) : (
-          <Login onClick={() => setIsModalOpened(true)}>Log in</Login>
+          <Login whileTap={{ scale: 0.75 }} onClick={() => setIsModalOpened(true)}>
+            Log in
+          </Login>
         )}
       </UserMenuWrapper>
       <LoginModal
@@ -125,7 +127,7 @@ const Header = () => {
         kakao={() => void login("kakao")}
         google={() => void login("google")}
       />
-    </Wrapper>
+    </motion.header>
   );
 };
 

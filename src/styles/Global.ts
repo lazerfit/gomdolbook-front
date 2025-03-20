@@ -2,15 +2,15 @@ import { createGlobalStyle } from "styled-components";
 
 const GlobalStyle = createGlobalStyle`
   @font-face {
-      font-family: 'YESGothic-Regular';
-      src: url('https://cdn.jsdelivr.net/gh/fontbee/font@main/Yes24/YESGothic-Regular.woff') format('woff');
-      font-weight: 400;
-      font-style: normal;
+    font-family: 'NanumSquareNeo-Variable';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_11-01@1.0/NanumSquareNeo-Variable.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
   }
 
   @font-face {
-    font-family: 'YES24';
-    src: url('https://cdn.jsdelivr.net/gh/fontbee/font@main/Yes24/YES24.woff') format('woff');
+    font-family: 'Cafe24Decoschool';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2405-3@1.1/Cafe24Decoschool.woff2') format('woff2');
     font-weight: normal;
     font-style: normal;
   }
@@ -41,12 +41,27 @@ const GlobalStyle = createGlobalStyle`
     flex-direction: column;
   }
 
+  #navigation {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: ${(props) => props.theme.fonts.english}, serif;
+  background-color: ${(props) => props.theme.colors.white};
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 15;
+  height: 60px;
+  width: 1180px;
+  }
+
   body {
     font-size: 100%;
     color: ${(props) => props.theme.colors.black};
     line-height: 140%;
     letter-spacing: -0.3px;
-    font-family: 'YESGothic-Regular';
+    font-family: ${(props) => props.theme.fonts.text};
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     background-color: ${(props) => props.theme.colors.white};
@@ -119,12 +134,48 @@ const GlobalStyle = createGlobalStyle`
   }
   }
 
+  @keyframes ScaleOut {
+  0% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.1);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 0;
+  }
+  }
+
   .scale-in {
-    animation: ScaleIn 0.5s ease-in-out;
+    animation: ScaleIn 0.5s ease-in-out forwards;
   }
 
   .scale-out {
-    animation: ScaleIn 0.5s reverse;
+    animation: ScaleOut 0.3s ease forwards;
+  }
+
+  .scale-enter {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+
+  .scale-enter-active {
+    opacity: 1;
+    transform: translateX(0);
+    transition: opacity 500ms, transform 500ms;
+  }
+
+  .scale-exit {
+    opacity: 1;
+  }
+
+  .scale-exit-active {
+    opacity: 0;
+    transform: scale(0.9);
+    transition: opacity 300ms, transform 300ms;
   }
 `;
 

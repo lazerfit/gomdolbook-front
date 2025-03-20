@@ -4,16 +4,17 @@ import { ThreeDotMenu, Publisher, BookListSkeleton, Modal, Toast } from "@/ui/in
 import { useParams } from "react-router-dom";
 import { useReadingLog } from "@/hooks/queries/useReadingLog.ts";
 import { useEffect, useState } from "react";
-import { GrClose } from "react-icons/gr";
 import TinyMCE from "@/utils/TinyMCE.tsx";
 import sanitizeHtml from "sanitize-html";
 import { ModalTypes, useModal } from "@/hooks/useModal.ts";
 import { useToast } from "@/hooks/useToast.ts";
-import { MenuButton } from "@/ui/ThreeDotMenu.tsx";
+import { Item } from "@/ui/ThreeDotMenu.tsx";
 import { TranslateBookStatus } from "@/utils/index.ts";
 import Ratings from "./Ratings.tsx";
+import { itemVariants } from "@/ui/frameMotion/variants.ts";
+import { motion } from "framer-motion";
 
-const Wrapper = styled.section`
+const Wrapper = styled(motion.section)`
   margin: 34px auto;
   display: flex;
   flex-direction: column;
@@ -95,13 +96,6 @@ const Content = styled.div`
 const ModalWrapper = styled.div`
   display: flex;
   flex-direction: column;
-`;
-
-const CloseButton = styled.button`
-  margin: 10px 10px 0 auto;
-  cursor: pointer;
-  padding: 5px;
-  font-size: 1.2rem;
 `;
 
 const ModalContentWrapper = styled.section`
@@ -291,12 +285,23 @@ const ReadingLog = () => {
   }
 
   return (
-    <Wrapper>
+    <Wrapper
+      initial={{ x: 300, opacity: 0 }}
+      animate={{ x: 0, opacity: 1 }}
+      transition={{
+        type: "spring",
+        stiffness: 400,
+        damping: 20,
+      }}
+    >
       <ThreeDotMenu onRemove={() => void 0} isLoading={false}>
         {status === "READING" && (
-          <MenuButton onClick={() => openModal(ModalTypes.STATUS_UPDATE)}>
+          <Item
+            variants={itemVariants}
+            onClick={() => openModal(ModalTypes.STATUS_UPDATE)}
+          >
             상태변경
-          </MenuButton>
+          </Item>
         )}
       </ThreeDotMenu>
       <Title>{readingLog.title}</Title>
@@ -331,9 +336,6 @@ const ReadingLog = () => {
       {modalType === ModalTypes.WYSIWYG && (
         <Modal innerWidth="1180px" innerHeight="90%" onClose={closeModal}>
           <ModalWrapper>
-            <CloseButton onClick={closeModal}>
-              <GrClose />
-            </CloseButton>
             <ModalContentWrapper>
               <ModalTitle>{noteTitle}</ModalTitle>
               <ModalWysiwyg>

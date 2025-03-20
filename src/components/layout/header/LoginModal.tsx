@@ -57,9 +57,6 @@ const LoginModal = (props: Props) => {
   return (
     <Modal innerWidth="360px" innerHeight="fit-content" onClose={props.onClose}>
       <ContentWrapper>
-        <CloseButton data-testid="closeBtn" onClick={props.onClose}>
-          &times;
-        </CloseButton>
         <Banner>로그인/회원가입</Banner>
         <EasyLoginWrapper>
           <LoginButton onClick={props.kakao} style={{ cursor: "pointer" }}>

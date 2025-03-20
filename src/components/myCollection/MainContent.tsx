@@ -5,8 +5,9 @@ import { FaArrowLeft } from "react-icons/fa6";
 import { CollectionSkeleton } from "@/ui/index.ts";
 import { useKeycloak } from "@react-keycloak/web";
 import { useCollection } from "@/hooks/queries/index.ts";
+import { motion } from "framer-motion";
 
-const Wrapper = styled.section`
+const Wrapper = styled(motion.section)`
   width: 100%;
   display: flex;
   align-items: flex-start;
@@ -132,7 +133,16 @@ const MainContent = () => {
   }
 
   return (
-    <Wrapper>
+    <Wrapper
+      initial={{ y: -300, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      exit={{ y: -300, opacity: 0 }}
+      transition={{
+        type: "spring",
+        stiffness: 400,
+        damping: 20,
+      }}
+    >
       <AddItem>
         {isAddNewCollection ? (
           <InputWrapper>

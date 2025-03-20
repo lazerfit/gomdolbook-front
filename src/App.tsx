@@ -13,7 +13,7 @@ const App = () => {
   return (
     <Theme>
       <GlobalStyle />
-      <Routes>
+      <Routes location={location} key={location.pathname}>
         <Route path="/" element={<Layout />}>
           <Route index element={<Main />} />
           <Route path="/library/:status" element={<Library />} />

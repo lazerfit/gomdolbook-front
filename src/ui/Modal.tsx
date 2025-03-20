@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { ReactNode, useState } from "react";
 import { styled } from "styled-components";
 import { createPortal } from "react-dom";
 
@@ -35,6 +35,17 @@ const Wrapper = styled.section<IWrapper>`
   overflow-y: auto;
 `;
 
+const CloseButton = styled.button`
+  width: 20px;
+  position: absolute;
+  right: 20px;
+  top: 10px;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  font-size: 2rem;
+`;
+
 interface Props {
   children: ReactNode;
   innerWidth: string;
@@ -52,6 +63,18 @@ const Modal = ({
   color = "#262627",
   onClose,
 }: Props) => {
+  const [isClosing, setIsClosing] = useState(false);
+
+  const onClosing = () => {
+    setIsClosing(true);
+  };
+
+  const handleOnClose = () => {
+    if (isClosing) {
+      if (onClose) onClose();
+    }
+  };
+
   const _onKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
     if (event.key === "Escape") {
       onClose();
@@ -59,20 +82,22 @@ const Modal = ({
   };
 
   return createPortal(
-    <>
-      <Overlay onClick={onClose} />
+    <div>
+      <Overlay onClick={onClosing} />
       <Wrapper
-        className="scale-in"
+        className={isClosing ? "scale-out" : "scale-in"}
         tabIndex={0}
         onKeyDown={_onKeyDown}
+        onAnimationEnd={handleOnClose}
         $innerWidth={innerWidth}
         $innerHeight={innerHeight}
         $bgc={bgc}
         $color={color}
       >
+        <CloseButton onClick={onClosing}>&times;</CloseButton>
         {children}
       </Wrapper>
-    </>,
+    </div>,
     document.getElementById("modal")!,
   );
 };

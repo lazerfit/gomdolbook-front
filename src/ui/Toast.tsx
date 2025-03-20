@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { styled, keyframes } from "styled-components";
 import { IoIosCheckmarkCircleOutline } from "react-icons/io";
 import { MdErrorOutline } from "react-icons/md";
@@ -46,10 +46,25 @@ interface Props {
 }
 
 const Toast = (props: Props) => {
+  const [isClosing, setIsClosing] = useState(false);
+  const [toggleOnClose, setToggleOnClose] = useState(false);
+
+  useEffect(() => {
+    if (toggleOnClose) {
+      setIsClosing(true);
+    }
+  }, [toggleOnClose]);
+
+  const handleOnClose = () => {
+    if (isClosing) {
+      props.onChangeVisibility();
+    }
+  };
+
   useEffect(
     function toastTimeout() {
       if (props.isVisible) {
-        const timer = setTimeout(() => props.onChangeVisibility(), 3000);
+        const timer = setTimeout(() => setToggleOnClose(true), 3000);
 
         return () => clearTimeout(timer);
       } else return;
@@ -60,7 +75,10 @@ const Toast = (props: Props) => {
 
   if (!props.isVisible) return null;
   return createPortal(
-    <Wrapper>
+    <Wrapper
+      className={isClosing ? "scale-out" : "scale-in"}
+      onAnimationEnd={handleOnClose}
+    >
       <Icon>
         {props.isError ? (
           <MdErrorOutline style={{ color: "red" }} />

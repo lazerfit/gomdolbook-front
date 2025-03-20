@@ -1,12 +1,16 @@
 import { useState } from "react";
 import { styled } from "styled-components";
+import { motion } from "framer-motion";
 import MockupImg from "../../../assets/img/avatar-02.jpg";
+import { itemVariants } from "@/ui/frameMotion/variants.ts";
 
-const Wrapper = styled.div`
+const Wrapper = styled(motion.nav)`
   width: 50px;
   height: 50px;
   position: relative;
 `;
+
+const Button = styled(motion.button)``;
 
 const Image = styled.img`
   width: 100%;
@@ -16,8 +20,10 @@ const Image = styled.img`
   cursor: pointer;
 `;
 
-const UserMenu = styled.span`
+const UserMenu = styled(motion.ul)`
+  list-style: none;
   width: 180px;
+  cursor: pointer;
   border-radius: 8px;
   position: absolute;
   right: 0;
@@ -28,32 +34,17 @@ const UserMenu = styled.span`
   box-shadow:
     rgba(0, 0, 0, 0.15) 0px 15px 25px,
     rgba(0, 0, 0, 0.05) 0px 5px 10px;
-
-  &::before {
-    content: "";
-    width: 170px;
-    height: 30px;
-    position: absolute;
-    top: -12px;
-    right: 0;
-  }
-
-  &::after {
-    content: "";
-    position: absolute;
-    background-color: white;
-    width: 10px;
-    height: 10px;
-    top: -5px;
-    transform: rotate(45deg);
-    right: 10%;
-  }
 `;
 
-const Item = styled.div`
+const Item = styled(motion.li)`
+  list-style: none;
   border-bottom: 1px solid #d3d3d3;
   padding: 5px;
   cursor: pointer;
+
+  &:last-child {
+    border-bottom: none;
+  }
 
   &:hover {
     background-color: ${(props) => props.theme.colors.black};
@@ -66,23 +57,44 @@ interface Props {
 }
 
 const UserProfile = (props: Props) => {
-  const [isUserMenuVisible, setIsUserMenuVisible] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <Wrapper
-      onMouseEnter={() => setIsUserMenuVisible(true)}
-      onMouseLeave={() => setIsUserMenuVisible(false)}
-    >
-      <Image src={MockupImg} alt="User" />
-      {isUserMenuVisible && (
-        <UserMenu>
-          <Item>Profile Setting</Item>
-          <Item>My Library</Item>
-          <Item style={{ border: "none" }} onClick={props.onLoggedOut}>
-            Log out
-          </Item>
-        </UserMenu>
-      )}
+    <Wrapper initial={false} animate={isOpen ? "open" : "closed"}>
+      <Button whileTap={{ scale: 0.97 }} onClick={() => setIsOpen(!isOpen)}>
+        <Image src={MockupImg} alt="User" />
+      </Button>
+      <UserMenu
+        animate={isOpen ? "open" : "closed"}
+        variants={{
+          open: {
+            clipPath: "inset(0% 0% 0% 0% round 10px)",
+            transition: {
+              type: "spring",
+              bounce: 0,
+              duration: 0.5,
+              delayChildren: 0.3,
+              staggerChildren: 0.05,
+            },
+          },
+          closed: {
+            clipPath: "inset(0% 0% 100% 100% round 10px)",
+            transition: {
+              type: "spring",
+              bounce: 0,
+              duration: 0.3,
+            },
+          },
+        }}
+        style={{ pointerEvents: isOpen ? "auto" : "none" }}
+        initial="closed"
+      >
+        <Item variants={itemVariants}>Profile Setting</Item>
+        <Item variants={itemVariants}>My Library</Item>
+        <Item variants={itemVariants} onClick={props.onLoggedOut}>
+          Log out
+        </Item>
+      </UserMenu>
     </Wrapper>
   );
 };

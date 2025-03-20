@@ -5,6 +5,8 @@ import { styled } from "styled-components";
 
 const Main = styled.section`
   flex: 1;
+  padding-top: 100px;
+  min-height: 200%;
 `;
 
 const Layout = () => {

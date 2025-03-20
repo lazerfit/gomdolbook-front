@@ -18,9 +18,9 @@ const theme: DefaultTheme = {
     gray9: "#212529",
   },
   fonts: {
-    title: "YES24",
-    text: "YESGothic-Regular",
-    english: "Eczar",
+    title: "NanumSquareNeo-Variable",
+    text: "NanumSquareNeo-Variable",
+    english: "Cafe24Decoschool",
     size300: "0.75rem" /* 12px */,
     size400: "1rem" /* 16px */,
     size500: "1.25rem" /* 20px */,

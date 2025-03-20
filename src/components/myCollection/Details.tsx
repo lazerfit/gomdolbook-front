@@ -7,8 +7,9 @@ import RefetchProvider from "@/api/contextProviders/RefetchProvider.tsx";
 import ParamContextProvider from "@/api/contextProviders/CollectionParamProvider.tsx";
 import { useEffect, useState } from "react";
 import { useCollection } from "@/hooks/queries/index.ts";
+import { motion } from "framer-motion";
 
-const Wrapper = styled.div`
+const Wrapper = styled(motion.section)`
   margin-top: 34px;
 `;
 
@@ -42,7 +43,16 @@ const Details = () => {
   }
 
   return (
-    <Wrapper>
+    <Wrapper
+      initial={{ y: -300, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      exit={{ y: -300, opacity: 0 }}
+      transition={{
+        type: "spring",
+        stiffness: 400,
+        damping: 20,
+      }}
+    >
       <Title>{name}</Title>
       <RefetchProvider refetch={collectionRefetch}>
         <ParamContextProvider

@@ -6,7 +6,8 @@ import BookDetailButtonActions from "@/components/myCollection/ui/button/BookDet
 import { ParamContext } from "@/api/contextProviders/contexts/collectionParamContext.ts";
 import { RefetchContext } from "@/api/contextProviders/contexts/refetchContext.ts";
 import { useBook, useCollection, useReadingLog } from "@/hooks/queries/index.ts";
-import { MenuButton } from "@/ui/ThreeDotMenu.tsx";
+import { Item } from "@/ui/ThreeDotMenu.tsx";
+import { itemVariants } from "@/ui/frameMotion/variants.ts";
 
 const Wrapper = styled.section`
   width: 100%;
@@ -94,13 +95,13 @@ interface Props {
   onClose: () => void;
 }
 
-const BookDetails = (props: Props) => {
+const BookDetails = ({ isbn = "", onClose }: Props) => {
   const [isToastVisible, setIsToastVisible] = useState(false);
   const [isErrorToast, setIsErrorToast] = useState(false);
-  const { book, isBookLoading } = useBook({ isbn: props.isbn });
+  const { book, isBookLoading } = useBook({ isbn: isbn });
   const { removeBook, isRemoveBookPending } = useCollection();
   const { status, statusRefetch, makeUpdatable } = useReadingLog({
-    statusIsbn: props.isbn,
+    statusIsbn: isbn,
   });
   const { name } = useContext(ParamContext);
   const { refetch: collectionBookListRefetch } = useContext(RefetchContext);
@@ -121,13 +122,16 @@ const BookDetails = (props: Props) => {
       { isbn: book.isbn13, name: name },
       {
         onSuccess: () => {
-          collectionBookListRefetch()
-            .then(() => props.onClose())
+          Promise.all([
+            collectionBookListRefetch().catch((error) =>
+              console.log("list refetch error:", error),
+            ),
+            statusRefetch().catch((error) => console.log("status refetch error:", error)),
+          ])
+            .then(() => onClose())
             .catch((error) => console.log(error));
         },
-        onError: (error) => {
-          console.log(error);
-        },
+        onError: (error) => console.log("removeBook error", error),
       },
     );
   };
@@ -135,12 +139,16 @@ const BookDetails = (props: Props) => {
   return (
     <Wrapper>
       <NavButtonWrapper>
-        <BackButton data-testid="backBtn" onClick={props.onClose}>
+        <BackButton data-testid="backBtn" onClick={onClose}>
           <FaArrowLeft style={{ fontSize: "20px" }} />
         </BackButton>
-        <ThreeDotMenu onRemove={onRemoveBook} isLoading={isRemoveBookPending}>
-          <MenuButton onClick={makeUpdatable}>상태변경</MenuButton>
-        </ThreeDotMenu>
+        {status !== "EMPTY" && status !== "NEW" && (
+          <ThreeDotMenu onRemove={onRemoveBook} isLoading={isRemoveBookPending}>
+            <Item variants={itemVariants} onClick={makeUpdatable}>
+              상태변경
+            </Item>
+          </ThreeDotMenu>
+        )}
       </NavButtonWrapper>
       <MainContentWrapper>
         {isBookLoading ? (

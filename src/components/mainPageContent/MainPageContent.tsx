@@ -1,5 +1,4 @@
 import { styled } from "styled-components";
-import Banner from "./Banner.tsx";
 import SearchBar from "./SearchBar.tsx";
 import { BookList } from "../shared/index.ts";
 import { MainpageSkeleton } from "@/ui/index.ts";
@@ -33,7 +32,6 @@ const MainContent = () => {
 
   return (
     <Wrapper>
-      <Banner />
       <SearchBar />
       <BookList books={library} />
     </Wrapper>

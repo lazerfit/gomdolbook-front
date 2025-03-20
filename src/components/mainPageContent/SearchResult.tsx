@@ -11,17 +11,6 @@ const ContentWrapper = styled.div`
   flex-direction: column;
 `;
 
-const CloseButton = styled.button`
-  width: 20px;
-  position: absolute;
-  right: 20px;
-  top: 10px;
-  border: none;
-  background-color: transparent;
-  cursor: pointer;
-  font-size: 2rem;
-`;
-
 const InputWrapper = styled.div`
   display: flex;
   align-items: center;
@@ -104,11 +93,11 @@ interface Props {
   onResultClose: () => void;
 }
 
-const SearchResult = (props: Props) => {
-  const [searchQuery, setSearchQuery] = useState(props.query);
+const SearchResult = ({ query, onResultClose }: Props) => {
+  const [searchQuery, setSearchQuery] = useState(query);
   const [isBookSelected, setIsBookSelected] = useState(false);
   const [getIsbn, setGetIsbn] = useState("");
-  const [reFetchQuery, setRefetchQuery] = useState(props.query);
+  const [reFetchQuery, setRefetchQuery] = useState(query);
   const { searchResult, isSearchResultLoading } = useBook({ q: reFetchQuery });
 
   const onChangeQuery = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -128,12 +117,11 @@ const SearchResult = (props: Props) => {
   };
 
   return (
-    <Modal innerWidth="1180px" innerHeight="90%" onClose={props.onResultClose}>
+    <Modal innerWidth="1180px" innerHeight="90%" onClose={onResultClose}>
       {isBookSelected ? (
         <BookDetails isbn={getIsbn} onClose={onReturnToBookList} />
       ) : (
         <ContentWrapper>
-          <CloseButton onClick={props.onResultClose}>&times;</CloseButton>
           <InputWrapper>
             <Input
               value={searchQuery}

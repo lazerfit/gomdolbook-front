@@ -1,5 +1,4 @@
 import { styled } from "styled-components";
-import { ButtonMd } from "@/styles/common.styled.ts";
 import { BookStatus } from "@/api/services/BoookService.ts";
 import translateBookStatus from "@/utils/TranslateBookStatus.ts";
 import type { IBookResponse } from "@/api/services/BoookService.ts";
@@ -8,10 +7,11 @@ import { RefetchContext } from "@/api/contextProviders/contexts/refetchContext.t
 import { ParamContext } from "@/api/contextProviders/contexts/collectionParamContext.ts";
 import { QueryObserverResult, RefetchOptions } from "@tanstack/react-query";
 import { useBook, useCollection } from "@/hooks/queries/index.ts";
+import { motion } from "framer-motion";
 
 const ButtonWrapper = styled.div`
   display: flex;
-  gap: 13px;
+  gap: 17px;
   margin: 34px auto;
 `;
 
@@ -28,37 +28,21 @@ const ReadingStatus = styled.div`
   justify-content: center;
 `;
 
-const SaveButton = styled(ButtonMd)`
-  border: 2px solid ${(porps) => porps.theme.colors.black};
-  position: relative;
-  overflow: hidden;
-  padding: 7px 20px;
+const Button = styled(motion.button)`
+  font-family: ${(props) => props.theme.fonts.text};
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 30px;
+  padding: 7px ${(props) => props.theme.fonts.size500};
+  background-color: ${(props) => props.theme.colors.black};
+  border-radius: 20px;
+  cursor: pointer;
+  color: ${(props) => props.theme.colors.white};
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 3px 3px 0px;
 
   > p {
     position: relative;
     font-size: 1rem;
-  }
-
-  &::before {
-    content: "";
-    position: absolute;
-    width: 0;
-    height: 100%;
-    background-color: ${(props) => props.theme.colors.white};
-    border-radius: 20px;
-    top: 0;
-    left: 0;
-  }
-
-  &:hover::before {
-    content: "";
-    width: 100%;
-    transition: 0.5s;
-  }
-
-  &:hover {
-    color: ${(props) => props.theme.colors.black};
-    transition: 1.5s;
   }
 `;
 
@@ -124,14 +108,14 @@ const BookDeatilButtonActions = ({
       { dto: getReadingLogSaveRequest(), name: encodeURIComponent(name) },
       {
         onSuccess: () => {
-          collectionBookListRefetch()
-            .then(() => showToast())
-            .catch((error) => console.log(error));
+          Promise.all([
+            collectionBookListRefetch().catch((error) =>
+              console.log("list refetch error:", error),
+            ),
+            statusRefetch().catch((error) => console.log("status refetch error:", error)),
+          ]).catch((error) => console.log(error));
         },
-        onError: (error) => {
-          showErrorToast();
-          console.log(error);
-        },
+        onError: (error) => console.log("addBook Error", error),
       },
     );
   };
@@ -139,9 +123,15 @@ const BookDeatilButtonActions = ({
   return (
     <ButtonWrapper>
       {isCollection && status === "EMPTY" && (
-        <SaveButton data-testid="collectionBtn" onClick={onAddBook}>
+        <Button
+          data-testid="collectionBtn"
+          onClick={onAddBook}
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.9 }}
+          transition={{ type: "spring", stiffness: 400, damping: 17 }}
+        >
           <p>추가하기</p>
-        </SaveButton>
+        </Button>
       )}
       {status !== "NEW" && status !== "EMPTY" ? (
         <ReadingStatus data-testid="readingStatus">
@@ -149,9 +139,15 @@ const BookDeatilButtonActions = ({
         </ReadingStatus>
       ) : (
         saveBtnArgs.map((arg) => (
-          <SaveButton onClick={() => saveReadingLog(arg.status)} key={arg.status}>
+          <Button
+            onClick={() => saveReadingLog(arg.status)}
+            key={arg.status}
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
+            transition={{ type: "spring", stiffness: 400, damping: 17 }}
+          >
             {arg.label}
-          </SaveButton>
+          </Button>
         ))
       )}
     </ButtonWrapper>

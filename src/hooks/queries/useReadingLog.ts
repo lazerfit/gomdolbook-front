@@ -36,8 +36,9 @@ const useGetStatus = (isbn: string) => {
   });
 
   useEffect(() => {
-    if (data?.data) {
-      setStatus(data?.data);
+    const response = data?.data;
+    if (response) {
+      setStatus(response.status);
     }
   }, [data]);
 

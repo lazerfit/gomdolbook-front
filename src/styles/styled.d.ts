@@ -3,6 +3,7 @@ import "styled-components";
 interface IColor {
   black: string;
   white: string;
+  bgc: string;
   gray0: string;
   gray1: string;
   gray2: string;
@@ -28,9 +29,15 @@ interface IFont {
   size900: string;
 }
 
+interface IShadow {
+  light: string;
+  text: string;
+}
+
 declare module "styled-components" {
   export interface DefaultTheme {
     colors: IColor;
     fonts: IFont;
+    shadow: IShadow;
   }
 }

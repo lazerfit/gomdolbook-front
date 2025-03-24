@@ -31,6 +31,13 @@ export const collectionService = {
       method: "POST",
     });
   },
+  delete: (name: string) => {
+    return request<void>({
+      url: CollectionEndPoint.delete(),
+      params: { name: name },
+      method: "DELETE",
+    });
+  },
   addBook: (data: IBookSaveRequest, name: string) => {
     return request<void>({
       url: CollectionEndPoint.addBook(name),

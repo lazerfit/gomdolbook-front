@@ -3,7 +3,7 @@ import { styled } from "styled-components";
 const Wrapper = styled.footer`
   width: 100%;
   height: 120px;
-  margin: 144px auto 0 auto;
+  margin: 0 auto;
   padding: 15px 10px;
   display: flex;
   flex-direction: column;

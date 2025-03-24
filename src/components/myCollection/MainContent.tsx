@@ -31,7 +31,6 @@ interface IName {
 const ItemWrapper = styled.div<IName>`
   width: 280px;
   height: 280px;
-  border-radius: 8px;
   padding: 20px;
   margin-bottom: 34px;
   display: flex;
@@ -39,11 +38,10 @@ const ItemWrapper = styled.div<IName>`
   gap: 5px;
   justify-content: space-evenly;
   align-items: center;
-  box-shadow:
-    rgba(0, 0, 0, 0.15) 0px 15px 25px,
-    rgba(0, 0, 0, 0.05) 0px 5px 10px;
+  box-shadow: ${(props) => props.theme.shadow.light};
   cursor: pointer;
   position: relative;
+  border: 2px solid black;
 
   &::before {
     content: "${(props) => props.$collectionName}";
@@ -59,15 +57,13 @@ const ItemWrapper = styled.div<IName>`
 const AddItem = styled.div`
   width: 280px;
   height: 280px;
-  border-radius: 8px;
   padding: 20px;
   font-size: 2rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow:
-    rgba(0, 0, 0, 0.15) 0px 15px 25px,
-    rgba(0, 0, 0, 0.05) 0px 5px 10px;
+  box-shadow: ${(props) => props.theme.shadow.light};
+  border: 2px solid black;
 `;
 
 const InputWrapper = styled.div`

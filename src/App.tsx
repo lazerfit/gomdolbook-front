@@ -8,6 +8,7 @@ import BookTracker from "@/pages/ReadingLog.tsx";
 import Theme from "@/styles/theme.tsx";
 import Details from "./components/myCollection/Details.js";
 import TestPage from "./ui/MainpageSkeleton.tsx";
+import NotFound from "./pages/NotFound.tsx";
 
 const App = () => {
   return (
@@ -22,6 +23,7 @@ const App = () => {
           <Route path="/readingLog/:isbn" element={<BookTracker />} />
           <Route path="/test" element={<TestPage />} />
         </Route>
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </Theme>
   );

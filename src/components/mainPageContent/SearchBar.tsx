@@ -18,10 +18,11 @@ const Search = styled.div`
 const Input = styled.input`
   width: 300px;
   border: 1px solid ${(props) => props.theme.colors.black};
-  border-radius: 8px;
   background-color: transparent;
   font-family: ${(props) => props.theme.fonts.text}, sans-serif;
   padding: 10px;
+  box-shadow: ${(props) => props.theme.shadow.light};
+  outline: none;
 
   &:focus::placeholder {
     opacity: 0;

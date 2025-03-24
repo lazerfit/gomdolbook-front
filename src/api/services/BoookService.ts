@@ -46,6 +46,10 @@ export interface IReadingLogUpdateRequest {
   value: string;
 }
 
+export interface IStatusResponse {
+  status: string;
+}
+
 export enum BookStatus {
   READING = "READING",
   TO_READ = "TO_READ",
@@ -88,7 +92,7 @@ export const BookService = {
     });
   },
   getStatus: (isbn: string) => {
-    return request<IApiResponse<string>>({
+    return request<IApiResponse<IStatusResponse>>({
       url: BookEndPoint.getStatus(isbn),
       method: "GET",
     });

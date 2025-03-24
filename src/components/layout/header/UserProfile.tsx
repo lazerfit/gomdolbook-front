@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { styled } from "styled-components";
 import { motion } from "framer-motion";
-import MockupImg from "../../../assets/img/avatar-02.jpg";
 import { itemVariants } from "@/ui/frameMotion/variants.ts";
+import { Login } from "./Header.tsx";
+import { useNavigate } from "react-router-dom";
 
 const Wrapper = styled(motion.nav)`
   width: 50px;
@@ -10,21 +11,10 @@ const Wrapper = styled(motion.nav)`
   position: relative;
 `;
 
-const Button = styled(motion.button)``;
-
-const Image = styled.img`
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 50%;
-  cursor: pointer;
-`;
-
 const UserMenu = styled(motion.ul)`
   list-style: none;
   width: 180px;
   cursor: pointer;
-  border-radius: 8px;
   position: absolute;
   right: 0;
   top: 60px;
@@ -58,12 +48,17 @@ interface Props {
 
 const UserProfile = (props: Props) => {
   const [isOpen, setIsOpen] = useState(false);
+  const navigate = useNavigate();
+  const onNavigate = (url: string) => {
+    navigate(url);
+    setIsOpen(false);
+  };
 
   return (
     <Wrapper initial={false} animate={isOpen ? "open" : "closed"}>
-      <Button whileTap={{ scale: 0.97 }} onClick={() => setIsOpen(!isOpen)}>
-        <Image src={MockupImg} alt="User" />
-      </Button>
+      <Login whileTap={{ scale: 0.9 }} onClick={() => setIsOpen(!isOpen)}>
+        menu
+      </Login>
       <UserMenu
         animate={isOpen ? "open" : "closed"}
         variants={{
@@ -89,8 +84,12 @@ const UserProfile = (props: Props) => {
         style={{ pointerEvents: isOpen ? "auto" : "none" }}
         initial="closed"
       >
-        <Item variants={itemVariants}>Profile Setting</Item>
-        <Item variants={itemVariants}>My Library</Item>
+        <Item variants={itemVariants} onClick={() => onNavigate("/library/reading")}>
+          My Library
+        </Item>
+        <Item variants={itemVariants} onClick={() => onNavigate("/collections")}>
+          My Collection
+        </Item>
         <Item variants={itemVariants} onClick={props.onLoggedOut}>
           Log out
         </Item>

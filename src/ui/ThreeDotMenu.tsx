@@ -12,7 +12,6 @@ const ButtonWrapper = styled(motion.section)`
   align-items: center;
   justify-content: center;
   margin-left: auto;
-  margin-right: 10px;
   position: relative;
 `;
 

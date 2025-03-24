@@ -69,7 +69,6 @@ const Toast = (props: Props) => {
         return () => clearTimeout(timer);
       } else return;
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     [props.isVisible],
   );
 

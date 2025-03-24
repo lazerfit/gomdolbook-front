@@ -15,6 +15,13 @@ const GlobalStyle = createGlobalStyle`
     font-style: normal;
   }
 
+  @font-face {
+    font-family: 'Gyeonggi_Batang_Regular';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2410-3@1.0/Batang_Regular.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+}
+
   * {
     margin: 0;
     padding: 0;
@@ -41,21 +48,6 @@ const GlobalStyle = createGlobalStyle`
     flex-direction: column;
   }
 
-  #navigation {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  font-family: ${(props) => props.theme.fonts.english}, serif;
-  background-color: ${(props) => props.theme.colors.white};
-  position: fixed;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 15;
-  height: 60px;
-  width: 1180px;
-  }
-
   body {
     font-size: 100%;
     color: ${(props) => props.theme.colors.black};
@@ -64,7 +56,7 @@ const GlobalStyle = createGlobalStyle`
     font-family: ${(props) => props.theme.fonts.text};
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    background-color: ${(props) => props.theme.colors.white};
+    background-color: ${(props) => props.theme.colors.bgc};
     max-width: 1180px;
     margin: 0 auto;
     height: 100%;

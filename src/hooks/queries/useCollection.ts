@@ -48,6 +48,14 @@ const useCreate = () => {
   return { createCollection };
 };
 
+const useDelete = (name: string) => {
+  const { mutate: deleteCollection, isPending: isDeleteCollectionPending } = useMutation({
+    mutationFn: () => collectionService.delete(name),
+  });
+
+  return { deleteCollection, isDeleteCollectionPending };
+};
+
 const useAddBook = () => {
   const { mutate: addBook } = useMutation({
     mutationKey: ["addBookToCollection"],
@@ -78,6 +86,7 @@ export const useCollection = ({ name = "" }: Args = {}) => {
   const { createCollection } = useCreate();
   const { addBook } = useAddBook();
   const { removeBook, isRemoveBookPending } = useRemoveBook();
+  const { deleteCollection, isDeleteCollectionPending } = useDelete(name);
 
   return {
     collectionList,
@@ -87,8 +96,10 @@ export const useCollection = ({ name = "" }: Args = {}) => {
     isCollectionLoading,
     collectionRefetch,
     createCollection,
+    deleteCollection,
     addBook,
     removeBook,
     isRemoveBookPending,
+    isDeleteCollectionPending,
   };
 };

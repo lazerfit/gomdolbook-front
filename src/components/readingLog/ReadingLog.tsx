@@ -33,10 +33,7 @@ const ImageWrapper = styled.div`
 const Image = styled.img`
   width: 200px;
   min-width: 12.5rem;
-  box-shadow:
-    rgba(0, 0, 0, 0.15) 0px 15px 25px,
-    rgba(0, 0, 0, 0.05) 0px 5px 10px;
-  border-radius: 8px;
+  box-shadow: ${(props) => props.theme.shadow.light};
   margin-top: 13px;
 `;
 
@@ -47,12 +44,9 @@ const Status = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 8px;
   background-color: ${(props) => props.theme.colors.gray3};
   color: ${(props) => props.theme.colors.gray6};
-  box-shadow:
-    rgba(0, 0, 0, 0.15) 0px 15px 25px,
-    rgba(0, 0, 0, 0.05) 0px 5px 10px;
+  box-shadow: ${(props) => props.theme.shadow.light};
 `;
 
 const ContentWrapper = styled.section`
@@ -68,8 +62,8 @@ const AnalyzeContent = styled.article`
   min-width: 37.5rem;
   min-height: 18.75rem;
   padding: 10px;
-  border-radius: 10px;
-  box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 15px 0px;
+  box-shadow: ${(props) => props.theme.shadow.light};
+  border: 2px solid black;
 `;
 
 const ContentTitle = styled.div`

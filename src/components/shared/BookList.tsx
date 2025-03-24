@@ -4,6 +4,9 @@ import type { ILibraryResponse } from "@/api/services/BoookService.ts";
 import { Modal } from "@/ui/index.ts";
 import { useState } from "react";
 import BookDetails from "./BookDetails.tsx";
+import { motion } from "framer-motion";
+import ImageMotion from "@/ui/frameMotion/ImageMotion.tsx";
+import { useKeycloak } from "@react-keycloak/web";
 
 const Wrapper = styled.section`
   width: 100%;
@@ -11,7 +14,7 @@ const Wrapper = styled.section`
   flex-direction: row;
   flex-wrap: wrap;
   align-items: flex-start;
-  justify-content: flex-start;
+  justify-content: center;
   gap: 45px;
   margin-top: 32px;
 `;
@@ -26,13 +29,10 @@ const ContentWrapper = styled.article`
 
 const Image = styled.img`
   width: 200px;
-  border-radius: 8px;
   filter: grayscale(100%);
   transition: all 0.5s ease;
   cursor: pointer;
-  box-shadow:
-    rgba(0, 0, 0, 0.15) 0px 15px 25px,
-    rgba(0, 0, 0, 0.05) 0px 5px 10px;
+  box-shadow: ${(props) => props.theme.shadow.light};
 
   &:hover {
     filter: none;
@@ -50,11 +50,15 @@ const EmptyLibraryWrapper = styled.div`
   align-items: center;
   justify-content: center;
   margin-top: 100px;
+  flex-direction: column;
 `;
 
-const EmptyLibraryBanner = styled.div`
+const EmptyLibraryBanner = styled(motion.div)`
   font: ${(props) => props.theme.fonts.title};
   font-size: 3rem;
+  font-family: ${(props) => props.theme.fonts.title};
+  line-height: 1;
+  text-shadow: ${(props) => props.theme.shadow.text};
 `;
 
 interface Props {
@@ -65,6 +69,7 @@ const BookList = ({ books }: Props) => {
   const [isModalOpened, setIsModalOpened] = useState(false);
   const [isbn, setIsbn] = useState("");
   const navigate = useNavigate();
+  const { keycloak } = useKeycloak();
 
   const handleOnClick = (book: ILibraryResponse) => {
     if (book.status === "NEW" || book.status === "TO_READ") {
@@ -82,7 +87,14 @@ const BookList = ({ books }: Props) => {
     <Wrapper>
       {books.length === 0 ? (
         <EmptyLibraryWrapper>
-          <EmptyLibraryBanner>책을 추가해 독서기록을 시작해보세요.</EmptyLibraryBanner>
+          <EmptyLibraryBanner
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 2 }}
+          >
+            책을 추가해 독서기록을 시작해보세요.
+          </EmptyLibraryBanner>
+          {!keycloak.authenticated && <ImageMotion />}
         </EmptyLibraryWrapper>
       ) : (
         books.map((book) => (

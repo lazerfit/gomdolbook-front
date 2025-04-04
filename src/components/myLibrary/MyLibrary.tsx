@@ -4,7 +4,7 @@ import StatusNavBar from "./StatusNavBar.tsx";
 import { BookList } from "../shared/index.ts";
 import { BookListSkeleton } from "@/ui/index.ts";
 import { useParams } from "react-router-dom";
-import { useBook } from "@/hooks/queries/index.ts";
+import { useBook } from "@/hooks/index.ts";
 import { motion } from "framer-motion";
 
 const Wrapper = styled(motion.section)`

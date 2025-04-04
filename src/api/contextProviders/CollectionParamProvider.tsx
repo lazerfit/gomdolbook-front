@@ -1,5 +1,8 @@
 import { ReactNode } from "react";
-import { ParamContext, CollectionParam } from "./contexts/collectionParamContext.ts";
+import {
+  CollectionParamContext,
+  CollectionParam,
+} from "./contexts/collectionParamContext.ts";
 
 interface Props {
   collectionParam: CollectionParam;
@@ -8,7 +11,9 @@ interface Props {
 
 const ParamContextProvider = ({ collectionParam, children }: Props) => {
   return (
-    <ParamContext.Provider value={collectionParam}>{children}</ParamContext.Provider>
+    <CollectionParamContext.Provider value={collectionParam}>
+      {children}
+    </CollectionParamContext.Provider>
   );
 };
 

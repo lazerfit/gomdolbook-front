@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import type { ILibraryResponse } from "@/api/services/BoookService.ts";
 import { Modal } from "@/ui/index.ts";
 import { useState } from "react";
-import BookDetails from "./BookDetails.tsx";
+import { BookDetails } from "./index.ts";
 import { motion } from "framer-motion";
 import ImageMotion from "@/ui/frameMotion/ImageMotion.tsx";
 import { useKeycloak } from "@react-keycloak/web";

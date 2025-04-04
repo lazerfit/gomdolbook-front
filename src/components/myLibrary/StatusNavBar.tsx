@@ -14,11 +14,10 @@ const Wrapper = styled.div`
 `;
 
 const Item = styled.button`
-  padding: 5px 0;
   cursor: pointer;
   font-size: 1rem;
   position: relative;
-  padding: 8px;
+  padding: 8px 0;
   border-radius: 7px;
 `;
 

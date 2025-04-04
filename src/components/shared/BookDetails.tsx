@@ -3,9 +3,11 @@ import { styled } from "styled-components";
 import { FaArrowLeft } from "react-icons/fa6";
 import { BookDetailSkeleton, Toast, Publisher, ThreeDotMenu } from "@/ui/index.ts";
 import BookDetailButtonActions from "@/components/myCollection/ui/button/BookDetailButtonActions.tsx";
-import { ParamContext } from "@/api/contextProviders/contexts/collectionParamContext.ts";
-import { RefetchContext } from "@/api/contextProviders/contexts/refetchContext.ts";
-import { useBook, useCollection, useReadingLog } from "@/hooks/queries/index.ts";
+import {
+  RefetchContext,
+  CollectionParamContext,
+} from "@/api/contextProviders/contexts/index.ts";
+import { useBook, useCollection, useReadingLog } from "@/hooks/index.ts";
 import { Item } from "@/ui/ThreeDotMenu.tsx";
 import { itemVariants } from "@/ui/frameMotion/variants.ts";
 
@@ -103,7 +105,7 @@ const BookDetails = ({ isbn = "", onClose }: Props) => {
   const { status, statusRefetch, makeUpdatable } = useReadingLog({
     statusIsbn: isbn,
   });
-  const { name } = useContext(ParamContext);
+  const { name } = useContext(CollectionParamContext);
   const { refetch: collectionBookListRefetch } = useContext(RefetchContext);
 
   const onShowToast = () => {

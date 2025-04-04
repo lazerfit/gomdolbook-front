@@ -27,7 +27,7 @@ export interface ILibraryResponse {
   status: string;
 }
 
-export interface IReadinglogResponse {
+export interface IReadingLogResponse {
   title: string;
   author: string;
   pubDate: string;
@@ -64,7 +64,7 @@ export const BookService = {
     });
   },
   getReadingLog: (isbn: string) => {
-    return request<IApiResponse<IReadinglogResponse>>({
+    return request<IApiResponse<IReadingLogResponse>>({
       url: BookEndPoint.getReadingLog(),
       method: "GET",
       params: { isbn: isbn },

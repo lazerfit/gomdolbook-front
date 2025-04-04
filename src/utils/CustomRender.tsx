@@ -8,7 +8,16 @@ import {
 import React, { ReactNode } from "react";
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import RefetchContextProvider from "@/api/contextProviders/RefetchProvider.tsx";
-import { vi } from "vitest";
+import {
+  vi,
+  it,
+  describe,
+  beforeAll,
+  beforeEach,
+  afterAll,
+  afterEach,
+  expect,
+} from "vitest";
 import ParamContextProvider from "@/api/contextProviders/CollectionParamProvider.tsx";
 
 interface Options {
@@ -36,5 +45,18 @@ const customRender = (
   return render(ui, { wrapper: Wrapper });
 };
 
-export { render, screen, fireEvent, waitFor };
+export {
+  render,
+  screen,
+  fireEvent,
+  waitFor,
+  it,
+  describe,
+  beforeAll,
+  beforeEach,
+  afterAll,
+  afterEach,
+  expect,
+  vi,
+};
 export { customRender };

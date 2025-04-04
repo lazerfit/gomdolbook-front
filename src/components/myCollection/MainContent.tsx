@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { FaArrowLeft } from "react-icons/fa6";
 import { CollectionSkeleton } from "@/ui/index.ts";
 import { useKeycloak } from "@react-keycloak/web";
-import { useCollection } from "@/hooks/queries/index.ts";
+import { useCollection } from "@/hooks/index.ts";
 import { motion } from "framer-motion";
 
 const Wrapper = styled(motion.section)`

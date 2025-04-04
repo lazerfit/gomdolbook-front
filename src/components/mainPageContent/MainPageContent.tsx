@@ -3,7 +3,7 @@ import SearchBar from "./SearchBar.tsx";
 import { BookList } from "../shared/index.ts";
 import { MainpageSkeleton } from "@/ui/index.ts";
 import { useKeycloak } from "@react-keycloak/web";
-import { useBook } from "@/hooks/queries/index.ts";
+import { useBook } from "@/hooks/index.ts";
 import { useEffect, useState } from "react";
 
 const Wrapper = styled.section`

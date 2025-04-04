@@ -5,7 +5,7 @@ export interface CollectionParam {
   name: string;
 }
 
-export const ParamContext = createContext<CollectionParam>({
+export const CollectionParamContext = createContext<CollectionParam>({
   isCollection: false,
   name: "",
 });

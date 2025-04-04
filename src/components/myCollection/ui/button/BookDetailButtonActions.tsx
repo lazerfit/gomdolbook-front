@@ -3,10 +3,12 @@ import { BookStatus } from "@/api/services/BoookService.ts";
 import translateBookStatus from "@/utils/TranslateBookStatus.ts";
 import type { IBookResponse } from "@/api/services/BoookService.ts";
 import { useContext } from "react";
-import { RefetchContext } from "@/api/contextProviders/contexts/refetchContext.ts";
-import { ParamContext } from "@/api/contextProviders/contexts/collectionParamContext.ts";
+import {
+  RefetchContext,
+  CollectionParamContext,
+} from "@/api/contextProviders/contexts/index.ts";
 import { QueryObserverResult, RefetchOptions } from "@tanstack/react-query";
-import { useBook, useCollection } from "@/hooks/queries/index.ts";
+import { useBook, useCollection } from "@/hooks/index.ts";
 import { motion } from "framer-motion";
 
 const ButtonWrapper = styled.div`
@@ -56,7 +58,7 @@ interface Props {
   showErrorToast: () => void;
 }
 
-const BookDeatilButtonActions = ({
+const BookDetailButtonActions = ({
   bookData,
   statusRefetch,
   showToast = () => void 0,
@@ -65,7 +67,7 @@ const BookDeatilButtonActions = ({
 }: Props) => {
   const { saveBook } = useBook();
   const { addBook } = useCollection();
-  const { isCollection, name } = useContext(ParamContext);
+  const { isCollection, name } = useContext(CollectionParamContext);
   const { refetch: collectionBookListRefetch } = useContext(RefetchContext);
 
   const getReadingLogSaveRequest = (status?: BookStatus) => {
@@ -154,4 +156,4 @@ const BookDeatilButtonActions = ({
   );
 };
 
-export default BookDeatilButtonActions;
+export default BookDetailButtonActions;

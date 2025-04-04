@@ -2,7 +2,7 @@ import { styled } from "styled-components";
 import { FaRegPenToSquare } from "react-icons/fa6";
 import { ThreeDotMenu, Publisher, BookListSkeleton, Modal, Toast } from "@/ui/index.ts";
 import { useParams } from "react-router-dom";
-import { useReadingLog } from "@/hooks/queries/useReadingLog.ts";
+import { useReadingLog } from "@/hooks/index.ts";
 import { useEffect, useState } from "react";
 import TinyMCE from "@/utils/TinyMCE.tsx";
 import sanitizeHtml from "sanitize-html";
@@ -10,7 +10,7 @@ import { ModalTypes, useModal } from "@/hooks/useModal.ts";
 import { useToast } from "@/hooks/useToast.ts";
 import { Item } from "@/ui/ThreeDotMenu.tsx";
 import { TranslateBookStatus } from "@/utils/index.ts";
-import Ratings from "./Ratings.tsx";
+import { Ratings } from "./index.ts";
 import { itemVariants } from "@/ui/frameMotion/variants.ts";
 import { motion } from "framer-motion";
 

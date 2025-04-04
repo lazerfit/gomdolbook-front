@@ -1,4 +1,13 @@
-import { customRender } from "@/utils/CustomRender.tsx";
+import {
+  customRender,
+  it,
+  describe,
+  beforeEach,
+  beforeAll,
+  afterEach,
+  afterAll,
+  expect,
+} from "@/utils/CustomRender.tsx";
 import BookDetailButtonActions from "../BookDetailButtonActions.tsx";
 import { vi } from "vitest";
 import { fireEvent, screen } from "@testing-library/react";
@@ -25,7 +34,7 @@ beforeAll(() => server.listen());
 afterEach(() => server.restoreHandlers());
 afterAll(() => server.close());
 
-describe("collection redner test", () => {
+describe("collection redner __test__", () => {
   server.use(
     http.post("http://localhost:8080/api/v1/collection/name/book/add", () => {
       return HttpResponse.json({ data: "OK" });
@@ -62,7 +71,7 @@ describe("Non-collection render", () => {
       const url = new URL(request.url);
       const email = url.searchParams.get("email");
 
-      if (email === "test@gmail.com") {
+      if (email === "__test__@gmail.com") {
         return HttpResponse.json({ data: "OK" });
       }
 

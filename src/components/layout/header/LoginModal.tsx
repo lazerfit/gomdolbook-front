@@ -9,17 +9,6 @@ const ContentWrapper = styled.div`
   flex-direction: column;
 `;
 
-const CloseButton = styled.button`
-  width: 20px;
-  position: absolute;
-  right: 20px;
-  top: 10px;
-  border: none;
-  background-color: transparent;
-  cursor: pointer;
-  font-size: 1.4em;
-`;
-
 const Banner = styled.div`
   font-size: 1.125rem;
   font-weight: 600;

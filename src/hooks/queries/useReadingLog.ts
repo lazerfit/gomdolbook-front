@@ -1,9 +1,9 @@
 import { BookService, IReadingLogUpdateRequest } from "@/api/services/BoookService.ts";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useState, useEffect } from "react";
-import type { IReadinglogResponse } from "@/api/services/BoookService.ts";
+import type { IReadingLogResponse } from "@/api/services/BoookService.ts";
 
-const DEFAULT_READING_LOG: IReadinglogResponse = {
+const DEFAULT_READING_LOG: IReadingLogResponse = {
   title: "default",
   author: "default",
   pubDate: "default",

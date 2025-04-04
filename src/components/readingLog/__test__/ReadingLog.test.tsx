@@ -1,8 +1,16 @@
 import { setupServer } from "msw/node";
-import { describe, it, beforeAll, beforeEach, afterAll, afterEach, expect } from "vitest";
-import { customRender } from "@/utils/CustomRender.tsx";
+import {
+  customRender,
+  describe,
+  it,
+  beforeAll,
+  beforeEach,
+  afterAll,
+  afterEach,
+  expect,
+} from "../../../utils/CustomRender.tsx";
 import { fireEvent, screen, waitFor } from "@testing-library/react";
-import ReadingLog from "./ReadingLog.tsx";
+import ReadingLog from "../ReadingLog.tsx";
 import { http, HttpResponse } from "msw";
 import { MemoryRouter, Route, Routes } from "react-router-dom";
 

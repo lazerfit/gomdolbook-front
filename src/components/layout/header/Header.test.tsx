@@ -14,8 +14,8 @@ vi.mock("@react-keycloak/web", async (importOrigianl) => {
     useKeycloak: () => ({
       keycloak: {
         authenticated: true,
-        token: "test-token",
-        idToken: "test-token",
+        token: "__test__-token",
+        idToken: "__test__-token",
         login: vi.fn(),
         logout: vi.fn(),
       },

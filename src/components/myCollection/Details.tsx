@@ -2,11 +2,13 @@ import { styled } from "styled-components";
 import { useNavigate, useParams } from "react-router-dom";
 import { BookList } from "../shared/index.ts";
 import BookListSkeleton from "@/ui/BookListSkeleton.tsx";
-import SearchBar from "../mainPageContent/SearchBar.tsx";
-import RefetchProvider from "@/api/contextProviders/RefetchProvider.tsx";
-import ParamContextProvider from "@/api/contextProviders/CollectionParamProvider.tsx";
+import { SearchBar } from "../mainPageContent/index.ts";
+import {
+  RefetchProvider,
+  CollectionParamProvider,
+} from "@/api/contextProviders/index.ts";
 import { useEffect, useState } from "react";
-import { useCollection } from "@/hooks/queries/index.ts";
+import { useCollection } from "@/hooks/index.ts";
 import { motion } from "framer-motion";
 import ThreeDotMenu from "@/ui/ThreeDotMenu.tsx";
 
@@ -86,14 +88,14 @@ const Details = () => {
         <ThreeDotMenu onRemove={onRemove} isLoading={isDeleteCollectionPending} />
       </TitleWrapper>
       <RefetchProvider refetch={collectionRefetch}>
-        <ParamContextProvider
+        <CollectionParamProvider
           collectionParam={{ isCollection: isCollection, name: name }}
         >
           <SearchWrapper>
             <SearchBar />
           </SearchWrapper>
           <BookList books={collection} />
-        </ParamContextProvider>
+        </CollectionParamProvider>
       </RefetchProvider>
     </Wrapper>
   );

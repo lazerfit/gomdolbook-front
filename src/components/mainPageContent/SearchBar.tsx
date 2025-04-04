@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { styled } from "styled-components";
-import SearchResult from "./SearchResult.tsx";
+import { SearchResult } from "./index.ts";
 import { useKeycloak } from "@react-keycloak/web";
 import { LoginRequireModal } from "@/ui/index.ts";
 

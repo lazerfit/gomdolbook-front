@@ -1,15 +1,13 @@
 import { styled } from "styled-components";
 import { FaStar, FaRegStar } from "react-icons/fa6";
 import { useEffect, useState } from "react";
-import { useReadingLog } from "@/hooks/queries/index.ts";
+import { useReadingLog } from "@/hooks/index.ts";
 import { RefetchOptions, QueryObserverResult } from "@tanstack/react-query";
-import { IApiResponse, IReadinglogResponse } from "@/api/services/BoookService.ts";
+import { IApiResponse, IReadingLogResponse } from "@/api/services/BoookService.ts";
 
 const Wrapper = styled.div`
   display: flex;
   gap: 5px;
-  align-items: center;
-  justify-content: center;
   margin-top: 21px;
   font-size: 1.313rem;
   min-width: 12.5rem;
@@ -31,7 +29,7 @@ interface Props {
   initialStar: number;
   refetch: (
     options?: RefetchOptions,
-  ) => Promise<QueryObserverResult<IApiResponse<IReadinglogResponse>, Error>>;
+  ) => Promise<QueryObserverResult<IApiResponse<IReadingLogResponse>, Error>>;
 }
 
 const Ratings = ({ isbn = "", initialStar = 0, refetch }: Props) => {

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { styled } from "styled-components";
 import { BookDetails } from "../shared/index.ts";
 import { Publisher, Modal, SimpleSkeletonLoader } from "@/ui/index.ts";
-import { useBook } from "@/hooks/queries/index.ts";
+import { useBook } from "@/hooks/index.ts";
 
 const ContentWrapper = styled.div`
   width: 100%;

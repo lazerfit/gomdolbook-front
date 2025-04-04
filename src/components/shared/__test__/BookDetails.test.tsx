@@ -1,10 +1,19 @@
 import { screen } from "@testing-library/react";
-import { beforeEach, expect, it, describe, vi } from "vitest";
 import BookDetails from "../BookDetails.tsx";
 import Toast from "@/ui/Toast.tsx";
 import { setupServer } from "msw/node";
 import { http, HttpResponse } from "msw";
-import { customRender } from "@/utils/CustomRender.tsx";
+import {
+  customRender,
+  beforeEach,
+  expect,
+  it,
+  describe,
+  beforeAll,
+  afterAll,
+  afterEach,
+  vi,
+} from "@/utils/CustomRender.tsx";
 
 const MOCK_STATUS_RESPONSE = {
   data: "READING",
@@ -39,7 +48,7 @@ const server = setupServer(
     const url = new URL(request.url);
     const email = url.searchParams.get("email");
 
-    if (email === "test@gmail.com") {
+    if (email === "__test__@gmail.com") {
       return HttpResponse.json({ data: "OK" });
     }
 
@@ -68,7 +77,7 @@ beforeEach(() => {
 afterEach(() => server.resetHandlers());
 afterAll(() => server.close());
 
-describe("api test", () => {
+describe("api __test__", () => {
   it("컴포넌트 생성 시 status를 렌더링한다.", async () => {
     const status = await screen.findByTestId("readingStatus");
     expect(status).toBeTruthy();

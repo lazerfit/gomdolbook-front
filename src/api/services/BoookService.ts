@@ -43,7 +43,7 @@ export interface IReadingLogResponse {
 export interface IReadingLogUpdateRequest {
   isbn: string;
   note: string;
-  value: string;
+  text: string;
 }
 
 export interface IStatusResponse {
@@ -54,6 +54,8 @@ export enum BookStatus {
   READING = "READING",
   TO_READ = "TO_READ",
   FINISHED = "FINISHED",
+  NEW = "NEW",
+  EMPTY = "EMPTY",
 }
 
 export const BookService = {

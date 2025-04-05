@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { styled } from "styled-components";
-import UserProfile from "./UserProfile.tsx";
+import UserMenu from "./UserMenu.tsx";
 import { useKeycloak } from "@react-keycloak/web";
 import { useEffect, useState } from "react";
 import LoginModal from "./LoginModal.tsx";
@@ -8,7 +8,7 @@ import { setToken } from "@/api/services/config/Interceptor.ts";
 import { LoginRequireModal } from "@/ui/index.ts";
 import { motion, useScroll, useTransform } from "framer-motion";
 
-const Wrapper = styled(motion.header)`
+const StyledHeader = styled(motion.header)`
   background-color: ${(props) => props.theme.colors.bgc};
   display: flex;
   align-items: center;
@@ -24,7 +24,7 @@ const Wrapper = styled(motion.header)`
   width: 1180px;
 `;
 
-const NavigationLinkWrapper = styled.nav`
+const NavMenu = styled.nav`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -32,14 +32,14 @@ const NavigationLinkWrapper = styled.nav`
   background-color: ${(props) => props.theme.colors.bgc};
 `;
 
-const MainLogo = styled.div`
+const SiteLogo = styled.div`
   font-family: ${(props) => props.theme.fonts.english}, serif;
   cursor: pointer;
   font-size: 1.4rem;
   white-space: pre-line;
 `;
 
-const MainLink = styled.button`
+const NavLink = styled.button`
   font-family: ${(props) => props.theme.fonts.english}, serif;
   font-size: 1.2rem;
   font-weight: 500;
@@ -48,7 +48,7 @@ const MainLink = styled.button`
   cursor: pointer;
 `;
 
-const UserMenuWrapper = styled.div`
+const UserDropdown = styled.div`
   padding: 22px 0;
   width: 85px;
   height: 90px;
@@ -57,7 +57,7 @@ const UserMenuWrapper = styled.div`
   align-items: center;
 `;
 
-export const Login = styled(motion.button)`
+export const LoginButton = styled(motion.button)`
   transition: transform 0.2s ease;
   font-family: ${(props) => props.theme.fonts.english};
   font-weight: 600;
@@ -111,33 +111,28 @@ const Header = () => {
   };
 
   return (
-    <Wrapper id="navigation" style={{ height }}>
-      {showModal && <LoginRequireModal close={() => setShowModal(false)} />}
-      <MainLogo
+    <StyledHeader role="banner" style={{ height }}>
+      {showModal && <LoginRequireModal onClose={() => setShowModal(false)} />}
+      <SiteLogo
         onClick={() => {
           navigate("/");
         }}
       >
         {`gomdol\nbook`}
-      </MainLogo>
-      <NavigationLinkWrapper>
-        <MainLink onClick={() => validateLoginStatus("/library/reading")}>
-          Library
-        </MainLink>
-        <MainLink onClick={() => validateLoginStatus("/collections")}>
-          Collections
-        </MainLink>
-      </NavigationLinkWrapper>
-
-      <UserMenuWrapper>
+      </SiteLogo>
+      <NavMenu>
+        <NavLink onClick={() => validateLoginStatus("/library/reading")}>Library</NavLink>
+        <NavLink onClick={() => validateLoginStatus("/collections")}>Collections</NavLink>
+      </NavMenu>
+      <UserDropdown>
         {keycloak.authenticated ? (
-          <UserProfile onLoggedOut={() => void logout()} />
+          <UserMenu onLoggedOut={() => void logout()} />
         ) : (
-          <Login whileTap={{ scale: 0.75 }} onClick={() => setIsModalOpened(true)}>
+          <LoginButton whileTap={{ scale: 0.75 }} onClick={() => setIsModalOpened(true)}>
             Log in
-          </Login>
+          </LoginButton>
         )}
-      </UserMenuWrapper>
+      </UserDropdown>
       <LoginModal
         isModalOpened={isModalOpened}
         onClose={() => setIsModalOpened(false)}
@@ -145,7 +140,7 @@ const Header = () => {
         kakao={() => void login("kakao")}
         google={() => void login("google")}
       />
-    </Wrapper>
+    </StyledHeader>
   );
 };
 

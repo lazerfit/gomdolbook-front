@@ -42,7 +42,7 @@ const useGetBookSearchResult = (q: string) => {
 };
 
 const useGetLibrary = (status: string) => {
-  const { data, isLoading: isLibraryLoading } = useQuery({
+  const { data, isLoading: isLibraryBookListLoading } = useQuery({
     queryKey: ["Library", status],
     queryFn: () => {
       return BookService.getLibrary(status);
@@ -50,9 +50,9 @@ const useGetLibrary = (status: string) => {
     enabled: !!status,
   });
 
-  const library = data?.data ?? [];
+  const libraryBookList = data?.data ?? [];
 
-  return { library, isLibraryLoading };
+  return { libraryBookList, isLibraryBookListLoading };
 };
 
 const useSaveBook = () => {
@@ -72,7 +72,7 @@ interface Args {
 export const useBook = ({ isbn = "", q = "", status = "" }: Args = {}) => {
   const { book, isBookLoading } = useGetBook(isbn);
   const { searchResult, isSearchResultLoading } = useGetBookSearchResult(q);
-  const { library, isLibraryLoading } = useGetLibrary(status);
+  const { libraryBookList, isLibraryBookListLoading } = useGetLibrary(status);
   const { saveBook } = useSaveBook();
 
   return {
@@ -80,8 +80,8 @@ export const useBook = ({ isbn = "", q = "", status = "" }: Args = {}) => {
     isBookLoading,
     searchResult,
     isSearchResultLoading,
-    library,
-    isLibraryLoading,
+    libraryBookList,
+    isLibraryBookListLoading,
     saveBook,
   };
 };

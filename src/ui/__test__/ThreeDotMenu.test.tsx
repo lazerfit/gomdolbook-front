@@ -56,10 +56,4 @@ describe("display render", () => {
     await waitFor(() => expect(screen.queryByText("정말 삭제하시겠습니까?")).toBeNull());
     expect(onSubmit).toBeCalledTimes(1);
   });
-
-  it("수정하기 버튼 클릭 후 statusUpdate fn이 실행된다.", async () => {
-    const btn = await screen.findByText("상태변경");
-    fireEvent.click(btn);
-    await waitFor(() => expect(statusUpdate).toBeCalledTimes(1));
-  });
 });

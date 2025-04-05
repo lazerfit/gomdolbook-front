@@ -10,7 +10,7 @@ const ShowUpAnimation = keyframes`
   }
 `;
 
-const Wrapper = styled.div`
+const ToastWrapper = styled.div`
   position: fixed;
   right: 10px;
   bottom: 10px;
@@ -27,7 +27,7 @@ const Wrapper = styled.div`
   animation: ${ShowUpAnimation} 0.5s ease;
 `;
 
-const Icon = styled.div`
+const ToastIcon = styled.div`
   font-size: 24px;
   display: flex;
   margin-bottom: 2px;
@@ -36,9 +36,9 @@ const Icon = styled.div`
 `;
 
 interface Props {
-  isVisible: boolean;
-  isError: boolean;
-  onChangeVisibility: () => void;
+  onShow: boolean;
+  onError: boolean;
+  onClose: () => void;
   message: {
     success: string;
     error: string;
@@ -55,42 +55,42 @@ const Toast = (props: Props) => {
     }
   }, [toggleOnClose]);
 
-  const handleOnClose = () => {
+  const closeToast = () => {
     if (isClosing) {
-      props.onChangeVisibility();
+      props.onClose();
     }
   };
 
   useEffect(
     function toastTimeout() {
-      if (props.isVisible) {
+      if (props.onShow) {
         const timer = setTimeout(() => setToggleOnClose(true), 3000);
 
         return () => clearTimeout(timer);
       } else return;
     },
-    [props.isVisible],
+    [props.onShow],
   );
 
-  if (!props.isVisible) return null;
+  if (!props.onShow) return null;
   return createPortal(
-    <Wrapper
+    <ToastWrapper
       className={isClosing ? "scale-out" : "scale-in"}
-      onAnimationEnd={handleOnClose}
+      onAnimationEnd={closeToast}
     >
-      <Icon>
-        {props.isError ? (
+      <ToastIcon>
+        {props.onError ? (
           <MdErrorOutline style={{ color: "red" }} />
         ) : (
           <IoIosCheckmarkCircleOutline />
         )}
-      </Icon>
-      {props.isError ? (
+      </ToastIcon>
+      {props.onError ? (
         <div>{props.message.error}</div>
       ) : (
         <div>{props.message.success}</div>
       )}
-    </Wrapper>,
+    </ToastWrapper>,
     document.getElementById("modal")!,
   );
 };

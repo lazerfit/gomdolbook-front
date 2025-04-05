@@ -15,17 +15,17 @@ const ButtonWrapper = styled(motion.section)`
   position: relative;
 `;
 
-const ThreeDot = styled(motion.nav)`
+const ThreeDotIcon = styled(motion.nav)`
   cursor: pointer;
 `;
 
-const Menu = styled(motion.ul)`
+const DropdownMenu = styled(motion.ul)`
   padding: 10px;
   width: 90px;
   min-width: 5.625rem;
   box-shadow:
-    rgba(0, 0, 0, 0.15) 0px 15px 25px,
-    rgba(0, 0, 0, 0.05) 0px 5px 10px;
+    rgba(0, 0, 0, 0.15) 0 15px 25px,
+    rgba(0, 0, 0, 0.05) 0 5px 10px;
   position: absolute;
   text-align: center;
   border-radius: 8px;
@@ -36,7 +36,7 @@ const Menu = styled(motion.ul)`
   list-style: none;
 `;
 
-export const Item = styled(motion.li)`
+export const DropdownLink = styled(motion.li)`
   cursor: pointer;
   padding: 5px;
   border-radius: 3px;
@@ -93,7 +93,7 @@ const ThreeDotMenu = ({ onRemove = () => void 0, isLoading, children }: Props) =
   const { modalType, openModal, closeModal } = useModal();
   const [isOpen, setIsOpen] = useState(false);
 
-  const onSubmit = () => {
+  const handleSubmit = () => {
     try {
       onRemove();
     } catch (error) {
@@ -106,14 +106,14 @@ const ThreeDotMenu = ({ onRemove = () => void 0, isLoading, children }: Props) =
   return (
     <>
       <ButtonWrapper initial={false} animate={isOpen ? "open" : "closed"}>
-        <ThreeDot
+        <ThreeDotIcon
           initial="closed"
           animate={isOpen ? "open" : "closed"}
           onClick={() => setIsOpen(!isOpen)}
         >
           <BsThreeDotsVertical data-tesid="threedot" />
-        </ThreeDot>
-        <Menu
+        </ThreeDotIcon>
+        <DropdownMenu
           animate={isOpen ? "open" : "closed"}
           variants={{
             open: {
@@ -138,11 +138,14 @@ const ThreeDotMenu = ({ onRemove = () => void 0, isLoading, children }: Props) =
           style={{ pointerEvents: isOpen ? "auto" : "none" }}
           initial="closed"
         >
-          <Item variants={itemVariants} onClick={() => openModal(ModalTypes.DELETE)}>
+          <DropdownLink
+            variants={itemVariants}
+            onClick={() => openModal(ModalTypes.DELETE)}
+          >
             삭제하기
-          </Item>
+          </DropdownLink>
           {children}
-        </Menu>
+        </DropdownMenu>
       </ButtonWrapper>
       {modalType === ModalTypes.DELETE && (
         <Modal
@@ -155,7 +158,7 @@ const ThreeDotMenu = ({ onRemove = () => void 0, isLoading, children }: Props) =
           <ModalWrapper>
             <div>정말 삭제하시겠습니까?</div>
             <ModalButtonWrapper>
-              <SubmitButton onClick={onSubmit} disabled={isLoading}>
+              <SubmitButton onClick={handleSubmit} disabled={isLoading}>
                 삭제
               </SubmitButton>
               <ModalCloseButton onClick={closeModal}>취소</ModalCloseButton>

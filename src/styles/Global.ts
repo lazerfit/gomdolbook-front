@@ -90,27 +90,6 @@ const GlobalStyle = createGlobalStyle`
     line-height: 130%;
   }
 
-  .text-lg {
-    font-size: 18px;
-    font-weight: 600;
-    line-height: 140%;
-  }
-
-  .text-md {
-    font-size: 1rem;
-    line-height: 140%;
-  }
-
-  .text-sm {
-    font-size: 0.9rem;
-    line-height: 140%;
-  }
-
-  .caption {
-    font-size: ${(props) => props.theme.fonts.size300};
-    line-height: 140%;
-  }
-
   /* Animation */
   @keyframes ScaleIn {
     0% {
@@ -141,34 +120,6 @@ const GlobalStyle = createGlobalStyle`
   }
   }
 
-  .scale-in {
-    animation: ScaleIn 0.5s ease-in-out forwards;
-  }
-
-  .scale-out {
-    animation: ScaleOut 0.3s ease forwards;
-  }
-
-  .scale-enter {
-    opacity: 0;
-    transform: scale(0.9);
-  }
-
-  .scale-enter-active {
-    opacity: 1;
-    transform: translateX(0);
-    transition: opacity 500ms, transform 500ms;
-  }
-
-  .scale-exit {
-    opacity: 1;
-  }
-
-  .scale-exit-active {
-    opacity: 0;
-    transform: scale(0.9);
-    transition: opacity 300ms, transform 300ms;
-  }
 `;
 
 export default GlobalStyle;

@@ -12,14 +12,14 @@ const Overlay = styled.div`
   z-index: 999;
 `;
 
-interface IWrapper {
+interface IModalWrapper {
   $innerWidth: string;
   $innerHeight: string;
   $bgc: string;
   $color: string;
 }
 
-const Wrapper = styled.section<IWrapper>`
+const ModalWrapper = styled.section<IModalWrapper>`
   position: fixed;
   width: ${(props) => props.$innerWidth};
   height: ${(props) => props.$innerHeight};
@@ -65,17 +65,17 @@ const Modal = ({
 }: Props) => {
   const [isClosing, setIsClosing] = useState(false);
 
-  const onClosing = () => {
+  const closeModal = () => {
     setIsClosing(true);
   };
 
-  const handleOnClose = () => {
+  const handleAnimationClose = () => {
     if (isClosing) {
       if (onClose) onClose();
     }
   };
 
-  const _onKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+  const handleEscapeKey = (event: React.KeyboardEvent<HTMLDivElement>) => {
     if (event.key === "Escape") {
       onClose();
     }
@@ -83,20 +83,20 @@ const Modal = ({
 
   return createPortal(
     <div>
-      <Overlay onClick={onClosing} />
-      <Wrapper
+      <Overlay onClick={closeModal} />
+      <ModalWrapper
         className={isClosing ? "scale-out" : "scale-in"}
         tabIndex={0}
-        onKeyDown={_onKeyDown}
-        onAnimationEnd={handleOnClose}
+        onKeyDown={handleEscapeKey}
+        onAnimationEnd={handleAnimationClose}
         $innerWidth={innerWidth}
         $innerHeight={innerHeight}
         $bgc={bgc}
         $color={color}
       >
-        <CloseButton onClick={onClosing}>&times;</CloseButton>
+        <CloseButton onClick={closeModal}>&times;</CloseButton>
         {children}
-      </Wrapper>
+      </ModalWrapper>
     </div>,
     document.getElementById("modal")!,
   );

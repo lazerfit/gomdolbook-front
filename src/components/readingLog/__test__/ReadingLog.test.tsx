@@ -10,7 +10,7 @@ import {
   expect,
 } from "../../../utils/CustomRender.tsx";
 import { fireEvent, screen, waitFor } from "@testing-library/react";
-import ReadingLog from "../ReadingLog.tsx";
+import ReadingLogPage from "../../../pages/ReadingLogPage.tsx";
 import { http, HttpResponse } from "msw";
 import { MemoryRouter, Route, Routes } from "react-router-dom";
 
@@ -108,7 +108,7 @@ describe("render", () => {
     customRender(
       <MemoryRouter initialEntries={["/readingLog/9791194330424"]}>
         <Routes>
-          <Route path="/readingLog/:isbn" element={<ReadingLog />} />
+          <Route path="/readingLog/:isbn" element={<ReadingLogPage />} />
         </Routes>
       </MemoryRouter>,
     );

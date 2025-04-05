@@ -17,15 +17,15 @@ const ModalBtn = styled.button`
 `;
 
 interface Props {
-  close: () => void;
+  onClose: () => void;
 }
 
 const LoginRequireModal = (props: Props) => {
   return (
-    <Modal innerWidth="300px" innerHeight="140px" onClose={props.close}>
+    <Modal innerWidth="300px" innerHeight="140px" onClose={props.onClose}>
       <ModalContent>
         <div>로그인이 필요합니다.</div>
-        <ModalBtn onClick={props.close}>확인</ModalBtn>
+        <ModalBtn onClick={props.onClose}>확인</ModalBtn>
       </ModalContent>
     </Modal>
   );

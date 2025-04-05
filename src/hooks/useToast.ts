@@ -2,18 +2,24 @@ import { useState } from "react";
 
 export const useToast = () => {
   const [isToastVisible, setIsToastVisible] = useState(false);
-  const [isErrorToast, setIsErrorToast] = useState(false);
+  const [hasToastError, setHasToastError] = useState(false);
 
-  const onShowToast = () => {
+  const openToast = () => {
     setIsToastVisible(true);
-    setIsErrorToast(false);
+    setHasToastError(false);
   };
-  const onShowErrorToast = () => {
-    setIsErrorToast(true);
+  const openErrorToast = () => {
+    setHasToastError(true);
   };
-  const onCloseToast = () => {
+  const closeToast = () => {
     setIsToastVisible(false);
   };
 
-  return { isToastVisible, isErrorToast, onShowToast, onShowErrorToast, onCloseToast };
+  return {
+    isToastVisible,
+    hasToastError,
+    openToast,
+    openErrorToast,
+    closeToast,
+  };
 };

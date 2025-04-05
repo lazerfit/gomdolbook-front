@@ -1,6 +1,6 @@
 import { styled } from "styled-components";
 
-const Wrapper = styled.footer`
+const StyledFooter = styled.footer`
   width: 100%;
   height: 120px;
   margin: 0 auto;
@@ -12,7 +12,7 @@ const Wrapper = styled.footer`
   font-family: ${(props) => props.theme.fonts.english}, serif;
 `;
 
-const ContentWrapper = styled.div`
+const FooterContent = styled.div`
   width: 100%;
   height: 120px;
   padding: 45px 0;
@@ -26,11 +26,11 @@ const ContentWrapper = styled.div`
 
 const Footer = () => {
   return (
-    <Wrapper>
-      <ContentWrapper>
+    <StyledFooter>
+      <FooterContent>
         <div>@Designed By gomdolbook</div>
-      </ContentWrapper>
-    </Wrapper>
+      </FooterContent>
+    </StyledFooter>
   );
 };
 

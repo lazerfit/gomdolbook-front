@@ -5,8 +5,8 @@ import { MemoryRouter, Routes, Route } from "react-router-dom";
 import { customRender } from "@/utils/CustomRender.tsx";
 import { ReactKeycloakProvider } from "@react-keycloak/web";
 import keycloak from "@/auth/keycloak.ts";
-import Library from "@/pages/Library.tsx";
-import Collection from "@/pages/Collection.tsx";
+import MyLibraryPage from "@/pages/MyLibraryPage.tsx";
+import Collection from "@/pages/MyCollectionPage.tsx";
 
 vi.mock("@react-keycloak/web", async (importOrigianl) => {
   return {
@@ -32,7 +32,7 @@ describe("Header Component", () => {
       <MemoryRouter initialEntries={["/"]}>
         <ReactKeycloakProvider authClient={keycloak}>
           <Routes>
-            <Route path="/library/reading" element={<Library />} />
+            <Route path="/library/reading" element={<MyLibraryPage />} />
             <Route path="/collections" element={<Collection />} />
             <Route path="/" element={<Header />} />
           </Routes>
@@ -45,7 +45,7 @@ describe("Header Component", () => {
     expect(await screen.findByText("gomdolbook")).toBeTruthy();
   });
 
-  it("Library 클릭", async () => {
+  it("MyLibraryPage 클릭", async () => {
     const btn = await screen.findByText("Library");
     expect(btn).toBeTruthy();
     fireEvent.click(btn);

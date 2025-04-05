@@ -28,5 +28,5 @@
     "preserveConstEnums": true
   },
   "include": ["src"],
-  "exclude": ["node_modules", "dist", "coverage", ".vscode", "**/__test__/*"]
+  "exclude": ["node_modules", "dist", "coverage", ".vscode"]
 }

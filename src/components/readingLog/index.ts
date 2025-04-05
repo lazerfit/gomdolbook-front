@@ -1,2 +1,2 @@
-export { default as ReadingLog } from "./ReadingLog.tsx";
-export { default as Ratings } from "./Ratings.tsx";
+export { default as ReadingLog } from "../../pages/ReadingLogPage.tsx";
+export { default as Ratings } from "./Rating.tsx";

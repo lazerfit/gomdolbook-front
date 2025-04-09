@@ -38,9 +38,10 @@
     "build": "tsc && vite build",
     "preview": "vite preview",
     "lint": "eslint . --ext ts,tsx",
-    "prepare": "husky",
+    "prepare": "if [ \"$CI\" != \"true\" ]; then husky; fi",
     "test": "vitest",
-    "coverage": "vitest run --coverage"
+    "coverage": "vitest run --coverage",
+    "postinstall": "if [ \"$CI\" != \"true\" ]; then husky install; fi"
   },
   "lint-staged": {
     "**/*.{ts,tsx}": "eslint .",

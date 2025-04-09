@@ -111,7 +111,7 @@ const ThreeDotMenu = ({ onRemove = () => void 0, isLoading, children }: Props) =
           animate={isOpen ? "open" : "closed"}
           onClick={() => setIsOpen(!isOpen)}
         >
-          <BsThreeDotsVertical data-tesid="threedot" />
+          <BsThreeDotsVertical data-testid="threedot" />
         </ThreeDotIcon>
         <DropdownMenu
           animate={isOpen ? "open" : "closed"}

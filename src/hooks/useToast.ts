@@ -9,6 +9,7 @@ export const useToast = () => {
     setHasToastError(false);
   };
   const openErrorToast = () => {
+    setIsToastVisible(true);
     setHasToastError(true);
   };
   const closeToast = () => {

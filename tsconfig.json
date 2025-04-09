@@ -1,10 +1,10 @@
 {
   "extends": "./tsconfig.common.json",
   "compilerOptions": {
-    "types": ["vite/client", "@types/sanitize-html", "@types/react-transition-group"],
+    "types": ["vite/client", "@types/sanitize-html", "@types/react-transition-group", "vitest", "node"],
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["src/*"]
     }
   }
 }

@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { FaArrowLeft } from "react-icons/fa6";
 import {
   BookDetailSkeletonLoader,
@@ -15,6 +15,7 @@ import { useBook, useCollection, useReadingLog } from "@/hooks/index.ts";
 import { DropdownLink } from "@/ui/ThreeDotMenu.tsx";
 import { itemVariants } from "@/ui/frameMotion/variants.ts";
 import * as S from "./BookDetail.styles.ts";
+import { useToast } from "@/hooks/useToast.ts";
 
 interface Props {
   isbn: string;
@@ -22,8 +23,8 @@ interface Props {
 }
 
 const BookDetail = ({ isbn = "", onClose }: Props) => {
-  const [isToastVisible, setIsToastVisible] = useState(false);
-  const [hasToastError, setHasToastError] = useState(false);
+  const { hasToastError, openErrorToast, openToast, isToastVisible, closeToast } =
+    useToast();
   const { book, isBookLoading } = useBook({ isbn: isbn });
   const { removeBook, isRemoveBookPending } = useCollection();
   const { status, statusRefetch, makeUpdatable } = useReadingLog({
@@ -31,17 +32,6 @@ const BookDetail = ({ isbn = "", onClose }: Props) => {
   });
   const { name } = useContext(CollectionParamContext);
   const { refetch: collectionBookListRefetch } = useContext(RefetchContext);
-
-  const openToast = () => {
-    setIsToastVisible(true);
-    setHasToastError(false);
-  };
-  const openErrorToast = () => {
-    setHasToastError(true);
-  };
-  const closeToast = () => {
-    setIsToastVisible(false);
-  };
 
   const handleRemoveBook = () => {
     removeBook(
@@ -105,8 +95,8 @@ const BookDetail = ({ isbn = "", onClose }: Props) => {
                 bookData={book}
                 statusRefetch={statusRefetch}
                 status={status}
-                showToast={() => openToast()}
-                showErrorToast={() => openErrorToast()}
+                showToast={openToast}
+                showErrorToast={openErrorToast}
               />
             </S.ButtonWrapper>
           </>

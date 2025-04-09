@@ -32,7 +32,6 @@ const customRender = (
   const Wrapper = ({ children }: { children: ReactNode }) => {
     return (
       <Theme>
-        <div id="modal"></div>
         <QueryClientProvider client={testQueryClient}>
           <ParamContextProvider collectionParam={params}>
             <RefetchContextProvider refetch={refetch}>{children}</RefetchContextProvider>

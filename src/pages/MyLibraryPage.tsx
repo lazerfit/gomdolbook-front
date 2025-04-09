@@ -42,7 +42,7 @@ const MyLibraryPage = () => {
         {isLibraryBookListLoading ? (
           <BookListSkeletonLoader />
         ) : (
-          <BookListView books={libraryBookList} />
+          <BookListView bookList={libraryBookList} />
         )}
       </motion.div>
     </MyLibraryWrapper>

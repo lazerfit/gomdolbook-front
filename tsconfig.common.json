@@ -27,6 +27,6 @@
     "lib": ["DOM", "DOM.Iterable", "ESNext"],
     "preserveConstEnums": true
   },
-  "include": ["src"],
+  "include": ["src","__mocks__"],
   "exclude": ["node_modules", "dist", "coverage", ".vscode"]
 }

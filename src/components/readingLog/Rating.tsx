@@ -47,9 +47,7 @@ const Rating = ({ isbn = "", initialRating = 0, refetch }: Props) => {
         { isbn: isbn, star: rating },
         {
           onSuccess: () => {
-            refetch()
-              .then()
-              .catch((error) => console.log(error));
+            refetch().catch((error) => console.log(error));
           },
           onError: (error) => console.log(error),
         },
@@ -67,6 +65,7 @@ const Rating = ({ isbn = "", initialRating = 0, refetch }: Props) => {
         {initialRating === 0 &&
           Array.from({ length: 5 }, (_, i) => i + 1).map((arrayStar) => (
             <Star
+              data-testid="star"
               key={arrayStar}
               onMouseEnter={() => setHover(arrayStar)}
               onMouseLeave={() => setHover(0)}
@@ -74,21 +73,25 @@ const Rating = ({ isbn = "", initialRating = 0, refetch }: Props) => {
             >
               {hover > 0 ? (
                 hover >= arrayStar ? (
-                  <FaStar />
+                  <FaStar data-testid="filled-star" />
                 ) : (
-                  <FaRegStar />
+                  <FaRegStar data-testid="reg-star" />
                 )
               ) : rating >= arrayStar ? (
-                <FaStar />
+                <FaStar data-testid="filled-star" />
               ) : (
-                <FaRegStar />
+                <FaRegStar data-testid="reg-star" />
               )}
             </Star>
           ))}
         {initialRating !== 0 &&
           Array.from({ length: 5 }, (_, i) => i + 1).map((arrayStar) => (
             <Star key={arrayStar} style={{ cursor: "default" }}>
-              {rating >= arrayStar ? <FaStar /> : <FaRegStar />}
+              {rating >= arrayStar ? (
+                <FaStar data-testid="filled-star" />
+              ) : (
+                <FaRegStar data-testid="reg-star" />
+              )}
             </Star>
           ))}
       </StarContainer>

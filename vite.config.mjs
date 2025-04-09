@@ -10,7 +10,7 @@ export default defineConfig({
   },
   resolve: {
     alias: {
-      "@": path.resolve(__dirname, "./src"),
+      "@": path.resolve(__dirname, "src"),
     },
     extensions: [".ts", ".tsx", "js", ".jsx"],
   },
@@ -19,7 +19,11 @@ export default defineConfig({
     environment: "jsdom",
     include: ["**/?(*.)test.ts?(x)"],
     alias: {
-      "@": path.resolve(__dirname, "./src"),
+      "@": path.resolve(__dirname, "src"),
     },
+    coverage: {
+      reporter: ["text", "json", "html"],
+    },
+    setupFiles: ["./src/test-utils/setupHttp"],
   },
 });

@@ -51,7 +51,7 @@ const CollectionDetailPage = () => {
     name: name,
   });
 
-  const onRemove = () => {
+  const handleDeleteCollection = () => {
     deleteCollection(void 0, {
       onSuccess: () => {
         collectionListRefetch()
@@ -85,7 +85,10 @@ const CollectionDetailPage = () => {
     >
       <TitleWrapper>
         <Title>{name}</Title>
-        <ThreeDotMenu onRemove={onRemove} isLoading={isDeleteCollectionPending} />
+        <ThreeDotMenu
+          onRemove={handleDeleteCollection}
+          isLoading={isDeleteCollectionPending}
+        />
       </TitleWrapper>
       <RefetchProvider refetch={collectionRefetch}>
         <CollectionParamProvider
@@ -94,7 +97,7 @@ const CollectionDetailPage = () => {
           <SearchWrapper>
             <SearchBar />
           </SearchWrapper>
-          <BookListView books={collection} />
+          <BookListView bookList={collection} />
         </CollectionParamProvider>
       </RefetchProvider>
     </Wrapper>

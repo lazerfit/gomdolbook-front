@@ -114,6 +114,7 @@ const Header = () => {
     <StyledHeader role="banner" style={{ height }}>
       {showModal && <LoginRequireModal onClose={() => setShowModal(false)} />}
       <SiteLogo
+        data-testid="site-logo"
         onClick={() => {
           navigate("/");
         }}

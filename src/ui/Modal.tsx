@@ -83,7 +83,7 @@ const Modal = ({
 
   return createPortal(
     <div>
-      <Overlay onClick={closeModal} />
+      <Overlay data-testid="modalOverlay" onClick={closeModal} />
       <ModalWrapper
         className={isClosing ? "scale-out" : "scale-in"}
         tabIndex={0}
@@ -94,7 +94,9 @@ const Modal = ({
         $bgc={bgc}
         $color={color}
       >
-        <CloseButton onClick={closeModal}>&times;</CloseButton>
+        <CloseButton onClick={closeModal} data-testid="closeButton">
+          &times;
+        </CloseButton>
         {children}
       </ModalWrapper>
     </div>,

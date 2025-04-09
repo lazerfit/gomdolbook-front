@@ -33,7 +33,7 @@ const ReadingBooksView = () => {
   return (
     <ReadingBooksWrapper>
       <SearchBar />
-      <BookListView books={libraryBookList} />
+      <BookListView bookList={libraryBookList} />
     </ReadingBooksWrapper>
   );
 };

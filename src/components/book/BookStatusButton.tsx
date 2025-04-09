@@ -96,7 +96,10 @@ const BookStatusButton = ({
       onSuccess: () => {
         statusRefetch()
           .then(() => showToast())
-          .catch((error) => console.log(error));
+          .catch((error) => {
+            showErrorToast();
+            console.log(error);
+          });
       },
       onError: (error) => {
         showErrorToast();

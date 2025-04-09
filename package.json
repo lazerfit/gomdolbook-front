@@ -38,10 +38,10 @@
     "build": "tsc && vite build",
     "preview": "vite preview",
     "lint": "eslint . --ext ts,tsx",
-    "prepare": "if [ \"$CI\" != \"true\" ]; then husky; fi",
+    "prepare": "[ -f .husky/pre-commit ] && npx husky install || echo 'husky not installed, skipping...'",
     "test": "vitest",
     "coverage": "vitest run --coverage",
-    "postinstall": "if [ \"$CI\" != \"true\" ]; then husky install; fi"
+    "postinstall": "[ -f .husky/pre-commit ] && npx husky install || echo 'husky not installed, skipping...'"
   },
   "lint-staged": {
     "**/*.{ts,tsx}": "eslint .",

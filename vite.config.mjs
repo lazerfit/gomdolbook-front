@@ -26,4 +26,7 @@ export default defineConfig({
     },
     setupFiles: ["./src/test-utils/setupHttp"],
   },
+  build: {
+    outDir: "dist",
+  },
 });

@@ -2,8 +2,11 @@ import Keycloak, { KeycloakConfig } from "keycloak-js";
 import { setToken } from "@/api/services/config/Interceptor.ts";
 import type { AuthClientEvent } from "@react-keycloak/core";
 
+const keycloakUrl = import.meta.env.VITE_KEYCLOAK_URL;
+const homepageUrl = import.meta.env.VITE_BASE_URL;
+
 const keycloakConfig: KeycloakConfig = {
-  url: "http://localhost:8081",
+  url: keycloakUrl,
   realm: "gomdolbook",
   clientId: "gomdolbook",
 };
@@ -18,18 +21,18 @@ export const eventHandler = async (event: AuthClientEvent) => {
   switch (event) {
     case "onTokenExpired":
       if (!keycloak.authenticated) {
-        await keycloak.logout({ redirectUri: "http://localhost:3000" });
+        await keycloak.logout({ redirectUri: homepageUrl });
       }
       try {
         const refreshed = await keycloak.updateToken(-1);
         if (refreshed) {
           setToken(keycloak.idToken!);
         } else {
-          await keycloak.logout({ redirectUri: "http://localhost:3000" });
+          await keycloak.logout({ redirectUri: homepageUrl });
         }
       } catch (error) {
         console.log("토큰 갱신 실패", error);
-        await keycloak.logout({ redirectUri: "http://localhost:3000" });
+        await keycloak.logout({ redirectUri: homepageUrl });
       }
       break;
     default:

@@ -68,6 +68,8 @@ export const LoginButton = styled(motion.button)`
   border: 1px solid black;
 `;
 
+const homepageUrl = import.meta.env.VITE_BASE_URL;
+
 const Header = () => {
   const navigate = useNavigate();
   const { keycloak, initialized } = useKeycloak();
@@ -79,7 +81,7 @@ const Header = () => {
   const login = async (idp: string) => {
     try {
       await keycloak.login({
-        redirectUri: "http://localhost:3000/",
+        redirectUri: homepageUrl,
         idpHint: idp,
       });
     } catch (e) {
@@ -89,7 +91,7 @@ const Header = () => {
 
   const logout = async () => {
     try {
-      await keycloak.logout({ redirectUri: "http://localhost:3000" });
+      await keycloak.logout({ redirectUri: homepageUrl });
     } catch (error) {
       console.log(error);
     }

@@ -15,6 +15,10 @@ const ButtonWrapper = styled.div`
   display: flex;
   gap: 17px;
   margin: 34px auto;
+
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    margin: 15px auto;
+  }
 `;
 
 const ReadingStatus = styled.div`
@@ -40,7 +44,13 @@ const Button = styled(motion.button)`
   border-radius: 20px;
   cursor: pointer;
   color: ${(props) => props.theme.colors.white};
-  box-shadow: rgba(0, 0, 0, 0.15) 0px 3px 3px 0px;
+  box-shadow: rgba(0, 0, 0, 0.15) 0 3px 3px 0;
+
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    width: 100%;
+    font-size: 0.5rem;
+    line-height: 1.3rem;
+  }
 
   > p {
     position: relative;
@@ -76,7 +86,7 @@ const BookStatusButton = ({
       author: bookData.author,
       pubDate: bookData.pubDate,
       description: bookData.description,
-      isbn13: bookData.isbn13,
+      isbn: bookData.isbn,
       cover: bookData.cover,
       categoryName: bookData.categoryName,
       publisher: bookData.publisher,

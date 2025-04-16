@@ -80,6 +80,10 @@ const theme: DefaultTheme = {
     24px 20px rgba(186, 186, 186, 0.01),
     24px 28px rgba(186, 186, 186, 0.01)`,
   },
+  breakpoints: {
+    mobile: "767px",
+    tablet: "1023px",
+  },
 };
 
 interface ThemeProps {

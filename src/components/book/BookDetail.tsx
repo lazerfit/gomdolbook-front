@@ -35,7 +35,7 @@ const BookDetail = ({ isbn = "", onClose }: Props) => {
 
   const handleRemoveBook = () => {
     removeBook(
-      { isbn: book.isbn13, name: name },
+      { isbn: book.isbn, name: name },
       {
         onSuccess: () => {
           Promise.all([
@@ -82,7 +82,7 @@ const BookDetail = ({ isbn = "", onClose }: Props) => {
               />
               <S.BookSubInformation>
                 <div style={{ fontWeight: "bold" }}>기본정보</div>
-                <div>ISBN : {book.isbn13}</div>
+                <div>ISBN : {book.isbn}</div>
                 <div>카테고리 : {book.categoryName}</div>
               </S.BookSubInformation>
             </S.BookInformation>

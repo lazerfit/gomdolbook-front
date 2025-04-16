@@ -14,7 +14,11 @@ const Wrapper = styled(motion.div)`
   transform: translate(-50%, -50%);
   align-items: center;
   justify-content: center;
-  perspective: 1200;
+  perspective: 1200px;
+
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    display: none;
+  }
 `;
 
 const Image = styled(motion.img)`

@@ -10,7 +10,7 @@ const DEFAULT_BOOK = {
   author: "default author",
   pubDate: "default pubDate",
   description: "default description",
-  isbn13: "default isbn13",
+  isbn: "default isbn",
   cover: "default cover",
   categoryName: "default categoryName",
   publisher: "default publisher",

@@ -11,6 +11,10 @@ const SearchBarWrapper = styled.section`
   align-items: center;
   justify-content: center;
   margin-top: 13px;
+
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    margin-bottom: 30px;
+  }
 `;
 const SearchInputWrapper = styled.div`
   display: flex;

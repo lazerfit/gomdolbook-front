@@ -13,6 +13,10 @@ const ButtonWrapper = styled(motion.section)`
   justify-content: center;
   margin-left: auto;
   position: relative;
+
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    margin-top: 60px;
+  }
 `;
 
 const ThreeDotIcon = styled(motion.nav)`

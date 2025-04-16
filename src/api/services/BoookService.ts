@@ -10,6 +10,17 @@ export interface IBookResponse {
   author: string;
   pubDate: string;
   description: string;
+  isbn: string;
+  cover: string;
+  categoryName?: string;
+  publisher: string;
+}
+
+export interface IBookSearchResponse {
+  title: string;
+  author: string;
+  pubDate: string;
+  description: string;
   isbn13: string;
   cover: string;
   categoryName?: string;
@@ -107,7 +118,7 @@ export const BookService = {
     });
   },
   getBookSearchResult: (q: string) => {
-    return request<IApiResponse<IBookResponse[]>>({
+    return request<IApiResponse<IBookSearchResponse[]>>({
       url: BookEndPoint.getBookSearchResult(),
       method: "GET",
       params: { q: q },

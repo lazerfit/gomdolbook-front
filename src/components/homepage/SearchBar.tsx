@@ -12,7 +12,7 @@ const SearchBarWrapper = styled.section`
   justify-content: center;
   margin-top: 13px;
 
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+  @media (${(props) => props.theme.breakpoints.mobile}) {
     margin-bottom: 30px;
   }
 `;

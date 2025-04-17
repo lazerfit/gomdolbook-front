@@ -1,4 +1,5 @@
 import { styled, keyframes } from "styled-components";
+import { useMediaBreakpoints } from "@/hooks/useMediaBreakpoints.js";
 
 const WaveLines = keyframes`
   0% {
@@ -13,6 +14,10 @@ const BookList = styled.div`
   display: flex;
   margin-top: 68px;
   gap: 20px;
+
+  @media (${(props) => props.theme.breakpoints.mobile}) {
+    margin-top: 0;
+  }
 `;
 
 const Line = styled.div<{ $width: string; $height: string }>`
@@ -21,14 +26,6 @@ const Line = styled.div<{ $width: string; $height: string }>`
   margin-bottom: 6px;
   border-radius: 2px;
   background: rgba(130, 130, 130, 0.2);
-  background: -webkit-gradient(
-    linear,
-    left top,
-    right top,
-    color-stop(8%, rgba(130, 130, 130, 0.2)),
-    color-stop(18%, rgba(130, 130, 130, 0.3)),
-    color-stop(33%, rgba(130, 130, 130, 0.2))
-  );
   background: linear-gradient(
     to right,
     rgba(130, 130, 130, 0.2) 8%,
@@ -40,6 +37,18 @@ const Line = styled.div<{ $width: string; $height: string }>`
 `;
 
 const BookListSkeletonLoader = () => {
+  const { isMobile } = useMediaBreakpoints();
+
+  if (isMobile) {
+    return (
+      <BookList>
+        <Line $width="70px" $height="90px" />
+        <Line $width="70px" $height="90px" />
+        <Line $width="70px" $height="90px" />
+      </BookList>
+    );
+  }
+
   return (
     <BookList>
       <Line $width="280px" $height="410px" />

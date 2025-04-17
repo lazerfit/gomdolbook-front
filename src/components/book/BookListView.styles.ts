@@ -11,7 +11,7 @@ export const BookWrapper = styled.section`
   gap: 45px;
   margin-top: 32px;
 
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+  @media (${(props) => props.theme.breakpoints.mobile}) {
     margin-top: 0;
     gap: 30px;
   }
@@ -24,7 +24,7 @@ export const BookContentWrapper = styled.article`
   text-align: center;
   width: 200px;
 
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+  @media (${(props) => props.theme.breakpoints.mobile}) {
     width: 20%;
     margin-top: 5px;
   }
@@ -37,7 +37,7 @@ export const BookCover = styled.img`
   cursor: pointer;
   box-shadow: ${(props) => props.theme.shadow.light};
 
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+  @media (${(props) => props.theme.breakpoints.mobile}) {
     width: 100%;
   }
 
@@ -49,7 +49,7 @@ export const BookCover = styled.img`
 export const BookTitle = styled.h5`
   margin-top: 21px;
 
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+  @media (${(props) => props.theme.breakpoints.mobile}) {
     margin-top: 11px;
     display: -webkit-box;
     -webkit-box-orient: vertical;
@@ -68,7 +68,7 @@ export const EmptyLibraryWrapper = styled.div`
   margin-top: 100px;
   flex-direction: column;
 
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+  @media (${(props) => props.theme.breakpoints.mobile}) {
     padding: 0 30px;
   }
 `;
@@ -80,7 +80,7 @@ export const EmptyLibraryBanner = styled(motion.div)`
   line-height: 1;
   text-shadow: ${(props) => props.theme.shadow.text};
 
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+  @media (${(props) => props.theme.breakpoints.mobile}) {
     line-height: 1.2;
   }
 `;

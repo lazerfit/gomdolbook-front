@@ -16,7 +16,7 @@ const Wrapper = styled(motion.div)`
   justify-content: center;
   perspective: 1200px;
 
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+  @media (${(props) => props.theme.breakpoints.mobile}) {
     display: none;
   }
 `;

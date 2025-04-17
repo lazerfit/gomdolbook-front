@@ -26,7 +26,7 @@ const ToastWrapper = styled.div`
   justify-content: center;
   animation: ${ShowUpAnimation} 0.5s ease;
 
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+  @media (${(props) => props.theme.breakpoints.mobile}) {
     position: fixed;
     top: 30px;
     left: 50%;

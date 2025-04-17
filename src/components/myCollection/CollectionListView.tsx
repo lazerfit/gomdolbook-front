@@ -5,12 +5,14 @@ import { CollectionSkeletonLoader } from "@/ui/index.ts";
 import { useKeycloak } from "@react-keycloak/web";
 import { useCollection } from "@/hooks/index.ts";
 import * as S from "./CollectionListView.styles.ts";
+import { useMediaBreakpoints } from "@/hooks/useMediaBreakpoints.js";
 
 const CollectionListView = () => {
   const navigate = useNavigate();
   const [isCreatingCollection, setIsCreatingCollection] = useState(false);
   const [inputText, setInputText] = useState("");
   const { initialized } = useKeycloak();
+  const { isMobile } = useMediaBreakpoints();
   const {
     collectionList,
     isCollectionListLoading,
@@ -84,9 +86,14 @@ const CollectionListView = () => {
           $collectionName={collection.name}
           onClick={() => navigate(`${encodeURIComponent(collection.name)}`)}
         >
-          {collection.books.covers.slice(0, 4).map((cover, index) => (
-            <S.BookCoverImage src={cover} key={index} alt="책 표지" />
-          ))}
+          <S.MobileContentCardWrapper>
+            <S.MobileBookCoverWrapper>
+              {collection.books.covers.slice(0, 4).map((cover, index) => (
+                <S.BookCoverImage src={cover} key={index} alt="책 표지" />
+              ))}
+            </S.MobileBookCoverWrapper>
+            {isMobile && <S.MobileContentName>{collection.name}</S.MobileContentName>}
+          </S.MobileContentCardWrapper>
         </S.CollectionCard>
       ))}
     </S.CollectionWrapper>

@@ -23,7 +23,7 @@ const StyledHeader = styled(motion.header)`
   height: 60px;
   width: 1180px;
 
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+  @media (${(props) => props.theme.breakpoints.mobile}) {
     width: 100%;
     padding: 0 20px;
   }
@@ -52,7 +52,7 @@ const NavLink = styled.button`
   background-color: ${(props) => props.theme.colors.bgc};
   cursor: pointer;
 
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+  @media (${(props) => props.theme.breakpoints.mobile}) {
     display: none;
   }
 `;

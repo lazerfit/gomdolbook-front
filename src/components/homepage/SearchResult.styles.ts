@@ -6,7 +6,7 @@ export const SearchResultContentWrapper = styled.section`
   display: flex;
   flex-direction: column;
 
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+  @media (${(props) => props.theme.breakpoints.mobile}) {
     width: 100%;
   }
 `;
@@ -17,7 +17,7 @@ export const SearchInputWrapper = styled.div`
   justify-content: center;
   margin-top: 21px;
 
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+  @media (${(props) => props.theme.breakpoints.mobile}) {
     width: 100%;
     margin-top: 50px;
   }
@@ -31,7 +31,7 @@ export const SearchInput = styled.input`
   border-radius: 8px;
   background-color: transparent;
 
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+  @media (${(props) => props.theme.breakpoints.mobile}) {
     min-width: 0;
     width: 100%;
   }
@@ -50,7 +50,7 @@ export const SearchInput = styled.input`
 export const SearchResultContent = styled.div`
   margin: 21px auto;
 
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+  @media (${(props) => props.theme.breakpoints.mobile}) {
     width: 100%;
   }
 `;
@@ -67,7 +67,7 @@ export const BookListItem = styled.article`
   padding: 13px 21px 23px 21px;
   box-shadow: rgba(17, 17, 26, 0.1) 0 1px 0;
 
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+  @media (${(props) => props.theme.breakpoints.mobile}) {
     width: 100%;
   }
 `;
@@ -86,7 +86,7 @@ export const BookInformation = styled.div`
   flex-direction: column;
   margin: 0 21px;
 
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+  @media (${(props) => props.theme.breakpoints.mobile}) {
     width: 60%;
   }
 `;
@@ -99,7 +99,7 @@ export const BookTitle = styled.h3`
   text-overflow: ellipsis;
   font-weight: 700;
 
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+  @media (${(props) => props.theme.breakpoints.mobile}) {
     width: 100%;
     -webkit-line-clamp: 3;
   }
@@ -114,7 +114,7 @@ export const BookDescription = styled.p`
   text-overflow: ellipsis;
   color: ${(props) => props.theme.colors.gray6};
 
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+  @media (${(props) => props.theme.breakpoints.mobile}) {
     display: none;
   }
 `;

@@ -12,7 +12,7 @@ const NavWrapper = styled.div`
   border-top: 1px solid black;
   border-bottom: 1px solid black;
 
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+  @media (${(props) => props.theme.breakpoints.mobile}) {
     width: 90%;
     margin-bottom: 30px;
   }

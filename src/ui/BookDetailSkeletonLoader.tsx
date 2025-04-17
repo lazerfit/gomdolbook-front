@@ -25,6 +25,10 @@ const Box = styled.div`
   justify-content: center;
   align-items: flex-start;
   margin-top: 34px;
+
+  @media (${(props) => props.theme.breakpoints.mobile}) {
+    width: 100%;
+  }
 `;
 
 const ButtonWrapper = styled.div`
@@ -33,6 +37,10 @@ const ButtonWrapper = styled.div`
   justify-content: center;
   gap: 13px;
   margin: 34px auto;
+
+  @media (${(props) => props.theme.breakpoints.mobile}) {
+    width: 100%;
+  }
 `;
 
 const LineWrapper = styled.div`
@@ -40,6 +48,10 @@ const LineWrapper = styled.div`
   margin-top: 21px;
   flex-direction: column;
   width: 500px;
+
+  @media (${(props) => props.theme.breakpoints.mobile}) {
+    width: 100%;
+  }
 `;
 
 const Line = styled.div<{ $width: string; $height: string }>`
@@ -48,14 +60,6 @@ const Line = styled.div<{ $width: string; $height: string }>`
   margin-top: 8px;
   border-radius: 2px;
   background: rgba(130, 130, 130, 0.2);
-  background: -webkit-gradient(
-    linear,
-    left top,
-    right top,
-    color-stop(8%, rgba(130, 130, 130, 0.2)),
-    color-stop(18%, rgba(130, 130, 130, 0.3)),
-    color-stop(33%, rgba(130, 130, 130, 0.2))
-  );
   background: linear-gradient(
     to right,
     rgba(130, 130, 130, 0.2) 8%,
@@ -64,6 +68,10 @@ const Line = styled.div<{ $width: string; $height: string }>`
   );
   background-size: 800px 100px;
   animation: ${Wave} 2s infinite ease-out;
+
+  @media (${(props) => props.theme.breakpoints.mobile}) {
+    max-width: 100%;
+  }
 `;
 
 const Square = styled.div<{ $width: string; $height: string }>`
@@ -72,14 +80,6 @@ const Square = styled.div<{ $width: string; $height: string }>`
   margin: 0 auto;
   border-radius: 9px;
   background: rgba(130, 130, 130, 0.2);
-  background: -webkit-gradient(
-    linear,
-    left top,
-    right top,
-    color-stop(8%, rgba(130, 130, 130, 0.2)),
-    color-stop(18%, rgba(130, 130, 130, 0.3)),
-    color-stop(33%, rgba(130, 130, 130, 0.2))
-  );
   background: linear-gradient(
     to right,
     rgba(130, 130, 130, 0.2) 8%,

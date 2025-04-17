@@ -1,7 +1,6 @@
 import React, { ReactNode, useState } from "react";
 import { styled } from "styled-components";
 import { createPortal } from "react-dom";
-import { motion } from "framer-motion";
 
 const Overlay = styled.div`
   position: fixed;
@@ -35,7 +34,7 @@ const ModalWrapper = styled.section<IModalWrapper>`
   font-family: ${(props) => props.theme.fonts.text};
   overflow-y: auto;
 
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+  @media (${(props) => props.theme.breakpoints.mobile}) {
     width: 90%;
     padding: 0 20px;
     overflow-x: hidden;

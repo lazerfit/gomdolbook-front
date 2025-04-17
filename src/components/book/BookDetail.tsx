@@ -58,13 +58,15 @@ const BookDetail = ({ isbn = "", onClose }: Props) => {
         <S.BackButton data-testid="backBtn" onClick={onClose}>
           <FaArrowLeft style={{ fontSize: "20px" }} />
         </S.BackButton>
-        {status !== "EMPTY" && status !== "NEW" && (
-          <ThreeDotMenu onRemove={handleRemoveBook} isLoading={isRemoveBookPending}>
-            <DropdownLink variants={itemVariants} onClick={makeUpdatable}>
-              상태변경
-            </DropdownLink>
-          </ThreeDotMenu>
-        )}
+        <S.ThreeDotMenuWrapper>
+          {status !== "EMPTY" && status !== "NEW" && (
+            <ThreeDotMenu onRemove={handleRemoveBook} isLoading={isRemoveBookPending}>
+              <DropdownLink variants={itemVariants} onClick={makeUpdatable}>
+                상태변경
+              </DropdownLink>
+            </ThreeDotMenu>
+          )}
+        </S.ThreeDotMenuWrapper>
       </S.NavMenu>
       <S.BookContentWrapper>
         {isBookLoading ? (

@@ -13,6 +13,10 @@ const Banner = styled.div`
   font-size: 1.125rem;
   font-weight: 600;
   margin-bottom: 34px;
+
+  @media (${(props) => props.theme.breakpoints.mobile}) {
+    margin-top: 16px;
+  }
 `;
 
 const EasyLoginWrapper = styled.div`
@@ -20,6 +24,10 @@ const EasyLoginWrapper = styled.div`
   flex-direction: row;
   justify-content: center;
   gap: 20px;
+
+  @media (${(props) => props.theme.breakpoints.mobile}) {
+    margin-bottom: 16px;
+  }
 `;
 
 const LoginButton = styled.button`

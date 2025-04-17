@@ -6,7 +6,7 @@ export const BookDetailWrapper = styled.section`
   display: flex;
   flex-direction: column;
 
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+  @media (${(props) => props.theme.breakpoints.mobile}) {
     width: 100%;
   }
 `;
@@ -15,10 +15,15 @@ export const NavMenu = styled.div`
   display: flex;
   align-items: center;
 
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+  @media (${(props) => props.theme.breakpoints.mobile}) {
     width: 100%;
     justify-content: space-between;
+    align-items: flex-start;
   }
+`;
+
+export const ThreeDotMenuWrapper = styled.div`
+  margin-top: 60px;
 `;
 
 export const BackButton = styled.button`
@@ -29,9 +34,9 @@ export const BackButton = styled.button`
   background-color: transparent;
   cursor: pointer;
 
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+  @media (${(props) => props.theme.breakpoints.mobile}) {
     padding: 0;
-    margin: 0 0 0 0;
+    margin: 8px 0 0 0;
   }
 `;
 
@@ -43,8 +48,9 @@ export const BookContentWrapper = styled.div`
   padding: 21px;
   width: 500px;
 
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+  @media (${(props) => props.theme.breakpoints.mobile}) {
     width: 100%;
+    margin: 17px auto;
   }
 `;
 
@@ -55,7 +61,7 @@ export const BookInformation = styled.div`
   align-items: flex-start;
   margin-top: 34px;
 
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+  @media (${(props) => props.theme.breakpoints.mobile}) {
     width: 100%;
   }
 `;
@@ -75,7 +81,7 @@ export const BookTitle = styled.h3`
   width: 500px;
   font-weight: 700;
 
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+  @media (${(props) => props.theme.breakpoints.mobile}) {
     width: 100%;
   }
 `;
@@ -86,7 +92,7 @@ export const BookSubInformation = styled.div`
   display: flex;
   flex-direction: column;
 
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+  @media (${(props) => props.theme.breakpoints.mobile}) {
     width: 100%;
   }
 
@@ -104,7 +110,7 @@ export const BookDescription = styled.div`
   width: 500px;
   min-width: 31.25rem;
 
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+  @media (${(props) => props.theme.breakpoints.mobile}) {
     min-width: 0;
     width: 100%;
   }

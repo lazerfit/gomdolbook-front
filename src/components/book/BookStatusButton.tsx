@@ -16,8 +16,11 @@ const ButtonWrapper = styled.div`
   gap: 17px;
   margin: 34px auto;
 
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    margin: 15px auto;
+  @media (${(props) => props.theme.breakpoints.mobile}) {
+    margin: 10px auto;
+    flex-direction: column;
+    width: 100%;
+    display: block;
   }
 `;
 
@@ -46,15 +49,17 @@ const Button = styled(motion.button)`
   color: ${(props) => props.theme.colors.white};
   box-shadow: rgba(0, 0, 0, 0.15) 0 3px 3px 0;
 
-  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
-    width: 100%;
-    font-size: 0.5rem;
-    line-height: 1.3rem;
-  }
-
   > p {
     position: relative;
     font-size: 1rem;
+  }
+
+  @media (${(props) => props.theme.breakpoints.mobile}) {
+    width: 100%;
+    font-size: 0.5rem;
+    line-height: 1.3rem;
+    border-radius: 5px;
+    margin-bottom: 10px;
   }
 `;
 

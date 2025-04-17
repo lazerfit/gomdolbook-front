@@ -5,11 +5,25 @@ export const BookDetailWrapper = styled.section`
   height: 100%;
   display: flex;
   flex-direction: column;
+
+  @media (${(props) => props.theme.breakpoints.mobile}) {
+    width: 100%;
+  }
 `;
 
 export const NavMenu = styled.div`
   display: flex;
   align-items: center;
+
+  @media (${(props) => props.theme.breakpoints.mobile}) {
+    width: 100%;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+`;
+
+export const ThreeDotMenuWrapper = styled.div`
+  margin-top: 60px;
 `;
 
 export const BackButton = styled.button`
@@ -19,6 +33,11 @@ export const BackButton = styled.button`
   padding-left: 30px;
   background-color: transparent;
   cursor: pointer;
+
+  @media (${(props) => props.theme.breakpoints.mobile}) {
+    padding: 0;
+    margin: 8px 0 0 0;
+  }
 `;
 
 export const BookContentWrapper = styled.div`
@@ -28,6 +47,11 @@ export const BookContentWrapper = styled.div`
   align-items: flex-start;
   padding: 21px;
   width: 500px;
+
+  @media (${(props) => props.theme.breakpoints.mobile}) {
+    width: 100%;
+    margin: 17px auto;
+  }
 `;
 
 export const BookInformation = styled.div`
@@ -36,6 +60,10 @@ export const BookInformation = styled.div`
   justify-content: center;
   align-items: flex-start;
   margin-top: 34px;
+
+  @media (${(props) => props.theme.breakpoints.mobile}) {
+    width: 100%;
+  }
 `;
 
 export const BookCover = styled.img`
@@ -52,6 +80,10 @@ export const BookTitle = styled.h3`
   overflow: hidden;
   width: 500px;
   font-weight: 700;
+
+  @media (${(props) => props.theme.breakpoints.mobile}) {
+    width: 100%;
+  }
 `;
 
 export const BookSubInformation = styled.div`
@@ -59,6 +91,10 @@ export const BookSubInformation = styled.div`
   margin-top: 21px;
   display: flex;
   flex-direction: column;
+
+  @media (${(props) => props.theme.breakpoints.mobile}) {
+    width: 100%;
+  }
 
   > div:nth-child(1) {
     margin-bottom: 5px;
@@ -73,6 +109,11 @@ export const BookDescription = styled.div`
   gap: 5px;
   width: 500px;
   min-width: 31.25rem;
+
+  @media (${(props) => props.theme.breakpoints.mobile}) {
+    min-width: 0;
+    width: 100%;
+  }
 `;
 
 export const ButtonWrapper = styled.div`

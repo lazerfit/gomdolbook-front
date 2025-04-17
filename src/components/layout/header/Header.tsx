@@ -22,6 +22,11 @@ const StyledHeader = styled(motion.header)`
   z-index: 15;
   height: 60px;
   width: 1180px;
+
+  @media (${(props) => props.theme.breakpoints.mobile}) {
+    width: 100%;
+    padding: 0 20px;
+  }
 `;
 
 const NavMenu = styled.nav`
@@ -46,6 +51,10 @@ const NavLink = styled.button`
   line-height: 30px;
   background-color: ${(props) => props.theme.colors.bgc};
   cursor: pointer;
+
+  @media (${(props) => props.theme.breakpoints.mobile}) {
+    display: none;
+  }
 `;
 
 const UserDropdown = styled.div`

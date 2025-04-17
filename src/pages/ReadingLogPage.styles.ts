@@ -7,6 +7,12 @@ export const ReadingLogWrapper = styled(motion.section)`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+
+  @media (${(props) => props.theme.breakpoints.mobile}) {
+    width: 100%;
+    margin: 0 auto;
+    padding: 10px;
+  }
 `;
 
 export const BookTitle = styled.h3``;
@@ -22,6 +28,11 @@ export const BookImage = styled.img`
   min-width: 12.5rem;
   box-shadow: ${(props) => props.theme.shadow.light};
   margin-top: 13px;
+
+  @media (${(props) => props.theme.breakpoints.mobile}) {
+    min-width: 0;
+    width: 100px;
+  }
 `;
 
 export const ReadingStatus = styled.div`
@@ -42,6 +53,10 @@ export const ReadingLogNoteBox = styled.div`
   justify-content: space-between;
   gap: 13px;
   margin-top: 40px;
+
+  @media (${(props) => props.theme.breakpoints.mobile}) {
+    width: 100%;
+  }
 `;
 
 export const ReadingLogNote = styled.article`
@@ -51,6 +66,11 @@ export const ReadingLogNote = styled.article`
   padding: 10px;
   box-shadow: ${(props) => props.theme.shadow.light};
   border: 2px solid black;
+
+  @media (${(props) => props.theme.breakpoints.mobile}) {
+    min-width: 30%;
+    width: 100%;
+  }
 `;
 
 export const NoteTitle = styled.div`
@@ -77,20 +97,37 @@ export const NoteContent = styled.div`
 export const ModalWrapper = styled.div`
   display: flex;
   flex-direction: column;
+
+  @media (${(props) => props.theme.breakpoints.mobile}) {
+    width: 100%;
+  }
 `;
 
 export const ModalContentWrapper = styled.section`
   display: flex;
   flex-direction: column;
   margin: 100px 100px;
+
+  @media (${(props) => props.theme.breakpoints.mobile}) {
+    width: 100%;
+    margin: 60px 0;
+  }
 `;
 
 export const ModalTitle = styled.h1`
   font-size: 1.5rem;
+
+  @media (${(props) => props.theme.breakpoints.mobile}) {
+    width: 100%;
+  }
 `;
 
 export const ModalWysiwyg = styled.div`
   margin-top: 30px;
+
+  @media (${(props) => props.theme.breakpoints.mobile}) {
+    width: 100%;
+  }
 `;
 
 export const ModalSaveButtonWrapper = styled.div`
@@ -99,6 +136,10 @@ export const ModalSaveButtonWrapper = styled.div`
   align-items: center;
   justify-content: flex-end;
   gap: 10px;
+
+  @media (${(props) => props.theme.breakpoints.mobile}) {
+    width: 100%;
+  }
 `;
 
 export const ModalSaveButton = styled.button`
@@ -107,6 +148,10 @@ export const ModalSaveButton = styled.button`
   border: 1px solid ${(props) => props.theme.colors.gray4};
   border-radius: 10px;
   transition: all 0.5s ease;
+
+  @media (${(props) => props.theme.breakpoints.mobile}) {
+    width: 100%;
+  }
 
   &:hover {
     transform: translate(5px, -5px);
@@ -121,6 +166,10 @@ export const ModalUpdateButtonWrapper = styled.div`
   padding: 5px;
   flex-direction: column;
   gap: 10px;
+
+  @media (${(props) => props.theme.breakpoints.mobile}) {
+    width: 100%;
+  }
 `;
 
 export const ModalUpdateButton = styled.button`
@@ -133,6 +182,10 @@ export const ModalUpdateButton = styled.button`
   background-color: ${(props) => props.theme.colors.black};
   color: ${(props) => props.theme.colors.white};
   transition: all 0.5s ease;
+
+  @media (${(props) => props.theme.breakpoints.mobile}) {
+    width: 100%;
+  }
 
   &:hover {
     transform: translate(5px, -5px);

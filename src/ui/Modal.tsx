@@ -1,4 +1,4 @@
-import { ReactNode, useState } from "react";
+import React, { ReactNode, useState } from "react";
 import { styled } from "styled-components";
 import { createPortal } from "react-dom";
 
@@ -33,6 +33,12 @@ const ModalWrapper = styled.section<IModalWrapper>`
   border-radius: 8px;
   font-family: ${(props) => props.theme.fonts.text};
   overflow-y: auto;
+
+  @media (${(props) => props.theme.breakpoints.mobile}) {
+    width: 90%;
+    padding: 0 20px;
+    overflow-x: hidden;
+  }
 `;
 
 const CloseButton = styled.button`
@@ -64,37 +70,34 @@ const Modal = ({
   onClose,
 }: Props) => {
   const [isClosing, setIsClosing] = useState(false);
-
-  const closeModal = () => {
-    setIsClosing(true);
-  };
-
-  const handleAnimationClose = () => {
-    if (isClosing) {
-      if (onClose) onClose();
-    }
-  };
-
   const handleEscapeKey = (event: React.KeyboardEvent<HTMLDivElement>) => {
     if (event.key === "Escape") {
+      onClose();
+    }
+  };
+  const handleClose = () => {
+    setIsClosing(true);
+  };
+  const handleAnimationClose = () => {
+    if (isClosing) {
       onClose();
     }
   };
 
   return createPortal(
     <div>
-      <Overlay data-testid="modalOverlay" onClick={closeModal} />
+      <Overlay data-testid="modalOverlay" onClick={handleClose} />
       <ModalWrapper
-        className={isClosing ? "scale-out" : "scale-in"}
         tabIndex={0}
         onKeyDown={handleEscapeKey}
+        className={isClosing ? "scale-out" : "scale-in"}
         onAnimationEnd={handleAnimationClose}
         $innerWidth={innerWidth}
         $innerHeight={innerHeight}
         $bgc={bgc}
         $color={color}
       >
-        <CloseButton onClick={closeModal} data-testid="closeButton">
+        <CloseButton onClick={handleClose} data-testid="closeButton">
           &times;
         </CloseButton>
         {children}

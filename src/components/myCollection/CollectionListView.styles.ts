@@ -9,6 +9,10 @@ export const CollectionWrapper = styled(motion.section)`
   margin-top: 32px;
   gap: 20px;
   flex-wrap: wrap;
+
+  @media (${(props) => props.theme.breakpoints.mobile}) {
+    padding: 10px;
+  }
 `;
 
 export const BookCoverImage = styled.img`
@@ -16,6 +20,10 @@ export const BookCoverImage = styled.img`
   border-radius: 8px;
   filter: grayscale(1);
   transition: 0.5s;
+
+  @media (${(props) => props.theme.breakpoints.mobile}) {
+    width: 40px;
+  }
 `;
 
 interface IName {
@@ -46,6 +54,40 @@ export const CollectionCard = styled.div<IName>`
   &:hover > ${BookCoverImage} {
     filter: grayscale(0);
   }
+
+  @media (${(props) => props.theme.breakpoints.mobile}) {
+    width: 100%;
+    height: 120px;
+    margin-bottom: 0;
+
+    &::before {
+      content: none;
+    }
+  }
+`;
+
+export const MobileContentCardWrapper = styled.div`
+  @media (${(props) => props.theme.breakpoints.mobile}) {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+  }
+`;
+
+export const MobileBookCoverWrapper = styled.div`
+  @media (${(props) => props.theme.breakpoints.mobile}) {
+    display: flex;
+    gap: 5px;
+  }
+`;
+
+export const MobileContentName = styled.div`
+  @media (${(props) => props.theme.breakpoints.mobile}) {
+    margin-top: 10px;
+    width: 100%;
+    text-align: center;
+  }
 `;
 
 export const NewCollectionWrapper = styled.div`
@@ -58,6 +100,11 @@ export const NewCollectionWrapper = styled.div`
   justify-content: center;
   box-shadow: ${(props) => props.theme.shadow.light};
   border: 2px solid black;
+
+  @media (${(props) => props.theme.breakpoints.mobile}) {
+    width: 100%;
+    height: 120px;
+  }
 `;
 
 export const CollectionInputArea = styled.div`
@@ -65,6 +112,10 @@ export const CollectionInputArea = styled.div`
   height: 100%;
   flex-direction: column;
   justify-content: flex-start;
+
+  @media (${(props) => props.theme.breakpoints.mobile}) {
+    width: 70%;
+  }
 `;
 
 export const CollectionNameInput = styled.input`
@@ -73,6 +124,10 @@ export const CollectionNameInput = styled.input`
   border-radius: 5px;
   margin-top: 75px;
   border: 1px solid black;
+
+  @media (${(props) => props.theme.breakpoints.mobile}) {
+    margin-top: 20px;
+  }
 `;
 
 export const CreateCollectionButton = styled.button`

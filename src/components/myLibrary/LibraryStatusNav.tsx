@@ -11,6 +11,11 @@ const NavWrapper = styled.div`
   justify-content: center;
   border-top: 1px solid black;
   border-bottom: 1px solid black;
+
+  @media (${(props) => props.theme.breakpoints.mobile}) {
+    width: 90%;
+    margin-bottom: 30px;
+  }
 `;
 
 const NavLink = styled.button<{ $selected: boolean }>`

@@ -34,10 +34,16 @@ interface IShadow {
   text: string;
 }
 
+interface IBreakpoint {
+  mobile: string;
+  tablet: string;
+}
+
 declare module "styled-components" {
   export interface DefaultTheme {
     colors: IColor;
     fonts: IFont;
     shadow: IShadow;
+    breakpoints: IBreakpoint;
   }
 }

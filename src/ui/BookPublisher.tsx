@@ -1,4 +1,4 @@
-import { styled, css } from "styled-components";
+import { styled } from "styled-components";
 
 interface SProps {
   $justifyContent: string;
@@ -11,14 +11,23 @@ const PublisherWrapper = styled.div<SProps>`
   align-items: center;
   justify-content: ${(props) => props.$justifyContent};
   width: 500px;
+
+  @media (${(props) => props.theme.breakpoints.mobile}) {
+    width: 100%;
+  }
 `;
 
-const PubCommon = css`
+const PubCommon = styled.div`
   margin-left: 5px;
   max-width: 250px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+
+  @media (${(props) => props.theme.breakpoints.mobile}) {
+    max-width: 100%;
+    margin-left: 0;
+  }
 
   &::before {
     content: "|";
@@ -27,24 +36,34 @@ const PubCommon = css`
   }
 `;
 
-const Author = styled.div`
-  ${PubCommon}
+const Author = styled(PubCommon)`
   margin-left: 0;
   max-width: 260px;
 
+  @media (${(props) => props.theme.breakpoints.mobile}) {
+    display: none;
+  }
+
   &::before {
-    content: "";
+    content: none;
     margin-right: 0;
   }
 `;
 
-const PublisherInfo = styled.div`
-  ${PubCommon}
+const PublisherInfo = styled(PubCommon)`
   max-width: 180px;
+
+  @media (${(props) => props.theme.breakpoints.mobile}) {
+    width: 50px;
+    max-width: 120px;
+    &::before {
+      content: none;
+      margin-right: 0;
+    }
+  }
 `;
 
-const Date = styled.div`
-  ${PubCommon}
+const Date = styled(PubCommon)`
   color: ${(props) => props.theme.colors.gray6};
 `;
 interface Props {

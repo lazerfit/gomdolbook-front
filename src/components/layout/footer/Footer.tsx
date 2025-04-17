@@ -10,6 +10,10 @@ const StyledFooter = styled.footer`
   align-items: center;
   justify-content: center;
   font-family: ${(props) => props.theme.fonts.english}, serif;
+
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+    width: 95%;
+  }
 `;
 
 const FooterContent = styled.div`

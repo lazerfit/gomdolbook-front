@@ -20,11 +20,18 @@ const ToastWrapper = styled.div`
   width: 300px;
   height: 70px;
   border-radius: 8px;
-  box-shadow: rgba(0, 0, 0, 0.45) 0px 25px 20px -20px;
+  box-shadow: rgba(0, 0, 0, 0.45) 0 25px 20px -20px;
   display: flex;
   align-items: center;
   justify-content: center;
   animation: ${ShowUpAnimation} 0.5s ease;
+
+  @media (${(props) => props.theme.breakpoints.mobile}) {
+    position: fixed;
+    top: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
 `;
 
 const ToastIcon = styled.div`

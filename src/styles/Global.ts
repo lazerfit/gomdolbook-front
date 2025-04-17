@@ -60,6 +60,10 @@ const GlobalStyle = createGlobalStyle`
     max-width: 1180px;
     margin: 0 auto;
     height: 100%;
+
+    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
+      max-width: ${(props) => props.theme.breakpoints.mobile};
+    }
   }
 
   code {
@@ -120,6 +124,13 @@ const GlobalStyle = createGlobalStyle`
   }
   }
 
+  .scale-in {
+    animation: ScaleIn 0.4s ease-in-out forwards;
+  }
+
+  .scale-out {
+    animation: ScaleOut 0.4s ease-in-out forwards;
+  }
 `;
 
 export default GlobalStyle;

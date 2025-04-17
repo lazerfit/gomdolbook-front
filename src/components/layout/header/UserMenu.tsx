@@ -6,8 +6,12 @@ import { LoginButton } from "./Header.tsx";
 import { useNavigate } from "react-router-dom";
 
 const UserProfileWrapper = styled(motion.div)`
-  width: 50px;
-  height: 50px;
+  padding: 22px 0;
+  width: 85px;
+  height: 90px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
   position: relative;
 `;
 
@@ -17,7 +21,7 @@ const DropdownMenu = styled(motion.ul)`
   cursor: pointer;
   position: absolute;
   right: 0;
-  top: 60px;
+  top: 70px;
   padding: 10px;
   background-color: white;
   z-index: 1000;

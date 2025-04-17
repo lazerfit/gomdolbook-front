@@ -87,11 +87,11 @@ export const ModifyButton = styled.div`
 export const NoteContent = styled.div`
   margin-top: 10px;
   width: 100%;
-  max-height: 300px;
+  max-height: 400px;
   min-height: 9.375rem;
   color: ${(props) => props.theme.colors.gray5};
   font-size: 0.938rem;
-  overflow-y: scroll;
+  overflow-y: auto;
 `;
 
 export const ModalWrapper = styled.div`

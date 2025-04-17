@@ -50,35 +50,35 @@ const BookList = styled.div`
 `;
 
 const TestPage = () => {
-  const isMobile = useMediaBreakpoints();
+  const { isMobile } = useMediaBreakpoints();
+
+  if (isMobile) {
+    return (
+      <>
+        <Banner>
+          <Line $width="300px" $height="40px" />
+        </Banner>
+        <BookList>
+          <Line $width="70px" $height="90px" />
+          <Line $width="70px" $height="90px" />
+          <Line $width="70px" $height="90px" />
+        </BookList>
+      </>
+    );
+  }
 
   return (
     <>
-      {isMobile ? (
-        <>
-          <Banner>
-            <Line $width="300px" $height="40px" />
-          </Banner>
-          <BookList>
-            <Line $width="70px" $height="90px" />
-            <Line $width="70px" $height="90px" />
-            <Line $width="70px" $height="90px" />
-          </BookList>
-        </>
-      ) : (
-        <>
-          <Banner>
-            <Line $width="750px" $height="107px" />
-            <Line $width="300px" $height="40px" style={{ marginTop: "13px" }} />
-          </Banner>
-          <BookList>
-            <Line $width="280px" $height="410px" />
-            <Line $width="280px" $height="410px" />
-            <Line $width="280px" $height="410px" />
-            <Line $width="280px" $height="410px" />
-          </BookList>
-        </>
-      )}
+      <Banner>
+        <Line $width="750px" $height="107px" />
+        <Line $width="300px" $height="40px" style={{ marginTop: "13px" }} />
+      </Banner>
+      <BookList>
+        <Line $width="280px" $height="410px" />
+        <Line $width="280px" $height="410px" />
+        <Line $width="280px" $height="410px" />
+        <Line $width="280px" $height="410px" />
+      </BookList>
     </>
   );
 };

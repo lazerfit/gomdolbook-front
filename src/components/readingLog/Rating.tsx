@@ -30,7 +30,7 @@ interface Props {
   initialRating: number;
   refetch: (
     options?: RefetchOptions,
-  ) => Promise<QueryObserverResult<ApiResponse<ReadingLogResponse>, Error>>;
+  ) => Promise<QueryObserverResult<ApiResponse<ReadingLogResponse> | void, Error>>;
 }
 
 const Rating = ({ isbn = "", initialRating = 0, refetch }: Props) => {

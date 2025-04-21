@@ -11,6 +11,7 @@ import { useEffect, useState } from "react";
 import { useCollection } from "@/hooks/index.ts";
 import { motion } from "framer-motion";
 import ThreeDotMenu from "@/ui/ThreeDotMenu.tsx";
+import { useKeycloak } from "@react-keycloak/web";
 
 const Wrapper = styled(motion.section)`
   margin-top: 34px;
@@ -36,9 +37,9 @@ const SearchWrapper = styled.div`
 `;
 
 const CollectionDetailPage = () => {
-  const params = useParams();
-  const name = params.name ?? "";
+  const { name = "" } = useParams();
   const navigate = useNavigate();
+  const { initialized } = useKeycloak();
   const [isCollection, setIsCollection] = useState(false);
   const {
     fetchedCollection,
@@ -63,12 +64,12 @@ const CollectionDetailPage = () => {
   };
 
   useEffect(() => {
-    if (params.name) {
+    if (name) {
       setIsCollection(true);
     }
-  }, [params.name]);
+  }, [name]);
 
-  if (isFetchingCollection) {
+  if (isFetchingCollection && !initialized) {
     return <BookListSkeletonLoader />;
   }
 

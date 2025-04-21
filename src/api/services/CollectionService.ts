@@ -13,7 +13,7 @@ export interface BookCover {
 
 export const collectionService = {
   getList: () => {
-    return ApiRequest<CollectionResponse[]>(CollectionEndPoint.getList(), "POST");
+    return ApiRequest<CollectionResponse[]>(CollectionEndPoint.getList(), "GET");
   },
   getOne: (name: string) => {
     return ApiRequest<LibraryResponse[]>(CollectionEndPoint.getOne(name), "GET");

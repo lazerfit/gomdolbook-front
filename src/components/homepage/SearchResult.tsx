@@ -21,7 +21,6 @@ const SearchResult = ({ text, onClose }: Props) => {
   const { searchResult, isSearchResultLoading } = useBook({ q: triggeredEnterPress });
 
   const handleSelectBook = (isbn: string) => {
-    console.log(isbn);
     setIsbnForDetails(isbn);
     setHasSelectedBook(true);
   };

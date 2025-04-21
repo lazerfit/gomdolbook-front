@@ -24,9 +24,10 @@ const MyLibraryPage = () => {
 
   useEffect(() => {
     if (status !== "") {
-      setFilter(status);
+      setFilter(status.toUpperCase());
     }
   }, [status]);
+
   return (
     <MyLibraryWrapper>
       <StatusNavBar />

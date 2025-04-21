@@ -1,6 +1,7 @@
 import { styled } from "styled-components";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
 
 const NavWrapper = styled.div`
   width: 100%;
@@ -18,11 +19,11 @@ const NavWrapper = styled.div`
   }
 `;
 
-const NavLink = styled.button<{ $selected: boolean }>`
+const NavLink = styled(motion.button)<{ $selected: boolean }>`
   cursor: pointer;
   font-size: 1rem;
   position: relative;
-  padding: 8px 0;
+  padding: 8px 5px;
   border-radius: 7px;
   background-color: ${(props) => (props.$selected ? "black" : "transparent")};
   color: ${(props) => (props.$selected ? "white" : "black")};
@@ -49,6 +50,7 @@ const LibraryStatusNav = () => {
           $selected={selectedStatus === option.status}
           onClick={() => handleClickLink(option.status, option.path)}
           key={option.status}
+          whileTap={{ scale: 0.85 }}
         >
           {option.label}
         </NavLink>

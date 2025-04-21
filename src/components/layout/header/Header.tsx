@@ -44,13 +44,20 @@ const SiteLogo = styled.div`
   white-space: pre-line;
 `;
 
-const NavLink = styled.button`
+const NavLink = styled(motion.button)`
   font-family: ${(props) => props.theme.fonts.english}, serif;
   font-size: 1.2rem;
   font-weight: 500;
   line-height: 30px;
   background-color: ${(props) => props.theme.colors.bgc};
   cursor: pointer;
+  padding: 5px;
+  transition: 0.2s ease;
+
+  &:hover {
+    background-color: black;
+    color: white;
+  }
 
   @media (${(props) => props.theme.breakpoints.mobile}) {
     display: none;
@@ -131,8 +138,18 @@ const Header = () => {
         {`gomdol\nbook`}
       </SiteLogo>
       <NavMenu>
-        <NavLink onClick={() => validateLoginStatus("/library/reading")}>Library</NavLink>
-        <NavLink onClick={() => validateLoginStatus("/collections")}>Collections</NavLink>
+        <NavLink
+          onClick={() => validateLoginStatus("/library/reading")}
+          whileTap={{ scale: 0.8 }}
+        >
+          Library
+        </NavLink>
+        <NavLink
+          onClick={() => validateLoginStatus("/collections")}
+          whileTap={{ scale: 0.8 }}
+        >
+          Collections
+        </NavLink>
       </NavMenu>
       <UserDropdown>
         {keycloak.authenticated ? (

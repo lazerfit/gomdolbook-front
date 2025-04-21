@@ -2,7 +2,7 @@ import { styled } from "styled-components";
 import { BookStatus } from "@/api/services/BoookService.ts";
 import translateBookStatus from "@/utils/TranslateBookStatus.ts";
 import type { IBookResponse } from "@/api/services/BoookService.ts";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import {
   RefetchContext,
   CollectionParamContext,
@@ -80,7 +80,8 @@ const BookStatusButton = ({
   showErrorToast = () => void 0,
   status = "NEW",
 }: Props) => {
-  const { saveBook } = useBook();
+  const [newStatus, setNewStatus] = useState("");
+  const { saveBook, libraryRefetch } = useBook({ status: newStatus });
   const { addBook } = useCollection();
   const { isCollection, name } = useContext(CollectionParamContext);
   const { refetch: collectionBookListRefetch } = useContext(RefetchContext);
@@ -105,16 +106,24 @@ const BookStatusButton = ({
     { status: BookStatus.FINISHED, label: <p>읽기 완료</p> },
   ];
 
+  useEffect(() => {
+    if (!newStatus) return;
+
+    void Promise.all([statusRefetch(), libraryRefetch()])
+      .then(() => {
+        showToast();
+      })
+      .catch((error) => {
+        showErrorToast();
+        console.error(error);
+      });
+  }, [newStatus, statusRefetch, libraryRefetch, showToast, showErrorToast]);
+
   const handleSaveBook = (status: BookStatus) => {
     const saveRequest = createBookPayload(status);
     saveBook(saveRequest, {
       onSuccess: () => {
-        statusRefetch()
-          .then(() => showToast())
-          .catch((error) => {
-            showErrorToast();
-            console.log(error);
-          });
+        setNewStatus(status);
       },
       onError: (error) => {
         showErrorToast();

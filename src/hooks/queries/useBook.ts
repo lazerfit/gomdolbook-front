@@ -42,7 +42,11 @@ const useGetBookSearchResult = (q: string) => {
 };
 
 const useGetLibrary = (status: string) => {
-  const { data, isLoading: isLibraryBookListLoading } = useQuery({
+  const {
+    data,
+    isLoading: isLibraryBookListLoading,
+    refetch: libraryRefetch,
+  } = useQuery({
     queryKey: ["Library", status],
     queryFn: () => {
       return BookService.getLibrary(status);
@@ -52,7 +56,7 @@ const useGetLibrary = (status: string) => {
 
   const libraryBookList = data?.data ?? [];
 
-  return { libraryBookList, isLibraryBookListLoading };
+  return { libraryBookList, isLibraryBookListLoading, libraryRefetch };
 };
 
 const useSaveBook = () => {
@@ -72,7 +76,8 @@ interface Args {
 export const useBook = ({ isbn = "", q = "", status = "" }: Args = {}) => {
   const { book, isBookLoading } = useGetBook(isbn);
   const { searchResult, isSearchResultLoading } = useGetBookSearchResult(q);
-  const { libraryBookList, isLibraryBookListLoading } = useGetLibrary(status);
+  const { libraryBookList, isLibraryBookListLoading, libraryRefetch } =
+    useGetLibrary(status);
   const { saveBook } = useSaveBook();
 
   return {
@@ -82,6 +87,7 @@ export const useBook = ({ isbn = "", q = "", status = "" }: Args = {}) => {
     isSearchResultLoading,
     libraryBookList,
     isLibraryBookListLoading,
+    libraryRefetch,
     saveBook,
   };
 };

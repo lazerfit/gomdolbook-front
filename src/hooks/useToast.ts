@@ -1,17 +1,19 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 
 export const useToast = () => {
   const [isToastVisible, setIsToastVisible] = useState(false);
   const [hasToastError, setHasToastError] = useState(false);
 
-  const openToast = () => {
+  const openToast = useCallback<() => void>(() => {
     setIsToastVisible(true);
     setHasToastError(false);
-  };
-  const openErrorToast = () => {
+  }, []);
+
+  const openErrorToast = useCallback<() => void>(() => {
     setIsToastVisible(true);
     setHasToastError(true);
-  };
+  }, []);
+
   const closeToast = () => {
     setIsToastVisible(false);
   };

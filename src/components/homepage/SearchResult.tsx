@@ -18,7 +18,9 @@ const SearchResult = ({ text, onClose }: Props) => {
     triggeredEnterPress,
     handleSearchTextChange,
   } = useBookSearch(text);
-  const { searchResult, isSearchResultLoading } = useBook({ q: triggeredEnterPress });
+  const { bookSearchResults, isFetchingSearchResults } = useBook({
+    q: triggeredEnterPress,
+  });
 
   const handleSelectBook = (isbn: string) => {
     setIsbnForDetails(isbn);
@@ -43,10 +45,10 @@ const SearchResult = ({ text, onClose }: Props) => {
             />
           </S.SearchInputWrapper>
           <S.SearchResultContent>
-            {isSearchResultLoading ? (
+            {isFetchingSearchResults ? (
               <SimpleSkeletonLoader $width="700px" $n={6} />
             ) : (
-              searchResult.map((book) => (
+              bookSearchResults.map((book) => (
                 <S.BookListItem
                   onClick={() => handleSelectBook(book.isbn13)}
                   key={book.isbn13}

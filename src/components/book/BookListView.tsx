@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import type { ILibraryResponse } from "@/api/services/BoookService.ts";
+import { LibraryResponse } from "@/api/services/types/booktypes.ts";
 import { Modal } from "@/ui/index.ts";
 import { useState } from "react";
 import { BookDetail } from "./index.ts";
@@ -9,7 +9,7 @@ import { useKeycloak } from "@react-keycloak/web";
 import * as S from "./BookListView.styles.ts";
 
 interface Props {
-  bookList: ILibraryResponse[];
+  bookList: LibraryResponse[];
 }
 
 const BookListView = ({ bookList }: Props) => {
@@ -18,7 +18,7 @@ const BookListView = ({ bookList }: Props) => {
   const navigate = useNavigate();
   const { keycloak } = useKeycloak();
 
-  const handleNavigateOrOpenModal = (book: ILibraryResponse) => {
+  const handleNavigateOrOpenModal = (book: LibraryResponse) => {
     if (book.status === "NEW" || book.status === "TO_READ") {
       setIsbn(book.isbn);
       setIsModalOpened(true);

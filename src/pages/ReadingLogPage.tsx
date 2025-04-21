@@ -27,21 +27,21 @@ const ReadingLogPage = () => {
     useToast();
   const [note, setNote] = useState({ id: "", title: "", text: "" });
   const {
-    readingLog,
-    isReadingLogLoading,
-    readingLogRefetch,
-    updateReadingLog,
-    status,
-    statusRefetch,
-    updateStatus,
+    fetchedReadingLog,
+    isFetchingReadingLog,
+    refetchReadingLog,
+    updateReadingLogMutation,
+    fetchedStatus,
+    refetchStatus,
+    updateStatusMutation,
   } = useReadingLog({ statusIsbn: isbn, readingLogIsbn: isbn });
-  const [rating, setRating] = useState(readingLog.rating);
+  const [rating, setRating] = useState(fetchedReadingLog.rating);
 
   useEffect(() => {
-    if (readingLog) {
-      setRating(readingLog.rating);
+    if (fetchedReadingLog) {
+      setRating(fetchedReadingLog.rating);
     }
-  }, [readingLog]);
+  }, [fetchedReadingLog]);
 
   const openReadingLogModal = (id: string, title: string, placeholder: string) => {
     openModal(ModalTypes.WYSIWYG);
@@ -61,9 +61,9 @@ const ReadingLogPage = () => {
       text: note.text,
     };
 
-    updateReadingLog(data, {
+    updateReadingLogMutation(data, {
       onSuccess: () => {
-        readingLogRefetch()
+        refetchReadingLog()
           .then(() => {
             openModal(ModalTypes.WYSIWYG);
             openToast();
@@ -78,11 +78,11 @@ const ReadingLogPage = () => {
   };
 
   const handleUpdateStatus = (status: string) => {
-    updateStatus(
+    updateStatusMutation(
       { isbn: isbn, status: status },
       {
         onSuccess: () => {
-          statusRefetch()
+          refetchStatus()
             .then(() => closeModal())
             .catch((error) => console.log(error));
         },
@@ -113,29 +113,29 @@ const ReadingLogPage = () => {
       note: "note1",
       title: "1. 무엇을 다룬 책인지 알아내기",
       text:
-        readingLog.note1 === ""
+        fetchedReadingLog.note1 === ""
           ? "중심 내용, 요점정리, 저자가 풀어가려는 문제 등을 적어주세요."
-          : readingLog.note1,
+          : fetchedReadingLog.note1,
     },
     {
       note: "note2",
       title: "2. 내용 해석하기",
       text:
-        readingLog.note2 === ""
+        fetchedReadingLog.note2 === ""
           ? "중요한 단어를 저자가 어떤 의미로 사용하는지, 주요 명제, 논증, 풀어낸 문제와 그렇지 못한 문제를 구분하고, 풀지 못한 문제를 저자도 아는지 파악해보세요."
-          : readingLog.note2,
+          : fetchedReadingLog.note2,
     },
     {
       note: "note3",
       title: "3. 비평하기",
       text:
-        readingLog.note3 === ""
+        fetchedReadingLog.note3 === ""
           ? "저자가 잘 알지 못하는 부분, 잘못 알고 있는 부분, 논리적이지 못한 부분, 분석한 내용이나 설명이 불완전한 부분을 적어보세요."
-          : readingLog.note3,
+          : fetchedReadingLog.note3,
     },
   ];
 
-  if (isReadingLogLoading) {
+  if (isFetchingReadingLog) {
     return <BookListSkeletonLoader />;
   }
 
@@ -150,7 +150,7 @@ const ReadingLogPage = () => {
       }}
     >
       <ThreeDotMenu onRemove={() => void 0} isLoading={false}>
-        {status === "READING" && (
+        {fetchedStatus === "READING" && (
           <DropdownLink
             variants={itemVariants}
             onClick={() => openModal(ModalTypes.STATUS_UPDATE)}
@@ -159,17 +159,17 @@ const ReadingLogPage = () => {
           </DropdownLink>
         )}
       </ThreeDotMenu>
-      <S.BookTitle>{readingLog.title}</S.BookTitle>
+      <S.BookTitle>{fetchedReadingLog.title}</S.BookTitle>
       <BookPublisher
-        author={readingLog.author}
-        publisher={readingLog.publisher}
-        date={readingLog.pubDate}
+        author={fetchedReadingLog.author}
+        publisher={fetchedReadingLog.publisher}
+        date={fetchedReadingLog.pubDate}
       />
       <S.BookImageWrapper>
-        <S.BookImage src={readingLog.cover} />
+        <S.BookImage src={fetchedReadingLog.cover} />
       </S.BookImageWrapper>
-      <Ratings isbn={isbn} initialRating={rating} refetch={readingLogRefetch} />
-      <S.ReadingStatus>{TranslateBookStatus(status)}</S.ReadingStatus>
+      <Ratings isbn={isbn} initialRating={rating} refetch={refetchReadingLog} />
+      <S.ReadingStatus>{TranslateBookStatus(fetchedStatus)}</S.ReadingStatus>
       <S.ReadingLogNoteBox>
         {noteContentData.map((content) => (
           <S.ReadingLogNote key={content.note}>

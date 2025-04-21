@@ -18,7 +18,7 @@ const ReadingBooksWrapper = styled.section`
 const ReadingBooksView = () => {
   const { initialized, keycloak } = useKeycloak();
   const [filter, setFilter] = useState("");
-  const { libraryBookList, isLibraryBookListLoading } = useBook({ status: filter });
+  const { libraryBooks, isFetchingLibraryBooks } = useBook({ status: filter });
 
   useEffect(() => {
     if (initialized && keycloak.authenticated) {
@@ -26,14 +26,14 @@ const ReadingBooksView = () => {
     }
   }, [keycloak, initialized]);
 
-  if (!initialized || isLibraryBookListLoading) {
+  if (!initialized || isFetchingLibraryBooks) {
     return <IndexPageSkeletonLoader />;
   }
 
   return (
     <ReadingBooksWrapper>
       <SearchBar />
-      <BookListView bookList={libraryBookList} />
+      <BookListView bookList={libraryBooks} />
     </ReadingBooksWrapper>
   );
 };

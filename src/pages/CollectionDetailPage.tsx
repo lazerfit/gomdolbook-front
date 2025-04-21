@@ -41,20 +41,20 @@ const CollectionDetailPage = () => {
   const navigate = useNavigate();
   const [isCollection, setIsCollection] = useState(false);
   const {
-    collection,
-    isCollectionLoading,
-    collectionRefetch,
-    deleteCollection,
-    isDeleteCollectionPending,
-    collectionListRefetch,
+    fetchedCollection,
+    isFetchingCollection,
+    refetchCollection,
+    mutateDeleteCollection,
+    isDeletingCollection,
+    refetchCollectionList,
   } = useCollection({
     name: name,
   });
 
   const handleDeleteCollection = () => {
-    deleteCollection(void 0, {
+    mutateDeleteCollection(void 0, {
       onSuccess: () => {
-        collectionListRefetch()
+        refetchCollectionList()
           .then(() => navigate("/collections"))
           .catch((error) => console.log("list refetch error", error));
       },
@@ -68,7 +68,7 @@ const CollectionDetailPage = () => {
     }
   }, [params.name]);
 
-  if (isCollectionLoading) {
+  if (isFetchingCollection) {
     return <BookListSkeletonLoader />;
   }
 
@@ -87,17 +87,17 @@ const CollectionDetailPage = () => {
         <Title>{name}</Title>
         <ThreeDotMenu
           onRemove={handleDeleteCollection}
-          isLoading={isDeleteCollectionPending}
+          isLoading={isDeletingCollection}
         />
       </TitleWrapper>
-      <RefetchProvider refetch={collectionRefetch}>
+      <RefetchProvider refetch={refetchCollection}>
         <CollectionParamProvider
           collectionParam={{ isCollection: isCollection, name: name }}
         >
           <SearchWrapper>
             <SearchBar />
           </SearchWrapper>
-          <BookListView bookList={collection} />
+          <BookListView bookList={fetchedCollection} />
         </CollectionParamProvider>
       </RefetchProvider>
     </Wrapper>

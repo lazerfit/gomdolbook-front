@@ -1,55 +1,35 @@
-import request from "@/api/services/config/Request.ts";
 import { CollectionEndPoint } from "./config/apiEndpoints.ts";
-import type { IApiResponse, ILibraryResponse, IBookSaveRequest } from "./BoookService.ts";
+import { ApiRequest } from "@/api/services/config/request.ts";
+import { LibraryResponse, BookSaveRequest } from "@/api/services/types/booktypes.js";
 
-export interface ICollectionResponse {
+export interface CollectionResponse {
   name: string;
-  books: IBookCover;
+  books: BookCover;
 }
 
-export interface IBookCover {
+export interface BookCover {
   covers: string[];
 }
 
 export const collectionService = {
   getList: () => {
-    return request<IApiResponse<ICollectionResponse[]>>({
-      url: CollectionEndPoint.getList(),
-      method: "GET",
-    });
+    return ApiRequest<CollectionResponse[]>(CollectionEndPoint.getList(), "POST");
   },
   getOne: (name: string) => {
-    return request<IApiResponse<ILibraryResponse[]>>({
-      url: CollectionEndPoint.getOne(name),
-      method: "GET",
-    });
+    return ApiRequest<LibraryResponse[]>(CollectionEndPoint.getOne(name), "GET");
   },
   create: (name: string) => {
-    return request<void>({
-      url: CollectionEndPoint.create(),
-      params: { name: name },
-      method: "POST",
-    });
+    return ApiRequest<void>(CollectionEndPoint.create(), "POST", { params: { name } });
   },
   delete: (name: string) => {
-    return request<void>({
-      url: CollectionEndPoint.delete(),
-      params: { name: name },
-      method: "DELETE",
-    });
+    return ApiRequest<void>(CollectionEndPoint.delete(), "DELETE", { params: { name } });
   },
-  addBook: (data: IBookSaveRequest, name: string) => {
-    return request<void>({
-      url: CollectionEndPoint.addBook(name),
-      data: data,
-      method: "POST",
-    });
+  addBook: (data: BookSaveRequest, name: string) => {
+    return ApiRequest<void>(CollectionEndPoint.addBook(name), "POST", { data });
   },
   removeBook: (isbn: string, name: string) => {
-    return request<void>({
-      url: CollectionEndPoint.removeBook(name),
-      params: { isbn: isbn },
-      method: "DELETE",
+    return ApiRequest<void>(CollectionEndPoint.removeBook(name), "DELETE", {
+      params: { isbn },
     });
   },
 };

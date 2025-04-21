@@ -14,10 +14,10 @@ const CollectionListView = () => {
   const { initialized } = useKeycloak();
   const { isMobile } = useMediaBreakpoints();
   const {
-    collectionList,
-    isCollectionListLoading,
-    collectionListRefetch,
-    createCollection,
+    fetchedCollectionList,
+    isFetchingCollectionList,
+    refetchCollectionList,
+    mutateCreateCollection,
   } = useCollection();
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -31,9 +31,9 @@ const CollectionListView = () => {
   };
   const handleSubmitOnEnter = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (inputText.trim() !== "" && event.key === "Enter") {
-      createCollection(inputText, {
+      mutateCreateCollection(inputText, {
         onSuccess: () => {
-          collectionListRefetch()
+          refetchCollectionList()
             .then(() => setIsCreatingCollection(false))
             .catch((error) => console.log(error));
         },
@@ -44,7 +44,7 @@ const CollectionListView = () => {
     }
   };
 
-  if (!initialized || isCollectionListLoading) {
+  if (!initialized || isFetchingCollectionList) {
     return <CollectionSkeletonLoader />;
   }
 
@@ -80,7 +80,7 @@ const CollectionListView = () => {
           </S.CreateCollectionButton>
         )}
       </S.NewCollectionWrapper>
-      {collectionList.map((collection) => (
+      {fetchedCollectionList.map((collection) => (
         <S.CollectionCard
           key={collection.name}
           $collectionName={collection.name}

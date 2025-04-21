@@ -8,7 +8,6 @@ import reactRefresh from "eslint-plugin-react-refresh";
 import jsxA11y from "eslint-plugin-jsx-a11y";
 import prettierPluginRecommended from "eslint-plugin-prettier/recommended";
 import importPlugin from "eslint-plugin-import";
-import vitest from "eslint-plugin-vitest";
 
 export default tseslint.config(
   {
@@ -42,7 +41,6 @@ export default tseslint.config(
       react: reactPlugin,
       "react-hooks": fixupPluginRules(reactHooksPlugin),
       "react-refresh": reactRefresh,
-      vitest,
     },
     settings: {
       react: { version: "detect" },
@@ -58,13 +56,6 @@ export default tseslint.config(
       },
     },
     rules: {
-      ...vitest.configs.recommended.rules,
-      "vitest/consistent-test-it": ["error", { fn: "it", withinDescribe: "it" }],
-      "vitest/max-nested-describe": ["error", { max: 3 }],
-      "vitest/prefer-lowercase-title": "warn",
-      "vitest/no-focused-tests": "error",
-      "vitest/no-conditional-expect": "warn",
-      "vitest/prefer-hooks-in-order": "warn",
       ...reactPlugin.configs["recommended"].rules,
       ...reactPlugin.configs["jsx-runtime"].rules,
       ...reactHooksPlugin.configs.recommended.rules,

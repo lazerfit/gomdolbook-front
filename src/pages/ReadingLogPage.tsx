@@ -10,8 +10,8 @@ import { useParams } from "react-router-dom";
 import { useReadingLog } from "@/hooks/index.ts";
 import { useEffect, useState } from "react";
 import TinyMCE from "@/utils/TinyMCE.tsx";
-import sanitizeHtml from "sanitize-html";
 import { ModalTypes, useModal } from "@/hooks/useModal.ts";
+import DOMPurify from "dompurify";
 import { useToast } from "@/hooks/useToast.ts";
 import { DropdownLink } from "@/ui/ThreeDotMenu.tsx";
 import { TranslateBookStatus } from "@/utils/index.ts";
@@ -97,7 +97,7 @@ const ReadingLogPage = () => {
   };
 
   const sanitizeHtmlContent = (text: string) => {
-    const sanitized = sanitizeHtml(text);
+    const sanitized = DOMPurify.sanitize(text);
 
     return { __html: sanitized };
   };

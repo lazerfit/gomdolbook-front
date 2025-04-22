@@ -1,4 +1,4 @@
-import type { ILibraryResponse } from "@/api/services/BoookService.js";
+import { LibraryResponse } from "@/api/services/types/booktypes.ts";
 
 export const MOCK_BOOK_RESPONSE = {
   data: {
@@ -68,7 +68,7 @@ export const MOCK_LIBRARY_RESPONSE_NEW_STATUS = [
   },
 ];
 
-export const MOCK_LIBRARY_EMPTY_RESPONSE: ILibraryResponse[] = [];
+export const MOCK_LIBRARY_EMPTY_RESPONSE: LibraryResponse[] = [];
 
 export const MOCK_COLLECTION_LIST_RESPONSE = {
   data: [

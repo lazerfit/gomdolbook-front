@@ -2,6 +2,7 @@ import Header from "./header/Header.tsx";
 import Footer from "./footer/Footer.tsx";
 import { useOutlet } from "react-router-dom";
 import { styled } from "styled-components";
+import { Analytics } from "@vercel/analytics/react";
 
 const Main = styled.section`
   flex: 1;
@@ -14,6 +15,7 @@ const Layout = () => {
 
   return (
     <>
+      <Analytics />
       <Header />
       <Main>{outlet}</Main>
       <Footer />

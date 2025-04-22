@@ -7,8 +7,6 @@ import {
 } from "@/ui/index.ts";
 import { useParams } from "react-router-dom";
 import { useReadingLog } from "@/hooks/index.ts";
-import { useEffect, useState } from "react";
-import TinyMCE from "@/utils/TinyMCE.tsx";
 import { ModalTypes, useModal } from "@/hooks/useModal.ts";
 import { useToast } from "@/hooks/useToast.ts";
 import { DropdownLink } from "@/ui/ThreeDotMenu.tsx";
@@ -18,13 +16,14 @@ import { itemVariants } from "@/ui/frameMotion/variants.ts";
 import { useReadingLogNote } from "@/hooks/useReadingLogNote.ts";
 import * as S from "./ReadingLogPage.styles.ts";
 import ReadingLogNote from "@/components/readingLog/ReadingLogNote.tsx";
+import AutoSaveReadingLogEditor from "@/components/readingLog/AutoSaveReadingLogEditor.tsx";
+import { useState } from "react";
 
 const ReadingLogPage = () => {
   const { isbn = "" } = useParams();
   const { modalType, openModal, closeModal } = useModal();
   const { isToastVisible, hasToastError, openToast, openErrorToast, closeToast } =
     useToast();
-  const [note, setNote] = useState({ id: "", title: "", text: "" });
   const {
     fetchedReadingLog,
     isFetchingReadingLog,
@@ -34,20 +33,22 @@ const ReadingLogPage = () => {
     refetchStatus,
     updateStatusMutation,
   } = useReadingLog({ statusIsbn: isbn, readingLogIsbn: isbn });
-  const { noteContentData } = useReadingLogNote(fetchedReadingLog);
-  const [notePlaceholder, setNotePlaceholder] = useState("");
-  const [rating, setRating] = useState(fetchedReadingLog.rating);
-
-  useEffect(() => {
-    if (fetchedReadingLog) {
-      setRating(fetchedReadingLog.rating);
-    }
-  }, [fetchedReadingLog]);
+  const {
+    noteContentData,
+    rating,
+    setRating,
+    notePlaceholder,
+    setNotePlaceholder,
+    note,
+    setNote,
+  } = useReadingLogNote(fetchedReadingLog);
+  const [isFirstOpened, setIsFirstOpened] = useState(false);
 
   const openReadingLogModal = (id: string, title: string, placeholder: string) => {
     openModal(ModalTypes.WYSIWYG);
-    setNote({ id: id, title: title, text: placeholder });
+    setNote({ id, title, text: placeholder });
     setNotePlaceholder(placeholder);
+    setIsFirstOpened(true);
   };
 
   const handleNoteTextChange = (text: string) => {
@@ -136,27 +137,17 @@ const ReadingLogPage = () => {
         noteContentData={noteContentData}
         openReadingLogModal={openReadingLogModal}
       />
-      {modalType === ModalTypes.WYSIWYG && (
-        <Modal innerWidth="1180px" innerHeight="90%" onClose={closeModal}>
-          <S.ModalWrapper>
-            <S.ModalContentWrapper>
-              <S.ModalTitle>{note.title}</S.ModalTitle>
-              <S.ModalWysiwyg>
-                <TinyMCE
-                  placeholder={notePlaceholder}
-                  onChangeValue={handleNoteTextChange}
-                />
-                <S.ModalSaveButtonWrapper>
-                  <S.ModalSaveButton onClick={closeModal}>취소하기</S.ModalSaveButton>
-                  <S.ModalSaveButton onClick={handleSaveReadingLog}>
-                    저장하기
-                  </S.ModalSaveButton>
-                </S.ModalSaveButtonWrapper>
-              </S.ModalWysiwyg>
-            </S.ModalContentWrapper>
-          </S.ModalWrapper>
-        </Modal>
-      )}
+      <AutoSaveReadingLogEditor
+        onClose={closeModal}
+        modalType={modalType}
+        note={note}
+        placeholder={notePlaceholder}
+        setPlaceholder={setNotePlaceholder}
+        onChangeValue={handleNoteTextChange}
+        onSave={handleSaveReadingLog}
+        isFirstOpened={isFirstOpened}
+        setIsFirstOpened={setIsFirstOpened}
+      />
       {modalType === ModalTypes.STATUS_UPDATE && (
         <Modal innerHeight="fit-content" innerWidth="300px" onClose={closeModal}>
           <S.ModalUpdateButtonWrapper>

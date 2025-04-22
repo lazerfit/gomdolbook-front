@@ -1,4 +1,3 @@
-import { FaRegPenToSquare } from "react-icons/fa6";
 import {
   ThreeDotMenu,
   BookPublisher,
@@ -11,17 +10,17 @@ import { useReadingLog } from "@/hooks/index.ts";
 import { useEffect, useState } from "react";
 import TinyMCE from "@/utils/TinyMCE.tsx";
 import { ModalTypes, useModal } from "@/hooks/useModal.ts";
-import DOMPurify from "dompurify";
 import { useToast } from "@/hooks/useToast.ts";
 import { DropdownLink } from "@/ui/ThreeDotMenu.tsx";
 import { TranslateBookStatus } from "@/utils/index.ts";
 import { Ratings } from "../components/readingLog/index.ts";
 import { itemVariants } from "@/ui/frameMotion/variants.ts";
+import { useReadingLogNote } from "@/hooks/useReadingLogNote.ts";
 import * as S from "./ReadingLogPage.styles.ts";
+import ReadingLogNote from "@/components/readingLog/ReadingLogNote.tsx";
 
 const ReadingLogPage = () => {
-  const params = useParams();
-  const isbn = params.isbn ?? "";
+  const { isbn = "" } = useParams();
   const { modalType, openModal, closeModal } = useModal();
   const { isToastVisible, hasToastError, openToast, openErrorToast, closeToast } =
     useToast();
@@ -35,6 +34,8 @@ const ReadingLogPage = () => {
     refetchStatus,
     updateStatusMutation,
   } = useReadingLog({ statusIsbn: isbn, readingLogIsbn: isbn });
+  const { noteContentData } = useReadingLogNote(fetchedReadingLog);
+  const [notePlaceholder, setNotePlaceholder] = useState("");
   const [rating, setRating] = useState(fetchedReadingLog.rating);
 
   useEffect(() => {
@@ -46,6 +47,7 @@ const ReadingLogPage = () => {
   const openReadingLogModal = (id: string, title: string, placeholder: string) => {
     openModal(ModalTypes.WYSIWYG);
     setNote({ id: id, title: title, text: placeholder });
+    setNotePlaceholder(placeholder);
   };
 
   const handleNoteTextChange = (text: string) => {
@@ -65,7 +67,6 @@ const ReadingLogPage = () => {
       onSuccess: () => {
         refetchReadingLog()
           .then(() => {
-            openModal(ModalTypes.WYSIWYG);
             openToast();
           })
           .catch((error) => console.log(error));
@@ -95,45 +96,6 @@ const ReadingLogPage = () => {
     setRating(0);
     closeModal();
   };
-
-  const sanitizeHtmlContent = (text: string) => {
-    const sanitized = DOMPurify.sanitize(text);
-
-    return { __html: sanitized };
-  };
-
-  interface Data {
-    note: string;
-    title: string;
-    text: string;
-  }
-
-  const noteContentData: Data[] = [
-    {
-      note: "note1",
-      title: "1. 무엇을 다룬 책인지 알아내기",
-      text:
-        fetchedReadingLog.note1 === ""
-          ? "중심 내용, 요점정리, 저자가 풀어가려는 문제 등을 적어주세요."
-          : fetchedReadingLog.note1,
-    },
-    {
-      note: "note2",
-      title: "2. 내용 해석하기",
-      text:
-        fetchedReadingLog.note2 === ""
-          ? "중요한 단어를 저자가 어떤 의미로 사용하는지, 주요 명제, 논증, 풀어낸 문제와 그렇지 못한 문제를 구분하고, 풀지 못한 문제를 저자도 아는지 파악해보세요."
-          : fetchedReadingLog.note2,
-    },
-    {
-      note: "note3",
-      title: "3. 비평하기",
-      text:
-        fetchedReadingLog.note3 === ""
-          ? "저자가 잘 알지 못하는 부분, 잘못 알고 있는 부분, 논리적이지 못한 부분, 분석한 내용이나 설명이 불완전한 부분을 적어보세요."
-          : fetchedReadingLog.note3,
-    },
-  ];
 
   if (isFetchingReadingLog) {
     return <BookListSkeletonLoader />;
@@ -170,33 +132,20 @@ const ReadingLogPage = () => {
       </S.BookImageWrapper>
       <Ratings isbn={isbn} initialRating={rating} refetch={refetchReadingLog} />
       <S.ReadingStatus>{TranslateBookStatus(fetchedStatus)}</S.ReadingStatus>
-      <S.ReadingLogNoteBox>
-        {noteContentData.map((content) => (
-          <S.ReadingLogNote key={content.note}>
-            <S.NoteTitle>
-              <h4>{content.title}</h4>
-              <S.ModifyButton
-                data-testid={"modifyBtn-" + content.note}
-                onClick={() =>
-                  openReadingLogModal(content.note, content.title, content.text)
-                }
-              >
-                <FaRegPenToSquare />
-              </S.ModifyButton>
-            </S.NoteTitle>
-            <S.NoteContent
-              dangerouslySetInnerHTML={sanitizeHtmlContent(content.text)}
-            ></S.NoteContent>
-          </S.ReadingLogNote>
-        ))}
-      </S.ReadingLogNoteBox>
+      <ReadingLogNote
+        noteContentData={noteContentData}
+        openReadingLogModal={openReadingLogModal}
+      />
       {modalType === ModalTypes.WYSIWYG && (
         <Modal innerWidth="1180px" innerHeight="90%" onClose={closeModal}>
           <S.ModalWrapper>
             <S.ModalContentWrapper>
               <S.ModalTitle>{note.title}</S.ModalTitle>
               <S.ModalWysiwyg>
-                <TinyMCE placeholder={note.text} onChangeValue={handleNoteTextChange} />
+                <TinyMCE
+                  placeholder={notePlaceholder}
+                  onChangeValue={handleNoteTextChange}
+                />
                 <S.ModalSaveButtonWrapper>
                   <S.ModalSaveButton onClick={closeModal}>취소하기</S.ModalSaveButton>
                   <S.ModalSaveButton onClick={handleSaveReadingLog}>

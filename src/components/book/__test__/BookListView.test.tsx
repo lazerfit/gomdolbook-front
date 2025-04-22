@@ -2,7 +2,7 @@ import BookListView from "../BookListView.tsx";
 import { screen, waitFor, cleanup } from "@testing-library/react";
 import { setupServer } from "msw/node";
 import { MemoryRouter, Routes, Route } from "react-router-dom";
-import type { ILibraryResponse } from "@/api/services/BoookService.js";
+import { LibraryResponse } from "@/api/services/types/booktypes.ts";
 import * as MR from "@/test-utils/mockResponses.js";
 import * as MS from "@/test-utils/mockServerResponses.ts";
 import {
@@ -31,7 +31,7 @@ afterEach(() => {
 });
 afterAll(() => server.close());
 
-const render = (bookList: ILibraryResponse[]) => {
+const render = (bookList: LibraryResponse[]) => {
   return customRender(
     <MemoryRouter initialEntries={["/"]}>
       <Routes>

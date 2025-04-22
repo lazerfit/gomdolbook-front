@@ -1,4 +1,4 @@
-import { client } from "./Request.ts";
+import { client } from "./request.ts";
 import type { InternalAxiosRequestConfig, AxiosError, AxiosResponse } from "axios";
 
 let token: string | null = null;

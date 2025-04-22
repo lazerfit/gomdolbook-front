@@ -1,9 +1,6 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
-import {
-  BookService,
-  IBookSaveRequest,
-  BookStatus,
-} from "@/api/services/BoookService.ts";
+import { BookService } from "@/api/services/BoookService.ts";
+import { BookSaveRequest, BookStatus } from "@/api/services/types/booktypes.ts";
 
 const DEFAULT_BOOK = {
   title: "default title",
@@ -18,34 +15,34 @@ const DEFAULT_BOOK = {
 };
 
 const useGetBook = (isbn: string) => {
-  const { data, isLoading: isBookLoading } = useQuery({
+  const { data, isLoading: isFetchingBook } = useQuery({
     queryKey: ["book", isbn],
     queryFn: () => BookService.getBook(isbn),
     enabled: !!isbn,
   });
 
-  const book = data?.data ?? DEFAULT_BOOK;
+  const fetchedBook = data?.data ?? DEFAULT_BOOK;
 
-  return { book, isBookLoading };
+  return { fetchedBook, isFetchingBook };
 };
 
 const useGetBookSearchResult = (q: string) => {
-  const { data, isLoading: isSearchResultLoading } = useQuery({
+  const { data, isLoading: isFetchingSearchResults } = useQuery({
     queryKey: ["search", q],
     queryFn: () => BookService.getBookSearchResult(q),
     enabled: !!q,
   });
 
-  const searchResult = data?.data ?? [];
+  const bookSearchResults = data?.data ?? [];
 
-  return { searchResult, isSearchResultLoading };
+  return { bookSearchResults, isFetchingSearchResults };
 };
 
 const useGetLibrary = (status: string) => {
   const {
     data,
-    isLoading: isLibraryBookListLoading,
-    refetch: libraryRefetch,
+    isLoading: isFetchingLibraryBooks,
+    refetch: refetchLibraryBooks,
   } = useQuery({
     queryKey: ["Library", status],
     queryFn: () => {
@@ -54,17 +51,17 @@ const useGetLibrary = (status: string) => {
     enabled: !!status,
   });
 
-  const libraryBookList = data?.data ?? [];
+  const libraryBooks = data?.data ?? [];
 
-  return { libraryBookList, isLibraryBookListLoading, libraryRefetch };
+  return { libraryBooks, isFetchingLibraryBooks, refetchLibraryBooks };
 };
 
 const useSaveBook = () => {
-  const { mutate: saveBook } = useMutation({
-    mutationFn: (data: IBookSaveRequest) => BookService.saveBook(data),
+  const { mutate: saveBookMutation } = useMutation({
+    mutationFn: (data: BookSaveRequest) => BookService.saveBook(data),
   });
 
-  return { saveBook };
+  return { saveBookMutation };
 };
 
 interface Args {
@@ -74,20 +71,20 @@ interface Args {
 }
 
 export const useBook = ({ isbn = "", q = "", status = "" }: Args = {}) => {
-  const { book, isBookLoading } = useGetBook(isbn);
-  const { searchResult, isSearchResultLoading } = useGetBookSearchResult(q);
-  const { libraryBookList, isLibraryBookListLoading, libraryRefetch } =
+  const { fetchedBook, isFetchingBook } = useGetBook(isbn);
+  const { bookSearchResults, isFetchingSearchResults } = useGetBookSearchResult(q);
+  const { libraryBooks, isFetchingLibraryBooks, refetchLibraryBooks } =
     useGetLibrary(status);
-  const { saveBook } = useSaveBook();
+  const { saveBookMutation } = useSaveBook();
 
   return {
-    book,
-    isBookLoading,
-    searchResult,
-    isSearchResultLoading,
-    libraryBookList,
-    isLibraryBookListLoading,
-    libraryRefetch,
-    saveBook,
+    fetchedBook,
+    isFetchingBook,
+    bookSearchResults,
+    isFetchingSearchResults,
+    libraryBooks,
+    isFetchingLibraryBooks,
+    refetchLibraryBooks,
+    saveBookMutation,
   };
 };

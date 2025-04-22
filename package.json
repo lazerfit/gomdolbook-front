@@ -18,6 +18,7 @@
     "@types/react-dom": "^18.3.1",
     "@types/react-transition-group": "^4.4.12",
     "axios": "^1.8.4",
+    "dompurify": "^3.2.5",
     "framer-motion": "^12.5.0",
     "keycloak-js": "^26.1.0",
     "lodash": "^4.17.21",
@@ -29,7 +30,6 @@
     "react-responsive": "^10.0.1",
     "react-router-dom": "^6.4.5",
     "react-transition-group": "^4.4.5",
-    "sanitize-html": "^2.14.0",
     "styled-components": "^6.1.15",
     "typescript": "^5.7.3",
     "web-vitals": "^2.1.4"
@@ -76,7 +76,6 @@
     "eslint-plugin-react": "^7.37.2",
     "eslint-plugin-react-hooks": "^5.0.0",
     "eslint-plugin-react-refresh": "^0.4.16",
-    "eslint-plugin-vitest": "^0.5.4",
     "globals": "^15.13.0",
     "jsdom": "^26.0.0",
     "prettier": "^3.4.2",

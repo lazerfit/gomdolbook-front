@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import { styled } from "styled-components";
 import StatusNavBar from "@/components/myLibrary/LibraryStatusNav.tsx";
 import { BookListView } from "@/components/book/index.ts";
@@ -17,16 +16,10 @@ const MyLibraryWrapper = styled(motion.section)`
 `;
 
 const MyLibraryPage = () => {
-  const params = useParams();
-  const status = params.status ?? "";
-  const [filter, setFilter] = useState("");
-  const { libraryBookList, isLibraryBookListLoading } = useBook({ status: filter });
-
-  useEffect(() => {
-    if (status !== "") {
-      setFilter(status.toUpperCase());
-    }
-  }, [status]);
+  const { status = "" } = useParams();
+  const { libraryBooks, isFetchingLibraryBooks } = useBook({
+    status: status.toLowerCase(),
+  });
 
   return (
     <MyLibraryWrapper>
@@ -40,10 +33,10 @@ const MyLibraryPage = () => {
           damping: 20,
         }}
       >
-        {isLibraryBookListLoading ? (
+        {isFetchingLibraryBooks ? (
           <BookListSkeletonLoader />
         ) : (
-          <BookListView bookList={libraryBookList} />
+          <BookListView bookList={libraryBooks} />
         )}
       </motion.div>
     </MyLibraryWrapper>

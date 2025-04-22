@@ -1,7 +1,6 @@
 import { styled } from "styled-components";
-import { BookStatus } from "@/api/services/BoookService.ts";
 import translateBookStatus from "@/utils/TranslateBookStatus.ts";
-import type { IBookResponse } from "@/api/services/BoookService.ts";
+import { BookResponse, BookStatus } from "@/api/services/types/booktypes.ts";
 import { useContext, useEffect, useState } from "react";
 import {
   RefetchContext,
@@ -64,7 +63,7 @@ const Button = styled(motion.button)`
 `;
 
 interface Props {
-  bookData: IBookResponse;
+  bookData: BookResponse;
   status: string;
   statusRefetch: (
     options?: RefetchOptions,
@@ -81,8 +80,8 @@ const BookStatusButton = ({
   status = "NEW",
 }: Props) => {
   const [newStatus, setNewStatus] = useState("");
-  const { saveBook, libraryRefetch } = useBook({ status: newStatus });
-  const { addBook } = useCollection();
+  const { saveBookMutation, refetchLibraryBooks } = useBook({ status: newStatus });
+  const { mutateAddBookToCollection } = useCollection();
   const { isCollection, name } = useContext(CollectionParamContext);
   const { refetch: collectionBookListRefetch } = useContext(RefetchContext);
 
@@ -109,7 +108,7 @@ const BookStatusButton = ({
   useEffect(() => {
     if (!newStatus) return;
 
-    void Promise.all([statusRefetch(), libraryRefetch()])
+    void Promise.all([statusRefetch(), refetchLibraryBooks()])
       .then(() => {
         showToast();
       })
@@ -117,11 +116,11 @@ const BookStatusButton = ({
         showErrorToast();
         console.error(error);
       });
-  }, [newStatus, statusRefetch, libraryRefetch, showToast, showErrorToast]);
+  }, [newStatus, statusRefetch, refetchLibraryBooks, showToast, showErrorToast]);
 
   const handleSaveBook = (status: BookStatus) => {
     const saveRequest = createBookPayload(status);
-    saveBook(saveRequest, {
+    saveBookMutation(saveRequest, {
       onSuccess: () => {
         setNewStatus(status);
       },
@@ -133,7 +132,7 @@ const BookStatusButton = ({
   };
 
   const handleAddBookToCollection = () => {
-    addBook(
+    mutateAddBookToCollection(
       { dto: createBookPayload(), name: encodeURIComponent(name) },
       {
         onSuccess: () => {

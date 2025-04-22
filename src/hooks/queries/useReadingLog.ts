@@ -1,9 +1,12 @@
-import { BookService, IReadingLogUpdateRequest } from "@/api/services/BoookService.ts";
+import { BookService } from "@/api/services/BoookService.ts";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useState, useEffect } from "react";
-import type { IReadingLogResponse } from "@/api/services/BoookService.ts";
+import {
+  ReadingLogResponse,
+  ReadingLogUpdateRequest,
+} from "@/api/services/types/booktypes.ts";
 
-const DEFAULT_READING_LOG: IReadingLogResponse = {
+const DEFAULT_READING_LOG: ReadingLogResponse = {
   title: "default",
   author: "default",
   pubDate: "default",
@@ -17,19 +20,19 @@ const DEFAULT_READING_LOG: IReadingLogResponse = {
 };
 
 const useUpdateReadingLog = () => {
-  const { mutate: updateReadingLog } = useMutation({
-    mutationFn: (data: IReadingLogUpdateRequest) => BookService.updateReadingLog(data),
+  const { mutate: updateReadingLogMutation } = useMutation({
+    mutationFn: (data: ReadingLogUpdateRequest) => BookService.updateReadingLog(data),
   });
 
-  return { updateReadingLog };
+  return { updateReadingLogMutation };
 };
 
 const useGetStatus = (isbn: string) => {
-  const [status, setStatus] = useState("EMPTY");
-  const makeUpdatable = () => {
-    setStatus("NEW");
+  const [fetchedStatus, setFetchedStatus] = useState("EMPTY");
+  const enableStatusUpdate = () => {
+    setFetchedStatus("NEW");
   };
-  const { data, refetch: statusRefetch } = useQuery({
+  const { data, refetch: refetchStatus } = useQuery({
     queryKey: ["status", isbn],
     queryFn: () => BookService.getStatus(isbn),
     enabled: !!isbn,
@@ -38,45 +41,45 @@ const useGetStatus = (isbn: string) => {
   useEffect(() => {
     const response = data?.data;
     if (response) {
-      setStatus(response.status);
+      setFetchedStatus(response.status);
     }
   }, [data]);
 
-  return { status, statusRefetch, makeUpdatable };
+  return { fetchedStatus, refetchStatus, enableStatusUpdate };
 };
 
 const useUpdateStatus = () => {
-  const { mutate: updateStatus } = useMutation({
+  const { mutate: updateStatusMutation } = useMutation({
     mutationFn: ({ isbn, status }: { isbn: string; status: string }) =>
       BookService.updateStatus(isbn, status),
   });
 
-  return { updateStatus };
+  return { updateStatusMutation };
 };
 
 const useGetReadinglog = (isbn: string) => {
   const {
     data,
-    refetch: readingLogRefetch,
-    isLoading: isReadingLogLoading,
+    refetch: refetchReadingLog,
+    isLoading: isFetchingReadingLog,
   } = useQuery({
     queryKey: ["readingLog", isbn],
     queryFn: () => BookService.getReadingLog(isbn),
     enabled: !!isbn,
   });
 
-  const readingLog = data?.data ?? DEFAULT_READING_LOG;
+  const fetchedReadingLog = data?.data ?? DEFAULT_READING_LOG;
 
-  return { readingLog, readingLogRefetch, isReadingLogLoading };
+  return { fetchedReadingLog, refetchReadingLog, isFetchingReadingLog };
 };
 
 const useUpdateRating = () => {
-  const { mutate: updateRating } = useMutation({
+  const { mutate: updateRatingMutation } = useMutation({
     mutationFn: ({ isbn, star }: { isbn: string; star: number }) =>
       BookService.updateRating(isbn, star),
   });
 
-  return { updateRating };
+  return { updateRatingMutation };
 };
 
 interface Args {
@@ -86,21 +89,21 @@ interface Args {
 }
 
 export const useReadingLog = ({ statusIsbn = "", readingLogIsbn = "" }: Args = {}) => {
-  const { readingLog, readingLogRefetch, isReadingLogLoading } =
+  const { fetchedReadingLog, refetchReadingLog, isFetchingReadingLog } =
     useGetReadinglog(readingLogIsbn);
-  const { status, statusRefetch, makeUpdatable } = useGetStatus(statusIsbn);
-  const { updateReadingLog } = useUpdateReadingLog();
-  const { updateStatus } = useUpdateStatus();
-  const { updateRating } = useUpdateRating();
+  const { fetchedStatus, refetchStatus, enableStatusUpdate } = useGetStatus(statusIsbn);
+  const { updateReadingLogMutation } = useUpdateReadingLog();
+  const { updateStatusMutation } = useUpdateStatus();
+  const { updateRatingMutation } = useUpdateRating();
   return {
-    readingLog,
-    readingLogRefetch,
-    isReadingLogLoading,
-    status,
-    statusRefetch,
-    makeUpdatable,
-    updateReadingLog,
-    updateStatus,
-    updateRating,
+    fetchedReadingLog,
+    refetchReadingLog,
+    isFetchingReadingLog,
+    fetchedStatus,
+    refetchStatus,
+    enableStatusUpdate,
+    updateReadingLogMutation,
+    updateStatusMutation,
+    updateRatingMutation,
   };
 };

@@ -5,8 +5,9 @@ interface Props {
   onChangeValue: (text: string) => void;
 }
 
-const TinyMCE = ({ placeholder, onChangeValue = () => void 0 }: Props) => {
-  const key = import.meta.env.VITE_TINY_MCE_API_KEY;
+const key = import.meta.env.VITE_TINY_MCE_API_KEY;
+
+const TinyMCE = ({ placeholder, onChangeValue }: Props) => {
   return (
     <>
       <Editor

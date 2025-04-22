@@ -25,24 +25,25 @@ interface Props {
 const BookDetail = ({ isbn = "", onClose }: Props) => {
   const { hasToastError, openErrorToast, openToast, isToastVisible, closeToast } =
     useToast();
-  const { book, isBookLoading } = useBook({ isbn: isbn });
-  const { removeBook, isRemoveBookPending } = useCollection();
-  const { status, statusRefetch, makeUpdatable } = useReadingLog({
+  const { fetchedBook, isFetchingBook } = useBook({ isbn: isbn });
+  const { mutateRemoveBookFromCollection, isRemovingBookFromCollection } =
+    useCollection();
+  const { fetchedStatus, refetchStatus, enableStatusUpdate } = useReadingLog({
     statusIsbn: isbn,
   });
   const { name } = useContext(CollectionParamContext);
   const { refetch: collectionBookListRefetch } = useContext(RefetchContext);
 
   const handleRemoveBook = () => {
-    removeBook(
-      { isbn: book.isbn, name: name },
+    mutateRemoveBookFromCollection(
+      { isbn: fetchedBook.isbn, name: name },
       {
         onSuccess: () => {
           Promise.all([
             collectionBookListRefetch().catch((error) =>
               console.log("list refetch error:", error),
             ),
-            statusRefetch().catch((error) => console.log("status refetch error:", error)),
+            refetchStatus().catch((error) => console.log("status refetch error:", error)),
           ])
             .then(() => onClose())
             .catch((error) => console.log(error));
@@ -59,9 +60,12 @@ const BookDetail = ({ isbn = "", onClose }: Props) => {
           <FaArrowLeft style={{ fontSize: "20px" }} />
         </S.BackButton>
         <S.ThreeDotMenuWrapper>
-          {status !== "EMPTY" && status !== "NEW" && (
-            <ThreeDotMenu onRemove={handleRemoveBook} isLoading={isRemoveBookPending}>
-              <DropdownLink variants={itemVariants} onClick={makeUpdatable}>
+          {fetchedStatus !== "EMPTY" && fetchedStatus !== "NEW" && (
+            <ThreeDotMenu
+              onRemove={handleRemoveBook}
+              isLoading={isRemovingBookFromCollection}
+            >
+              <DropdownLink variants={itemVariants} onClick={enableStatusUpdate}>
                 상태변경
               </DropdownLink>
             </ThreeDotMenu>
@@ -69,34 +73,34 @@ const BookDetail = ({ isbn = "", onClose }: Props) => {
         </S.ThreeDotMenuWrapper>
       </S.NavMenu>
       <S.BookContentWrapper>
-        {isBookLoading ? (
+        {isFetchingBook ? (
           <BookDetailSkeletonLoader />
         ) : (
           <>
-            <S.BookCover src={book.cover} />
+            <S.BookCover src={fetchedBook.cover} />
             <S.BookInformation>
-              <S.BookTitle>{book.title}</S.BookTitle>
+              <S.BookTitle>{fetchedBook.title}</S.BookTitle>
               <BookPublisher
-                author={book.author}
-                publisher={book.publisher}
-                date={book.pubDate}
+                author={fetchedBook.author}
+                publisher={fetchedBook.publisher}
+                date={fetchedBook.pubDate}
                 align="flex-start"
               />
               <S.BookSubInformation>
                 <div style={{ fontWeight: "bold" }}>기본정보</div>
-                <div>ISBN : {book.isbn}</div>
-                <div>카테고리 : {book.categoryName}</div>
+                <div>ISBN : {fetchedBook.isbn}</div>
+                <div>카테고리 : {fetchedBook.categoryName}</div>
               </S.BookSubInformation>
             </S.BookInformation>
             <S.BookDescription>
               <div style={{ fontWeight: "bold" }}>책 소개</div>
-              <div>{book.description}</div>
+              <div>{fetchedBook.description}</div>
             </S.BookDescription>
             <S.ButtonWrapper>
               <BookStatusButton
-                bookData={book}
-                statusRefetch={statusRefetch}
-                status={status}
+                bookData={fetchedBook}
+                statusRefetch={refetchStatus}
+                status={fetchedStatus}
                 showToast={openToast}
                 showErrorToast={openErrorToast}
               />

@@ -1,34 +1,34 @@
 import { collectionService } from "@/api/services/CollectionService.ts";
 import { useQuery, useMutation } from "@tanstack/react-query";
-import type { IBookSaveRequest } from "@/api/services/BoookService.ts";
+import { BookSaveRequest } from "@/api/services/types/booktypes.ts";
 
 const useGetList = () => {
   const {
     data,
-    isLoading: isCollectionListLoading,
-    refetch: collectionListRefetch,
+    isLoading: isFetchingCollectionList,
+    refetch: refetchCollectionList,
   } = useQuery({
     queryKey: ["list"],
     queryFn: () => collectionService.getList(),
   });
 
-  const collectionList = data?.data ?? [];
+  const fetchedCollectionList = data?.data ?? [];
 
-  return { collectionList, isCollectionListLoading, collectionListRefetch };
+  return { fetchedCollectionList, isFetchingCollectionList, refetchCollectionList };
 };
 
 const useGetOne = (name: string) => {
   const {
     data,
-    isLoading: isCollectionLoading,
-    refetch: collectionRefetch,
+    isLoading: isFetchingCollection,
+    refetch: refetchCollection,
   } = useQuery({
     queryKey: ["collection", name],
     queryFn: () => collectionService.getOne(name),
     enabled: !!name,
   });
 
-  const collection = data?.data ?? [
+  const fetchedCollection = data?.data ?? [
     {
       cover: "default",
       title: "default",
@@ -37,43 +37,48 @@ const useGetOne = (name: string) => {
     },
   ];
 
-  return { collection, isCollectionLoading, collectionRefetch };
+  return { fetchedCollection, isFetchingCollection, refetchCollection };
 };
 
 const useCreate = () => {
-  const { mutate: createCollection } = useMutation({
+  const { mutate: mutateCreateCollection } = useMutation({
     mutationFn: (name: string) => collectionService.create(name),
   });
 
-  return { createCollection };
+  return { mutateCreateCollection };
 };
 
 const useDelete = (name: string) => {
-  const { mutate: deleteCollection, isPending: isDeleteCollectionPending } = useMutation({
-    mutationFn: () => collectionService.delete(name),
-  });
+  const { mutate: mutateDeleteCollection, isPending: isDeletingCollection } = useMutation(
+    {
+      mutationFn: () => collectionService.delete(name),
+    },
+  );
 
-  return { deleteCollection, isDeleteCollectionPending };
+  return { mutateDeleteCollection, isDeletingCollection };
 };
 
 const useAddBook = () => {
-  const { mutate: addBook } = useMutation({
+  const { mutate: mutateAddBookToCollection } = useMutation({
     mutationKey: ["addBookToCollection"],
-    mutationFn: ({ dto, name }: { dto: IBookSaveRequest; name: string }) =>
+    mutationFn: ({ dto, name }: { dto: BookSaveRequest; name: string }) =>
       collectionService.addBook(dto, name),
   });
 
-  return { addBook };
+  return { mutateAddBookToCollection };
 };
 
 const useRemoveBook = () => {
-  const { mutate: removeBook, isPending: isRemoveBookPending } = useMutation({
+  const {
+    mutate: mutateRemoveBookFromCollection,
+    isPending: isRemovingBookFromCollection,
+  } = useMutation({
     mutationKey: ["removeBookFromCollection"],
     mutationFn: ({ isbn, name }: { isbn: string; name: string }) =>
       collectionService.removeBook(isbn, name),
   });
 
-  return { removeBook, isRemoveBookPending };
+  return { mutateRemoveBookFromCollection, isRemovingBookFromCollection };
 };
 
 interface Args {
@@ -81,25 +86,27 @@ interface Args {
 }
 
 export const useCollection = ({ name = "" }: Args = {}) => {
-  const { collectionList, isCollectionListLoading, collectionListRefetch } = useGetList();
-  const { collection, isCollectionLoading, collectionRefetch } = useGetOne(name);
-  const { createCollection } = useCreate();
-  const { addBook } = useAddBook();
-  const { removeBook, isRemoveBookPending } = useRemoveBook();
-  const { deleteCollection, isDeleteCollectionPending } = useDelete(name);
+  const { fetchedCollectionList, isFetchingCollectionList, refetchCollectionList } =
+    useGetList();
+  const { fetchedCollection, isFetchingCollection, refetchCollection } = useGetOne(name);
+  const { mutateCreateCollection } = useCreate();
+  const { mutateAddBookToCollection } = useAddBook();
+  const { mutateRemoveBookFromCollection, isRemovingBookFromCollection } =
+    useRemoveBook();
+  const { mutateDeleteCollection, isDeletingCollection } = useDelete(name);
 
   return {
-    collectionList,
-    isCollectionListLoading,
-    collectionListRefetch,
-    collection,
-    isCollectionLoading,
-    collectionRefetch,
-    createCollection,
-    deleteCollection,
-    addBook,
-    removeBook,
-    isRemoveBookPending,
-    isDeleteCollectionPending,
+    fetchedCollectionList,
+    isFetchingCollectionList,
+    refetchCollectionList,
+    fetchedCollection,
+    isFetchingCollection,
+    refetchCollection,
+    mutateCreateCollection,
+    mutateDeleteCollection,
+    mutateAddBookToCollection,
+    mutateRemoveBookFromCollection,
+    isRemovingBookFromCollection,
+    isDeletingCollection,
   };
 };

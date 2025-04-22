@@ -1,4 +1,5 @@
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from "axios";
+import { ApiResponse } from "@/api/services/types/commonTypes.js";
 
 export const client = (() => {
   return axios.create({
@@ -38,4 +39,14 @@ const request = async <T>(options: AxiosRequestConfig): Promise<T> => {
   return client(options).then(onSuccess).catch(onError);
 };
 
-export default request;
+export const ApiRequest = <T>(
+  url: string,
+  method: "GET" | "POST" | "PUT" | "DELETE",
+  options: { params?: object; data?: object } = {},
+) => {
+  return request<ApiResponse<T> | void>({
+    url,
+    method,
+    ...options,
+  });
+};

@@ -3,7 +3,8 @@ import { FaStar, FaRegStar } from "react-icons/fa6";
 import { useEffect, useState } from "react";
 import { useReadingLog } from "@/hooks/index.ts";
 import { RefetchOptions, QueryObserverResult } from "@tanstack/react-query";
-import { IApiResponse, IReadingLogResponse } from "@/api/services/BoookService.ts";
+import { ApiResponse } from "@/api/services/types/commonTypes.ts";
+import { ReadingLogResponse } from "@/api/services/types/booktypes.ts";
 
 const RatingWrapper = styled.div`
   display: flex;
@@ -29,13 +30,13 @@ interface Props {
   initialRating: number;
   refetch: (
     options?: RefetchOptions,
-  ) => Promise<QueryObserverResult<IApiResponse<IReadingLogResponse>, Error>>;
+  ) => Promise<QueryObserverResult<ApiResponse<ReadingLogResponse> | void, Error>>;
 }
 
 const Rating = ({ isbn = "", initialRating = 0, refetch }: Props) => {
   const [rating, setRating] = useState(initialRating);
   const [hover, setHover] = useState(0);
-  const { updateRating } = useReadingLog();
+  const { updateRatingMutation } = useReadingLog();
 
   const handleRatingChange = (n: number) => {
     setRating((prev) => (prev === n ? 0 : n));
@@ -43,7 +44,7 @@ const Rating = ({ isbn = "", initialRating = 0, refetch }: Props) => {
 
   useEffect(() => {
     if (rating !== 0 && rating !== initialRating) {
-      updateRating(
+      updateRatingMutation(
         { isbn: isbn, star: rating },
         {
           onSuccess: () => {
@@ -53,7 +54,7 @@ const Rating = ({ isbn = "", initialRating = 0, refetch }: Props) => {
         },
       );
     }
-  }, [rating, updateRating, initialRating, isbn, refetch]);
+  }, [rating, updateRatingMutation, initialRating, isbn, refetch]);
 
   useEffect(() => {
     setRating(initialRating);

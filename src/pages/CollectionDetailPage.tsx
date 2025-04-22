@@ -11,6 +11,7 @@ import { useEffect, useState } from "react";
 import { useCollection } from "@/hooks/index.ts";
 import { motion } from "framer-motion";
 import ThreeDotMenu from "@/ui/ThreeDotMenu.tsx";
+import { useKeycloak } from "@react-keycloak/web";
 
 const Wrapper = styled(motion.section)`
   margin-top: 34px;
@@ -36,25 +37,25 @@ const SearchWrapper = styled.div`
 `;
 
 const CollectionDetailPage = () => {
-  const params = useParams();
-  const name = params.name ?? "";
+  const { name = "" } = useParams();
   const navigate = useNavigate();
+  const { initialized } = useKeycloak();
   const [isCollection, setIsCollection] = useState(false);
   const {
-    collection,
-    isCollectionLoading,
-    collectionRefetch,
-    deleteCollection,
-    isDeleteCollectionPending,
-    collectionListRefetch,
+    fetchedCollection,
+    isFetchingCollection,
+    refetchCollection,
+    mutateDeleteCollection,
+    isDeletingCollection,
+    refetchCollectionList,
   } = useCollection({
     name: name,
   });
 
   const handleDeleteCollection = () => {
-    deleteCollection(void 0, {
+    mutateDeleteCollection(void 0, {
       onSuccess: () => {
-        collectionListRefetch()
+        refetchCollectionList()
           .then(() => navigate("/collections"))
           .catch((error) => console.log("list refetch error", error));
       },
@@ -63,12 +64,12 @@ const CollectionDetailPage = () => {
   };
 
   useEffect(() => {
-    if (params.name) {
+    if (name) {
       setIsCollection(true);
     }
-  }, [params.name]);
+  }, [name]);
 
-  if (isCollectionLoading) {
+  if (isFetchingCollection && !initialized) {
     return <BookListSkeletonLoader />;
   }
 
@@ -87,17 +88,17 @@ const CollectionDetailPage = () => {
         <Title>{name}</Title>
         <ThreeDotMenu
           onRemove={handleDeleteCollection}
-          isLoading={isDeleteCollectionPending}
+          isLoading={isDeletingCollection}
         />
       </TitleWrapper>
-      <RefetchProvider refetch={collectionRefetch}>
+      <RefetchProvider refetch={refetchCollection}>
         <CollectionParamProvider
           collectionParam={{ isCollection: isCollection, name: name }}
         >
           <SearchWrapper>
             <SearchBar />
           </SearchWrapper>
-          <BookListView bookList={collection} />
+          <BookListView bookList={fetchedCollection} />
         </CollectionParamProvider>
       </RefetchProvider>
     </Wrapper>

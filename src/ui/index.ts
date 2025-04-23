@@ -8,3 +8,4 @@ export { default as BookListSkeletonLoader } from "./BookListSkeletonLoader.tsx"
 export { default as CollectionSkeletonLoader } from "./CollectionSkeletonLoader.tsx";
 export { default as IndexPageSkeletonLoader } from "./IndexPageSkeletonLoader.tsx";
 export { default as SimpleSkeletonLoader } from "./SimpleSkeletonLoader.tsx";
+export { default as ReadingLogSkeletonLoader } from "./ReadingLogSkeletonLoader.tsx";

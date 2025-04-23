@@ -11,7 +11,7 @@ export const CollectionWrapper = styled(motion.section)`
   flex-wrap: wrap;
 
   @media (${(props) => props.theme.breakpoints.mobile}) {
-    padding: 10px;
+    padding: 20px;
   }
 `;
 

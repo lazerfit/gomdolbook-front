@@ -1,13 +1,5 @@
-import { styled, keyframes } from "styled-components";
-
-const Wave = keyframes`
-  0% {
-        background-position: -468px 0;
-    }
-  100% {
-        background-position: 468px 0;
-    }
-`;
+import { styled } from "styled-components";
+import { LineSkeleton, SquareSkeleton } from "@/styles/common.styled.ts";
 
 const Wrapper = styled.div`
   display: flex;
@@ -54,40 +46,12 @@ const LineWrapper = styled.div`
   }
 `;
 
-const Line = styled.div<{ $width: string; $height: string }>`
-  width: ${(props) => props.$width};
-  height: ${(props) => props.$height};
+const Line = styled(LineSkeleton)`
   margin-top: 8px;
-  border-radius: 2px;
-  background: rgba(130, 130, 130, 0.2);
-  background: linear-gradient(
-    to right,
-    rgba(130, 130, 130, 0.2) 8%,
-    rgba(130, 130, 130, 0.3) 18%,
-    rgba(130, 130, 130, 0.2) 33%
-  );
-  background-size: 800px 100px;
-  animation: ${Wave} 2s infinite ease-out;
-
-  @media (${(props) => props.theme.breakpoints.mobile}) {
-    max-width: 100%;
-  }
 `;
 
-const Square = styled.div<{ $width: string; $height: string }>`
-  width: ${(props) => props.$width};
-  height: ${(props) => props.$height};
+const Square = styled(SquareSkeleton)`
   margin: 0 auto;
-  border-radius: 9px;
-  background: rgba(130, 130, 130, 0.2);
-  background: linear-gradient(
-    to right,
-    rgba(130, 130, 130, 0.2) 8%,
-    rgba(130, 130, 130, 0.3) 18%,
-    rgba(130, 130, 130, 0.2) 33%
-  );
-  background-size: 800px 100px;
-  animation: ${Wave} 2s infinite ease-out;
 `;
 
 const BookDetailSkeletonLoader = () => {

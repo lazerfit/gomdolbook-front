@@ -11,7 +11,7 @@ export const ReadingLogWrapper = styled(motion.section)`
   @media (${(props) => props.theme.breakpoints.mobile}) {
     width: 100%;
     margin: 0 auto;
-    padding: 10px;
+    padding: 20px;
   }
 `;
 

@@ -1,13 +1,6 @@
-import { styled, keyframes } from "styled-components";
-
-const WaveLines = keyframes`
-  0% {
-        background-position: -468px 0;
-    }
-  100% {
-        background-position: 468px 0;
-    }
-`;
+import { styled } from "styled-components";
+import { useMediaBreakpoints } from "@/hooks/useMediaBreakpoints.ts";
+import { LineSkeleton, SquareSkeleton } from "@/styles/common.styled.ts";
 
 const BookList = styled.div`
   display: flex;
@@ -15,6 +8,10 @@ const BookList = styled.div`
   gap: 20px;
   width: 100%;
   flex-wrap: wrap;
+
+  @media (${(props) => props.theme.breakpoints.mobile}) {
+    margin-top: 30px;
+  }
 `;
 
 const Book = styled.div`
@@ -23,63 +20,41 @@ const Book = styled.div`
   justify-content: center;
   align-items: center;
   gap: 5px;
+
+  @media (${(props) => props.theme.breakpoints.mobile}) {
+    margin: auto;
+  }
 `;
 
-const Square = styled.div<{ $width: string; $height: string }>`
-  width: ${(prop) => prop.$width};
-  height: ${(prop) => prop.$height};
+const Square = styled(SquareSkeleton)`
   margin-bottom: 6px;
-  border-radius: 8px;
-  background: rgba(130, 130, 130, 0.2);
-  background: -webkit-gradient(
-    linear,
-    left top,
-    right top,
-    color-stop(8%, rgba(130, 130, 130, 0.2)),
-    color-stop(18%, rgba(130, 130, 130, 0.3)),
-    color-stop(33%, rgba(130, 130, 130, 0.2))
-  );
-  background: linear-gradient(
-    to right,
-    rgba(130, 130, 130, 0.2) 8%,
-    rgba(130, 130, 130, 0.3) 18%,
-    rgba(130, 130, 130, 0.2) 33%
-  );
-  background-size: 800px 100px;
-  animation: ${WaveLines} 2s infinite ease-out;
 `;
 
-const Line = styled.div`
-  width: 50px;
-  height: 12px;
+const Line = styled(LineSkeleton)`
   margin-bottom: 6px;
-  border-radius: 8px;
-  background: rgba(130, 130, 130, 0.2);
-  background: -webkit-gradient(
-    linear,
-    left top,
-    right top,
-    color-stop(8%, rgba(130, 130, 130, 0.2)),
-    color-stop(18%, rgba(130, 130, 130, 0.3)),
-    color-stop(33%, rgba(130, 130, 130, 0.2))
-  );
-  background: linear-gradient(
-    to right,
-    rgba(130, 130, 130, 0.2) 8%,
-    rgba(130, 130, 130, 0.3) 18%,
-    rgba(130, 130, 130, 0.2) 33%
-  );
-  background-size: 800px 100px;
-  animation: ${WaveLines} 2s infinite ease-out;
 `;
 
 const CollectionSkeletonLoader = () => {
+  const { isMobile } = useMediaBreakpoints();
+
+  if (isMobile) {
+    return (
+      <BookList data-testid="skeleton">
+        {Array.from({ length: 3 }).map((_, index) => (
+          <Book key={index}>
+            <Square $width="350px" $height="120px" />
+          </Book>
+        ))}
+      </BookList>
+    );
+  }
+
   return (
     <BookList data-testid="skeleton">
       {Array.from({ length: 4 }).map((_, index) => (
         <Book key={index}>
           <Square $width="280px" $height="280px" />
-          <Line />
+          <Line $width="50px" $height="12px" />
         </Book>
       ))}
     </BookList>

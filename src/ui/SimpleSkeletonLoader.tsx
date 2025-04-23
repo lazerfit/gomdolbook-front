@@ -1,22 +1,5 @@
-import { keyframes, styled } from "styled-components";
-
-const WaveLines = keyframes`
-  0% {
-        background-position: -468px 0;
-    }
-  100% {
-        background-position: 468px 0;
-    }
-`;
-
-const WaveSquares = keyframes`
-  0% {
-        background-position: -468px 0;
-    }
-  100% {
-        background-position: 468px 0;
-    }
-`;
+import { styled } from "styled-components";
+import { WaveLines } from "@/styles/common.styled.ts";
 
 const Wrapper = styled.div<{ width: string }>`
   width: ${(props) => props.width};
@@ -66,7 +49,7 @@ const Square = styled.div`
     rgba(130, 130, 130, 0.2) 33%
   );
   background-size: 800px 100px;
-  animation: ${WaveSquares} 2s infinite ease-out;
+  animation: ${WaveLines} 2s infinite ease-out;
 `;
 
 const Right = styled.div`

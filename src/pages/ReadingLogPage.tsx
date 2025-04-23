@@ -1,7 +1,7 @@
 import {
   ThreeDotMenu,
   BookPublisher,
-  BookListSkeletonLoader,
+  ReadingLogSkeletonLoader,
   Modal,
   Toast,
 } from "@/ui/index.ts";
@@ -99,7 +99,7 @@ const ReadingLogPage = () => {
   };
 
   if (isFetchingReadingLog) {
-    return <BookListSkeletonLoader />;
+    return <ReadingLogSkeletonLoader />;
   }
 
   return (

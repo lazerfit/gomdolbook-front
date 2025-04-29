@@ -39,6 +39,12 @@ const ModalWrapper = styled.section<IModalWrapper>`
     padding: 0 20px;
     overflow-x: hidden;
   }
+
+  @media (${(props) => props.theme.breakpoints.tablet}) {
+    width: 90%;
+    padding: 0 20px;
+    overflow-x: hidden;
+  }
 `;
 
 const CloseButton = styled.button`

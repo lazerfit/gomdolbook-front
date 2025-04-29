@@ -65,14 +65,22 @@ const useSaveBook = () => {
 };
 
 const useFinishedBookCalendarData = () => {
-  const { data, isLoading: isFetchingFinishedBookCalendarData } = useQuery({
+  const {
+    data,
+    isLoading: isFetchingFinishedBookCalendarData,
+    refetch: refetchFinishedBookCalendar,
+  } = useQuery({
     queryKey: ["finishedBookCalendarData"],
     queryFn: () => BookService.getFinishedBookCalendarData(),
   });
 
   const finishedBookCalendarData = data?.data ?? [];
 
-  return { finishedBookCalendarData, isFetchingFinishedBookCalendarData };
+  return {
+    finishedBookCalendarData,
+    isFetchingFinishedBookCalendarData,
+    refetchFinishedBookCalendar,
+  };
 };
 
 interface Args {
@@ -87,8 +95,11 @@ export const useBook = ({ isbn = "", q = "", status = "" }: Args = {}) => {
   const { libraryBooks, isFetchingLibraryBooks, refetchLibraryBooks } =
     useGetLibrary(status);
   const { saveBookMutation } = useSaveBook();
-  const { finishedBookCalendarData, isFetchingFinishedBookCalendarData } =
-    useFinishedBookCalendarData();
+  const {
+    finishedBookCalendarData,
+    isFetchingFinishedBookCalendarData,
+    refetchFinishedBookCalendar,
+  } = useFinishedBookCalendarData();
 
   return {
     fetchedBook,
@@ -101,5 +112,6 @@ export const useBook = ({ isbn = "", q = "", status = "" }: Args = {}) => {
     saveBookMutation,
     finishedBookCalendarData,
     isFetchingFinishedBookCalendarData,
+    refetchFinishedBookCalendar,
   };
 };

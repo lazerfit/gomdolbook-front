@@ -80,7 +80,9 @@ const BookStatusButton = ({
   status = "NEW",
 }: Props) => {
   const [newStatus, setNewStatus] = useState("");
-  const { saveBookMutation, refetchLibraryBooks } = useBook({ status: newStatus });
+  const { saveBookMutation, refetchLibraryBooks, refetchFinishedBookCalendar } = useBook({
+    status: newStatus,
+  });
   const { mutateAddBookToCollection } = useCollection();
   const { isCollection, name } = useContext(CollectionParamContext);
   const { refetch: collectionBookListRefetch } = useContext(RefetchContext);
@@ -108,7 +110,11 @@ const BookStatusButton = ({
   useEffect(() => {
     if (!newStatus) return;
 
-    void Promise.all([statusRefetch(), refetchLibraryBooks()])
+    void Promise.all([
+      statusRefetch(),
+      refetchLibraryBooks(),
+      refetchFinishedBookCalendar(),
+    ])
       .then(() => {
         showToast();
       })
@@ -116,7 +122,14 @@ const BookStatusButton = ({
         showErrorToast();
         console.error(error);
       });
-  }, [newStatus, statusRefetch, refetchLibraryBooks, showToast, showErrorToast]);
+  }, [
+    newStatus,
+    statusRefetch,
+    refetchLibraryBooks,
+    showToast,
+    showErrorToast,
+    refetchFinishedBookCalendar,
+  ]);
 
   const handleSaveBook = (status: BookStatus) => {
     const saveRequest = createBookPayload(status);

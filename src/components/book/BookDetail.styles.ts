@@ -24,6 +24,7 @@ export const NavMenu = styled.div`
 
 export const ThreeDotMenuWrapper = styled.div`
   margin-top: 60px;
+  margin-left: auto;
 `;
 
 export const BackButton = styled.button`

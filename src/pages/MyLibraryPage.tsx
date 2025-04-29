@@ -13,12 +13,17 @@ const MyLibraryWrapper = styled(motion.section)`
   margin: 10px auto;
   align-items: center;
   justify-content: center;
+
+  @media (${(props) => props.theme.breakpoints.tablet}) {
+    width: 100%;
+    padding: 0 20px;
+  }
 `;
 
 const MyLibraryPage = () => {
   const { status = "" } = useParams();
   const { libraryBooks, isFetchingLibraryBooks } = useBook({
-    status: status.toLowerCase(),
+    status: status.toUpperCase(),
   });
 
   return (

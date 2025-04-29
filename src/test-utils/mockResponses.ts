@@ -106,3 +106,22 @@ export const MOCK_READINGLOG_RESPONSE = {
     rating: "5",
   },
 };
+
+export const MOCK_FINISHED_BOOK_CALENDAR_RESPONSE = {
+  data: [
+    {
+      title: "title",
+      finishedAt: "2023-10-01",
+      cover: "cover",
+      isbn: "isbn",
+      rating: "5",
+    },
+    {
+      title: "title2",
+      finishedAt: "2023-10-02",
+      cover: "cover2",
+      isbn: "isbn2",
+      rating: "4",
+    },
+  ],
+};

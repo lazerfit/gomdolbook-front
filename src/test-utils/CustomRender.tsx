@@ -5,8 +5,8 @@ import {
   QueryObserverResult,
   RefetchOptions,
 } from "@tanstack/react-query";
-import React, { ReactNode } from "react";
-import { render, screen, fireEvent, waitFor } from "@testing-library/react";
+import React, { ReactElement, ReactNode } from "react";
+import { render, screen, fireEvent, waitFor, RenderResult } from "@testing-library/react";
 import RefetchContextProvider from "@/api/contextProviders/RefetchProvider.tsx";
 import {
   vi,
@@ -26,9 +26,9 @@ interface Options {
 }
 
 const customRender = (
-  ui: React.ReactElement,
+  ui: ReactElement,
   { refetch = vi.fn(), params = { isCollection: false, name: "name" } }: Options = {},
-) => {
+): RenderResult => {
   const Wrapper = ({ children }: { children: ReactNode }) => {
     return (
       <Theme>

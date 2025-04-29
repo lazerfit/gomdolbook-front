@@ -13,6 +13,11 @@ export const CollectionWrapper = styled(motion.section)`
   @media (${(props) => props.theme.breakpoints.mobile}) {
     padding: 20px;
   }
+
+  @media (${(props) => props.theme.breakpoints.tablet}) {
+    margin: 32px auto;
+    justify-content: center;
+  }
 `;
 
 export const BookCoverImage = styled.img`

@@ -17,6 +17,11 @@ const NavWrapper = styled.div`
     width: 90%;
     margin: 0 auto 30px auto;
   }
+
+  @media (${(props) => props.theme.breakpoints.tablet}) {
+    width: 98%;
+    margin: 0 auto 30px auto;
+  }
 `;
 
 const NavLink = styled(motion.button)<{ $selected: boolean }>`

@@ -14,8 +14,8 @@ const ButtonWrapper = styled(motion.section)`
   margin-left: auto;
   position: relative;
 
-  @media (${(props) => props.theme.breakpoints.mobile}) {
-    //margin-top: 60px;
+  @media (${(props) => props.theme.breakpoints.tablet}) {
+    margin-right: 20px;
   }
 `;
 

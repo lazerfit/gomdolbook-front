@@ -9,6 +9,10 @@ export const SearchResultContentWrapper = styled.section`
   @media (${(props) => props.theme.breakpoints.mobile}) {
     width: 100%;
   }
+
+  @media (${(props) => props.theme.breakpoints.tablet}) {
+    width: 100%;
+  }
 `;
 
 export const SearchInputWrapper = styled.div`
@@ -53,6 +57,10 @@ export const SearchResultContent = styled.div`
   @media (${(props) => props.theme.breakpoints.mobile}) {
     width: 100%;
   }
+
+  @media (${(props) => props.theme.breakpoints.tablet}) {
+    width: 100%;
+  }
 `;
 
 export const BookListItem = styled.article`
@@ -68,6 +76,10 @@ export const BookListItem = styled.article`
   box-shadow: rgba(17, 17, 26, 0.1) 0 1px 0;
 
   @media (${(props) => props.theme.breakpoints.mobile}) {
+    width: 100%;
+  }
+
+  @media (${(props) => props.theme.breakpoints.tablet}) {
     width: 100%;
   }
 `;

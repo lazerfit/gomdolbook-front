@@ -21,12 +21,19 @@ const StyledHeader = styled(motion.header)`
   transform: translateX(-50%);
   z-index: 15;
   height: 60px;
-  width: 1180px;
+  width: 100%;
+  max-width: 1180px;
 
   @media (${(props) => props.theme.breakpoints.mobile}) {
     width: 100%;
     padding: 0 20px;
   }
+
+  @media (${(props) => props.theme.breakpoints.tablet}) {
+    width: 100%;
+    padding: 0 20px;
+  }
+}
 `;
 
 const NavMenu = styled.nav`

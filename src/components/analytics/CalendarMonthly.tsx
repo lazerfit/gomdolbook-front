@@ -15,6 +15,10 @@ const CalendarWrapper = styled.div`
   @media (${(props) => props.theme.breakpoints.mobile}) {
     width: 85%;
   }
+
+  @media (${(props) => props.theme.breakpoints.tablet}) {
+    width: 90%;
+  }
 `;
 
 const ModalContentWrapper = styled.div`

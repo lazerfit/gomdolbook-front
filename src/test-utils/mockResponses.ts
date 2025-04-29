@@ -1,4 +1,4 @@
-import type { ILibraryResponse } from "@/api/services/BoookService.js";
+import { LibraryResponse } from "@/api/services/types/booktypes.ts";
 
 export const MOCK_BOOK_RESPONSE = {
   data: {
@@ -68,7 +68,7 @@ export const MOCK_LIBRARY_RESPONSE_NEW_STATUS = [
   },
 ];
 
-export const MOCK_LIBRARY_EMPTY_RESPONSE: ILibraryResponse[] = [];
+export const MOCK_LIBRARY_EMPTY_RESPONSE: LibraryResponse[] = [];
 
 export const MOCK_COLLECTION_LIST_RESPONSE = {
   data: [
@@ -105,4 +105,23 @@ export const MOCK_READINGLOG_RESPONSE = {
     note3: "note3",
     rating: "5",
   },
+};
+
+export const MOCK_FINISHED_BOOK_CALENDAR_RESPONSE = {
+  data: [
+    {
+      title: "title",
+      finishedAt: "2023-10-01",
+      cover: "cover",
+      isbn: "isbn",
+      rating: "5",
+    },
+    {
+      title: "title2",
+      finishedAt: "2023-10-02",
+      cover: "cover2",
+      isbn: "isbn2",
+      rating: "4",
+    },
+  ],
 };

@@ -131,6 +131,10 @@ const GlobalStyle = createGlobalStyle`
   .scale-out {
     animation: ScaleOut 0.4s ease-in-out forwards;
   }
+
+  .calendar-event {
+    cursor: pointer;
+  }
 `;
 
 export default GlobalStyle;

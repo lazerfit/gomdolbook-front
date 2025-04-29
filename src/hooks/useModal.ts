@@ -5,6 +5,7 @@ export enum ModalTypes {
   "STATUS_UPDATE" = "STATUS_UPDATE",
   "WYSIWYG" = "WYSIWYG",
   "DEFAULT" = "DEFAULT",
+  "POPOVER" = "POPOVER",
 }
 
 export const useModal = () => {

@@ -4,6 +4,20 @@ import * as MR from "./mockResponses.ts";
 
 export const apiBaseUrl = "http://localhost:8080/api/v1";
 
+const httpOptions = (uri: string) => {
+  return http.options(`${apiBaseUrl}/${uri}`, () => {
+    return new HttpResponse(null, {
+      status: 200,
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+        "Access-Control-Allow-Headers": "*",
+        "Access-Control-Credentials": "true",
+      },
+    });
+  });
+};
+
 export const MOCK_SERVER_NEW_STATUS_RESPONSE = (server: SetupServer, isbn: string) => {
   server.use(
     http.get(`${apiBaseUrl}/status/${isbn}`, () => {
@@ -36,17 +50,7 @@ export const MOCK_SERVER_BOOK_SAVE = (server: SetupServer) => {
     http.post(`${apiBaseUrl}/book/save`, () => {
       return HttpResponse.json({ data: "OK" });
     }),
-    http.options(`${apiBaseUrl}/book/save`, () => {
-      return new HttpResponse(null, {
-        status: 200,
-        headers: {
-          "Access-Control-Allow-Origin": "*",
-          "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
-          "Access-Control-Allow-Headers": "*",
-          "Access-Control-Credentials": "true",
-        },
-      });
-    }),
+    httpOptions("book/save"),
   );
 };
 
@@ -55,17 +59,7 @@ export const MOCK_SERVER_BOOK_SAVE_ERROR = (server: SetupServer) => {
     http.post(`${apiBaseUrl}/book/save`, () => {
       return HttpResponse.json({ status: 404, errors: "[error]" }, { status: 404 });
     }),
-    http.options(`${apiBaseUrl}/book/save`, () => {
-      return new HttpResponse(null, {
-        status: 200,
-        headers: {
-          "Access-Control-Allow-Origin": "*",
-          "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
-          "Access-Control-Allow-Headers": "*",
-          "Access-Control-Credentials": "true",
-        },
-      });
-    }),
+    httpOptions("book/save"),
   );
 };
 
@@ -127,17 +121,7 @@ export const MOCK_SERVER_CREATE_COLLECTION = (server: SetupServer) => {
 
       return HttpResponse.json({ data: "ERROR" });
     }),
-    http.options(`${apiBaseUrl}/collection/create`, () => {
-      return new HttpResponse(null, {
-        status: 200,
-        headers: {
-          "Access-Control-Allow-Origin": "*",
-          "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
-          "Access-Control-Allow-Headers": "*",
-          "Access-Control-Credentials": "true",
-        },
-      });
-    }),
+    httpOptions("collection/create"),
   );
 };
 
@@ -154,17 +138,7 @@ export const MOCK_SERVER_UPDATE_RATING = (server: SetupServer) => {
 
       return HttpResponse.json({ data: "ERROR" });
     }),
-    http.options(`${apiBaseUrl}/readingLog/rating/update`, () => {
-      return new HttpResponse(null, {
-        status: 200,
-        headers: {
-          "Access-Control-Allow-Origin": "*",
-          "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
-          "Access-Control-Allow-Headers": "*",
-          "Access-Control-Credentials": "true",
-        },
-      });
-    }),
+    httpOptions("readingLog/rating/update"),
   );
 };
 
@@ -188,17 +162,7 @@ export const MOCK_SERVER_COLLECTION_DETAIL_DELETE = (server: SetupServer) => {
 
       return HttpResponse.json({ data: "ERROR" });
     }),
-    http.options(`${apiBaseUrl}/collection/delete`, () => {
-      return new HttpResponse(null, {
-        status: 200,
-        headers: {
-          "Access-Control-Allow-Origin": "*",
-          "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
-          "Access-Control-Allow-Headers": "*",
-          "Access-Control-Credentials": "true",
-        },
-      });
-    }),
+    httpOptions("collection/delete"),
   );
 };
 
@@ -222,17 +186,7 @@ export const MOCK_SERVER_UPDATE_READINGLOG = (server: SetupServer) => {
     http.post(`${apiBaseUrl}/readingLog/update`, () => {
       return HttpResponse.json({ data: "OK" });
     }),
-    http.options(`${apiBaseUrl}/readingLog/update`, () => {
-      return new HttpResponse(null, {
-        status: 200,
-        headers: {
-          "Access-Control-Allow-Origin": "*",
-          "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
-          "Access-Control-Allow-Headers": "*",
-          "Access-Control-Credentials": "true",
-        },
-      });
-    }),
+    httpOptions("readingLog/update"),
   );
 };
 
@@ -241,16 +195,15 @@ export const MOCK_SERVER_UPDATE_READINGLOG_ERROR = (server: SetupServer) => {
     http.post(`${apiBaseUrl}/readingLog/update`, () => {
       return HttpResponse.json({ status: 400, errors: ["error"] }, { status: 400 });
     }),
-    http.options(`${apiBaseUrl}/readingLog/update`, () => {
-      return new HttpResponse(null, {
-        status: 200,
-        headers: {
-          "Access-Control-Allow-Origin": "*",
-          "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
-          "Access-Control-Allow-Headers": "*",
-          "Access-Control-Credentials": "true",
-        },
-      });
+    httpOptions("readingLog/update"),
+  );
+};
+
+export const MOCK_FINISHED_BOOK_CALENDAR = (server: SetupServer) => {
+  server.use(
+    http.get(`${apiBaseUrl}/book/calendar/finished`, () => {
+      return HttpResponse.json(MR.MOCK_FINISHED_BOOK_CALENDAR_RESPONSE);
     }),
+    httpOptions("book/calendar/finished"),
   );
 };

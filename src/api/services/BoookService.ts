@@ -40,4 +40,10 @@ export const BookService = {
       params: { status },
     });
   },
+  getFinishedBookCalendarData: () => {
+    return ApiRequest<T.FinishedBookData[]>(
+      BookEndPoint.getFinishedBookCalendarData(),
+      "GET",
+    );
+  },
 };

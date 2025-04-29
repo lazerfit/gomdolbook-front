@@ -28,6 +28,20 @@ export interface BookSaveRequest extends BookResponse {
   status?: BookStatus | null;
 }
 
+export interface FinishedBookData {
+  title: string;
+  isbn: string;
+  cover: string;
+  rating: number;
+  finishedAt: string | null;
+}
+
+export interface CalendarEvent {
+  title: string;
+  start: string;
+  coverUrl: string;
+}
+
 export interface LibraryResponse {
   cover: string;
   title: string;

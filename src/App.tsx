@@ -8,6 +8,7 @@ import ReadingLogPage from "@/pages/ReadingLogPage.tsx";
 import Theme from "@/styles/theme.tsx";
 import CollectionDetailPage from "./pages/CollectionDetailPage.js";
 import NotFoundPage from "./pages/NotFoundPage.tsx";
+import AnalyticsPage from "./pages/AnalyticsPage.tsx";
 
 const App = () => {
   return (
@@ -17,9 +18,12 @@ const App = () => {
         <Route path="/" element={<Layout />}>
           <Route index element={<IndexPage />} />
           <Route path="/library/:status" element={<MyLibraryPage />} />
-          <Route path="/collections" element={<MyCollectionPage />} />
-          <Route path="/collections/:name" element={<CollectionDetailPage />} />
+          <Route path="/collections">
+            <Route index element={<MyCollectionPage />} />
+            <Route path={":name"} element={<CollectionDetailPage />} />
+          </Route>
           <Route path="/readingLog/:isbn" element={<ReadingLogPage />} />
+          <Route path="/analytics/:view" element={<AnalyticsPage />} />
         </Route>
         <Route path="*" element={<NotFoundPage />} />
       </Routes>

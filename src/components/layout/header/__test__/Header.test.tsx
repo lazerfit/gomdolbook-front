@@ -16,6 +16,7 @@ const render = () => {
         <Route element={<Header />} path={"/"} />
         <Route element={<div>라이브러리입니다.</div>} path={"/library/reading"} />
         <Route element={<div>컬렉션입니다.</div>} path={"/collections"} />
+        <Route element={<div>분석입니다.</div>} path={"/analytics/calendar"} />
       </Routes>
     </MemoryRouter>,
   );
@@ -48,6 +49,15 @@ describe("유저 로그인 했을 때", () => {
     fireEvent.click(collection);
 
     expect(screen.findByText("컬렉션입니다.")).toBeTruthy();
+  });
+
+  it("analytics 클릭하면 이동한다.", async () => {
+    const analytics = await screen.findByText("Analytics");
+    expect(analytics).toBeTruthy();
+
+    fireEvent.click(analytics);
+
+    expect(screen.findByText("분석입니다.")).toBeTruthy();
   });
 
   it("menu 클릭하면 dropdown 내려온다.", async () => {

@@ -8,6 +8,7 @@ export const BookEndPoint = {
   updateStatus: (isbn: string) => `/status/${isbn}/update`,
   getBookSearchResult: () => "/book/search",
   getLibrary: () => "/book/Library",
+  getFinishedBookCalendarData: () => "/book/calendar/finished",
 };
 
 export const CollectionEndPoint = {

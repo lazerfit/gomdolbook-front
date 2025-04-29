@@ -26,9 +26,9 @@ const Star = styled.span`
 `;
 
 interface Props {
-  isbn: string;
+  isbn?: string;
   initialRating: number;
-  refetch: (
+  refetch?: (
     options?: RefetchOptions,
   ) => Promise<QueryObserverResult<ApiResponse<ReadingLogResponse> | void, Error>>;
 }
@@ -45,10 +45,10 @@ const Rating = ({ isbn = "", initialRating = 0, refetch }: Props) => {
   useEffect(() => {
     if (rating !== 0 && rating !== initialRating) {
       updateRatingMutation(
-        { isbn: isbn, star: rating },
+        { isbn, star: rating },
         {
           onSuccess: () => {
-            refetch().catch((error) => console.log(error));
+            refetch?.().catch((error) => console.log(error));
           },
           onError: (error) => console.log(error),
         },

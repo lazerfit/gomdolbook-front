@@ -4,3 +4,4 @@ export { useCollection } from "./queries/useCollection.ts";
 export { useModal } from "./useModal.ts";
 export { useToast } from "./useToast.ts";
 export { useBookSearch } from "./useBookSearch.ts";
+export { useMediaBreakpoints } from "./useMediaBreakpoints.ts";

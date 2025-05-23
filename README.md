@@ -38,13 +38,13 @@ goomdolbook은 사용자의 독서 활동 관리를 돕기 위해 만들어졌�
 - 스켈레톤 로더: 데이터 로딩 중에는 스켈레톤 UI를 표시하여 사용자가 지루함을 느끼지 않도록 합니다.
 
 ## 기술 스택
-Core: React, TypeScript, Vite
-State Management: React Query (TanStack Query)
-Styling: Styled Components, Framer Motion (애니메이션)
-Routing: React Router
-HTTP Client: Axios
-Authentication: Keycloak
-Rich Text Editor: TinyMCE
-Testing: Vitest, Testing Library, MSW (Mock Service Worker)
-Linting/Formatting: ESLint, Prettier
-Deployment: Vercel
+- Core: React, TypeScript, Vite
+- State Management: React Query (TanStack Query)
+- Styling: Styled Components, Framer Motion (애니메이션)
+- Routing: React Router
+- HTTP Client: Axios
+- Authentication: Keycloak
+- Rich Text Editor: TinyMCE
+- Testing: Vitest, Testing Library, MSW (Mock Service Worker)
+- Linting/Formatting: ESLint, Prettier
+- Deployment: Vercel

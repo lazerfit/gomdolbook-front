@@ -1,5 +1,6 @@
 # gomdolbook-front 
 goomdolbook은 사용자의 독서 활동 관리를 돕기 위해 만들어졌습니다. 주요 기능으로는 도서 검색, 개인 서재 및 사용자 정의 컬렉션으로 책 정리, 독서 진행 상황 기록, 독서 통계 확인 등이 있습니다.
+[Gitbook 바로가기](https://sgs-organization-3.gitbook.io/gomdolbook-frontend/)
 
 ## 주요 기능
 

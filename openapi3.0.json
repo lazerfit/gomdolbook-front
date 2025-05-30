@@ -1,0 +1,1191 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Gomdolbook API",
+    "version": "v1",
+    "description": "Gomdolbook 백엔드 API 명세서입니다.\n사용자의 독서 기록 관리, 책 컬렉션 생성, 알라딘 API를 통한 도서 정보 탐색 기능을 제공합니다.\n모든 API는 JWT 기반의 OAuth2 인증을 필요로 합니다."
+  },
+  "servers": [
+    {
+      "url": "https://www.gomdolbook.kr",
+      "description": "Production server"
+    },
+    {
+      "url": "http://localhost:8080",
+      "description": "Local development server"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Book & ReadingLog",
+      "description": "도서 정보 조회 및 사용자의 독서 기록 관련 API"
+    },
+    {
+      "name": "Collection",
+      "description": "사용자 책 컬렉션 관리 API"
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT",
+        "description": "OAuth2 JWT 토큰을 사용합니다. 'Bearer {token}' 형식으로 입력해주세요."
+      }
+    },
+    "schemas": {
+      "BookSaveCommand": {
+        "type": "object",
+        "required": [
+          "title",
+          "author",
+          "pubDate",
+          "description",
+          "isbn",
+          "cover",
+          "categoryName",
+          "publisher"
+        ],
+        "properties": {
+          "title": {
+            "type": "string",
+            "description": "도서 제목",
+            "example": "펠로폰네소스 전쟁사"
+          },
+          "author": {
+            "type": "string",
+            "description": "저자",
+            "example": "투퀴디데스"
+          },
+          "pubDate": {
+            "type": "string",
+            "description": "출판일 (YYYY-MM-DD)",
+            "example": "2011-06-30"
+          },
+          "description": {
+            "type": "string",
+            "description": "도서 설명",
+            "example": "투퀴디세스가 집필한 전쟁사"
+          },
+          "isbn": {
+            "type": "string",
+            "description": "ISBN (10 또는 13자리)",
+            "example": "9788991290402"
+          },
+          "cover": {
+            "type": "string",
+            "description": "표지 이미지 URL",
+            "example": "http://example.com/image.jpg"
+          },
+          "categoryName": {
+            "type": "string",
+            "description": "카테고리명",
+            "example": "서양고대사"
+          },
+          "publisher": {
+            "type": "string",
+            "description": "출판사",
+            "example": "도서출판 숲"
+          },
+          "status": {
+            "type": "string",
+            "description": "독서 상태 (TO_READ, READING, FINISHED, NEW). 지정하지 않으면 NEW로 처리될 수 있음.",
+            "enum": [
+              "TO_READ",
+              "READING",
+              "FINISHED",
+              "NEW"
+            ],
+            "nullable": true,
+            "example": "READING"
+          }
+        }
+      },
+      "ReadingLogUpdateCommand": {
+        "type": "object",
+        "required": [
+          "isbn",
+          "note",
+          "text"
+        ],
+        "properties": {
+          "isbn": {
+            "type": "string",
+            "description": "ISBN (10 또는 13자리)",
+            "example": "9788991290402"
+          },
+          "note": {
+            "type": "string",
+            "description": "업데이트할 노트 필드 (note1, note2, note3 중 하나)",
+            "enum": [
+              "note1",
+              "note2",
+              "note3"
+            ],
+            "example": "note1"
+          },
+          "text": {
+            "type": "string",
+            "description": "노트 내용",
+            "example": "이 부분은 매우 인상 깊었다."
+          }
+        }
+      },
+      "BookAndReadingLogData": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "example": "펠로폰네소스 전쟁사"
+          },
+          "author": {
+            "type": "string",
+            "example": "투퀴디데스"
+          },
+          "pubDate": {
+            "type": "string",
+            "example": "2011-06-30"
+          },
+          "cover": {
+            "type": "string",
+            "example": "http://example.com/image.jpg"
+          },
+          "publisher": {
+            "type": "string",
+            "example": "도서출판 숲"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "TO_READ",
+              "READING",
+              "FINISHED",
+              "NEW"
+            ],
+            "example": "READING"
+          },
+          "note1": {
+            "type": "string",
+            "nullable": true,
+            "example": "1장 요약..."
+          },
+          "note2": {
+            "type": "string",
+            "nullable": true,
+            "example": "인상 깊은 구절..."
+          },
+          "note3": {
+            "type": "string",
+            "nullable": true,
+            "example": "더 읽어볼 내용..."
+          },
+          "rating": {
+            "type": "integer",
+            "format": "int32",
+            "example": 4
+          }
+        }
+      },
+      "StatusData": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "description": "현재 독서 상태 또는 \"EMPTY\" (해당 ISBN의 책이 서재에 없는 경우)",
+            "example": "READING"
+          }
+        }
+      },
+      "BookData": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "example": "소년이 온다"
+          },
+          "author": {
+            "type": "string",
+            "example": "한강"
+          },
+          "pubDate": {
+            "type": "string",
+            "example": "2014-05-19"
+          },
+          "description": {
+            "type": "string",
+            "example": "2024 노벨문학상"
+          },
+          "isbn": {
+            "type": "string",
+            "example": "9788936434120"
+          },
+          "cover": {
+            "type": "string",
+            "example": "http://example.com/image1.jpg"
+          },
+          "categoryName": {
+            "type": "string",
+            "example": "노벨문학상"
+          },
+          "publisher": {
+            "type": "string",
+            "example": "창비"
+          }
+        }
+      },
+      "SearchedBookData": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "example": "소년이 온다"
+          },
+          "isbn13": {
+            "type": "string",
+            "example": "9788936434120"
+          },
+          "cover": {
+            "type": "string",
+            "example": "http://example.com/image1.jpg"
+          },
+          "author": {
+            "type": "string",
+            "example": "한강"
+          },
+          "publisher": {
+            "type": "string",
+            "example": "창비"
+          },
+          "pubDate": {
+            "type": "string",
+            "example": "2014-05-19"
+          },
+          "description": {
+            "type": "string",
+            "example": "2024 노벨문학상"
+          }
+        }
+      },
+      "BookListData": {
+        "type": "object",
+        "properties": {
+          "cover": {
+            "type": "string",
+            "example": "http://example.com/image.jpg"
+          },
+          "title": {
+            "type": "string",
+            "example": "펠로폰네소스 전쟁사"
+          },
+          "isbn": {
+            "type": "string",
+            "example": "9788991290402"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "TO_READ",
+              "READING",
+              "FINISHED",
+              "NEW"
+            ],
+            "example": "READING"
+          }
+        }
+      },
+      "FinishedBookCalendarData": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "example": "역사의 역사"
+          },
+          "isbn": {
+            "type": "string",
+            "example": "9788932473909"
+          },
+          "cover": {
+            "type": "string",
+            "example": "http://example.com/cover.jpg"
+          },
+          "rating": {
+            "type": "integer",
+            "format": "int32",
+            "example": 5
+          },
+          "finishedAt": {
+            "type": "string",
+            "format": "date",
+            "description": "책을 다 읽은 날짜 (YYYY-MM-DD)",
+            "example": "2025-05-20"
+          }
+        }
+      },
+      "BookCoverData": {
+        "type": "object",
+        "properties": {
+          "covers": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "description": "책 표지 이미지 URL",
+              "example": "http://example.com/cover1.jpg"
+            }
+          }
+        }
+      },
+      "BookCollectionCoverListData": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "컬렉션 이름",
+            "example": "인생 책"
+          },
+          "books": {
+            "$ref": "#/components/schemas/BookCoverData"
+          }
+        }
+      },
+      "ApiResponseBookAndReadingLog": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/BookAndReadingLogData"
+          }
+        }
+      },
+      "ApiResponseStatus": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/StatusData"
+          }
+        }
+      },
+      "ApiResponseBookData": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/BookData"
+          }
+        }
+      },
+      "ApiResponseListSearchedBookData": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SearchedBookData"
+            }
+          }
+        }
+      },
+      "ApiResponseListBookListData": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BookListData"
+            }
+          }
+        }
+      },
+      "ApiResponseListFinishedBookCalendarData": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FinishedBookCalendarData"
+            }
+          }
+        }
+      },
+      "ApiResponseListBookCollectionCoverListData": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BookCollectionCoverListData"
+            }
+          }
+        }
+      },
+      "ApiErrorResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "example": "BAD_REQUEST"
+          },
+          "errors": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "example": [
+              "Can't find Book: 1234"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "security": [
+    {
+      "bearerAuth": []
+    }
+  ],
+  "paths": {
+    "/v1/readingLog": {
+      "get": {
+        "tags": [
+          "Book & ReadingLog"
+        ],
+        "summary": "특정 책의 독서 기록 조회",
+        "description": "ISBN을 기준으로 사용자의 특정 책에 대한 독서 기록(노트, 별점, 상태 등)을 조회합니다.",
+        "operationId": "getReadingLog",
+        "parameters": [
+          {
+            "name": "isbn",
+            "in": "query",
+            "required": true,
+            "description": "조회할 책의 ISBN",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "성공적으로 독서 기록을 조회함",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseBookAndReadingLog"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "잘못된 요청 (예: 책을 찾을 수 없음)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "인증 실패"
+          },
+          "403": {
+            "description": "권한 없음"
+          }
+        }
+      }
+    },
+    "/v1/readingLog/update": {
+      "post": {
+        "tags": [
+          "Book & ReadingLog"
+        ],
+        "summary": "독서 기록 노트 수정",
+        "description": "특정 책의 독서 기록 중 지정된 노트(note1, note2, note3) 내용을 수정합니다.",
+        "operationId": "updateReadingLog",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReadingLogUpdateCommand"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "성공적으로 노트가 수정됨"
+          },
+          "400": {
+            "description": "잘못된 요청 (예: 유효성 검사 실패, 책을 찾을 수 없음)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "인증 실패"
+          },
+          "403": {
+            "description": "권한 없음"
+          }
+        }
+      }
+    },
+    "/v1/readingLog/rating/update": {
+      "post": {
+        "tags": [
+          "Book & ReadingLog"
+        ],
+        "summary": "특정 책의 별점 업데이트",
+        "description": "ISBN으로 지정된 책의 별점을 업데이트합니다.",
+        "operationId": "updateRating",
+        "parameters": [
+          {
+            "name": "isbn",
+            "in": "query",
+            "required": true,
+            "description": "별점을 업데이트할 책의 ISBN",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "star",
+            "in": "query",
+            "required": true,
+            "description": "새로운 별점 (1-5)",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "minimum": 0,
+              "maximum": 5
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "성공적으로 별점이 업데이트됨"
+          },
+          "400": {
+            "description": "잘못된 요청 (예: 책을 찾을 수 없음)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "인증 실패"
+          },
+          "403": {
+            "description": "권한 없음"
+          }
+        }
+      }
+    },
+    "/v1/status/{isbn}": {
+      "get": {
+        "tags": [
+          "Book & ReadingLog"
+        ],
+        "summary": "특정 책의 독서 상태 조회",
+        "description": "ISBN으로 지정된 책의 현재 독서 상태를 조회합니다. 서재에 없는 경우 \"EMPTY\"를 반환합니다.",
+        "operationId": "getStatus",
+        "parameters": [
+          {
+            "name": "isbn",
+            "in": "path",
+            "required": true,
+            "description": "독서 상태를 조회할 책의 ISBN",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "성공적으로 독서 상태를 조회함",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseStatus"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "인증 실패"
+          },
+          "403": {
+            "description": "권한 없음"
+          }
+        }
+      }
+    },
+    "/v1/status/{isbn}/update": {
+      "post": {
+        "tags": [
+          "Book & ReadingLog"
+        ],
+        "summary": "특정 책의 독서 상태 업데이트",
+        "description": "ISBN으로 지정된 책의 독서 상태를 업데이트합니다.",
+        "operationId": "updateStatus",
+        "parameters": [
+          {
+            "name": "isbn",
+            "in": "path",
+            "required": true,
+            "description": "독서 상태를 업데이트할 책의 ISBN",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "required": true,
+            "description": "새로운 독서 상태 (TO_READ, READING, FINISHED, NEW)",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "TO_READ",
+                "READING",
+                "FINISHED",
+                "NEW"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "성공적으로 독서 상태가 업데이트됨"
+          },
+          "400": {
+            "description": "잘못된 요청 (예: 유효성 검사 실패, 책을 찾을 수 없음)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "인증 실패"
+          },
+          "403": {
+            "description": "권한 없음"
+          }
+        }
+      }
+    },
+    "/v1/book/{isbn}": {
+      "get": {
+        "tags": [
+          "Book & ReadingLog"
+        ],
+        "summary": "알라딘 API를 통해 도서 정보 조회",
+        "description": "ISBN을 사용하여 알라딘 API에서 단일 도서 정보를 가져옵니다.",
+        "operationId": "fetchItemFromAladin",
+        "parameters": [
+          {
+            "name": "isbn",
+            "in": "path",
+            "required": true,
+            "description": "조회할 책의 ISBN (13자리 권장)",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "성공적으로 도서 정보를 조회함",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseBookData"
+                }
+              }
+            }
+          },
+          "4xx": {
+            "description": "알라딘 API 호출 오류 (클라이언트 측)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          },
+          "5xx": {
+            "description": "알라딘 API 호출 오류 (서버 측)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "인증 실패"
+          },
+          "403": {
+            "description": "권한 없음"
+          }
+        }
+      }
+    },
+    "/v1/book/search": {
+      "get": {
+        "tags": [
+          "Book & ReadingLog"
+        ],
+        "summary": "알라딘 API를 통해 도서 검색",
+        "description": "검색어를 사용하여 알라딘 API에서 도서 목록을 검색합니다.",
+        "operationId": "searchBookFromAladin",
+        "parameters": [
+          {
+            "name": "q",
+            "in": "query",
+            "required": true,
+            "description": "검색어 (제목, 저자 등)",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "성공적으로 도서 목록을 검색함",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseListSearchedBookData"
+                }
+              }
+            }
+          },
+          "4xx": {
+            "description": "알라딘 API 호출 오류 (클라이언트 측)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          },
+          "5xx": {
+            "description": "알라딘 API 호출 오류 (서버 측)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "인증 실패"
+          },
+          "403": {
+            "description": "권한 없음"
+          }
+        }
+      }
+    },
+    "/v1/book/save": {
+      "post": {
+        "tags": [
+          "Book & ReadingLog"
+        ],
+        "summary": "도서 정보 저장 및 독서 기록 시작",
+        "description": "새로운 도서 정보를 시스템에 저장하고, 해당 책에 대한 독서 기록을 시작합니다. 이미 저장된 책인 경우 정보를 업데이트 할 수 있습니다.",
+        "operationId": "saveBook",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BookSaveCommand"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "성공적으로 도서 정보가 저장됨 (내용 없음)"
+          },
+          "400": {
+            "description": "잘못된 요청 (예: 유효성 검사 실패)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "인증 실패"
+          },
+          "403": {
+            "description": "권한 없음"
+          }
+        }
+      }
+    },
+    "/v1/book/Library": {
+      "get": {
+        "tags": [
+          "Book & ReadingLog"
+        ],
+        "summary": "내 서재 목록 조회 (상태별)",
+        "description": "특정 독서 상태(READING, FINISHED 등)에 해당하는 사용자의 서재 목록을 조회합니다.",
+        "operationId": "getLibraryByStatus",
+        "parameters": [
+          {
+            "name": "status",
+            "in": "query",
+            "required": true,
+            "description": "조회할 독서 상태 (TO_READ, READING, FINISHED, NEW)",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "TO_READ",
+                "READING",
+                "FINISHED",
+                "NEW"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "성공적으로 서재 목록을 조회함",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseListBookListData"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "해당 상태의 책이 없음 (내용 없음)"
+          },
+          "401": {
+            "description": "인증 실패"
+          },
+          "403": {
+            "description": "권한 없음"
+          }
+        }
+      }
+    },
+    "/v1/book/calendar/finished": {
+      "get": {
+        "tags": [
+          "Book & ReadingLog"
+        ],
+        "summary": "완료된 책들의 월별 캘린더 데이터 조회",
+        "description": "사용자가 다 읽은(FINISHED) 책들의 정보를 월별 캘린더 형태로 조회할 수 있는 데이터를 반환합니다.",
+        "operationId": "getFinishedBookCalendarData",
+        "responses": {
+          "200": {
+            "description": "성공적으로 캘린더 데이터를 조회함",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseListFinishedBookCalendarData"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "완료된 책이 없음 (내용 없음)"
+          },
+          "401": {
+            "description": "인증 실패"
+          },
+          "403": {
+            "description": "권한 없음"
+          }
+        }
+      }
+    },
+    "/v1/collection/list": {
+      "get": {
+        "tags": [
+          "Collection"
+        ],
+        "summary": "내 컬렉션 목록 조회",
+        "description": "현재 사용자가 생성한 모든 책 컬렉션 목록과 각 컬렉션에 포함된 책들의 커버 이미지를 조회합니다.",
+        "operationId": "getCollectionList",
+        "responses": {
+          "200": {
+            "description": "성공적으로 컬렉션 목록을 조회함",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseListBookCollectionCoverListData"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "생성된 컬렉션이 없음 (내용 없음)"
+          },
+          "401": {
+            "description": "인증 실패"
+          },
+          "403": {
+            "description": "권한 없음"
+          }
+        }
+      }
+    },
+    "/v1/collection/{name}": {
+      "get": {
+        "tags": [
+          "Collection"
+        ],
+        "summary": "특정 컬렉션 상세 정보 조회",
+        "description": "지정된 이름의 컬렉션에 포함된 모든 책의 상세 정보를 조회합니다.",
+        "operationId": "getCollectionByName",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "path",
+            "required": true,
+            "description": "조회할 컬렉션의 이름",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "성공적으로 컬렉션 상세 정보를 조회함",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponseListBookListData"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "잘못된 요청 (예: 컬렉션을 찾을 수 없음)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "인증 실패"
+          },
+          "403": {
+            "description": "권한 없음"
+          }
+        }
+      }
+    },
+    "/v1/collection/create": {
+      "post": {
+        "tags": [
+          "Collection"
+        ],
+        "summary": "새로운 책 컬렉션 생성",
+        "description": "새로운 책 컬렉션을 생성합니다.",
+        "operationId": "createCollection",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "query",
+            "required": true,
+            "description": "생성할 컬렉션의 이름",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "성공적으로 컬렉션이 생성됨. Location 헤더에 생성된 리소스 URI 포함."
+          },
+          "400": {
+            "description": "잘못된 요청 (예: 사용자 정보 오류, 중복된 컬렉션 이름 등)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "인증 실패"
+          },
+          "403": {
+            "description": "권한 없음"
+          }
+        }
+      }
+    },
+    "/v1/collection/delete": {
+      "delete": {
+        "tags": [
+          "Collection"
+        ],
+        "summary": "특정 컬렉션 삭제",
+        "description": "지정된 이름의 컬렉션을 삭제합니다. 컬렉션에 포함된 책과의 연결도 해제됩니다.",
+        "operationId": "deleteCollection",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "query",
+            "required": true,
+            "description": "삭제할 컬렉션의 이름",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "성공적으로 컬렉션이 삭제됨"
+          },
+          "400": {
+            "description": "잘못된 요청 (예: 컬렉션을 찾을 수 없음)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "인증 실패"
+          },
+          "403": {
+            "description": "권한 없음"
+          }
+        }
+      }
+    },
+    "/v1/collection/{name}/book/add": {
+      "post": {
+        "tags": [
+          "Collection"
+        ],
+        "summary": "컬렉션에 책 추가",
+        "description": "지정된 이름의 컬렉션에 책을 추가합니다. 요청 본문에는 도서 정보(`BookSaveCommand`)가 필요합니다.",
+        "operationId": "addBookToCollection",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "path",
+            "required": true,
+            "description": "책을 추가할 컬렉션의 이름",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BookSaveCommand"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "성공적으로 컬렉션에 책이 추가됨"
+          },
+          "400": {
+            "description": "잘못된 요청 (예: 유효성 검사 실패, 컬렉션을 찾을 수 없음)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "인증 실패"
+          },
+          "403": {
+            "description": "권한 없음"
+          }
+        }
+      }
+    },
+    "/v1/collection/{name}/book/remove": {
+      "delete": {
+        "tags": [
+          "Collection"
+        ],
+        "summary": "컬렉션에서 책 제거",
+        "description": "지정된 이름의 컬렉션에서 특정 ISBN의 책을 제거합니다.",
+        "operationId": "removeBookFromCollection",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "path",
+            "required": true,
+            "description": "책을 제거할 컬렉션의 이름",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "isbn",
+            "in": "query",
+            "required": true,
+            "description": "제거할 책의 ISBN",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "성공적으로 컬렉션에서 책이 제거됨"
+          },
+          "400": {
+            "description": "잘못된 요청 (예: 책을 찾을 수 없음)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "인증 실패"
+          },
+          "403": {
+            "description": "권한 없음"
+          }
+        }
+      }
+    }
+  }
+}

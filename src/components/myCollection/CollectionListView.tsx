@@ -86,14 +86,14 @@ const CollectionListView = () => {
           $collectionName={collection.name}
           onClick={() => navigate(`${encodeURIComponent(collection.name)}`)}
         >
-          <S.MobileContentCardWrapper>
-            <S.MobileBookCoverWrapper>
+          <S.ContentCardWrapper>
+            <S.BookCoverWrapper>
               {collection.books.covers.slice(0, 4).map((cover, index) => (
                 <S.BookCoverImage src={cover} key={index} alt="책 표지" />
               ))}
-            </S.MobileBookCoverWrapper>
+            </S.BookCoverWrapper>
             {isMobile && <S.MobileContentName>{collection.name}</S.MobileContentName>}
-          </S.MobileContentCardWrapper>
+          </S.ContentCardWrapper>
         </S.CollectionCard>
       ))}
     </S.CollectionWrapper>

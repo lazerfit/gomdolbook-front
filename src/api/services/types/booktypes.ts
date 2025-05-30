@@ -42,11 +42,14 @@ export interface CalendarEvent {
   coverUrl: string;
 }
 
-export interface LibraryResponse {
+export interface LibraryResponse extends CollectionBookMetaResponse {
+  status: string;
+}
+
+export interface CollectionBookMetaResponse {
   cover: string;
   title: string;
   isbn: string;
-  status: string;
 }
 
 export interface ReadingLogResponse {

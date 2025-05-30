@@ -40,7 +40,11 @@ const SearchInput = styled.input`
   }
 `;
 
-const SearchBar = () => {
+interface Props {
+  isCollection?: boolean;
+}
+
+const SearchBar = ({ isCollection = false }: Props) => {
   const [showSearchResult, setShowSearchResult] = useState(false);
   const [showLoginRequireModal, setShowLoginRequireModal] = useState(false);
   const { searchText, setSearchText, handleSearchTextChange } = useBookSearch();
@@ -74,7 +78,13 @@ const SearchBar = () => {
           onKeyDown={handleSearchEnterPress}
         />
       </SearchInputWrapper>
-      {showSearchResult && <SearchResult text={searchText} onClose={closeSearchResult} />}
+      {showSearchResult && (
+        <SearchResult
+          text={searchText}
+          onClose={closeSearchResult}
+          isCollection={isCollection}
+        />
+      )}
       {showLoginRequireModal && <LoginRequireModal onClose={closeLoginRequireModal} />}
     </SearchBarWrapper>
   );

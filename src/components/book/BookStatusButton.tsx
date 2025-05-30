@@ -36,7 +36,7 @@ const ReadingStatus = styled.div`
   justify-content: center;
 `;
 
-const Button = styled(motion.button)`
+export const Button = styled(motion.button)`
   font-family: ${(props) => props.theme.fonts.text};
   font-size: 1rem;
   font-weight: 500;

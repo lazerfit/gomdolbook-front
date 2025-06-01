@@ -71,20 +71,16 @@ export const CollectionCard = styled.div<IName>`
   }
 `;
 
-export const MobileContentCardWrapper = styled.div`
-  @media (${(props) => props.theme.breakpoints.mobile}) {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: center;
-  }
+export const ContentCardWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
 `;
 
-export const MobileBookCoverWrapper = styled.div`
-  @media (${(props) => props.theme.breakpoints.mobile}) {
-    display: flex;
-    gap: 5px;
-  }
+export const BookCoverWrapper = styled.div`
+  display: flex;
+  gap: 5px;
 `;
 
 export const MobileContentName = styled.div`

@@ -1,6 +1,5 @@
 import { styled } from "styled-components";
 import { useNavigate, useParams } from "react-router-dom";
-import { BookListView } from "../components/book/index.ts";
 import BookListSkeletonLoader from "@/ui/BookListSkeletonLoader.tsx";
 import { SearchBar } from "@/components/homepage/index.ts";
 import {
@@ -12,6 +11,7 @@ import { useCollection } from "@/hooks/index.ts";
 import { motion } from "framer-motion";
 import ThreeDotMenu from "@/ui/ThreeDotMenu.tsx";
 import { useKeycloak } from "@react-keycloak/web";
+import { CollectionView } from "@/components/myCollection/index.ts";
 
 const Wrapper = styled(motion.section)`
   margin-top: 34px;
@@ -96,9 +96,9 @@ const CollectionDetailPage = () => {
           collectionParam={{ isCollection: isCollection, name: name }}
         >
           <SearchWrapper>
-            <SearchBar />
+            <SearchBar isCollection={true} />
           </SearchWrapper>
-          <BookListView bookList={fetchedCollection} />
+          <CollectionView collectionBookList={fetchedCollection} />
         </CollectionParamProvider>
       </RefetchProvider>
     </Wrapper>

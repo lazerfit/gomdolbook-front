@@ -3,13 +3,15 @@ import { BookDetail } from "../book/index.ts";
 import { BookPublisher, Modal, SimpleSkeletonLoader } from "@/ui/index.ts";
 import { useBook, useBookSearch } from "@/hooks/index.ts";
 import * as S from "./SearchResult.styles.js";
+import CollectionBookMetaDetail from "@/components/myCollection/CollectionBookMetaDetail.tsx";
 
 interface Props {
   text: string;
   onClose: () => void;
+  isCollection?: boolean;
 }
 
-const SearchResult = ({ text, onClose }: Props) => {
+const SearchResult = ({ text, onClose, isCollection = false }: Props) => {
   const [hasSelectedBook, setHasSelectedBook] = useState(false);
   const [isbnForDetails, setIsbnForDetails] = useState("");
   const {
@@ -33,7 +35,14 @@ const SearchResult = ({ text, onClose }: Props) => {
   return (
     <Modal innerWidth="1180px" innerHeight="90%" onClose={onClose}>
       {hasSelectedBook ? (
-        <BookDetail isbn={isbnForDetails} onClose={handleBookDetailClose} />
+        isCollection ? (
+          <CollectionBookMetaDetail
+            isbn={isbnForDetails}
+            onClose={handleBookDetailClose}
+          />
+        ) : (
+          <BookDetail isbn={isbnForDetails} onClose={handleBookDetailClose} />
+        )
       ) : (
         <S.SearchResultContentWrapper>
           <S.SearchInputWrapper>

@@ -1,6 +1,5 @@
 import { styled } from "styled-components";
 import { useNavigate, useParams } from "react-router-dom";
-import { BookListView } from "../components/book/index.ts";
 import BookListSkeletonLoader from "@/ui/BookListSkeletonLoader.tsx";
 import { SearchBar } from "@/components/homepage/index.ts";
 import {

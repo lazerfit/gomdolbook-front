@@ -25,13 +25,24 @@ describe("render", () => {
     server.resetHandlers();
     MS.MOCK_SERVER_COLLECTION_DETAIL_RESPONSE(server);
     MS.MOCK_SERVER_COLLECTION_BOOK_LIST(server);
-    MS.MOCK_SERVER_COLLECTION_DETAIL_DELETE(server);
+    MS.MOCK_SERVER_COLLECTION_DETAIL_DELETE(server, "test");
+    MS.MOCK_SERVER_BOOK_RESPONSE(server, "isbn");
+    MS.MOCK_SERVER_BOOK_RESPONSE(server, "default");
+    MS.MOCK_SERVER_IS_EXIST_BOOK_IN_COLLECTION(server, "default", "test");
+    MS.MOCK_SERVER_IS_EXIST_BOOK_IN_COLLECTION(server, "isbn", "test");
     render();
   });
 
   it("book cover 렌더링 된다.", async () => {
     const bookCover = await screen.findByAltText("책 표지");
     expect(bookCover).toBeTruthy();
+  });
+
+  it("표지 클릭하면 modal 창이 뜬다.", async () => {
+    const bookCover = await screen.findByAltText("책 표지");
+    fireEvent.click(bookCover);
+    const modal = await screen.findByText("제거하기");
+    expect(modal).toBeTruthy();
   });
 
   it("threedot 렌더링 된다, 삭제하기 버튼 누르면 modal창이 뜨고 삭제버튼을 누르면 삭제 후 redirect한다.", async () => {

@@ -101,7 +101,7 @@ const CollectionBookMetaDetail = ({ isbn = "", onClose }: Props) => {
           <BookDetailSkeletonLoader />
         ) : (
           <>
-            <S.BookCover src={fetchedBook.cover} />
+            <S.BookCover src={fetchedBook.cover} alt="책표지" />
             <S.BookInformation>
               <S.BookTitle>{fetchedBook.title}</S.BookTitle>
               <BookPublisher

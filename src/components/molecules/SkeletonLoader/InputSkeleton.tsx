@@ -1,0 +1,24 @@
+import { styled } from 'styled-components';
+import * as mixins from '@/styles/mixins';
+import { LineSkeleton } from '@/components/atoms/SkeletonLoader';
+
+const Wrapper = styled.div`
+  ${mixins.flexCenter};
+  margin-top: 1.5rem;
+`;
+
+const Line = styled(LineSkeleton)`
+  width: 18.75rem;
+  height: 2.3125rem;
+  border-radius: var(--border-radius-small);
+`;
+
+const InputSkeleton = () => {
+  return (
+    <Wrapper>
+      <Line />
+    </Wrapper>
+  );
+};
+
+export default InputSkeleton;

@@ -1,35 +1,35 @@
-import Keycloak, { KeycloakConfig } from "keycloak-js";
-import { setToken } from "@/api/services/config/Interceptor.ts";
-import type { AuthClientEvent } from "@react-keycloak/core";
+import Keycloak, { KeycloakConfig } from 'keycloak-js';
+import { setToken } from '@/api/services/config/Interceptor.ts';
+import type { AuthClientEvent } from '@react-keycloak/core';
 
 const keycloakConfig: KeycloakConfig = {
-  url: "http://localhost:8081",
-  realm: "gomdolbook",
-  clientId: "gomdolbook",
+  url: 'http://localhost:8081',
+  realm: 'gomdolbook',
+  clientId: 'gomdolbook',
 };
 
 const keycloak = new Keycloak(keycloakConfig);
 
 export const keycloakInitOptions = {
-  onLoad: "check-sso",
+  onLoad: 'check-sso',
 };
 
 export const eventHandler = async (event: AuthClientEvent) => {
   switch (event) {
-    case "onTokenExpired":
+    case 'onTokenExpired':
       if (!keycloak.authenticated) {
-        await keycloak.logout({ redirectUri: "http://localhost:3000" });
+        await keycloak.logout({ redirectUri: 'http://localhost:3000' });
       }
       try {
         const refreshed = await keycloak.updateToken(-1);
         if (refreshed) {
           setToken(keycloak.idToken!);
         } else {
-          await keycloak.logout({ redirectUri: "http://localhost:3000" });
+          await keycloak.logout({ redirectUri: 'http://localhost:3000' });
         }
       } catch (error) {
-        console.log("토큰 갱신 실패", error);
-        await keycloak.logout({ redirectUri: "http://localhost:3000" });
+        console.log('토큰 갱신 실패', error);
+        await keycloak.logout({ redirectUri: 'http://localhost:3000' });
       }
       break;
     default:

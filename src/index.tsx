@@ -1,38 +1,33 @@
-import { createRoot } from "react-dom/client";
-import { BrowserRouter } from "react-router-dom";
-import App from "./App.tsx";
-import reportWebVitals from "./reportWebVitals.ts";
-import { QueryClientProvider } from "@tanstack/react-query";
-import { queryClient } from "./api/services/config/queryClient.ts";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import keycloak, { keycloakInitOptions, eventHandler } from "./auth/keycloak.ts";
-import { ReactKeycloakProvider } from "@react-keycloak/web";
-import { setToken } from "@/api/services/config/Interceptor.ts";
-import { StrictMode } from "react";
+import { createRoot } from 'react-dom/client';
+import App from './App';
+import reportWebVitals from './reportWebVitals';
+import { QueryClientProvider } from '@tanstack/react-query';
+import { queryClient } from './api/services/config/queryClient';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import keycloak, { keycloakInitOptions, eventHandler } from './auth/keycloak';
+import { ReactKeycloakProvider } from '@react-keycloak/web';
+import { setToken } from '@/api/services/config/Interceptor';
+import { StrictMode } from 'react';
+import './styles/globals.css';
+import Theme from '@/styles/theme';
 
-const root = createRoot(document.getElementById("root")!);
+const root = createRoot(document.getElementById('root')!);
 root.render(
   <ReactKeycloakProvider
     authClient={keycloak}
     initOptions={keycloakInitOptions}
     // eslint-disable-next-line @typescript-eslint/no-misused-promises
     onEvent={eventHandler}
-    onTokens={(tokens) => {
+    onTokens={tokens => {
       setToken(tokens.idToken!);
-    }}
-  >
+    }}>
     <QueryClientProvider client={queryClient}>
       <ReactQueryDevtools initialIsOpen={false} />
-      <BrowserRouter
-        future={{
-          v7_startTransition: true,
-          v7_relativeSplatPath: true,
-        }}
-      >
-        <StrictMode>
+      <StrictMode>
+        <Theme>
           <App />
-        </StrictMode>
-      </BrowserRouter>
+        </Theme>
+      </StrictMode>
     </QueryClientProvider>
   </ReactKeycloakProvider>,
 );

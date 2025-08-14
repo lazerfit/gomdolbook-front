@@ -37,16 +37,7 @@
     "schemas": {
       "BookSaveCommand": {
         "type": "object",
-        "required": [
-          "title",
-          "author",
-          "pubDate",
-          "description",
-          "isbn",
-          "cover",
-          "categoryName",
-          "publisher"
-        ],
+        "required": ["title", "author", "pubDate", "description", "isbn", "cover", "categoryName", "publisher"],
         "properties": {
           "title": {
             "type": "string",

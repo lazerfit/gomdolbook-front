@@ -1,4 +1,4 @@
-import "styled-components";
+import 'styled-components';
 
 interface IColor {
   black: string;
@@ -39,7 +39,7 @@ interface IBreakpoint {
   tablet: string;
 }
 
-declare module "styled-components" {
+declare module 'styled-components' {
   export interface DefaultTheme {
     colors: IColor;
     fonts: IFont;

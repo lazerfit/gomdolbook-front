@@ -1,4 +1,4 @@
-import { createContext } from "react";
+import { createContext } from 'react';
 
 export interface CollectionParam {
   isCollection: boolean;
@@ -7,5 +7,5 @@ export interface CollectionParam {
 
 export const CollectionParamContext = createContext<CollectionParam>({
   isCollection: false,
-  name: "",
+  name: '',
 });

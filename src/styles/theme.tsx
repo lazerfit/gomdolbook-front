@@ -1,34 +1,34 @@
-import { ReactNode } from "react";
-import { ThemeProvider, DefaultTheme } from "styled-components";
-import "./styled.d.ts";
+import { ReactNode } from 'react';
+import { ThemeProvider, DefaultTheme } from 'styled-components';
+import './styled.d.ts';
 
 const theme: DefaultTheme = {
   colors: {
-    black: "#262627",
-    white: "#fafafa",
-    bgc: "#ebebeb",
-    gray0: "#f8f9fa",
-    gray1: "#f1f3f5",
-    gray2: "#e9ecef",
-    gray3: "#dee2e6",
-    gray4: "#ced4da",
-    gray5: "#adb5bd",
-    gray6: "#868e96",
-    gray7: "#495057",
-    gray8: "#343a40",
-    gray9: "#212529",
+    black: '#262627',
+    white: '#fafafa',
+    bgc: '#ebebeb',
+    gray0: '#f8f9fa',
+    gray1: '#f1f3f5',
+    gray2: '#e9ecef',
+    gray3: '#dee2e6',
+    gray4: '#ced4da',
+    gray5: '#adb5bd',
+    gray6: '#868e96',
+    gray7: '#495057',
+    gray8: '#343a40',
+    gray9: '#212529',
   },
   fonts: {
-    title: "Gyeonggi_Batang_Regular",
-    text: "NanumSquareNeo-Variable",
-    english: "Barlow Condensed",
-    size300: "0.75rem" /* 12px */,
-    size400: "1rem" /* 16px */,
-    size500: "1.25rem" /* 20px */,
-    size600: "1.5rem" /* 24px */,
-    size700: "1.75rem" /* 28px */,
-    size800: "2rem" /* 32px */,
-    size900: "2.25rem" /* 36px */,
+    title: 'Gyeonggi_Batang_Regular',
+    text: 'NanumSquareNeo-Variable',
+    english: 'Barlow Condensed',
+    size300: '0.75rem' /* 12px */,
+    size400: '1rem' /* 16px */,
+    size500: '1.25rem' /* 20px */,
+    size600: '1.5rem' /* 24px */,
+    size700: '1.75rem' /* 28px */,
+    size800: '2rem' /* 32px */,
+    size900: '2.25rem' /* 36px */,
   },
   shadow: {
     light: `
@@ -81,8 +81,8 @@ const theme: DefaultTheme = {
     24px 28px rgba(186, 186, 186, 0.01)`,
   },
   breakpoints: {
-    mobile: "max-width: 768px",
-    tablet: "(min-width: 769px) and (max-width: 1180px)",
+    mobile: 'max-width: 768px',
+    tablet: '(min-width: 769px) and (max-width: 1180px)',
   },
 };
 

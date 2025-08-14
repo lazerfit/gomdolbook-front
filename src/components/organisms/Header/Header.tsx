@@ -149,9 +149,6 @@ const Header = () => {
         <NavLink onClick={() => validateLoginStatus('/collections')} whileTap={{ scale: 0.8 }}>
           Collections
         </NavLink>
-        <NavLink onClick={() => validateLoginStatus('/analytics/calendar')} whileTap={{ scale: 0.8 }}>
-          Analytics
-        </NavLink>
       </NavMenu>
       <UserDropdown>
         {keycloak.authenticated ? (

@@ -15,15 +15,15 @@
   --grey5: rgb(173, 181, 189);
   --grey6: rgb(173, 181, 189);
   --grey7: rgb(73, 80, 87);
-  --tomato: rgb(255,101,66);
+  --tomato: rgb(255, 101, 66);
   --border: rgba(51, 61, 58, 0.2);
   --border1: rgb(230, 230, 233);
   --border2: rgb(165, 179, 179);
   --border3: rgb(18, 21, 20);
   --bgc-grey: rgba(18, 21, 20, 0.05);
   --point: rgb(88, 201, 185);
-  --point2: rgb(164,184,196);
-  --point3: rgb(250,246,246);
+  --point2: rgb(164, 184, 196);
+  --point3: rgb(250, 246, 246);
   --border-radius-small: 0.5rem;
   --border-radius-big: 50rem;
 }

@@ -55,7 +55,7 @@ interface BookDetailsProps {
 }
 
 const BookInfo = ({ book }: BookDetailsProps) => {
-  const [mainTitle, subTitle] = book.title.split('-');
+  const [mainTitle, subTitle] = book.title.split('-', 2);
 
   return (
     <Wrapper>

@@ -1,4 +1,4 @@
-import { StatusBooksResponse } from '@/api/services/types/booktypes.ts';
+import { StatusBooksResponse } from '@/api/services/types/booktypes';
 
 export const MOCK_BOOK_RESPONSE = {
   data: {

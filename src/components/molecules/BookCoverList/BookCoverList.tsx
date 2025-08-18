@@ -63,6 +63,7 @@ const BookCoverList = ({ books, onCoverClick }: BookCoverListProps) => {
           exit={{ opacity: 0 }}
           key={book.isbn}
           src={book.cover}
+          data-testid={`bookCover-${book.isbn}`}
           alt="bookCover"
           onClick={() => handleClick(book.isbn, book?.readingLogId)}
         />

@@ -3,6 +3,7 @@ import { MEDIA_SIZES } from '@/utils/variables';
 type Labels = keyof typeof MEDIA_SIZES;
 
 export { default as StatusButtonOptions } from './StatusButtonOptions';
+export * from './date';
 
 export const media = (Object.keys(MEDIA_SIZES) as Labels[]).reduce(
   (acc, label) => {

@@ -1,6 +1,6 @@
 import { http, HttpResponse } from 'msw';
 import { type SetupServer } from 'msw/node';
-import * as MR from './mockResponses.ts';
+import * as MR from './mockResponses';
 
 export const apiBaseUrl = 'http://localhost:8080/api';
 

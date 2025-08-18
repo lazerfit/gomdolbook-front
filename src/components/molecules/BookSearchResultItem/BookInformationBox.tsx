@@ -1,6 +1,6 @@
 import { styled } from 'styled-components';
 import * as mixins from '@/styles/mixins';
-import { mediaMax } from '@/utils';
+import { mediaMax, transformPublicationDate } from '@/utils';
 
 const Wrapper = styled.div<{ $justifyContent: string }>`
   ${mixins.flexRow};
@@ -37,11 +37,6 @@ interface BookInformationBoxProps {
   publicationDate: string;
   justifyContent?: string;
 }
-
-const transformPublicationDate = (date: string): string => {
-  const [year, month] = date.split('-');
-  return `${year}년 ${month}월`;
-};
 
 const BookInformationBox = ({
   author = '',

@@ -44,6 +44,12 @@ const CreateCollectionForm = ({ onCreate }: Props) => {
     setInputValue('');
   };
 
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      onCreate(inputValue, handleClose, e);
+    }
+  };
+
   return (
     <AnimatePresence mode="wait">
       <ButtonContainer layout style={{ width: isAddMode ? '100%' : '50%' }}>
@@ -54,9 +60,9 @@ const CreateCollectionForm = ({ onCreate }: Props) => {
               placeholder="컬렉션 이름을 입력해주세요..."
               value={inputValue}
               onChange={e => setInputValue(e.target.value)}
-              onKeyDown={e => onCreate(inputValue, handleClose, e)}
+              onKeyDown={e => handleKeyDown(e)}
             />
-            <Button onClick={handleClose}>
+            <Button onClick={handleClose} data-testid="close-create-collection-button">
               <MdClose />
             </Button>
           </InputContainer>
@@ -65,7 +71,8 @@ const CreateCollectionForm = ({ onCreate }: Props) => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            onClick={() => setIsAddMode(true)}>
+            onClick={() => setIsAddMode(true)}
+            data-testid="create-collection-button">
             <LuPlus />
           </Button>
         )}

@@ -85,7 +85,7 @@ const UserMenu = (props: Props) => {
         }}
         style={{ pointerEvents: isDropdownOpened ? 'auto' : 'none' }}
         initial="closed">
-        <DropdownItem variants={itemVariants} onClick={() => onNavigate('/library/reading')}>
+        <DropdownItem variants={itemVariants} onClick={() => onNavigate('/library/READING')}>
           Library
         </DropdownItem>
         <DropdownItem variants={itemVariants} onClick={() => onNavigate('/collections')}>

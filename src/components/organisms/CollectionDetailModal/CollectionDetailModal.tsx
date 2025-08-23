@@ -12,6 +12,7 @@ import * as mixins from '@/styles/mixins';
 import StatusButton from '@/components/molecules/StatusButton';
 import { motion } from 'framer-motion';
 import { useState } from 'react';
+import Loader from '@/components/atoms/Loader';
 
 const Wrapper = styled.div``;
 
@@ -51,15 +52,19 @@ const StatusContainer = styled(motion.div)`
 interface Props {
   close: () => void;
   isOpen: boolean;
+  isLoading?: boolean;
   book: BookResponse;
   status: BookStatus;
   onChangeStatus: (status: BookStatus) => void;
   onRemove: () => void;
 }
 
-const CollectionDetailModal = ({ close, isOpen, book, status, onChangeStatus, onRemove }: Props) => {
+const CollectionDetailModal = ({ close, isOpen, isLoading = false, book, status, onChangeStatus, onRemove }: Props) => {
   const [statusEditMode, setStatusEditMode] = useState(false);
 
+  if (!book || isLoading) {
+    return <Loader />;
+  }
   return (
     <Modal
       size={MODAL_SIZES.large}
@@ -73,6 +78,7 @@ const CollectionDetailModal = ({ close, isOpen, book, status, onChangeStatus, on
               data-tooltip-id="remove-book-tooltip"
               data-tooltip-content="컬렉션에서 제거"
               data-tooltip-place="right"
+              data-testid="remove-book-collection-button"
               onClick={onRemove}>
               <RiDeleteBinFill />
             </Button>
@@ -80,6 +86,7 @@ const CollectionDetailModal = ({ close, isOpen, book, status, onChangeStatus, on
               data-tooltip-id="change-status-tooltip"
               data-tooltip-content="읽기 상태 변경"
               data-tooltip-place="right"
+              data-testid="change-status-btn"
               onClick={() => setStatusEditMode(!statusEditMode)}>
               <MdEdit />
             </Button>

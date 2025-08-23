@@ -1,4 +1,4 @@
-import { beforeEach, expect, vi } from 'vitest';
+import { beforeEach, expect } from 'vitest';
 import { screen } from '@testing-library/react';
 import BookSearchInput from './BookSearchInput';
 import userEvent from '@testing-library/user-event';

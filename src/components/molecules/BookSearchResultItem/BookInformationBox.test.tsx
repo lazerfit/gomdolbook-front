@@ -1,4 +1,4 @@
-import { beforeEach, expect, vi } from 'vitest';
+import { beforeEach, expect } from 'vitest';
 import { screen, render } from '@testing-library/react';
 import BookInformationBox from './BookInformationBox';
 

@@ -80,7 +80,7 @@ const CollectionDetailPage = () => {
   const numberId = useMemo(() => parseInt(id, 10), [id]);
 
   const { data: collection } = useCollection(numberId);
-  const { data: book } = useBook(isbn);
+  const { data: book, isLoading: isBookLoading } = useBook(isbn);
   const { data: currentStatus } = useStatus(isbn);
   const { mutate: removeBook } = useRemoveBookFromCollection();
   const { mutate: deleteCollection } = useDeleteCollection();
@@ -158,7 +158,7 @@ const CollectionDetailPage = () => {
           <Banner>컬렉션에 책을 추가해주세요.</Banner>
         </BannerContainer>
       ) : (
-        <BookCoverList books={collection?.books ?? []} onCoverClick={handleBookOnClick} />
+        <BookCoverList books={collection?.books ?? []} onCoverClick={handleBookOnClick} isLoading={isBookLoading} />
       )}
       <HorizonalFloatingButton top="1rem" left="4rem" isChange={isSettingMode}>
         {isSettingMode ? (
@@ -166,10 +166,10 @@ const CollectionDetailPage = () => {
             <StyledButton key="close" onClick={() => setIsSettingMode(false)}>
               <RiCloseFill />
             </StyledButton>
-            <StyledButton key="delete" onClick={handleDeleteCollection}>
+            <StyledButton key="delete" onClick={handleDeleteCollection} data-testid="collection-delete-button">
               <RiDeleteBinFill />
             </StyledButton>
-            <StyledButton key="edit" onClick={() => setIsEditModalOpen(true)}>
+            <StyledButton key="edit" onClick={() => setIsEditModalOpen(true)} data-testid="collection-edit-button">
               <CgEditFlipH />
             </StyledButton>
           </ButtonContainer>
@@ -180,6 +180,7 @@ const CollectionDetailPage = () => {
               variants={buttonVariants}
               initial="initial"
               animate="animate"
+              data-testid="collection-setting-button"
               onClick={() => setIsSettingMode(true)}>
               <RxGear />
             </StyledButton>
@@ -190,6 +191,7 @@ const CollectionDetailPage = () => {
         book={book!}
         close={() => setIsModalOpen(false)}
         isOpen={isModalOpen}
+        isLoading={isBookLoading}
         status={currentStatus ?? BookStatus.NEW}
         onChangeStatus={handleSaveBookToLibrary}
         onRemove={handleRemoveBookFromCollection}

@@ -143,10 +143,16 @@ const Header = () => {
         {`gomdol\nbook`}
       </HeaderLogo>
       <NavMenu>
-        <NavLink onClick={() => validateLoginStatus('/library/READING')} whileTap={{ scale: 0.8 }}>
+        <NavLink
+          onClick={() => validateLoginStatus('/library/READING')}
+          whileTap={{ scale: 0.8 }}
+          data-testid="header-nav-library">
           Library
         </NavLink>
-        <NavLink onClick={() => validateLoginStatus('/collections')} whileTap={{ scale: 0.8 }}>
+        <NavLink
+          onClick={() => validateLoginStatus('/collections')}
+          whileTap={{ scale: 0.8 }}
+          data-testid="header-nav-collection">
           Collections
         </NavLink>
       </NavMenu>

@@ -9,6 +9,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { BookStatus } from '@/api/services/types';
 import { motion } from 'framer-motion';
 import TinyMCE from '@/utils/TinyMCE';
+import Loader from '@/components/atoms/Loader';
 
 const Wrapper = styled(Screen)`
   margin-top: 3rem;
@@ -111,7 +112,7 @@ const ReadingLogPage = () => {
     );
   };
 
-  if (!readingLog) return <div>Loading . . .</div>;
+  if (!readingLog) return <Loader />;
 
   return (
     <Wrapper>

@@ -3,7 +3,7 @@ import * as mixins from '@/styles/mixins';
 import { CommonBox } from '@/components/atoms/Box';
 import { BookCoverMidBig } from '@/components/atoms/BookCover';
 import { BookStatus, ReadingLogResponse } from '@/api/services/types';
-import { StatusButtonOptions } from '@/utils';
+import { StatusButtonOptions, transformReadingDate } from '@/utils';
 
 const BookInfoContainer = styled(CommonBox)`
   width: 25rem;
@@ -92,22 +92,8 @@ interface Props {
 const ReadingLogBookInfo = ({ readingLog, onRatingClick, onStatusClick }: Props) => {
   const convertTitle = (title: string) => {
     if (!title) return '';
-    const [mainTitle] = title.split('-');
+    const [mainTitle] = title.split('-', 1);
     return mainTitle;
-  };
-
-  const convertDate = (dateString: string) => {
-    if (!dateString) return '';
-    try {
-      const date = new Date(dateString);
-      const year = String(date.getFullYear()).slice(-2);
-      const month = String(date.getMonth() + 1).padStart(2, '0');
-      const day = String(date.getDate()).padStart(2, '0');
-      return `${year}${month}${day}`;
-    } catch {
-      console.log('Invalid date string');
-      return '';
-    }
   };
 
   return (
@@ -124,7 +110,7 @@ const ReadingLogBookInfo = ({ readingLog, onRatingClick, onStatusClick }: Props)
         </BookInfoItem>
         <BookInfoItem>
           <BookInfoSubTitle>date</BookInfoSubTitle>
-          {convertDate(readingLog?.startedAt ?? '')} - {convertDate(readingLog?.finishedAt ?? '')}
+          {transformReadingDate(readingLog?.startedAt ?? '')} - {transformReadingDate(readingLog?.finishedAt ?? '')}
         </BookInfoItem>
         <BookInfoItem>
           <BookInfoSubTitle>ratings</BookInfoSubTitle>
@@ -134,6 +120,7 @@ const ReadingLogBookInfo = ({ readingLog, onRatingClick, onStatusClick }: Props)
                 $checked={readingLog?.rating === index + 1}
                 disabled={readingLog?.rating === index + 1}
                 key={index}
+                data-testid={`rating-${index}`}
                 onClick={() => onRatingClick(index + 1)}>
                 {index + 1}
               </Rating>
@@ -148,6 +135,7 @@ const ReadingLogBookInfo = ({ readingLog, onRatingClick, onStatusClick }: Props)
                 <Button
                   key={option.status}
                   $checked={readingLog?.status === option.status}
+                  data-testid={`status-${option.status}`}
                   onClick={() => onStatusClick(option.status)}>
                   {option.label}
                 </Button>

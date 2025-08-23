@@ -3,6 +3,7 @@ import * as mixins from '@/styles/mixins';
 import { mediaMax } from '@/utils';
 import { motion } from 'framer-motion';
 import { BounceInDownStates } from '@/utils/variables';
+import { BookCoverListSkeleton } from '@/components/molecules/SkeletonLoader';
 
 const Wrapper = styled(motion.div)`
   ${mixins.flexCenter};
@@ -40,10 +41,11 @@ interface BooksProps {
 
 interface BookCoverListProps {
   books: BooksProps[];
+  isLoading: boolean;
   onCoverClick: (isbn: string, readingLogId?: number) => void;
 }
 
-const BookCoverList = ({ books, onCoverClick }: BookCoverListProps) => {
+const BookCoverList = ({ books, isLoading, onCoverClick }: BookCoverListProps) => {
   const handleClick = (isbn: string, id?: number) => {
     if (id !== undefined) {
       onCoverClick(isbn, id);
@@ -51,6 +53,10 @@ const BookCoverList = ({ books, onCoverClick }: BookCoverListProps) => {
       onCoverClick(isbn);
     }
   };
+
+  if (!books || isLoading) {
+    return <BookCoverListSkeleton />;
+  }
 
   return (
     <Wrapper>

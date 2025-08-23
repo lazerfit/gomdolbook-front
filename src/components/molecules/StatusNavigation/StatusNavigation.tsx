@@ -34,7 +34,7 @@ interface Props<T extends string> {
 const StatusNavigation = <T extends string>({ statusOption, status }: Props<T>) => {
   const navigate = useNavigate();
 
-  const handleClickLink = (value: T, path: string) => {
+  const handleClickLink = (path: string) => {
     navigate(path);
   };
 
@@ -43,7 +43,7 @@ const StatusNavigation = <T extends string>({ statusOption, status }: Props<T>) 
       {statusOption.map(option => (
         <NavLink
           layout
-          onClick={() => handleClickLink(option.status, option.path)}
+          onClick={() => handleClickLink(option.path)}
           key={option.status}
           whileTap={{ scale: 0.85 }}
           whileHover={{ backgroundColor: status === option.status ? 'var(--black)' : 'var(--bgc-grey)' }}

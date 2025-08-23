@@ -14,7 +14,6 @@ export const useUpdateStatus = () => {
 
 const useGetBook = (isbn: string) => {
   const { keycloak, initialized } = useKeycloak();
-
   const { data, isLoading } = useQuery({
     queryKey: ['book', isbn],
     queryFn: () => BookService.getBook(isbn),
@@ -25,10 +24,11 @@ const useGetBook = (isbn: string) => {
 };
 
 const useGetBookSearchResult = (q: string) => {
+  const { keycloak, initialized } = useKeycloak();
   const { data, isLoading, refetch } = useQuery({
     queryKey: ['search', q],
     queryFn: () => BookService.getBookSearchResult(q),
-    enabled: !!q,
+    enabled: initialized && keycloak.authenticated && !!q,
   });
 
   return { data: data?.data, isLoading, refetch };
@@ -48,10 +48,11 @@ const useGetStatusBooks = (status: string) => {
 };
 
 const useGetStatus = (isbn: string) => {
+  const { keycloak, initialized } = useKeycloak();
   const { data, refetch } = useQuery({
     queryKey: ['status', isbn],
     queryFn: () => BookService.getStatus(isbn),
-    enabled: !!isbn,
+    enabled: initialized && keycloak.authenticated && !!isbn,
   });
 
   return { data: data?.data.status, refetch };
@@ -67,7 +68,6 @@ const useSaveBookMutate = () => {
 
 const useFinishedBookCalendarData = () => {
   const { keycloak, initialized } = useKeycloak();
-
   const { data, isLoading, refetch } = useQuery({
     queryKey: ['finishedBookCalendarData'],
     queryFn: () => BookService.getFinishedBookCalendarData(),

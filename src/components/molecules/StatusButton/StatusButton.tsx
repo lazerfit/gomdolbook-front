@@ -22,6 +22,7 @@ const StatusButton = ({ onSave, status }: Props) => {
             key={option.status}
             size="medium"
             onClick={() => onSave(option.status)}
+            data-testid={`status-button-${option.status}`}
             disabled={option.status === status}>
             {option.label}
           </Button>

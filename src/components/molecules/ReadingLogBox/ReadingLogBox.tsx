@@ -77,7 +77,7 @@ const ReadingLogBox = ({ size, title, children, onEditClick, isEditMode, close }
             <ConfirmButton>
               <CiCircleCheck />
             </ConfirmButton>
-            <ConfirmButton onClick={close}>
+            <ConfirmButton onClick={close} data-testid="readingLog-confirm-button">
               <CiCircleRemove />
             </ConfirmButton>
           </ButtonGroup>
@@ -88,6 +88,7 @@ const ReadingLogBox = ({ size, title, children, onEditClick, isEditMode, close }
             title="edit"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
+            data-testid="readingLog-edit-button"
             transition={{ duration: 0.5 }}>
             <FaRegEdit />
           </EditButton>

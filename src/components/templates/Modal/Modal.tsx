@@ -102,7 +102,7 @@ const Modal = ({ close, title = '', content, size, ReactModalProps }: Props) => 
       <Wrapper $size={size} className={isClosing ? 'scale-out' : 'scale-in'} onAnimationEnd={handleAnimationEnd}>
         <Header>
           <Title>{title}</Title>
-          <Close onClick={handleClose} aria-label="Close modal">
+          <Close onClick={handleClose} aria-label="Close modal" data-testid="modal-close-button">
             <IoMdCloseCircle />
           </Close>
         </Header>

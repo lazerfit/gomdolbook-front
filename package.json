@@ -52,7 +52,10 @@
     "postinstall": "[ -f .husky/pre-commit ] && npx husky install || echo 'husky not installed, skipping...'"
   },
   "lint-staged": {
-    "**/*.{ts,tsx}": ["eslint .", "vitest related --run"],
+    "**/*.{ts,tsx}": [
+      "eslint .",
+      "vitest related --run"
+    ],
     "**/*.{ts,tsx,mjs}": "prettier --ignore-unknown --write ."
   },
   "browserslist": {

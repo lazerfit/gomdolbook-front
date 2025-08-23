@@ -13,6 +13,7 @@ import React from 'react';
 import CreateCollectionForm from '@/components/molecules/CreateCollectionForm';
 import Divider from '@/components/atoms/Divider';
 import { useQueryClient } from '@tanstack/react-query';
+import Loader from '@/components/atoms/Loader';
 
 const Wrapper = styled(motion.div)`
   ${CssScreen};
@@ -102,7 +103,7 @@ const CollectionPage = () => {
   };
 
   if (isCollectionListLoading || !initialized || !keycloak.authenticated) {
-    return <div>Loading . . .</div>;
+    return <Loader />;
   }
 
   return (
@@ -118,7 +119,7 @@ const CollectionPage = () => {
           <Divider />
           <BookCoverContainer onClick={() => navigate(`/collections/${collection.id}`)} $name={collection.name}>
             {collection.covers.slice(0, 10).map((cover, index) => (
-              <BookCover src={cover} key={index} alt="책 표지" />
+              <BookCover src={cover} key={index} alt={`책표지-${index}`} />
             ))}
           </BookCoverContainer>
         </Content>

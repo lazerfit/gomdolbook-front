@@ -4,6 +4,7 @@ import googleLoginImage from '@/assets/img/web_light_rd_na@1x.png';
 import githubLoginImage from '@/assets/img/github-mark.png';
 import Modal from '@/components/templates/Modal/Modal';
 import { MODAL_SIZES } from '@/utils/variables';
+import { mediaMax } from '@/utils';
 
 const Content = styled.div`
   display: flex;
@@ -16,7 +17,7 @@ const EasyLoginWrapper = styled.div`
   justify-content: center;
   gap: 20px;
 
-  @media (${props => props.theme.breakpoints.mobile}) {
+  ${mediaMax.mobile} {
     margin-bottom: 16px;
   }
 `;

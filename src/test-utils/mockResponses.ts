@@ -1,26 +1,36 @@
-import { StatusBooksResponse } from '@/api/services/types/booktypes';
+import {
+  BookResponse,
+  BookSearchResponse,
+  BookStatus,
+  StatusBooksResponse,
+  ReadingLogResponse,
+} from '@/api/services/types/booktypes';
 
-export const MOCK_BOOK_RESPONSE = {
+interface APIResponse<T> {
+  data: T;
+}
+
+export const MOCK_BOOK_RESPONSE: APIResponse<BookResponse> = {
   data: {
     title: 'title',
     author: 'author',
     pubDate: 'pubDate',
     description: 'desc',
-    isbn13: 'isbn',
+    isbn: 'isbn',
     cover: 'cover',
     categoryName: 'cate',
     publisher: 'pub',
   },
 };
 
-export const MOCK_BOOK_LIST_RESPONSE = {
+export const MOCK_BOOK_LIST_RESPONSE: APIResponse<BookSearchResponse[]> = {
   data: [
     {
       title: 'title',
       author: 'author',
       pubDate: 'pubDate',
       description: 'desc',
-      isbn: 'isbn',
+      isbn13: 'isbn',
       cover: 'cover',
       categoryName: 'cate',
       publisher: 'pub',
@@ -30,7 +40,7 @@ export const MOCK_BOOK_LIST_RESPONSE = {
       author: 'author2',
       pubDate: 'pubDate2',
       description: 'desc2',
-      isbn: 'isbn2',
+      isbn13: 'isbn2',
       cover: 'cover2',
       categoryName: 'cate2',
       publisher: 'pub2',
@@ -44,84 +54,54 @@ export const MOCK_NEW_STATUS_RESPONSE = {
   },
 };
 
-export const MOCK_READING_STATUS_RESPONSE = {
-  data: {
-    status: 'READING',
-  },
+export const MOCK_LIBRARY_RESPONSE_READING_STATUS: APIResponse<StatusBooksResponse[]> = {
+  data: [
+    {
+      cover: 'cover',
+      title: 'title',
+      isbn: 'isbn',
+      status: 'READING',
+      readingLogId: 1,
+    },
+  ],
 };
-
-export const MOCK_LIBRARY_RESPONSE_READING_STATUS = [
-  {
-    cover: 'cover',
-    title: 'title',
-    isbn: 'isbn',
-    status: 'READING',
-  },
-];
-
-export const MOCK_LIBRARY_RESPONSE_NEW_STATUS = [
-  {
-    cover: 'cover',
-    title: 'title',
-    isbn: 'isbn',
-    status: 'NEW',
-  },
-];
-
-export const MOCK_LIBRARY_EMPTY_RESPONSE: StatusBooksResponse[] = [];
 
 export const MOCK_COLLECTION_LIST_RESPONSE = {
   data: [
     {
+      id: 5,
       name: 'name',
-      books: {
-        covers: ['cover'],
-      },
+      covers: ['cover', 'cover2'],
     },
   ],
 };
 
 export const MOCK_COLLECTION_DETAIL_RESPONSE = {
-  data: [
-    {
-      cover: 'cover',
-      title: 'test',
-      isbn: 'isbn',
-      status: 'READING',
-    },
-  ],
-};
-
-export const MOCK_READINGLOG_RESPONSE = {
   data: {
-    title: 'title',
-    author: 'author',
-    pubDate: 'pub',
-    cover: 'cover',
-    publisher: 'publisher',
-    status: 'status',
-    note1: 'note1',
-    note2: 'note2',
-    note3: 'note3',
-    rating: '5',
+    id: 1,
+    collectionName: 'test',
+    books: [
+      {
+        title: 'title',
+        cover: 'cover',
+        isbn: 'isbn',
+      },
+    ],
   },
 };
 
-export const MOCK_FINISHED_BOOK_CALENDAR_RESPONSE = {
-  data: [
-    {
-      title: 'title',
-      finishedAt: '2023-10-01',
-      cover: 'cover',
-      isbn: 'isbn',
-      rating: '5',
-    },
-    {
-      title: 'title2',
-      finishedAt: '2023-10-02',
-      cover: 'cover2',
-      isbn: 'isbn2',
-      rating: '4',
-    },
-  ],
+export const MOCK_READINGLOG_RESPONSE: APIResponse<ReadingLogResponse> = {
+  data: {
+    id: 1,
+    title: 'title',
+    author: 'author',
+    cover: 'cover',
+    publisher: 'publisher',
+    status: BookStatus.READING,
+    summary: 'summary',
+    note: 'note',
+    rating: 5,
+    startedAt: '2025-08-15',
+    finishedAt: '2025-08-16',
+  },
 };

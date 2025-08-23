@@ -28,12 +28,10 @@ const LibraryPage = () => {
     navigate(`/readingLog/${isbn}/${readingLogId}`);
   };
 
-  if (isBookLoading) return <BookCoverListSkeleton />;
-
   return (
     <Wrapper>
       <StatusNavigation statusOption={statusOptions} status={status} />
-      <BookCoverList books={books} onCoverClick={handleCoverClick} />
+      <BookCoverList books={books} onCoverClick={handleCoverClick} isLoading={isBookLoading} />
     </Wrapper>
   );
 };

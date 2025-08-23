@@ -91,6 +91,7 @@ const BookDetailPage = () => {
           <Button
             data-tooltip-id="collection-tooltip"
             data-tooltip-content="컬렉션에 추가하기"
+            data-testid="add-to-collection"
             onClick={() => setAddBookToCollectionModalOpen(true)}>
             <FaBookmark />
           </Button>
@@ -98,6 +99,7 @@ const BookDetailPage = () => {
             data-tooltip-id="status-tooltip"
             data-tooltip-content="내 서재에 저장하기"
             data-tooltip-place="bottom"
+            data-testid="add-to-library"
             onClick={() => setSaveBookToLibraryModalOpen(true)}>
             {currentStatus !== BookStatus.NEW && currentStatus !== BookStatus.EMPTY ? (
               <RiHeart2Fill />

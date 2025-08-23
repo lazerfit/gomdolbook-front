@@ -2,7 +2,7 @@ import { styled } from 'styled-components';
 import { useKeycloak } from '@react-keycloak/web';
 import { useStatusBooks } from '@/hooks';
 import { Screen } from '@/components/templates/Screen';
-import { BookCoverListSkeleton, InputSkeleton } from '@/components/molecules/SkeletonLoader';
+import { InputSkeleton } from '@/components/molecules/SkeletonLoader';
 import BookSearchInput from '@/components/molecules/BookSearchInput';
 import BookCoverList from '@/components/molecules/BookCoverList';
 import { useNavigate } from 'react-router-dom';
@@ -24,18 +24,13 @@ const LandingPage = () => {
   };
 
   if (!initialized || isStatusBooksLoading) {
-    return (
-      <>
-        <InputSkeleton />
-        <BookCoverListSkeleton />
-      </>
-    );
+    return <InputSkeleton />;
   }
 
   return (
     <Wrapper>
       <BookSearchInput />
-      <BookCoverList books={books} onCoverClick={handleCoverClick} />
+      <BookCoverList books={books} onCoverClick={handleCoverClick} isLoading={isStatusBooksLoading} />
     </Wrapper>
   );
 };

@@ -1,25 +1,25 @@
-import Keycloak, { KeycloakConfig } from "keycloak-js";
-import { setToken } from "@/api/services/config/Interceptor.ts";
-import type { AuthClientEvent } from "@react-keycloak/core";
+import Keycloak, { KeycloakConfig } from 'keycloak-js';
+import { setToken } from '@/api/services/config/Interceptor.ts';
+import type { AuthClientEvent } from '@react-keycloak/core';
 
 const keycloakUrl = import.meta.env.VITE_KEYCLOAK_URL;
 const homepageUrl = import.meta.env.VITE_BASE_URL;
 
 const keycloakConfig: KeycloakConfig = {
   url: keycloakUrl,
-  realm: "gomdolbook",
-  clientId: "gomdolbook",
+  realm: 'gomdolbook',
+  clientId: 'gomdolbook',
 };
 
 const keycloak = new Keycloak(keycloakConfig);
 
 export const keycloakInitOptions = {
-  onLoad: "check-sso",
+  onLoad: 'check-sso',
 };
 
 export const eventHandler = async (event: AuthClientEvent) => {
   switch (event) {
-    case "onTokenExpired":
+    case 'onTokenExpired':
       if (!keycloak.authenticated) {
         await keycloak.logout({ redirectUri: homepageUrl });
       }
@@ -31,7 +31,7 @@ export const eventHandler = async (event: AuthClientEvent) => {
           await keycloak.logout({ redirectUri: homepageUrl });
         }
       } catch (error) {
-        console.log("토큰 갱신 실패", error);
+        console.log('토큰 갱신 실패', error);
         await keycloak.logout({ redirectUri: homepageUrl });
       }
       break;

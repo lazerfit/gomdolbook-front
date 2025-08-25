@@ -1,8 +1,7 @@
 export const BookEndPoint = {
   getBook: (isbn: string) => `v1/book/${isbn}`,
-  getReadingLog: () => `v1/readingLog`,
   saveBook: () => 'v1/book/save',
-  getStatus: (isbn: string) => `v1/status/${isbn}`,
+  getStatus: (isbn: string) => `v1/book/status/${isbn}`,
   updateStatus: (isbn: string) => `v1/book/status/${isbn}`,
   getBookSearchResult: () => 'v1/book/search',
   getLibrary: () => 'v1/book/Library',

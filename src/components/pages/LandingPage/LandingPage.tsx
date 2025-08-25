@@ -19,8 +19,8 @@ const LandingPage = () => {
   const navigate = useNavigate();
   const { data: books = [], isLoading: isStatusBooksLoading } = useStatusBooks('READING');
 
-  const handleCoverClick = (isbn: string) => {
-    navigate(`/readingLog/${isbn}`);
+  const handleCoverClick = (isbn: string, readingLogId?: number) => {
+    navigate(`/readingLog/${isbn}/${readingLogId}`);
   };
 
   if (!initialized || isStatusBooksLoading) {

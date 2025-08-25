@@ -30,6 +30,6 @@ describe('LandingPage', () => {
     const cover = await screen.findByTestId('bookCover-isbn');
     await userEvent.click(cover);
 
-    expect(mockNavigate).toBeCalledWith('/readingLog/isbn');
+    expect(mockNavigate).toBeCalledWith('/readingLog/isbn/1');
   });
 });

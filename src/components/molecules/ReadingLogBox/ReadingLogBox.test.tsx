@@ -6,12 +6,19 @@ import ReadingLogBox from '@/components/molecules/ReadingLogBox/ReadingLogBox';
 
 const mockOnEditClick = vi.fn();
 const mockClose = vi.fn();
+const mockOnSave = vi.fn();
 
 describe('ReadingLogBox', () => {
   describe('Non edit mode', () => {
     beforeEach(() => {
       render(
-        <ReadingLogBox size="small" title="title" onEditClick={mockOnEditClick} close={mockClose} isEditMode={false}>
+        <ReadingLogBox
+          size="small"
+          title="title"
+          onSaveClick={mockOnSave}
+          onEditClick={mockOnEditClick}
+          close={mockClose}
+          isEditMode={false}>
           <div>children</div>
         </ReadingLogBox>,
       );
@@ -40,20 +47,28 @@ describe('ReadingLogBox', () => {
   describe('Edit mode', () => {
     beforeEach(() => {
       render(
-        <ReadingLogBox size="small" title="title" onEditClick={mockOnEditClick} close={mockClose} isEditMode={true}>
+        <ReadingLogBox
+          size="small"
+          title="title"
+          onSaveClick={mockOnSave}
+          onEditClick={mockOnEditClick}
+          close={mockClose}
+          isEditMode={true}>
           <div>children</div>
         </ReadingLogBox>,
       );
     });
 
-    it('confirm button이 렌더링되어야 한다.', () => {
+    it('confirm button을 클릭하면 onSaveClick 함수가 실행되어야 한다.', async () => {
       const btn = screen.getByTestId('readingLog-confirm-button');
-
       expect(btn).toBeInTheDocument();
+      await userEvent.click(btn);
+
+      expect(mockOnSave).toBeCalledTimes(1);
     });
 
-    it('confirm button을 클릭하면 close 함수가 실행되어야 한다.', async () => {
-      const btn = screen.getByTestId('readingLog-confirm-button');
+    it('remove button을 클릭하면 close 함수가 실행되어야 한다.', async () => {
+      const btn = screen.getByTestId('readingLog-remove-button');
       await userEvent.click(btn);
 
       expect(mockClose).toBeCalledTimes(1);

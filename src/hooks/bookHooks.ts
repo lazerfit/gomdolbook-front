@@ -3,6 +3,7 @@ import { useQueryClient, useMutation, useQuery } from '@tanstack/react-query';
 import { BookService } from '@/api/services/BoookService';
 import { BookSaveRequest, BookStatus, BookResponse } from '@/api/services/types';
 import { createBookPayload } from '@/utils/saveBookUtils';
+import { toast } from 'react-toastify';
 
 export const useUpdateStatus = () => {
   const { mutate } = useMutation({
@@ -98,6 +99,7 @@ export const useSaveOrUpdateStatusBook = (isbn: string, book: BookResponse, curr
       },
       onError: (e: Error) => {
         console.error(e);
+        toast.error('다시 시도해주십시오.');
       },
     };
 

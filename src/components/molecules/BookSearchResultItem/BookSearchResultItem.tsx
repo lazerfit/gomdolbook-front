@@ -18,7 +18,7 @@ const Content = styled.div`
   height: 12.5rem;
   min-height: 12.5rem;
   cursor: pointer;
-  padding: 0.82rem 1.32rem 1.44rem 1.32rem;
+  padding: 1.32rem;
   background-color: var(--white);
   border-radius: var(--border-radius-small);
   border: 1px solid var(--border1);

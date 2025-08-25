@@ -63,21 +63,22 @@ interface Props {
   title: string;
   children: React.ReactNode;
   onEditClick: () => void;
+  onSaveClick: () => void;
   isEditMode: boolean;
   close: () => void;
 }
 
-const ReadingLogBox = ({ size, title, children, onEditClick, isEditMode, close }: Props) => {
+const ReadingLogBox = ({ size, title, children, onSaveClick, onEditClick, isEditMode, close }: Props) => {
   return (
     <Wrapper $size={size}>
       <SubTitle>
         <div>{title}</div>
         {isEditMode ? (
           <ButtonGroup initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }}>
-            <ConfirmButton>
+            <ConfirmButton onClick={onSaveClick} data-testid="readingLog-confirm-button">
               <CiCircleCheck />
             </ConfirmButton>
-            <ConfirmButton onClick={close} data-testid="readingLog-confirm-button">
+            <ConfirmButton onClick={close} data-testid="readingLog-remove-button">
               <CiCircleRemove />
             </ConfirmButton>
           </ButtonGroup>

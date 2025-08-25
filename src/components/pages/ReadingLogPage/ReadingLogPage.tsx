@@ -1,8 +1,8 @@
 import { css, styled } from 'styled-components';
-import { useMemo, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Screen } from '@/components/templates/Screen';
-import { useReadinglog, useUpdateRating, useUpdateStatus } from '@/hooks';
+import { useReadinglog, useUpdateRating, useUpdateStatus, useUpdateSummary, useUpdateNote } from '@/hooks';
 import ReadingLogBookInfo from '@/components/molecules/ReadingLogBookInfo';
 import ReadingLogBox from '@/components/molecules/ReadingLogBox';
 import { useQueryClient } from '@tanstack/react-query';
@@ -10,6 +10,7 @@ import { BookStatus } from '@/api/services/types';
 import { motion } from 'framer-motion';
 import TinyMCE from '@/utils/TinyMCE';
 import Loader from '@/components/atoms/Loader';
+import DOMPurify from 'dompurify';
 
 const Wrapper = styled(Screen)`
   margin-top: 3rem;
@@ -33,7 +34,7 @@ const SummaryItem = styled.div`
   border: 1px solid var(--border2);
   padding: 1rem;
   word-break: break-all;
-  overflow: scroll;
+  overflow: auto;
 `;
 
 const noteGradiant = css`
@@ -55,7 +56,7 @@ const NoteItem = styled.div`
   border: 1px solid var(--border2);
   padding: 1.5rem;
   word-break: break-all;
-  overflow: scroll;
+  overflow: auto;
   ${noteGradiant};
 `;
 
@@ -77,9 +78,21 @@ const ReadingLogPage = () => {
   const [isSummaryEdit, setIsSummaryEdit] = useState(false);
   const [isNoteEdit, setIsNoteEdit] = useState(false);
   const [noteValue, setNoteValue] = useState('');
-  const { data: readingLog } = useReadinglog(numberId);
+  const [summaryValue, setSummaryValue] = useState('');
+  const { data: readingLog, isLoading } = useReadinglog(numberId);
   const { mutate: updateRating } = useUpdateRating();
   const { mutate: updateReadingStatus } = useUpdateStatus();
+  const { mutate: updateSummary } = useUpdateSummary();
+  const { mutate: updateNote } = useUpdateNote();
+
+  const sanitizedSummary = useMemo(() => DOMPurify.sanitize(readingLog?.summary ?? ''), [readingLog?.summary]);
+  const sanitizedNote = useMemo(() => DOMPurify.sanitize(readingLog?.note ?? ''), [readingLog?.note]);
+
+  const placeholderText = '나만의 언어로 내용을 요약해보세요. . .';
+
+  const invalidateReadingLogQuery = () => {
+    return queryClient.invalidateQueries({ queryKey: ['readingLog', numberId] });
+  };
 
   const handleRatingClick = (rating: number) => {
     updateRating(
@@ -89,7 +102,7 @@ const ReadingLogPage = () => {
       },
       {
         onSuccess: () => {
-          queryClient.invalidateQueries({ queryKey: ['readingLog', isbn] }).catch(e => console.log(e));
+          invalidateReadingLogQuery().catch(e => console.log(e));
         },
         onError: e => console.log(e),
       },
@@ -104,7 +117,7 @@ const ReadingLogPage = () => {
       },
       {
         onSuccess: () => {
-          queryClient.invalidateQueries({ queryKey: ['readingLog', isbn] }).catch(e => console.log(e));
+          invalidateReadingLogQuery().catch(e => console.log(e));
           queryClient.invalidateQueries({ queryKey: ['status', isbn] }).catch(e => console.log(e));
         },
         onError: e => console.log(e),
@@ -112,7 +125,37 @@ const ReadingLogPage = () => {
     );
   };
 
-  if (!readingLog) return <Loader />;
+  const handleSaveSummary = () => {
+    if (summaryValue) {
+      updateSummary(
+        { id: numberId, summary: summaryValue },
+        {
+          onSuccess: () => {
+            invalidateReadingLogQuery().catch(e => console.log(e));
+            setIsSummaryEdit(false);
+          },
+          onError: e => console.log(e),
+        },
+      );
+    }
+  };
+
+  const handleSaveNote = () => {
+    if (noteValue) {
+      updateNote(
+        { id: numberId, note: noteValue },
+        {
+          onSuccess: () => {
+            invalidateReadingLogQuery().catch(e => console.log(e));
+            setIsNoteEdit(false);
+          },
+          onError: e => console.log(e),
+        },
+      );
+    }
+  };
+
+  if (!readingLog || isLoading) return <Loader />;
 
   return (
     <Wrapper>
@@ -127,6 +170,7 @@ const ReadingLogPage = () => {
           title="summary"
           onEditClick={() => setIsSummaryEdit(true)}
           isEditMode={isSummaryEdit}
+          onSaveClick={handleSaveSummary}
           close={() => setIsSummaryEdit(false)}>
           <SummaryItem>
             {isSummaryEdit ? (
@@ -134,10 +178,12 @@ const ReadingLogPage = () => {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.5 }}
-                placeholder="나만의 언어로 내용을 요약해보세요. . ."
+                placeholder={placeholderText}
+                value={readingLog.summary ?? ''}
+                onChange={e => setSummaryValue(e.target.value)}
               />
             ) : (
-              <SummaryNote>Hi, Hola!, 안녕하세요 만나서 정말 반갑습니다.! 저는 이 책을 매우 좋아합니다!</SummaryNote>
+              <SummaryNote dangerouslySetInnerHTML={{ __html: sanitizedSummary }} />
             )}
           </SummaryItem>
         </ReadingLogBox>
@@ -147,13 +193,17 @@ const ReadingLogPage = () => {
         title="note"
         close={() => setIsNoteEdit(false)}
         onEditClick={() => setIsNoteEdit(true)}
+        onSaveClick={handleSaveNote}
         isEditMode={isNoteEdit}>
         {isNoteEdit ? (
           <EditorContainer initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }}>
-            <TinyMCE placeholder="감상을 적어주세요. . ." onChangeValue={newValue => setNoteValue(newValue)} />
+            <TinyMCE
+              placeholder={readingLog.note ?? placeholderText}
+              onChangeValue={newValue => setNoteValue(newValue)}
+            />
           </EditorContainer>
         ) : (
-          <NoteItem>Hi, Hola!, 안녕하세요 만나서 정말 반갑습니다.!{noteValue}</NoteItem>
+          <NoteItem dangerouslySetInnerHTML={{ __html: sanitizedNote }} />
         )}
       </ReadingLogBox>
     </Wrapper>

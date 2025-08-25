@@ -19,8 +19,8 @@ describe('ReadingLogPage', () => {
   });
 
   it('readingLog 기본정보가 렌더링되어야 한다.', async () => {
-    const title = await screen.findByText('title');
-    expect(title).toBeInTheDocument();
+    const cover = await screen.findByAltText('cover');
+    expect(cover).toBeInTheDocument();
   });
 
   it('summaryEditButton을 클릭하면 summary note가 렌더링되어야 한다.', async () => {

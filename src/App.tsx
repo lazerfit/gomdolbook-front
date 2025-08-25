@@ -1,15 +1,18 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Layout from '@/components/templates/Layout';
-import ReadingLogPage from '@/components/pages/ReadingLogPage';
 import NotFoundPage from './components/pages/NotFoundPage';
 import LandingPage from '@/components/pages/LandingPage';
-import BookSearchResultPage from '@/components/pages/BookSearchResultPage';
-import BookDetailPage from '@/components/pages/BookDetailPage';
 import { ToastContainer, Bounce } from 'react-toastify';
-import CollectionPage from '@/components/pages/CollectionPage';
-import CollectionDetailPage from '@/components/pages/CollectionDetailPage';
-import LibraryPage from '@/components/pages/LibraryPage';
 import ForbiddenPage from '@/components/pages/ForbiddenPage';
+import { lazy, Suspense } from 'react';
+import Loader from '@/components/atoms/Loader';
+
+const ReadingLogPage = lazy(() => import('@/components/pages/ReadingLogPage'));
+const BookDetailPage = lazy(() => import('@/components/pages/BookDetailPage'));
+const CollectionPage = lazy(() => import('@/components/pages/CollectionPage'));
+const CollectionDetailPage = lazy(() => import('@/components/pages/CollectionDetailPage'));
+const LibraryPage = lazy(() => import('@/components/pages/LibraryPage'));
+const BookSearchResultPage = lazy(() => import('@/components/pages/BookSearchResultPage'));
 
 const App = () => {
   return (
@@ -18,21 +21,23 @@ const App = () => {
         v7_startTransition: true,
         v7_relativeSplatPath: true,
       }}>
-      <Routes location={location} key={location.pathname}>
-        <Route path="/" element={<Layout />}>
-          <Route index element={<LandingPage />} />
-          <Route path="/library/:status" element={<LibraryPage />} />
-          <Route path="/collections">
-            <Route index element={<CollectionPage />} />
-            <Route path={':id'} element={<CollectionDetailPage />} />
+      <Suspense fallback={<Loader />}>
+        <Routes location={location} key={location.pathname}>
+          <Route path="/" element={<Layout />}>
+            <Route index element={<LandingPage />} />
+            <Route path="/library/:status" element={<LibraryPage />} />
+            <Route path="/collections">
+              <Route index element={<CollectionPage />} />
+              <Route path={':id'} element={<CollectionDetailPage />} />
+            </Route>
+            <Route path="/readingLog/:isbn/:id" element={<ReadingLogPage />} />
+            <Route path="/search/:title" element={<BookSearchResultPage />} />
+            <Route path="/detail/:isbn" element={<BookDetailPage />} />
+            <Route path="/403" element={<ForbiddenPage />} />
           </Route>
-          <Route path="/readingLog/:isbn/:id" element={<ReadingLogPage />} />
-          <Route path="/search/:title" element={<BookSearchResultPage />} />
-          <Route path="/detail/:isbn" element={<BookDetailPage />} />
-          <Route path="/403" element={<ForbiddenPage />} />
-        </Route>
-        <Route path="*" element={<NotFoundPage />} />
-      </Routes>
+          <Route path="*" element={<NotFoundPage />} />
+        </Routes>
+      </Suspense>
 
       <ToastContainer closeOnClick transition={Bounce} />
     </Router>

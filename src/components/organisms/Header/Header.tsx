@@ -2,13 +2,14 @@ import { useNavigate } from 'react-router-dom';
 import { styled } from 'styled-components';
 import UserMenu from './UserMenu';
 import { useKeycloak } from '@react-keycloak/web';
-import { useEffect, useState } from 'react';
-import LoginModal from '../LoginModal';
+import { lazy, useEffect, useState, Suspense } from 'react';
 import { setToken } from '@/api/services/config/Interceptor';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import * as mixins from '@/styles/mixins';
 import { mediaMax, media } from '@/utils';
 import * as fonts from '@/styles/fonts';
+
+const LoginModal = lazy(() => import('../LoginModal'));
 
 const Wrapper = styled(motion.header)`
   background-color: var(--whitebgc);
@@ -168,13 +169,15 @@ const Header = () => {
           </LoginButton>
         )}
       </UserDropdown>
-      <LoginModal
-        isOpen={isModalOpened}
-        close={() => setIsModalOpened(false)}
-        github={() => void login('github')}
-        kakao={() => void login('kakao')}
-        google={() => void login('google')}
-      />
+      <Suspense fallback={null}>
+        <LoginModal
+          isOpen={isModalOpened}
+          close={() => setIsModalOpened(false)}
+          github={() => void login('github')}
+          kakao={() => void login('kakao')}
+          google={() => void login('google')}
+        />
+      </Suspense>
     </Wrapper>
   );
 };

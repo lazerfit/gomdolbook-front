@@ -14,7 +14,7 @@ const keycloakConfig: KeycloakConfig = {
 const keycloak = new Keycloak(keycloakConfig);
 
 export const keycloakInitOptions = {
-  onLoad: 'check-sso',
+  onLoad: 'login-required',
 };
 
 export const eventHandler = async (event: AuthClientEvent) => {

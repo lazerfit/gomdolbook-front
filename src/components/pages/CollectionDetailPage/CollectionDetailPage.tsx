@@ -15,17 +15,18 @@ import {
 } from '@/hooks';
 import Banner from '@/components/atoms/Banner';
 import { CssScreen } from '@/components/templates/Screen';
-import { useMemo, useState } from 'react';
-import CollectionDetailModal from '@/components/organisms/CollectionDetailModal/CollectionDetailModal';
+import { lazy, useMemo, useState, Suspense } from 'react';
 import { MotionCircleButton } from '@/components/atoms/ButtonCircle';
 import { RxGear } from 'react-icons/rx';
 import { RiCloseFill, RiDeleteBinFill } from 'react-icons/ri';
 import { CgEditFlipH } from 'react-icons/cg';
 import HorizonalFloatingButton from '@/components/molecules/HorizonalFloatingButton';
-import InputModal from '@/components/molecules/InputModal';
 import { useQueryClient } from '@tanstack/react-query';
 import BookCoverList from '@/components/molecules/BookCoverList';
 import { BookStatus } from '@/api/services/types';
+
+const InputModal = lazy(() => import('@/components/molecules/InputModal'));
+const CollectionDetailModal = lazy(() => import('@/components/organisms/CollectionDetailModal/CollectionDetailModal'));
 
 const Wrapper = styled(motion.div)`
   ${CssScreen};
@@ -187,22 +188,26 @@ const CollectionDetailPage = () => {
           </ButtonContainer>
         )}
       </HorizonalFloatingButton>
-      <CollectionDetailModal
-        book={book!}
-        close={() => setIsModalOpen(false)}
-        isOpen={isModalOpen}
-        isLoading={isBookLoading}
-        status={currentStatus ?? BookStatus.NEW}
-        onChangeStatus={handleSaveBookToLibrary}
-        onRemove={handleRemoveBookFromCollection}
-      />
-      <InputModal
-        value={newCollectionName}
-        onChange={e => setNewCollectionName(e.target.value)}
-        onSuccess={handleRenameCollection}
-        close={handleCloseEditModal}
-        isOpen={isEditModalOpen}
-      />
+      <Suspense fallback={null}>
+        <CollectionDetailModal
+          book={book!}
+          close={() => setIsModalOpen(false)}
+          isOpen={isModalOpen}
+          isLoading={isBookLoading}
+          status={currentStatus ?? BookStatus.NEW}
+          onChangeStatus={handleSaveBookToLibrary}
+          onRemove={handleRemoveBookFromCollection}
+        />
+      </Suspense>
+      <Suspense fallback={null}>
+        <InputModal
+          value={newCollectionName}
+          onChange={e => setNewCollectionName(e.target.value)}
+          onSuccess={handleRenameCollection}
+          close={handleCloseEditModal}
+          isOpen={isEditModalOpen}
+        />
+      </Suspense>
     </Wrapper>
   );
 };

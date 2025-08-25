@@ -1,5 +1,5 @@
 import { css, styled } from 'styled-components';
-import React, { useMemo, useState } from 'react';
+import React, { useMemo, useState, lazy, Suspense } from 'react';
 import { useParams } from 'react-router-dom';
 import { Screen } from '@/components/templates/Screen';
 import { useReadinglog, useUpdateRating, useUpdateStatus, useUpdateSummary, useUpdateNote } from '@/hooks';
@@ -8,9 +8,10 @@ import ReadingLogBox from '@/components/molecules/ReadingLogBox';
 import { useQueryClient } from '@tanstack/react-query';
 import { BookStatus } from '@/api/services/types';
 import { motion } from 'framer-motion';
-import TinyMCE from '@/utils/TinyMCE';
 import Loader from '@/components/atoms/Loader';
 import DOMPurify from 'dompurify';
+
+const TinyMCE = lazy(() => import('@/utils/TinyMCE'));
 
 const Wrapper = styled(Screen)`
   margin-top: 3rem;
@@ -72,18 +73,19 @@ const SummaryTextArea = styled(motion.textarea)`
 
 const ReadingLogPage = () => {
   const queryClient = useQueryClient();
-
   const { isbn = '', id = '0' } = useParams();
   const numberId = useMemo(() => parseInt(id), [id]);
-  const [isSummaryEdit, setIsSummaryEdit] = useState(false);
-  const [isNoteEdit, setIsNoteEdit] = useState(false);
-  const [noteValue, setNoteValue] = useState('');
-  const [summaryValue, setSummaryValue] = useState('');
+
   const { data: readingLog, isLoading } = useReadinglog(numberId);
   const { mutate: updateRating } = useUpdateRating();
   const { mutate: updateReadingStatus } = useUpdateStatus();
   const { mutate: updateSummary } = useUpdateSummary();
   const { mutate: updateNote } = useUpdateNote();
+
+  const [isSummaryEdit, setIsSummaryEdit] = useState(false);
+  const [isNoteEdit, setIsNoteEdit] = useState(false);
+  const [noteValue, setNoteValue] = useState('');
+  const [summaryValue, setSummaryValue] = useState(readingLog?.summary ?? '');
 
   const sanitizedSummary = useMemo(() => DOMPurify.sanitize(readingLog?.summary ?? ''), [readingLog?.summary]);
   const sanitizedNote = useMemo(() => DOMPurify.sanitize(readingLog?.note ?? ''), [readingLog?.note]);
@@ -179,7 +181,7 @@ const ReadingLogPage = () => {
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.5 }}
                 placeholder={placeholderText}
-                value={readingLog.summary ?? ''}
+                value={summaryValue}
                 onChange={e => setSummaryValue(e.target.value)}
               />
             ) : (
@@ -196,12 +198,14 @@ const ReadingLogPage = () => {
         onSaveClick={handleSaveNote}
         isEditMode={isNoteEdit}>
         {isNoteEdit ? (
-          <EditorContainer initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }}>
-            <TinyMCE
-              placeholder={readingLog.note ?? placeholderText}
-              onChangeValue={newValue => setNoteValue(newValue)}
-            />
-          </EditorContainer>
+          <Suspense fallback={<Loader />}>
+            <EditorContainer initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }}>
+              <TinyMCE
+                placeholder={readingLog.note ?? placeholderText}
+                onChangeValue={newValue => setNoteValue(newValue)}
+              />
+            </EditorContainer>
+          </Suspense>
         ) : (
           <NoteItem dangerouslySetInnerHTML={{ __html: sanitizedNote }} />
         )}

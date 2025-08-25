@@ -1,34 +1,25 @@
-import { styled } from "styled-components";
-import React, { useState } from "react";
-import { motion, useSpring, useMotionTemplate, transform } from "framer-motion";
-import { createPortal } from "react-dom";
-import Cat from "@/assets/img/pexels-nomino-3069334.jpg";
+import { styled } from 'styled-components';
+import React, { useState } from 'react';
+import { motion, useSpring, useMotionTemplate, transform } from 'framer-motion';
+import { createPortal } from 'react-dom';
+import Cat from '@/assets/img/pexels-nomino-3069334.jpg';
+import * as mixins from '@/styles/mixins';
+import { mediaMax } from '@/utils';
+import { ImgBig } from '@/components/atoms/Img';
 
 const Wrapper = styled(motion.div)`
-  display: flex;
+  ${mixins.flexCenter};
   position: fixed;
   width: 100vw;
   height: 100vh;
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  align-items: center;
-  justify-content: center;
   perspective: 1200px;
 
-  @media (${(props) => props.theme.breakpoints.mobile}) {
+  ${mediaMax.mobile} {
     display: none;
   }
-`;
-
-const Image = styled(motion.img)`
-  display: block;
-  filter: grayscale(1);
-  transform-origin: center;
-  border-radius: 10px;
-  width: 300px;
-  height: auto;
-  object-fit: contain;
 `;
 
 const ImageMotion = () => {
@@ -98,15 +89,10 @@ const ImageMotion = () => {
       onMouseLeave={handleMouseLeave}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      transition={{ duration: 2 }}
-    >
-      <Image
-        src={Cat}
-        alt="emptyLibraryImage"
-        style={{ rotateX, rotateY, filter, x, y }}
-      />
+      transition={{ duration: 2 }}>
+      <ImgBig src={Cat} alt="emptyLibraryImage" style={{ rotateX, rotateY, filter, x, y }} />
     </Wrapper>,
-    document.getElementById("motion")!,
+    document.getElementById('root')!,
   );
 };
 

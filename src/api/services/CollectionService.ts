@@ -1,13 +1,11 @@
-import { CollectionEndPoint } from "./config/apiEndpoints.ts";
-import { ApiRequest } from "@/api/services/config/request.ts";
-import {
-  BookSaveRequest,
-  CollectionBookMetaResponse,
-} from "@/api/services/types/booktypes.js";
+import { CollectionEndPoint } from './config/APIEndpoints';
+import { APIRequest } from '@/api/services/config/request';
+import { BookSaveRequest, CollectionDetailResponse } from '@/api/services/types/booktypes';
 
-export interface CollectionResponse {
+export interface CollectionsResponse {
+  id: number;
   name: string;
-  books: BookCover;
+  covers: string[];
 }
 
 export interface BookCover {
@@ -20,36 +18,32 @@ export interface CollectionCreateRequest {
 
 export const collectionService = {
   getList: () => {
-    return ApiRequest<CollectionResponse[]>(CollectionEndPoint.getList(), "GET");
+    return APIRequest<CollectionsResponse[]>(CollectionEndPoint.getList(), 'GET');
   },
-  getOne: (name: string) => {
-    return ApiRequest<CollectionBookMetaResponse[]>(
-      CollectionEndPoint.getOne(name),
-      "GET",
-    );
+  getOne: (id: number) => {
+    return APIRequest<CollectionDetailResponse>(CollectionEndPoint.getOne(id), 'GET');
   },
   create: (name: string) => {
     const data: CollectionCreateRequest = { name };
-    return ApiRequest<void>(CollectionEndPoint.create(), "POST", { data });
+    return APIRequest<void>(CollectionEndPoint.create(), 'POST', { data });
   },
-  delete: (name: string) => {
-    return ApiRequest<void>(CollectionEndPoint.delete(name), "DELETE");
+  delete: (id: number) => {
+    return APIRequest<void>(CollectionEndPoint.delete(id), 'DELETE');
   },
-  addBook: (data: BookSaveRequest, name: string) => {
-    return ApiRequest<void>(CollectionEndPoint.addBookToCollection(name), "POST", {
+  addBook: (data: BookSaveRequest, id: number) => {
+    return APIRequest<void>(CollectionEndPoint.addBookToCollection(id), 'POST', {
       data,
     });
   },
-  removeBook: (isbn: string, name: string) => {
-    return ApiRequest<void>(
-      CollectionEndPoint.removeBookFromCollection(name, isbn),
-      "DELETE",
-    );
+  removeBook: (isbn: string, id: number) => {
+    return APIRequest<void>(CollectionEndPoint.removeBookFromCollection(id, isbn), 'DELETE');
   },
   isExistBookInCollection: (name: string, isbn: string) => {
-    return ApiRequest<boolean>(
-      CollectionEndPoint.isExistBookInCollection(name, isbn),
-      "GET",
-    );
+    return APIRequest<boolean>(CollectionEndPoint.isExistBookInCollection(name, isbn), 'GET');
+  },
+  renameCollection: (id: number, name: string) => {
+    return APIRequest<void>(CollectionEndPoint.renameCollection(id), 'PATCH', {
+      data: { name },
+    });
   },
 };

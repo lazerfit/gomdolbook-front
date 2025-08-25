@@ -1,18 +1,22 @@
-import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from "axios";
-import { ApiResponse } from "@/api/services/types/commonTypes.js";
+import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
+import { ApiResponse } from '@/api/services/types/commonTypes.js';
 
 export const client = (() => {
   return axios.create({
     baseURL: import.meta.env.VITE_API_BASE_URL,
     headers: {
-      Accept: "application/json, text/plain, */*",
+      Accept: 'application/json, text/plain, */*',
     },
   });
 })();
 
-interface ApiError {
-  status: string;
-  errors: string[] | string;
+export interface APIError {
+  name: string;
+  message: string;
+}
+
+export interface CustomError extends Error {
+  cause?: APIError;
 }
 
 const request = async <T>(options: AxiosRequestConfig): Promise<T> => {
@@ -21,27 +25,26 @@ const request = async <T>(options: AxiosRequestConfig): Promise<T> => {
     return data;
   };
 
-  const onError = function (error: AxiosError<ApiError>) {
-    const serverResponse = error.response?.data;
-    if (serverResponse) {
-      console.log(serverResponse?.errors);
-      const errorPromise = new Error(error.message, {
+  const onError = function (error: CustomError | AxiosError | Error) {
+    if (error.cause && typeof error.cause === 'object') {
+      return Promise.reject(error);
+    } else {
+      const fallbackError = new Error(error.message || '알 수 없는 오류', {
         cause: {
-          status: serverResponse?.status ?? "Unknown status",
-          errors: serverResponse?.errors ?? ["Unknown error"],
+          name: (error as Error).name || 'Unknown Client Error',
+          message: (error as Error).message || 'An unknown error occurred in request function catch block.',
         },
-      });
-      return Promise.reject(errorPromise);
+      }) as CustomError;
+      return Promise.reject(fallbackError);
     }
-    return Promise.reject(error);
   };
 
   return client(options).then(onSuccess).catch(onError);
 };
 
-export const ApiRequest = <T>(
+export const APIRequest = <T>(
   url: string,
-  method: "GET" | "POST" | "PUT" | "DELETE",
+  method: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH',
   options: { params?: object; data?: object } = {},
 ) => {
   return request<ApiResponse<T> | void>({

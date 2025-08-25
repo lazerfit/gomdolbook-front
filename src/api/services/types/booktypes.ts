@@ -1,9 +1,9 @@
 export enum BookStatus {
-  READING = "READING",
-  TO_READ = "TO_READ",
-  FINISHED = "FINISHED",
-  NEW = "NEW",
-  EMPTY = "EMPTY",
+  READING = 'READING',
+  TO_READ = 'TO_READ',
+  FINISHED = 'FINISHED',
+  NEW = 'NEW',
+  EMPTY = 'EMPTY',
 }
 
 interface BaseBook {
@@ -42,27 +42,45 @@ export interface CalendarEvent {
   coverUrl: string;
 }
 
-export interface LibraryResponse extends CollectionBookMetaResponse {
+export interface StatusBooksResponse {
+  cover: string;
+  title: string;
+  isbn: string;
   status: string;
+  readingLogId: number;
+}
+
+export interface CollectionDetailResponse {
+  id: number;
+  collectionName: string;
+  books: BookInfoInCollection[];
+}
+
+export interface BookInfoInCollection {
+  title: string;
+  cover: string;
+  isbn: string;
 }
 
 export interface CollectionBookMetaResponse {
+  id: number;
   cover: string;
   title: string;
   isbn: string;
 }
 
 export interface ReadingLogResponse {
+  id: number;
   title: string;
   author: string;
-  pubDate: string;
   cover: string;
   publisher: string;
-  status: string;
-  note1: string;
-  note2: string;
-  note3: string;
+  status: BookStatus;
+  summary: string;
+  note: string;
   rating: number;
+  startedAt: string;
+  finishedAt: string;
 }
 
 export interface ReadingLogUpdateRequest {
@@ -72,5 +90,5 @@ export interface ReadingLogUpdateRequest {
 }
 
 export interface StatusResponse {
-  status: string;
+  status: BookStatus;
 }

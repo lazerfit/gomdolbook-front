@@ -26,7 +26,7 @@ describe('BookCoverList', () => {
   describe('readingLogId가 있는 BookCoverList', () => {
     beforeEach(() => {
       mockOnCoverClick.mockClear();
-      render(<BookCoverList books={mockBooks} onCoverClick={mockOnCoverClick} />);
+      render(<BookCoverList books={mockBooks} onCoverClick={mockOnCoverClick} isLoading={false} />);
     });
 
     it('주어진 책 목록만큼 bookCover 렌더링 해야한다.', () => {
@@ -47,7 +47,7 @@ describe('BookCoverList', () => {
   describe('readingLogId가 없는 BookCoverList', () => {
     beforeEach(() => {
       mockOnCoverClick.mockClear();
-      render(<BookCoverList books={mockBooksWithoutReadingLogId} onCoverClick={mockOnCoverClick} />);
+      render(<BookCoverList books={mockBooksWithoutReadingLogId} onCoverClick={mockOnCoverClick} isLoading={false} />);
     });
 
     it('readingLog가 없는 bookCover 클릭하면 onCoverClick 함수가 isbn 인자와 힘께 호출되어야 한다.', async () => {
@@ -62,7 +62,7 @@ describe('BookCoverList', () => {
   describe('빈 BookCoverList', () => {
     beforeEach(() => {
       mockOnCoverClick.mockClear();
-      render(<BookCoverList books={[]} onCoverClick={mockOnCoverClick} />);
+      render(<BookCoverList books={[]} onCoverClick={mockOnCoverClick} isLoading={false} />);
     });
 
     it('아무것도 렌더링되지 말아야한다.', () => {

@@ -1,5 +1,5 @@
 import Keycloak, { KeycloakConfig } from 'keycloak-js';
-import { setToken } from '@/api/services/config/Interceptor.ts';
+import { setToken } from '@/api/services/config/Interceptor';
 import type { AuthClientEvent } from '@react-keycloak/core';
 
 const keycloakUrl = import.meta.env.VITE_KEYCLOAK_URL;

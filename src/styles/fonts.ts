@@ -10,7 +10,7 @@ export const title = css`
 `;
 
 export const common = css`
-  font-family: 'NanumSquareNeo-Variable', sans-serif;
+  font-family: 'Gowun Dodum', sans-serif;
   font-style: normal;
   font-weight: normal;
   font-stretch: normal;

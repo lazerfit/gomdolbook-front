@@ -29,24 +29,11 @@
 }
 
 @font-face {
-  font-family: 'Cafe24Decoschool';
-  src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2405-3@1.1/Cafe24Decoschool.woff2') format('woff2');
-  font-weight: normal;
-  font-style: normal;
-}
-
-@font-face {
   font-family: 'Gyeonggi_Batang_Regular';
   src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2410-3@1.0/Batang_Regular.woff') format('woff');
   font-weight: 400;
   font-style: normal;
-}
-
-@font-face {
-  font-family: 'Pretendard-Regular';
-  src: url('https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
-  font-weight: 400;
-  font-style: normal;
+  font-display: swap;
 }
 
 html,
@@ -62,8 +49,8 @@ body,
   min-height: 100vh;
   margin: 0 auto;
   padding: 0;
-  font-family: 'Pretendard-Regular', sans-serif;
-  line-height: 140%;
+  font-family: "Gowun Dodum", sans-serif;
+  line-height: 120%;
   letter-spacing: -0.3px;
   background-color: var(--whitebgc);
   color: var(--black);
@@ -91,7 +78,7 @@ textarea {
   background-color: transparent;
   color: var(--black);
   font-size: 1rem;
-  font-family: 'Pretendard-Regular', sans-serif;
+  font-family: 'Gowun Dodum', sans-serif;
 }
 
 ol,
@@ -102,7 +89,12 @@ ul {
 button {
   background-color: var(--whitebgc);
   cursor: pointer;
-  font-family: 'Pretendard-Regular', sans-serif;
+  font-family: 'Gowun Dodum', sans-serif;
+  line-height: 100%;
+}
+
+input {
+  font-family: 'Gowun Dodum', sans-serif;
 }
 
 pre {

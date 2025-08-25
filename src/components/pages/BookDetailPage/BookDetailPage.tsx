@@ -15,14 +15,15 @@ import VerticalFloatingButton from '@/components/molecules/VerticalFloatingButto
 import { StyledCircleButton } from '@/components/atoms/ButtonCircle';
 import { FaBookmark } from 'react-icons/fa';
 import { Tooltip } from 'react-tooltip';
-import SaveBookToLibraryModal from '@/components/organisms/SaveBookToLibraryModal';
-import AddBookToCollectionModal from '@/components/organisms/AddBookToCollectionModal';
-import { useState } from 'react';
+import { useState, lazy, Suspense } from 'react';
 import { useKeycloak } from '@react-keycloak/web';
 import { toast } from 'react-toastify';
 import { BookStatus } from '@/api/services/types';
 import { RiHeart2Line, RiHeart2Fill } from 'react-icons/ri';
 import { BookDetailSkeletonLoader } from '@/components/molecules/SkeletonLoader';
+
+const SaveBookToLibraryModal = lazy(() => import('@/components/organisms/SaveBookToLibraryModal'));
+const AddBookToCollectionModal = lazy(() => import('@/components/organisms/AddBookToCollectionModal'));
 
 const Wrapper = styled(Screen)`
   ${mixins.flexColumn};
@@ -111,18 +112,22 @@ const BookDetailPage = () => {
           <Tooltip id="collection-tooltip" />
         </VerticalFloatingButton>
       </Content>
-      <AddBookToCollectionModal
-        close={() => setAddBookToCollectionModalOpen(false)}
-        isOpen={addBookToCollectionModalOpen}
-        collections={collectionList}
-        onAdd={handleAddToCollection}
-      />
-      <SaveBookToLibraryModal
-        onSave={handleSaveBookToLibrary}
-        status={currentStatus ?? BookStatus.NEW}
-        isOpen={saveBookToLibraryModalOpen}
-        close={() => setSaveBookToLibraryModalOpen(false)}
-      />
+      <Suspense fallback={null}>
+        <AddBookToCollectionModal
+          close={() => setAddBookToCollectionModalOpen(false)}
+          isOpen={addBookToCollectionModalOpen}
+          collections={collectionList}
+          onAdd={handleAddToCollection}
+        />
+      </Suspense>
+      <Suspense fallback={null}>
+        <SaveBookToLibraryModal
+          onSave={handleSaveBookToLibrary}
+          status={currentStatus ?? BookStatus.NEW}
+          isOpen={saveBookToLibraryModalOpen}
+          close={() => setSaveBookToLibraryModalOpen(false)}
+        />
+      </Suspense>
     </Wrapper>
   );
 };

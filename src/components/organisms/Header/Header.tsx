@@ -95,15 +95,18 @@ export const LoginButton = styled(motion.button)`
 
 const Header = () => {
   const navigate = useNavigate();
+
   const { keycloak, initialized } = useKeycloak();
   const [isModalOpened, setIsModalOpened] = useState(false);
   const { scrollY } = useScroll();
+
   const height = useTransform(scrollY, [0, 100], [100, 60]);
+  const homepageUrl = import.meta.env.VITE_BASE_URL;
 
   const login = async (idp: string) => {
     try {
       await keycloak.login({
-        redirectUri: 'http://localhost:3000/',
+        redirectUri: homepageUrl,
         idpHint: idp,
       });
     } catch (e) {
@@ -113,7 +116,7 @@ const Header = () => {
 
   const logout = async () => {
     try {
-      await keycloak.logout({ redirectUri: 'http://localhost:3000' });
+      await keycloak.logout({ redirectUri: homepageUrl });
     } catch (error) {
       console.log(error);
     }

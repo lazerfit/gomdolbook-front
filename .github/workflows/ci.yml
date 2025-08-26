@@ -24,5 +24,12 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: Display setup file content
+        run: |
+            echo "--- Contents of setupHttp.ts ---"
+            cat src/test-utils/setupHttp.ts || echo "File not found!"
+            echo "--------------------------------"
+
+
       - name: Run tests
         run: pnpm test

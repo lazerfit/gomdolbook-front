@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, vi } from 'vitest';
-import { screen, waitFor } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import { render } from '@/test-utils';
 import userEvent from '@testing-library/user-event';
 import AddBookToCollectionModal from '@/components/organisms/AddBookToCollectionModal/AddBookToCollectionModal';

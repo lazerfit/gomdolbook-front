@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, vi } from 'vitest';
-import { screen, waitFor } from '@testing-library/react';
-import { render, server } from '@/test-utils';
+import { screen } from '@testing-library/react';
+import { render } from '@/test-utils';
 import userEvent from '@testing-library/user-event';
 import ReadingLogBookInfo from '@/components/molecules/ReadingLogBookInfo/ReadingLogBookInfo';
 import { BookStatus } from '@/api/services/types';

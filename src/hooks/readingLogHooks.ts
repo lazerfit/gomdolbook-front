@@ -1,5 +1,4 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { BookStatus, ReadingLogResponse } from '@/api/services/types';
 import { ReadingLogService } from '@/api/services/ReadingLogService';
 import { useKeycloak } from '@react-keycloak/web';
 

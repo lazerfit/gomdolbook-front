@@ -1,4 +1,4 @@
-import { beforeEach, expect, vi } from 'vitest';
+import { beforeEach, expect } from 'vitest';
 import { screen } from '@testing-library/react';
 import { render } from '@/test-utils';
 import Footer from '@/components/organisms/Footer/Footer';

@@ -1,6 +1,6 @@
-import { beforeEach, expect, vi } from 'vitest';
+import { beforeEach, expect } from 'vitest';
 import { screen } from '@testing-library/react';
-import { render, server } from '@/test-utils';
+import { render } from '@/test-utils';
 import userEvent from '@testing-library/user-event';
 import NotFoundPage from '@/components/pages/NotFoundPage';
 import { mockNavigate } from '@/setupTests';

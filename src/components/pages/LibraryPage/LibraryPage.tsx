@@ -5,7 +5,6 @@ import StatusNavigation from '@/components/molecules/StatusNavigation';
 import { motion } from 'framer-motion';
 import { useStatusBooks } from '@/hooks';
 import BookCoverList from '@/components/molecules/BookCoverList';
-import { BookCoverListSkeleton } from '@/components/molecules/SkeletonLoader';
 
 const Wrapper = styled(motion.div)`
   ${CssScreen}

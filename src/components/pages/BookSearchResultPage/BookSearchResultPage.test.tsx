@@ -1,9 +1,9 @@
 import { beforeEach, expect } from 'vitest';
 import { screen } from '@testing-library/react';
-import { render } from '@/test-utils';
+import { render } from 'src/test-utils';
 import userEvent from '@testing-library/user-event';
-import BookSearchResultPage from '@/components/pages/BookSearchResultPage';
-import { mockUseKeycloak, mockNavigate } from '@/setupTests';
+import BookSearchResultPage from 'src/components/pages/BookSearchResultPage';
+import { mockUseKeycloak, mockNavigate } from 'src/setupTests';
 
 describe('BookSearchResultPage', () => {
   beforeEach(() => {

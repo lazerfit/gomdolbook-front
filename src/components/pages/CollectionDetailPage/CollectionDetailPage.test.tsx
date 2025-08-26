@@ -1,9 +1,9 @@
 import { beforeEach, expect, vi } from 'vitest';
 import { screen } from '@testing-library/react';
-import { render } from '@/test-utils';
+import { render } from 'src/test-utils';
 import userEvent from '@testing-library/user-event';
-import CollectionDetailPage from '@/components/pages/CollectionDetailPage';
-import { mockUseKeycloak, mockNavigate } from '@/setupTests';
+import CollectionDetailPage from 'src/components/pages/CollectionDetailPage';
+import { mockUseKeycloak, mockNavigate } from 'src/setupTests';
 
 describe('CollectionDetailPage', () => {
   beforeEach(() => {

@@ -1,8 +1,8 @@
 import { beforeEach, expect, vi } from 'vitest';
 import { screen } from '@testing-library/react';
-import { render } from '@/test-utils';
+import { render } from 'src/test-utils';
 import userEvent from '@testing-library/user-event';
-import ReadingLogPage from '@/components/pages/ReadingLogPage';
+import ReadingLogPage from 'src/components/pages/ReadingLogPage';
 
 vi.mock('@react-keycloak/web', () => ({
   useKeycloak: () => ({

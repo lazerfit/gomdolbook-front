@@ -24,7 +24,7 @@ export default defineConfig({
     coverage: {
       reporter: ['text', 'json', 'html'],
     },
-    setupFiles: ['./src/test-utils/setupHttp', './src/setupTests.ts'],
+    setupFiles: [path.resolve(__dirname, 'src/test-utils/setupHttp.ts'), path.resolve(__dirname, 'src/setupTests.ts')],
     clearMocks: true,
   },
   build: {

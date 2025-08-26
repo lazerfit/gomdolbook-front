@@ -1,7 +1,7 @@
 import { afterAll, afterEach, beforeAll } from 'vitest';
 import { setupServer } from 'msw/node';
 import { cleanup } from '@testing-library/react';
-import { handlers } from '@/test-utils';
+import { handlers } from './';
 
 export const server = setupServer();
 

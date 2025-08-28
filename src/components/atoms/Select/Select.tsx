@@ -9,8 +9,8 @@ const Wrapper = styled.div`
 const StyledSelect = styled.select`
   width: 10rem;
   border: 1px solid var(--grey6);
-  padding: 0.7rem;
-  border-radius: 0.5rem;
+  padding: var(--space-1-5);
+  border-radius: var(--radius-md);
   appearance: none;
   -webkit-appearance: none;
 `;

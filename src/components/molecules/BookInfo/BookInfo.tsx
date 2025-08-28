@@ -9,45 +9,42 @@ const Wrapper = styled.div`
   ${mixins.flexColumn};
   align-items: center;
   justify-content: flex-start;
-  gap: 0.31rem;
+  gap: var(--space-half);
   width: 31rem;
   height: 100%;
 `;
 
-const BookTitle = styled.div`
-  font-weight: bold;
-  font-size: 1.5rem;
-`;
+const BookTitle = styled.h2``;
 
-const SubTitle = styled.div`
-  color: var(--grey7);
+const SubTitle = styled.h5`
+  color: var(--secondary-text);
 `;
 
 const BookCover = styled(BookCoverBig)`
-  margin-top: 1rem;
+  margin-top: var(--space-2);
 `;
 
 const BookOverviewContainer = styled.div`
   width: 400px;
-  margin-top: 4rem;
-  border: 1px solid var(--border1);
-  border-radius: var(--border-radius-small);
-  padding: 1rem;
+  margin-top: var(--space-6);
+  border: 1px solid var(--border-color-1);
+  border-radius: var(--radius-md);
+  padding: var(--space-2);
   background-color: var(--white);
 `;
 
-const BookOverviewTitle = styled.div`
+const BookOverviewTitle = styled.h3`
   font-size: 1.2rem;
   font-weight: bold;
 `;
 
-const BookOverview = styled.div`
-  margin-top: 1rem;
+const BookOverview = styled.p`
+  margin-top: var(--space-2);
 `;
 
 const GreyDivider = styled(Divider)`
   height: 1px;
-  background-color: var(--border2);
+  background-color: var(--border-color-2);
 `;
 
 interface BookDetailsProps {

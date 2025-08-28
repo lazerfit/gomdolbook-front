@@ -9,12 +9,12 @@ const Wrapper = styled(motion.div)`
   ${mixins.flexCenter};
   flex-direction: row;
   width: 100%;
-  margin-top: 5rem;
-  gap: 2rem;
+  margin-top: var(--space-6);
+  gap: var(--space-4);
 
   ${mediaMax.mobile} {
     width: 20%;
-    margin-top: 0.3rem;
+    margin-top: var(--space-half);
   }
 `;
 
@@ -24,7 +24,7 @@ const BookCover = styled(motion.img)`
   transition: filter 0.2s;
   width: 12.5rem;
   height: auto;
-  border-radius: 0.3125rem;
+  border-radius: var(--radius-sm);
   ${mixins.boxShadowLight};
 
   &:hover {

@@ -5,7 +5,7 @@ import * as mixins from '@/styles/mixins';
 export const BookCoverMid = styled.img`
   width: 4rem;
   height: 6rem;
-  border-radius: 0.3125rem;
+  border-radius: var(--radius-md);
 
   ${mediaMax.mobile} {
     width: 2.5rem;
@@ -15,7 +15,7 @@ export const BookCoverMid = styled.img`
 export const BookCoverMidBig = styled.img`
   width: 7.5rem;
   max-height: 12rem;
-  border-radius: 0.3125rem;
+  border-radius: var(--radius-md);
   object-fit: cover;
 
   ${mediaMax.mobile} {
@@ -26,6 +26,6 @@ export const BookCoverMidBig = styled.img`
 export const BookCoverBig = styled.img`
   width: 12.5rem;
   height: auto;
-  border-radius: 0.3125rem;
+  border-radius: var(--radius-md);
   ${mixins.boxShadowLight};
 `;

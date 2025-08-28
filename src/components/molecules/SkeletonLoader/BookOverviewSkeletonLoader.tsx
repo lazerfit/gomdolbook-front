@@ -8,7 +8,7 @@ const Wrapper = styled.div`
   flex-direction: row;
   width: 53.125rem;
   height: 12.5rem;
-  gap: 1.25rem;
+  gap: var(--space-2-5);
 
   ${mediaMax.mobile} {
     margin-top: 0;
@@ -18,13 +18,13 @@ const Wrapper = styled.div`
 const ImageSkeleton = styled(SquareSkeleton)`
   width: 7.5rem;
   height: 10rem;
-  border-radius: 0.32rem;
+  border-radius: var(--radius-sm);
 `;
 
 const Content = styled.div`
   ${mixins.flexColumn};
   width: 100%;
-  gap: 0.625rem;
+  gap: var(--space-1);
 `;
 
 const BookOverviewSkeletonLoader = () => {

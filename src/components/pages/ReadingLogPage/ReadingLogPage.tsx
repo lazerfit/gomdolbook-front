@@ -14,26 +14,26 @@ import DOMPurify from 'dompurify';
 const TinyMCE = lazy(() => import('@/utils/TinyMCE'));
 
 const Wrapper = styled(Screen)`
-  margin-top: 3rem;
+  margin-top: var(--space-3);
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
   width: 100%;
-  gap: 2rem;
+  gap: var(--space-4);
 `;
 
 const Content = styled.div`
   display: flex;
-  gap: 2rem;
+  gap: var(--space-4);
 `;
 
 const SummaryItem = styled.div`
   width: 100%;
   height: 11rem;
-  border-radius: var(--border-radius-small);
-  border: 1px solid var(--border2);
-  padding: 1rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-color-2);
+  padding: var(--space-2);
   word-break: break-all;
   overflow: auto;
 `;
@@ -53,9 +53,9 @@ const SummaryNote = styled.div`
 const NoteItem = styled.div`
   width: 100%;
   min-height: 55rem;
-  border-radius: var(--border-radius-small);
-  border: 1px solid var(--border2);
-  padding: 1.5rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-color-2);
+  padding: var(--space-2-5);
   word-break: break-all;
   overflow: auto;
   ${noteGradiant};

@@ -5,7 +5,7 @@ import { BookStatus } from '@/api/services/types';
 
 const Wrapper = styled.div`
   display: flex;
-  gap: 0.625rem;
+  gap: var(--space-1);
 `;
 
 interface Props {
@@ -21,6 +21,7 @@ const StatusButton = ({ onSave, status }: Props) => {
           <Button
             key={option.status}
             size="medium"
+            variant={'secondary'}
             onClick={() => onSave(option.status)}
             data-testid={`status-button-${option.status}`}
             disabled={option.status === status}>

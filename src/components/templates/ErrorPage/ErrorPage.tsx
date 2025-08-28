@@ -15,7 +15,7 @@ const Wrapper = styled(Screen)`
 
   ${mediaMax.mobile} {
     width: 100vw;
-    padding: 2rem;
+    padding: var(--space-4);
   }
 `;
 
@@ -24,7 +24,7 @@ const Content = styled.div`
   flex-direction: column;
   height: auto;
   width: 100%;
-  padding: 2rem;
+  padding: var(--space-4);
 `;
 
 const Title = styled.div`
@@ -40,7 +40,7 @@ const Title = styled.div`
 
 const SubTitle = styled.p`
   font-size: 2rem;
-  margin: 1rem;
+  margin: var(--space-2);
   line-height: 1;
 
   ${mediaMax.mobile} {
@@ -51,18 +51,18 @@ const SubTitle = styled.p`
 `;
 
 const Button = styled(motion.button)`
-  padding: 20px 25px;
+  padding: var(--space-2-5) var(--space-3);
   border: 1px solid black;
-  border-radius: 20px;
-  margin-top: 1rem;
+  border-radius: var(--radius-full);
+  margin-top: var(--space-2);
   cursor: pointer;
   font-size: 1.5rem;
 
   ${mediaMax.mobile} {
-    padding: 10px 15px;
+    padding: var(--space-1-5) var(--space-2);
     font-size: 0.8rem;
-    border-radius: 10px;
-    margin-top: 0.5rem;
+    border-radius: var(--radius-md);
+    margin-top: var(--space-half);
   }
 `;
 

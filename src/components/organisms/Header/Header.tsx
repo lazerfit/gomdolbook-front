@@ -12,37 +12,37 @@ import * as fonts from '@/styles/fonts';
 const LoginModal = lazy(() => import('../LoginModal'));
 
 const Wrapper = styled(motion.header)`
-  background-color: var(--whitebgc);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  ${fonts.fontFamilyEnglish};
-  ${fonts.demi};
-  position: fixed;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 1;
-  height: 3.75rem;
-  width: 100%;
-  max-width: 73.75rem;
-
-  ${mediaMax.mobile} {
+    background-color: var(--background-light);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    ${fonts.fontFamilyEnglish};
+    ${fonts.demi};
+    position: fixed;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1;
+    height: 3.75rem;
     width: 100%;
-    padding: 0 1.25rem;
-  }
+    max-width: 73.75rem;
 
- ${media.tablet} and ${mediaMax.tablet} {
-    width: 100%;
-    padding: 0 1.25rem;
-  }
+    ${mediaMax.mobile} {
+        width: 100%;
+        padding: 0 var(--space-2-5);
+    }
+
+    ${media.tablet} and ${mediaMax.tablet} {
+        width: 100%;
+        padding: 0 var(--space-2-5);
+    }
 }
 `;
 
 const NavMenu = styled.nav`
   ${mixins.flexCenter}
-  gap: 0.5rem;
-  background-color: var(--whitebgc);
+  gap: var(--space-half);
+  background-color: var(--background-light);
 `;
 
 const HeaderLogo = styled.div`
@@ -54,18 +54,17 @@ const HeaderLogo = styled.div`
 
 const NavLink = styled(motion.button)`
   ${fonts.fontFamilyEnglish};
-  font-size: 1rem;
-  font-weight: 500;
-  line-height: 1;
-  background-color: var(--whitebgc);
+  font-size: var(--font-size-xl);
+  line-height: 1.4;
+  background-color: var(--background-light);
   cursor: pointer;
-  padding: 0.75rem 1rem;
+  padding: var(--space-1-5) var(--space-2);
   transition: 0.2s ease;
-  border-radius: var(--border-radius-small);
-  color: var(--black2);
+  border-radius: var(--radius-md);
+  color: var(--primary-text);
 
   &:hover {
-    background-color: var(--bgc-grey);
+    background-color: var(--background-grey);
   }
 
   ${mediaMax.mobile} {
@@ -74,9 +73,7 @@ const NavLink = styled(motion.button)`
 `;
 
 const UserDropdown = styled.div`
-  padding: 1.4rem 0;
-  width: 5.32rem;
-  height: 5.625rem;
+  padding: var(--space-3);
   display: flex;
   justify-content: flex-end;
   align-items: center;
@@ -87,11 +84,15 @@ export const LoginButton = styled(motion.button)`
   ${fonts.fontFamilyEnglish};
   font-weight: 600;
   line-height: 1.875rem;
-  padding: 0.125rem 1.56rem;
-  background-color: transparent;
-  border-radius: var(--border-radius-big);
+  padding: var(--space-half) var(--space-2-5);
+  background-color: var(--accent-color);
+  border-radius: var(--radius-md);
   cursor: pointer;
-  border: 1px solid var(--border3);
+  color: var(--background-light);
+
+  &:hover {
+    background-color: var(--accent-color-hover);
+  }
 `;
 
 const Header = () => {

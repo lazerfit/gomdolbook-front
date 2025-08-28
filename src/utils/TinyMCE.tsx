@@ -1,15 +1,6 @@
 import { Editor } from '@tinymce/tinymce-react';
 import { useState } from 'react';
 import Loader from '@/components/atoms/Loader';
-import { styled } from 'styled-components';
-
-const LoaderContainer = styled.div`
-  display: flex;
-  width: 100%;
-  height: 100%;
-  justify-content: center;
-  align-items: center;
-`;
 
 interface Props {
   placeholder: string;
@@ -23,11 +14,7 @@ const TinyMCE = ({ placeholder, onChangeValue }: Props) => {
 
   return (
     <>
-      {isLoading && (
-        <LoaderContainer>
-          <Loader />
-        </LoaderContainer>
-      )}
+      {isLoading && <Loader />}
       <Editor
         apiKey={key}
         initialValue={placeholder}

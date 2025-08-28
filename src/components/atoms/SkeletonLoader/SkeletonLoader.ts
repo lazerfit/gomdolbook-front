@@ -16,11 +16,11 @@ export const CommonSkeleton = styled.div`
 export const LineSkeleton = styled(CommonSkeleton)`
   width: 100%;
   height: 12px;
-  margin-bottom: 6px;
+  margin-bottom: var(--space-1);
   border-radius: var(--border-radius-small);
 `;
 
 export const SquareSkeleton = styled(CommonSkeleton)`
   margin: 0 auto;
-  border-radius: 9px;
+  border-radius: var(--radius-md);
 `;

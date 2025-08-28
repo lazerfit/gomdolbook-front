@@ -13,12 +13,16 @@ export const handlers = [
     return HttpResponse.json(MR.MOCK_LIBRARY_RESPONSE_READING_STATUS);
   }),
 
-  http.get(`${apiBaseUrl}/v1/book/:isbn`, () => {
-    return HttpResponse.json(MR.MOCK_BOOK_RESPONSE);
+  http.get(`${apiBaseUrl}/v1/book/status/:isbn`, () => {
+    return HttpResponse.json(MR.MOCK_NEW_STATUS_RESPONSE);
   }),
 
-  http.get(`${apiBaseUrl}/v1/status/:isbn`, () => {
-    return HttpResponse.json(MR.MOCK_NEW_STATUS_RESPONSE);
+  http.post(`${apiBaseUrl}/v1/book/save`, () => {
+    return HttpResponse.json(HttpStatusCode.Ok);
+  }),
+
+  http.get(`${apiBaseUrl}/v1/book/:isbn`, () => {
+    return HttpResponse.json(MR.MOCK_BOOK_RESPONSE);
   }),
 
   http.get(`${apiBaseUrl}/v2/collections`, () => {

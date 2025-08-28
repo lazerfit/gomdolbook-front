@@ -1,31 +1,62 @@
 :root {
   --MEDIA_SIZE_MOBILE: 768px;
-  --whitebgc: rgb(250, 250, 250);
-  --black: rgb(32, 33, 47);
-  --black2: rgb(18, 21, 20);
+  --background-light: rgb(250,249,246);
+  --background-grey: rgba(18, 21, 20, 0.05);
   --white: rgb(255, 255, 255);
-  --peach: rgb(255, 226, 226);
-  --pink: rgb(255, 199, 199);
+
+  /* text color */
+  --primary-text: rgb(0,20,39);
+  --secondary-text: rgb(108,117,125);
+
+  /* object color */
+  --accent-color: rgb(112,141,129);
+  --accent-color-hover: rgb(90,116,107);
+  --highlight-color: rgb(244,213,141);
+  --highlight-text: rgb(93,77,43);
+  --danger-color: rgb(191,6,3);
+  --danger-color-hover: rgb(141,8,1);
+
+  /* grey color */
   --grey: rgb(170, 170, 170);
   --grey0: rgb(248, 249, 250);
   --grey1: rgb(241, 243, 245);
   --grey2: rgb(233, 236, 239);
   --grey3: rgb(222, 226, 230);
   --grey4: rgb(206, 212, 218);
-  --grey5: rgb(173, 181, 189);
   --grey6: rgb(173, 181, 189);
   --grey7: rgb(73, 80, 87);
-  --tomato: rgb(255, 101, 66);
-  --border: rgba(51, 61, 58, 0.2);
-  --border1: rgb(230, 230, 233);
-  --border2: rgb(165, 179, 179);
-  --border3: rgb(18, 21, 20);
-  --bgc-grey: rgba(18, 21, 20, 0.05);
-  --point: rgb(88, 201, 185);
-  --point2: rgb(164, 184, 196);
-  --point3: rgb(250, 246, 246);
-  --border-radius-small: 0.5rem;
-  --border-radius-big: 50rem;
+
+  /* border */
+  --border-color: rgba(51, 61, 58, 0.2);
+  --border-color-1: rgb(230, 230, 233);
+  --border-color-2: rgb(165, 179, 179);
+  --border-color-3: rgb(18, 21, 20);
+
+  /* Spacing System (4px & 8px Grid) */
+  --space-half: 0.25rem; /* 4px */
+  --space-1: 0.5rem;    /* 8px */
+  --space-1-5: 0.75rem; /* 12px */
+  --space-2: 1rem;      /* 16px */
+  --space-2-5: 1.25rem; /* 20px */
+  --space-3: 1.5rem;    /* 24px */
+  --space-4: 2rem;      /* 32px */
+  --space-5: 2.5rem;    /* 40px */
+  --space-6: 3rem;      /* 48px */
+
+  /* Radius System (4px Scale) */
+  --radius-sm: var(--space-half); /* 4px */
+  --radius-md: var(--space-1);  /* 8px */
+  --radius-lg: var(--space-2);    /* 16px */
+  --radius-full: 50rem;
+
+  /* Font Sizes */
+  --font-size-xs: 0.75rem;   /* 12px: Caption, 작은 텍스트 */
+  --font-size-sm: 0.875rem;  /* 14px: 작은 버튼, 부가 정보 */
+  --font-size-base: 1rem;    /* 16px: 기본 본문, 문단 */
+  --font-size-lg: 1.125rem;  /* 18px: 작은 제목, 큰 버튼 */
+  --font-size-xl: 1.25rem;   /* 20px: 부제목 (Subheading) */
+  --font-size-2xl: 1.5rem;   /* 24px: 제목 (Heading) */
+  --font-size-3xl: 2rem;     /* 32px: 페이지 타이틀 (Display) */
 }
 
 @font-face {
@@ -52,11 +83,12 @@ body,
   font-family: 'Gowun Dodum', sans-serif;
   line-height: 120%;
   letter-spacing: -0.3px;
-  background-color: var(--whitebgc);
-  color: var(--black);
+  background-color: var(--background-light);
+  color: var(--primary-text);
   text-rendering: optimizeLegibility;
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
+  font-size: 16px;
 }
 
 a {
@@ -76,7 +108,7 @@ textarea {
   outline: none;
   resize: none;
   background-color: transparent;
-  color: var(--black);
+  color: var(--primary-text);
   font-size: 1rem;
   font-family: 'Gowun Dodum', sans-serif;
 }
@@ -87,7 +119,7 @@ ul {
 }
 
 button {
-  background-color: var(--whitebgc);
+  background-color: var(--background-light);
   cursor: pointer;
   font-family: 'Gowun Dodum', sans-serif;
   line-height: 100%;
@@ -101,10 +133,68 @@ pre {
   white-space: pre-wrap;
 }
 
+/* Typography System */
+
+h1, h2, h3, h4, h5, h6 {
+  /* 제목용 폰트 패밀리 지정 */
+  font-family: 'Gyeonggi_Batang_Regular', serif;
+  /* 기본 텍스트 색상 사용 */
+  color: var(--primary-text);
+  /* 자간을 살짝 좁혀 가독성 향상 */
+  letter-spacing: -0.02em;
+  font-weight: 600; /* 기본 두께를 demi(600)로 설정 */
+}
+
+/* 페이지의 메인 타이틀 (가장 큰 제목) */
+h1 {
+  font-size: var(--font-size-3xl); /* 32px */
+  line-height: 1.2; /* 38.4px */
+}
+
+/* 섹션 제목 */
 h2 {
-  font-size: 2em;
-  line-height: 1.2;
-  font-weight: 600;
+  font-size: var(--font-size-2xl); /* 24px */
+  line-height: 1.3; /* 31.2px */
+}
+
+/* 부제목 또는 카드 제목 */
+h3 {
+  font-size: var(--font-size-xl); /* 20px */
+  line-height: 1.4; /* 28px */
+}
+
+/* 더 작은 제목 */
+h4 {
+  font-size: var(--font-size-lg); /* 18px */
+  line-height: 1.4; /* 25.2px */
+}
+
+/* 가장 작은 제목 */
+h5 {
+  font-size: var(--font-size-base); /* 16px */
+  line-height: 1.5; /* 24px */
+  font-weight: 700; /* 작은 텍스트는 더 굵게 처리하여 주목도 유지 */
+}
+
+h6 {
+  font-size: var(--font-size-sm); /* 14px */
+  line-height: 1.5; /* 21px */
+  font-weight: 700;
+}
+
+/* 기본 본문 스타일 */
+p {
+  font-family: 'Gowun Dodum', sans-serif;
+  font-size: var(--font-size-base); /* 16px */
+  line-height: 1.6;
+  color: var(--primary-text);
+}
+
+/* 작은 부가 설명 텍스트 (Caption) */
+small, .caption {
+  font-size: var(--font-size-xs); /* 12px */
+  line-height: 1.5; /* 18px */
+  color: var(--secondary-text); /* 부가 정보는 살짝 연한 색으로 */
 }
 
 /* Animation */
@@ -176,3 +266,67 @@ h2 {
 .fade-out {
   animation: FadeOut 0.15s ease-in-out forwards;
 }
+
+/* Loader */
+.lds-heart,
+.lds-heart div,
+.lds-heart div:after,
+.lds-heart div:before {
+  box-sizing: border-box;
+}
+.lds-heart {
+  display: inline-block;
+  position: relative;
+  width: 80px;
+  height: 80px;
+  transform: rotate(45deg);
+  transform-origin: 40px 40px;
+}
+.lds-heart div {
+  top: 28px;
+  left: 28px;
+  position: absolute;
+  width: 32px;
+  height: 32px;
+  background: currentColor;
+  animation: lds-heart 1.2s infinite cubic-bezier(0.215, 0.61, 0.355, 1);
+}
+.lds-heart div:after,
+.lds-heart div:before {
+  content: " ";
+  position: absolute;
+  display: block;
+  width: 32px;
+  height: 32px;
+  background: currentColor;
+}
+.lds-heart div:before {
+  left: -24px;
+  border-radius: 50% 0 0 50%;
+}
+.lds-heart div:after {
+  top: -24px;
+  border-radius: 50% 50% 0 0;
+}
+@keyframes lds-heart {
+  0% {
+    transform: scale(0.95);
+  }
+  5% {
+    transform: scale(1.1);
+  }
+  39% {
+    transform: scale(0.85);
+  }
+  45% {
+    transform: scale(1);
+  }
+  60% {
+    transform: scale(0.95);
+  }
+  100% {
+    transform: scale(0.9);
+  }
+}
+
+

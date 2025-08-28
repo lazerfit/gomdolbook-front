@@ -29,21 +29,19 @@ const Wrapper = styled(Screen)`
   ${mixins.flexColumn};
   align-items: center;
   justify-content: flex-start;
-  margin-top: 1.9rem;
+  margin-top: var(--space-5);
   position: relative;
 `;
 
 const Content = styled.div`
   width: 400px;
-  margin-top: 4rem;
 `;
 
 const Button = styled(StyledCircleButton)`
   font-size: 1.25rem;
-  color: var(--grey7);
 
   &:hover {
-    color: var(--pink);
+    color: var(--highlight-color);
   }
 `;
 

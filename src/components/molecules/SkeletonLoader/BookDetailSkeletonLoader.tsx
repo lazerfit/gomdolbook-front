@@ -7,7 +7,7 @@ const Wrapper = styled.div`
   flex-direction: column;
   width: 100%;
   height: 100%;
-  gap: 0.5rem;
+  gap: var(--space-1);
 `;
 
 const Line = styled(LineSkeleton)`
@@ -22,7 +22,7 @@ const Image = styled(SquareSkeleton)`
 const Overview = styled(SquareSkeleton)`
   width: 25rem;
   height: 10rem;
-  margin-top: 2rem;
+  margin-top: var(--space-4);
 `;
 
 const BookDetailSkeletonLoader = () => {

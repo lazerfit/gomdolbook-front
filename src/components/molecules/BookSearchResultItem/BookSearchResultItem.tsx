@@ -18,18 +18,19 @@ const Content = styled.div`
   height: 12.5rem;
   min-height: 12.5rem;
   cursor: pointer;
-  padding: 1.32rem;
+  padding: var(--space-2-5);
   background-color: var(--white);
-  border-radius: var(--border-radius-small);
-  border: 1px solid var(--border1);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-color-1);
 `;
 
 const BookDetailsBox = styled.div`
   width: 42.5rem;
-  margin: 0 1.32rem;
+  height: 100%;
+  margin: 0 var(--space-1-5);
   ${mixins.flexColumn};
-  justify-content: center;
-  gap: 0.5rem;
+  justify-content: flex-start;
+  gap: var(--space-1);
 
   ${mediaMax.mobile} {
     width: 60%;
@@ -47,7 +48,8 @@ const BookTitle = styled.h3`
 
 const BookOverview = styled.div`
   ${mixins.LineClamp}
-  color: var(--grey);
+  -webkit-line-clamp: 4;
+  color: var(--secondary-text);
 
   ${mediaMax.mobile} {
     display: none;

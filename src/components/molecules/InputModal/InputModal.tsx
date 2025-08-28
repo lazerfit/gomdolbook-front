@@ -8,10 +8,10 @@ const StyledInput = styled(Input)``;
 
 const ConfirmButtonContainer = styled.div`
   justify-content: center;
-  margin-top: 1rem;
+  margin-top: var(--space-2);
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: var(--space-1);
 `;
 
 interface InputModalProps extends React.InputHTMLAttributes<HTMLInputElement> {
@@ -28,7 +28,7 @@ const InputModal = ({ isOpen, close, onSuccess, ...props }: InputModalProps) => 
         <>
           <StyledInput type="text" placeholder="새 컬렉션 이름을 입력해주세요." {...props} />
           <ConfirmButtonContainer>
-            <Button size="medium" onClick={onSuccess}>
+            <Button size="medium" variant={'primary'} onClick={onSuccess}>
               확인
             </Button>
             <Button size="medium" onClick={close}>

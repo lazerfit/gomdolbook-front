@@ -4,7 +4,7 @@ import { LineSkeleton } from '@/components/atoms/SkeletonLoader';
 
 const Wrapper = styled.div`
   ${mixins.flexCenter};
-  margin-top: 1.5rem;
+  margin-top: var(--space-3);
 `;
 
 const Line = styled(LineSkeleton)`

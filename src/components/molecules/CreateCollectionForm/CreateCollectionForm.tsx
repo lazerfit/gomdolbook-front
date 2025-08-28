@@ -9,7 +9,7 @@ const InputContainer = styled(motion.div)`
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.5rem;
+  gap: var(--space-1);
 `;
 
 const StyledInput = styled(Input)``;
@@ -19,7 +19,7 @@ const ButtonContainer = styled(motion.div)`
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  gap: 0.5rem;
+  gap: var(--space-1);
 `;
 
 const Button = styled(motion.button)`
@@ -27,8 +27,8 @@ const Button = styled(motion.button)`
   width: 2.3rem;
   height: 2.3rem;
   background-color: var(--white);
-  border: 1px solid var(--border3);
-  border-radius: var(--border-radius-small);
+  border: 1px solid var(--border-color-3);
+  border-radius: var(--radius-md);
 `;
 
 interface Props {

@@ -2,18 +2,18 @@ import { styled, css } from 'styled-components';
 
 export const Screen = styled.div`
   width: 100vw;
-  max-width: 1180px;
+  max-width: 73.75rem;
   height: 100%;
-  padding: 1.5rem;
+  padding: var(--space-3);
   box-sizing: border-box;
-  margin-top: 0.625rem;
+  margin-top: var(--space-1-5);
 `;
 
 export const CssScreen = css`
   width: 100vw;
   max-width: 73.75rem;
   height: 100%;
-  padding: 1.5rem;
+  padding: var(--space-3);
   box-sizing: border-box;
-  margin-top: 0.625rem;
+  margin-top: var(--space-1-5);
 `;

@@ -7,12 +7,12 @@ const Wrapper = styled.footer`
   width: 100%;
   height: 120px;
   margin: 0 auto;
-  padding: 15px 10px;
+  padding: var(--space-2) var(--space-1-5);
   ${mixins.flexCenter};
   flex-direction: column;
   font-family: ${fontFamily.english}, serif;
-  background-color: var(--whitebgc);
-  border-top: 1px solid var(--black);
+  background-color: var(--background-light);
+  border-top: 1px solid var(--primary-text);
 
   ${mediaMax.mobile} {
     width: 95%;
@@ -22,7 +22,7 @@ const Wrapper = styled.footer`
 const Content = styled.div`
   width: 100%;
   height: 120px;
-  padding: 45px 0;
+  padding: var(--space-6) 0;
   ${mixins.flexCenter}
   flex-direction: row;
 `;

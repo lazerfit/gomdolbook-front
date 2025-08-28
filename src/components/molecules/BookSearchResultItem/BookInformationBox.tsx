@@ -8,15 +8,15 @@ const Wrapper = styled.div<{ $justifyContent: string }>`
   justify-content: ${props => props.$justifyContent};
   width: 100%;
   font-size: 0.938rem;
-  color: var(--grey);
-  gap: 10px;
+  color: var(--secondary-text);
+  gap: var(--space-1);
 
   ${mediaMax} {
     width: 100%;
   }
 `;
 
-const Author = styled.div`
+const Author = styled.small`
   max-width: 400px;
   white-space: nowrap;
   overflow: hidden;
@@ -27,9 +27,9 @@ const Author = styled.div`
   }
 `;
 
-const Publisher = styled.div``;
+const Publisher = styled.small``;
 
-const PublicationDate = styled.div``;
+const PublicationDate = styled.small``;
 
 interface BookInformationBoxProps {
   author: string;

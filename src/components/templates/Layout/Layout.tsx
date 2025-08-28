@@ -12,7 +12,7 @@ const Wrapper = styled.div`
 
 const Main = styled.div`
   flex: 1;
-  padding: 100px 0;
+  padding: 6.25rem 0;
   width: 100%;
 `;
 

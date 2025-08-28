@@ -1,7 +1,7 @@
 import { styled } from 'styled-components';
 import Modal from '@/components/templates/Modal';
 import { MODAL_SIZES } from '@/utils/variables';
-import { BookResponse, BookStatus } from '@/api/services/types';
+import { BookStatus } from '@/api/services/types';
 import BookInfo from '@/components/molecules/BookInfo';
 import VerticalFloatingButton from '@/components/molecules/VerticalFloatingButton';
 import { StyledCircleButton } from '@/components/atoms/ButtonCircle';
@@ -12,16 +12,16 @@ import * as mixins from '@/styles/mixins';
 import StatusButton from '@/components/molecules/StatusButton';
 import { motion } from 'framer-motion';
 import { useState } from 'react';
-import Loader from '@/components/atoms/Loader';
+import { useBook, useSaveOrUpdateStatusBook, useStatus } from '@/hooks';
 
 const Wrapper = styled.div``;
 
 const Button = styled(StyledCircleButton)`
   font-size: 1.25rem;
-  color: var(--grey7);
+  color: var(--secondary-text);
 
   &:hover {
-    color: var(--pink);
+    background-color: var(--background-grey);
   }
 `;
 
@@ -29,7 +29,7 @@ const StatusContainer = styled(motion.div)`
   width: 20rem;
   height: 5rem;
   border: 1px solid var(--grey2);
-  border-radius: 5px;
+  border-radius: var(--radius-md);
   position: absolute;
   left: 2rem;
   bottom: 20rem;
@@ -52,19 +52,21 @@ const StatusContainer = styled(motion.div)`
 interface Props {
   close: () => void;
   isOpen: boolean;
-  isLoading?: boolean;
-  book: BookResponse;
-  status: BookStatus;
-  onChangeStatus: (status: BookStatus) => void;
+  isbn: string;
   onRemove: () => void;
 }
 
-const CollectionDetailModal = ({ close, isOpen, isLoading = false, book, status, onChangeStatus, onRemove }: Props) => {
+const CollectionDetailModal = ({ close, isOpen, isbn, onRemove }: Props) => {
   const [statusEditMode, setStatusEditMode] = useState(false);
 
-  if (!book || isLoading) {
-    return <Loader />;
+  const { data: book, isLoading: isBookLoading } = useBook(isbn);
+  const { data: currentStatus } = useStatus(isbn);
+  const { handleSaveBookToLibrary } = useSaveOrUpdateStatusBook(isbn, book!, currentStatus ?? BookStatus.NEW);
+
+  if (!book || isBookLoading) {
+    return;
   }
+
   return (
     <Modal
       size={MODAL_SIZES.large}
@@ -95,7 +97,7 @@ const CollectionDetailModal = ({ close, isOpen, isLoading = false, book, status,
           </VerticalFloatingButton>
           {statusEditMode && (
             <StatusContainer initial={{ opacity: 0, scale: 0 }} animate={{ opacity: 1, scale: 1 }}>
-              <StatusButton status={status} onSave={onChangeStatus} />
+              <StatusButton status={currentStatus ?? BookStatus.NEW} onSave={handleSaveBookToLibrary} />
             </StatusContainer>
           )}
         </Wrapper>

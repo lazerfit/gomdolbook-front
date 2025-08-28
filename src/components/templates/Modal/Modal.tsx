@@ -9,7 +9,8 @@ import { motion } from 'framer-motion';
 
 const customStyles = {
   overlay: {
-    backgroundColor: 'rgba(33, 34, 66, 0.6)',
+    backgroundColor: 'rgba(0, 0, 0, 0.7)',
+    backdropFilter: 'blur(4px)',
     zIndex: 2000,
   },
   content: {
@@ -20,6 +21,7 @@ const customStyles = {
     marginRight: '-50%',
     padding: 0,
     transform: 'translate(-50%, -50%)',
+    backgroundColor: 'var(--background-light)',
     borderRadius: '5px',
     boxShadow:
       '0 6px 10px -5px rgba(33, 34, 66, 0.04),0 6px 30px 5px rgba(33, 34, 66, 0.08),0 16px 24px 2px rgba(33, 34, 66, 0.12)',
@@ -30,7 +32,7 @@ const Wrapper = styled(motion.div)<{ $size: MODAL_SIZES }>`
   ${mixins.flexCenter};
   flex-direction: column;
   justify-content: space-around;
-  padding: 18px 24px 22px 24px;
+  padding: var(--space-3);
   border-radius: var(--border-radius-small);
   position: relative;
   ${props => {
@@ -70,7 +72,7 @@ const Close = styled.button`
   transition: color 0.25s;
 
   &:hover {
-    color: var(--pink);
+    color: var(--highlight-color);
   }
 `;
 

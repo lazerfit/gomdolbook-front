@@ -18,17 +18,17 @@ const Wrapper = styled(CommonBox)<{ $size: 'small' | 'big' }>`
   ${props => (props.$size === 'small' ? small : big)}
   align-items: center;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: var(--space-1);
 `;
 
 const SubTitle = styled.div`
   width: 100%;
   height: 2rem;
-  background-color: var(--bgc-grey);
-  border-radius: var(--border-radius-small);
+  background-color: var(--background-grey);
+  border-radius: var(--radius-md);
   display: flex;
   align-items: center;
-  padding: 0.5rem;
+  padding: var(--space-1);
   justify-content: space-between;
 `;
 
@@ -41,7 +41,7 @@ const EditButton = styled(motion.button)`
 
 const ButtonGroup = styled(motion.div)`
   display: flex;
-  gap: 0.3rem;
+  gap: var(--space-half);
   align-items: center;
   justify-content: center;
 `;
@@ -49,12 +49,12 @@ const ButtonGroup = styled(motion.div)`
 const ConfirmButton = styled.button`
   width: 2rem;
   height: 2rem;
-  padding: 0.3rem;
+  padding: var(--space-half);
   background-color: transparent;
   font-size: 1.6rem;
 
   &:hover {
-    color: var(--point);
+    color: var(--accent-color);
   }
 `;
 
@@ -72,7 +72,7 @@ const ReadingLogBox = ({ size, title, children, onSaveClick, onEditClick, isEdit
   return (
     <Wrapper $size={size}>
       <SubTitle>
-        <div>{title}</div>
+        <h5>{title}</h5>
         {isEditMode ? (
           <ButtonGroup initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }}>
             <ConfirmButton onClick={onSaveClick} data-testid="readingLog-confirm-button">

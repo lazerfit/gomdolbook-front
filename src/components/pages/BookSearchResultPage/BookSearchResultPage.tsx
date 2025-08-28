@@ -16,7 +16,7 @@ const Wrapper = styled(Screen)`
 
 const Content = styled.div`
   display: flex;
-  margin-top: 1.25rem;
+  margin-top: var(--space-3);
   align-items: flex-start;
   width: 100%;
   flex-direction: column;
@@ -24,16 +24,15 @@ const Content = styled.div`
 
 const BookItem = styled.div`
   width: 100%;
-  margin-top: 1.875rem;
+  margin-top: var(--space-3);
   ${mixins.flexColumn};
   align-items: center;
   justify-content: center;
-  gap: 0.5rem;
+  gap: var(--space-half);
 `;
 
 const BookTitle = styled.div`
   display: flex;
-  font-size: 1.1rem;
 `;
 
 const BookSearchResultPage = () => {
@@ -52,7 +51,8 @@ const BookSearchResultPage = () => {
         ) : (
           <>
             <BookTitle>
-              <p style={{ color: 'var(--pink)' }}>{title}</p>에 대한 검색결과
+              <h4 style={{ color: 'var(--accent-color)' }}>{title}</h4>
+              <h4>에 대한 검색결과</h4>
             </BookTitle>
             <BookItem>
               {books.map(book => (

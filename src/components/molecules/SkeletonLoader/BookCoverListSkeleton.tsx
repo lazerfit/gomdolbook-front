@@ -4,14 +4,14 @@ import { SquareSkeleton } from '@/components/atoms/SkeletonLoader';
 
 const Wrapper = styled.div`
   ${mixins.flexCenter};
-  gap: 2rem;
+  gap: var(--space-4);
   margin-top: 10rem;
 `;
 
 const ImageSkeleton = styled(SquareSkeleton)`
   width: 12.5rem;
   height: 18.75rem;
-  border-radius: 0.3125rem;
+  border-radius: var(--radius-sm);
 `;
 
 const BookCoverListSkeleton = () => {

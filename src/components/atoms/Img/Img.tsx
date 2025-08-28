@@ -5,7 +5,7 @@ export const Image = styled(motion.img)`
   display: block;
   filter: grayscale(1);
   transform-origin: center;
-  border-radius: 10px;
+  border-radius: var(--radius-md);
   height: auto;
   object-fit: contain;
 `;

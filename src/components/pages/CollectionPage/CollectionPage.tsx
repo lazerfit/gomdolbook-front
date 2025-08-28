@@ -17,14 +17,15 @@ import Loader from '@/components/atoms/Loader';
 
 const Wrapper = styled(motion.div)`
   ${CssScreen};
-  margin-top: 2rem;
+  margin-top: var(--space-4);
 `;
 
 const TitleContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 3rem;
+  margin: var(--space-2);
+  width: 100%;
 `;
 
 const MainTitle = styled.h2`
@@ -33,7 +34,6 @@ const MainTitle = styled.h2`
 
 const CollectionTitle = styled.div`
   width: 100%;
-  font-size: 1.5rem;
 `;
 
 const Content = styled(motion.div)`
@@ -42,12 +42,12 @@ const Content = styled(motion.div)`
   ${mixins.flexColumn};
   justify-content: center;
   align-items: center;
-  gap: 0.5rem;
-  border: 1px solid var(--border1);
-  border-radius: var(--border-radius-small);
+  gap: var(--space-1);
+  border: 1px solid var(--border-color-1);
+  border-radius: var(--radius-md);
   background-color: var(--white);
-  margin: 1rem 0;
-  padding: 1rem;
+  margin: var(--space-2);
+  padding: var(--space-2);
 
   ${mediaMax.mobile} {
     width: 60%;
@@ -57,12 +57,12 @@ const Content = styled(motion.div)`
 const BookCoverContainer = styled.div<{ $name: string }>`
   width: 100%;
   height: 100%;
-  padding: 0.3rem;
+  padding: var(--space-half);
   ${mixins.flexRow};
   align-items: center;
   justify-content: flex-start;
   flex-wrap: wrap;
-  gap: 1rem;
+  gap: var(--space-2);
   cursor: pointer;
   filter: grayscale(1);
   transition: filter 0.3s;
@@ -115,7 +115,9 @@ const CollectionPage = () => {
 
       {collectionList.map(collection => (
         <Content layout key={collection.name}>
-          <CollectionTitle>{collection.name}</CollectionTitle>
+          <CollectionTitle>
+            <h3>{collection.name}</h3>
+          </CollectionTitle>
           <Divider />
           <BookCoverContainer onClick={() => navigate(`/collections/${collection.id}`)} $name={collection.name}>
             {collection.covers.slice(0, 10).map((cover, index) => (

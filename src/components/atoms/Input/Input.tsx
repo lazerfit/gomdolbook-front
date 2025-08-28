@@ -3,22 +3,22 @@ import { fontFamilyEnglish } from '@/styles/fonts';
 
 const Input = styled.input`
   width: 18.75rem;
-  border: 1px solid var(--border2);
+  border: 1px solid var(--border-color-2);
   background-color: var(--white);
-  padding: 0.625rem;
+  padding: var(--space-1-5);
   outline: none;
-  border-radius: var(--border-radius-small);
+  border-radius: var(--radius-md);
 
   &:focus::placeholder {
     opacity: 0;
   }
 
   &:focus {
-    border-color: var(--border3);
+    border-color: var(--border-color-3);
   }
 
   &::placeholder {
-    color: var(--black);
+    color: var(--primary-text);
     transition: opacity 0.3s;
     ${fontFamilyEnglish};
   }

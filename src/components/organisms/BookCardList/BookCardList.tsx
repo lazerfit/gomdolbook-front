@@ -2,7 +2,6 @@ import { styled } from 'styled-components';
 import * as mixins from '@/styles/mixins';
 import { mediaMax } from '@/utils';
 import Banner from '@/components/atoms/Banner';
-import AuthRequireImage from '@/components/organisms/AuthRequireImage';
 import { StatusBooksResponse } from '@/api/services/types';
 
 const Wrapper = styled.div`
@@ -11,12 +10,12 @@ const Wrapper = styled.div`
   flex-wrap: wrap;
   align-items: flex-start;
   justify-content: center;
-  gap: 45px;
-  margin-top: 32px;
+  gap: var(--space-6);
+  margin-top: var(--space-4);
 
   ${mediaMax} {
     margin-top: 0;
-    gap: 30px;
+    gap: var(--space-4);
   }
 `;
 
@@ -25,10 +24,10 @@ const Content = styled.div`
   height: 100%;
   ${mixins.flexColumn};
   align-items: center;
-  margin-top: 10px;
+  margin-top: var(--space-1-5);
 
   ${mediaMax} {
-    padding: 0 30px;
+    padding: 0 var(--space-4);
   }
 `;
 
@@ -41,7 +40,6 @@ const BookCardList = ({ bookCardList = [] }: Props) => {
     <Wrapper>
       <Content>
         {bookCardList.length === 0 ? <Banner>책을 추가해 독서기록을 시작해보세요.</Banner> : <div>Hi</div>}
-        <AuthRequireImage />
       </Content>
     </Wrapper>
   );

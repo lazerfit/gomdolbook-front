@@ -15,15 +15,15 @@ const EasyLoginWrapper = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: center;
-  gap: 20px;
+  gap: var(--space-2-5);
 
   ${mediaMax.mobile} {
-    margin-bottom: 16px;
+    margin-bottom: var(--space-2);
   }
 `;
 
 const LoginButton = styled.button`
-  margin: 8px 0;
+  margin: var(--space-1) 0;
   background-color: transparent;
 `;
 

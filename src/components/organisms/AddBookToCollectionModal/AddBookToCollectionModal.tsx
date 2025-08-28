@@ -9,11 +9,11 @@ import Select from '@/components/atoms/Select';
 
 const SelectContainer = styled.div`
   display: flex;
-  gap: 0.3rem;
+  gap: var(--space-half);
 `;
 
 const AddButton = styled(Button)`
-  width: 3.5rem;
+  border-radius: var(--border-radius-small);
 `;
 
 const NavigateToCollectionButton = styled(Button)`
@@ -54,7 +54,9 @@ const AddBookToCollectionModal = ({ close, isOpen, collections, onAdd }: Props) 
         ) : (
           <SelectContainer>
             <Select options={inputOptions} onChange={e => setCollectionId(parseInt(e.target.value, 10))} />
-            <AddButton onClick={() => onAdd(collectionId)}>Add</AddButton>
+            <AddButton onClick={() => onAdd(collectionId)} variant={'primary'}>
+              Add
+            </AddButton>
           </SelectContainer>
         )
       }

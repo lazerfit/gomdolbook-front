@@ -17,29 +17,29 @@ const BookInfo = styled.div`
   flex-direction: column;
   align-items: flex-start;
   justify-content: flex-start;
-  margin-left: 1rem;
-  gap: 0.5rem;
+  margin-left: var(--space-1-5);
+  gap: var(--space-1);
   width: 100%;
 `;
 
 const BookInfoItem = styled.div`
-  border-bottom: 1px solid var(--point2);
+  border-bottom: 1px solid var(--grey4);
   width: 100%;
-  padding: 0.1rem 0;
   display: flex;
+  padding: var(--space-half);
 `;
 
 const RatingContainer = styled.div`
   width: 100%;
   display: flex;
-  gap: 0.5rem;
+  gap: var(--space-1);
 `;
 
 const CheckedIcon = css<{ $checked: boolean }>`
   &::before {
     content: '${props => (props.$checked ? 'V' : '')}';
     position: absolute;
-    color: var(--tomato);
+    color: var(--danger-color);
     top: 0.1rem;
     left: 0;
     font-size: 1rem;
@@ -47,11 +47,11 @@ const CheckedIcon = css<{ $checked: boolean }>`
 `;
 
 const Rating = styled.button<{ $checked: boolean }>`
-  padding: 0.2rem;
+  padding: var(--space-half);
   position: relative;
 
   &:disabled {
-    color: var(--black);
+    color: var(--primary-text);
   }
 
   ${CheckedIcon};
@@ -59,13 +59,13 @@ const Rating = styled.button<{ $checked: boolean }>`
 
 const BookInfoSubTitle = styled.div`
   display: inline-block;
-  margin-right: 0.5rem;
-  color: var(--point2);
+  margin-right: var(--space-2);
+  color: var(--secondary-text);
 `;
 
 const ButtonContainer = styled.div`
   display: flex;
-  gap: 0.2rem;
+  gap: var(--space-1);
 `;
 
 const Button = styled.button<{ $checked: boolean }>`
@@ -80,6 +80,10 @@ const Button = styled.button<{ $checked: boolean }>`
     left: 50%;
     transform: translateX(-50%);
     font-size: 1.2rem;
+  }
+
+  p {
+    font-size: var(--font-size-sm);
   }
 `;
 

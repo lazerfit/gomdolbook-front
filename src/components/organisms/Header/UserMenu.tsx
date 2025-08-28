@@ -6,8 +6,8 @@ import { LoginButton } from './Header';
 import { useNavigate } from 'react-router-dom';
 
 const UserProfileWrapper = styled(motion.div)`
-  padding: 1.375rem 0;
-  width: 5.32rem;
+  padding: var(--space-2-5) 0;
+  width: 6.5rem;
   height: 5.625rem;
   display: flex;
   justify-content: flex-end;
@@ -17,12 +17,12 @@ const UserProfileWrapper = styled(motion.div)`
 
 const DropdownMenu = styled(motion.ul)`
   list-style: none;
-  width: 6.25rem;
+  width: 6.5rem;
   cursor: pointer;
   position: absolute;
-  right: 0;
+  right: -0.6rem;
   top: 4.375rem;
-  padding: 0.625rem;
+  padding: var(--space-1-5);
   background-color: var(--white);
   z-index: 1000;
   border-radius: var(--border-radius-small);
@@ -33,14 +33,14 @@ const DropdownMenu = styled(motion.ul)`
 
 const DropdownItem = styled(motion.li)`
   list-style: none;
-  padding: 0.625rem;
+  padding: var(--space-1);
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: flex-start;
 
   &:hover {
-    background-color: var(--bgc-grey);
+    background-color: var(--background-grey);
     border-radius: var(--border-radius-small);
   }
 `;

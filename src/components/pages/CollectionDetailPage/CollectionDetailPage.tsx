@@ -4,14 +4,11 @@ import { motion } from 'framer-motion';
 import { BounceInDownStates } from '@/utils/variables';
 import { useParams, useNavigate } from 'react-router-dom';
 import {
-  useBook,
   useCollection,
   useDeleteCollection,
   useInvalidateCollections,
   useRemoveBookFromCollection,
   useRenameCollection,
-  useSaveOrUpdateStatusBook,
-  useStatus,
 } from '@/hooks';
 import Banner from '@/components/atoms/Banner';
 import { CssScreen } from '@/components/templates/Screen';
@@ -23,20 +20,19 @@ import { CgEditFlipH } from 'react-icons/cg';
 import HorizonalFloatingButton from '@/components/molecules/HorizonalFloatingButton';
 import { useQueryClient } from '@tanstack/react-query';
 import BookCoverList from '@/components/molecules/BookCoverList';
-import { BookStatus } from '@/api/services/types';
 
 const InputModal = lazy(() => import('@/components/molecules/InputModal'));
 const CollectionDetailModal = lazy(() => import('@/components/organisms/CollectionDetailModal/CollectionDetailModal'));
 
 const Wrapper = styled(motion.div)`
   ${CssScreen};
-  margin-top: 2rem;
+  margin-top: var(--space-4);
   position: relative;
 `;
 
 const BannerContainer = styled.div`
   ${mixins.flexCenter};
-  margin-top: 5rem;
+  margin-top: var(--space-6);
 `;
 
 const CollectionTitle = styled.div`
@@ -49,7 +45,7 @@ const ButtonContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  gap: 0.5rem;
+  gap: var(--space-1);
 `;
 
 const buttonVariants = {
@@ -59,12 +55,12 @@ const buttonVariants = {
 };
 
 const StyledButton = styled(MotionCircleButton)`
-  padding: 1rem;
-  border: 1px solid var(--border1);
+  padding: var(--space-2);
+  border: 1px solid var(--border-color-1);
   transition: background-color 0.2s;
 
   &:hover {
-    background-color: var(--bgc-grey);
+    background-color: var(--background-grey);
   }
 `;
 
@@ -80,14 +76,11 @@ const CollectionDetailPage = () => {
 
   const numberId = useMemo(() => parseInt(id, 10), [id]);
 
-  const { data: collection } = useCollection(numberId);
-  const { data: book, isLoading: isBookLoading } = useBook(isbn);
-  const { data: currentStatus } = useStatus(isbn);
+  const { data: collection, isLoading } = useCollection(numberId);
   const { mutate: removeBook } = useRemoveBookFromCollection();
   const { mutate: deleteCollection } = useDeleteCollection();
   const { mutate: renameCollection } = useRenameCollection();
   const { invalidate: invalidateCollections } = useInvalidateCollections();
-  const { handleSaveBookToLibrary } = useSaveOrUpdateStatusBook(isbn, book!, currentStatus ?? BookStatus.NEW);
 
   const handleBookOnClick = (isbn: string) => {
     setIsbn(isbn);
@@ -159,7 +152,7 @@ const CollectionDetailPage = () => {
           <Banner>컬렉션에 책을 추가해주세요.</Banner>
         </BannerContainer>
       ) : (
-        <BookCoverList books={collection?.books ?? []} onCoverClick={handleBookOnClick} isLoading={isBookLoading} />
+        <BookCoverList books={collection?.books ?? []} onCoverClick={handleBookOnClick} isLoading={isLoading} />
       )}
       <HorizonalFloatingButton top="1rem" left="4rem" isChange={isSettingMode}>
         {isSettingMode ? (
@@ -190,13 +183,10 @@ const CollectionDetailPage = () => {
       </HorizonalFloatingButton>
       <Suspense fallback={null}>
         <CollectionDetailModal
-          book={book!}
           close={() => setIsModalOpen(false)}
           isOpen={isModalOpen}
-          isLoading={isBookLoading}
-          status={currentStatus ?? BookStatus.NEW}
-          onChangeStatus={handleSaveBookToLibrary}
           onRemove={handleRemoveBookFromCollection}
+          isbn={isbn}
         />
       </Suspense>
       <Suspense fallback={null}>

@@ -7,17 +7,31 @@ const Wrapper = styled(motion.div)`
   width: 100%;
   height: 3.125rem;
   ${mixins.flexCenter}
-  gap: 1.25rem;
-  border: 1px solid var(--border1);
-  border-radius: var(--border-radius-small);
+  gap: var(--space-2-5);
+  border: 1px solid var(--border-color-1);
+  border-radius: var(--radius-md);
 `;
 
 const NavLink = styled(motion.button)`
   cursor: pointer;
   font-size: 1rem;
   position: relative;
-  padding: 0.5rem 1rem;
-  border-radius: 7px;
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--radius-md);
+
+  &:disabled {
+    pointer-events: none;
+    color: var(--black2) !important;
+  }
+`;
+
+const Underline = styled(motion.div)`
+  position: absolute;
+  bottom: -2px;
+  left: 10%;
+  height: 2px;
+  width: 80%;
+  background: var(--highlight-color);
 `;
 
 interface TapOption<T> {
@@ -45,13 +59,11 @@ const StatusNavigation = <T extends string>({ statusOption, status }: Props<T>) 
           layout
           onClick={() => handleClickLink(option.path)}
           key={option.status}
+          disabled={status === option.status}
           whileTap={{ scale: 0.85 }}
-          whileHover={{ backgroundColor: status === option.status ? 'var(--black)' : 'var(--bgc-grey)' }}
-          animate={{
-            backgroundColor: status === option.status ? 'var(--black)' : 'var(--whitebgc)',
-            color: status === option.status ? 'var(--white)' : 'var(--black)',
-          }}>
+          whileHover={{ backgroundColor: 'var(--highlight-color)', color: 'var(--primary-text)' }}>
           {option.label}
+          {status === option.status && <Underline layoutId="underline" />}
         </NavLink>
       ))}
     </Wrapper>

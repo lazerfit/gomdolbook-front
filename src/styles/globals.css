@@ -1,20 +1,20 @@
 :root {
   --MEDIA_SIZE_MOBILE: 768px;
-  --background-light: rgb(250,249,246);
+  --background-light: rgb(250, 249, 246);
   --background-grey: rgba(18, 21, 20, 0.05);
   --white: rgb(255, 255, 255);
 
   /* text color */
-  --primary-text: rgb(0,20,39);
-  --secondary-text: rgb(108,117,125);
+  --primary-text: rgb(0, 20, 39);
+  --secondary-text: rgb(108, 117, 125);
 
   /* object color */
-  --accent-color: rgb(112,141,129);
-  --accent-color-hover: rgb(90,116,107);
-  --highlight-color: rgb(244,213,141);
-  --highlight-text: rgb(93,77,43);
-  --danger-color: rgb(191,6,3);
-  --danger-color-hover: rgb(141,8,1);
+  --accent-color: rgb(112, 141, 129);
+  --accent-color-hover: rgb(90, 116, 107);
+  --highlight-color: rgb(244, 213, 141);
+  --highlight-text: rgb(93, 77, 43);
+  --danger-color: rgb(191, 6, 3);
+  --danger-color-hover: rgb(141, 8, 1);
 
   /* grey color */
   --grey: rgb(170, 170, 170);
@@ -34,29 +34,29 @@
 
   /* Spacing System (4px & 8px Grid) */
   --space-half: 0.25rem; /* 4px */
-  --space-1: 0.5rem;    /* 8px */
+  --space-1: 0.5rem; /* 8px */
   --space-1-5: 0.75rem; /* 12px */
-  --space-2: 1rem;      /* 16px */
+  --space-2: 1rem; /* 16px */
   --space-2-5: 1.25rem; /* 20px */
-  --space-3: 1.5rem;    /* 24px */
-  --space-4: 2rem;      /* 32px */
-  --space-5: 2.5rem;    /* 40px */
-  --space-6: 3rem;      /* 48px */
+  --space-3: 1.5rem; /* 24px */
+  --space-4: 2rem; /* 32px */
+  --space-5: 2.5rem; /* 40px */
+  --space-6: 3rem; /* 48px */
 
   /* Radius System (4px Scale) */
   --radius-sm: var(--space-half); /* 4px */
-  --radius-md: var(--space-1);  /* 8px */
-  --radius-lg: var(--space-2);    /* 16px */
+  --radius-md: var(--space-1); /* 8px */
+  --radius-lg: var(--space-2); /* 16px */
   --radius-full: 50rem;
 
   /* Font Sizes */
-  --font-size-xs: 0.75rem;   /* 12px: Caption, 작은 텍스트 */
-  --font-size-sm: 0.875rem;  /* 14px: 작은 버튼, 부가 정보 */
-  --font-size-base: 1rem;    /* 16px: 기본 본문, 문단 */
-  --font-size-lg: 1.125rem;  /* 18px: 작은 제목, 큰 버튼 */
-  --font-size-xl: 1.25rem;   /* 20px: 부제목 (Subheading) */
-  --font-size-2xl: 1.5rem;   /* 24px: 제목 (Heading) */
-  --font-size-3xl: 2rem;     /* 32px: 페이지 타이틀 (Display) */
+  --font-size-xs: 0.75rem; /* 12px: Caption, 작은 텍스트 */
+  --font-size-sm: 0.875rem; /* 14px: 작은 버튼, 부가 정보 */
+  --font-size-base: 1rem; /* 16px: 기본 본문, 문단 */
+  --font-size-lg: 1.125rem; /* 18px: 작은 제목, 큰 버튼 */
+  --font-size-xl: 1.25rem; /* 20px: 부제목 (Subheading) */
+  --font-size-2xl: 1.5rem; /* 24px: 제목 (Heading) */
+  --font-size-3xl: 2rem; /* 32px: 페이지 타이틀 (Display) */
 }
 
 @font-face {
@@ -135,7 +135,12 @@ pre {
 
 /* Typography System */
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   /* 제목용 폰트 패밀리 지정 */
   font-family: 'Gyeonggi_Batang_Regular', serif;
   /* 기본 텍스트 색상 사용 */
@@ -191,7 +196,8 @@ p {
 }
 
 /* 작은 부가 설명 텍스트 (Caption) */
-small, .caption {
+small,
+.caption {
   font-size: var(--font-size-xs); /* 12px */
   line-height: 1.5; /* 18px */
   color: var(--secondary-text); /* 부가 정보는 살짝 연한 색으로 */
@@ -293,7 +299,7 @@ small, .caption {
 }
 .lds-heart div:after,
 .lds-heart div:before {
-  content: " ";
+  content: ' ';
   position: absolute;
   display: block;
   width: 32px;
@@ -328,5 +334,3 @@ small, .caption {
     transform: scale(0.9);
   }
 }
-
-

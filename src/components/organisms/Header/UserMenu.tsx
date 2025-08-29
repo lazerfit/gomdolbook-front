@@ -25,7 +25,7 @@ const DropdownMenu = styled(motion.ul)`
   padding: var(--space-1-5);
   background-color: var(--white);
   z-index: 1000;
-  border-radius: var(--border-radius-small);
+  border-radius: var(--radius-md);
   box-shadow:
     rgba(0, 0, 0, 0.15) 0 15px 25px,
     rgba(0, 0, 0, 0.05) 0 5px 10px;
@@ -41,7 +41,7 @@ const DropdownItem = styled(motion.li)`
 
   &:hover {
     background-color: var(--background-grey);
-    border-radius: var(--border-radius-small);
+    border-radius: var(--radius-md);
   }
 `;
 

@@ -33,7 +33,7 @@ const Wrapper = styled(motion.div)<{ $size: MODAL_SIZES }>`
   flex-direction: column;
   justify-content: space-around;
   padding: var(--space-3);
-  border-radius: var(--border-radius-small);
+  border-radius: var(--radius-md);
   position: relative;
   ${props => {
     switch (props.$size) {

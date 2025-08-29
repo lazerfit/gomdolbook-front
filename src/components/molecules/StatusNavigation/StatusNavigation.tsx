@@ -21,7 +21,7 @@ const NavLink = styled(motion.button)`
 
   &:disabled {
     pointer-events: none;
-    color: var(--black2) !important;
+    color: var(--primary-text) !important;
   }
 `;
 

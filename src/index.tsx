@@ -9,7 +9,6 @@ import { ReactKeycloakProvider } from '@react-keycloak/web';
 import { setToken } from '@/api/services/config/Interceptor';
 import { StrictMode } from 'react';
 import './styles/globals.css';
-import Theme from '@/styles/theme';
 
 const root = createRoot(document.getElementById('root')!);
 root.render(
@@ -24,9 +23,7 @@ root.render(
     <QueryClientProvider client={queryClient}>
       <ReactQueryDevtools initialIsOpen={false} />
       <StrictMode>
-        <Theme>
-          <App />
-        </Theme>
+        <App />
       </StrictMode>
     </QueryClientProvider>
   </ReactKeycloakProvider>,

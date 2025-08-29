@@ -150,7 +150,7 @@ const GuestLanding = () => {
             <ModalContent layoutId={selectedId} onClick={() => setSelectedId(null)}>
               <motion.h2>{selectedFeature.title}</motion.h2>
               <motion.p>{selectedFeature.description}</motion.p>
-              <motion.img src={selectedFeature.screenshot} alt={selectedFeature.title} />
+              <motion.img src={selectedFeature.screenshot} alt={selectedFeature.title} style={{ maxHeight: '60vh' }} />
             </ModalContent>
           </ModalOverlay>
         )}

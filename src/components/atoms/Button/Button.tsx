@@ -19,6 +19,7 @@ const large = css`
 const primary = css`
   background-color: var(--accent-color);
   border: 1px solid var(--accent-color);
+  border-radius: var(--radius-sm);
   color: var(--white);
 
   &:hover {
@@ -30,6 +31,7 @@ const primary = css`
 const secondary = css`
   background-color: transparent;
   border: 1px solid var(--border-color-3);
+  border-radius: var(--radius-sm);
   color: var(--primary-text);
 
   &:hover {

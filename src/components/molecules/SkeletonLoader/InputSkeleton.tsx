@@ -10,7 +10,7 @@ const Wrapper = styled.div`
 const Line = styled(LineSkeleton)`
   width: 18.75rem;
   height: 2.3125rem;
-  border-radius: var(--border-radius-small);
+  border-radius: var(--radius-sm);
 `;
 
 const InputSkeleton = () => {

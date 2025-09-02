@@ -2,7 +2,7 @@ import { css, styled } from 'styled-components';
 import React, { useMemo, useState, lazy, Suspense } from 'react';
 import { useParams } from 'react-router-dom';
 import { Screen } from '@/components/templates/Screen';
-import { useReadinglog, useUpdateRating, useUpdateStatus, useUpdateSummary, useUpdateNote } from '@/hooks';
+import { useReadinglog, useUpdateRating, useUpdateStatus, useUpdateSummary, useUpdateNote, useStatus } from '@/hooks';
 import ReadingLogBookInfo from '@/components/molecules/ReadingLogBookInfo';
 import ReadingLogBox from '@/components/molecules/ReadingLogBox';
 import { useQueryClient } from '@tanstack/react-query';
@@ -74,9 +74,11 @@ const SummaryTextArea = styled(motion.textarea)`
 const ReadingLogPage = () => {
   const queryClient = useQueryClient();
   const { isbn = '', id = '0' } = useParams();
+
   const numberId = useMemo(() => parseInt(id), [id]);
 
   const { data: readingLog, isLoading } = useReadinglog(numberId);
+  const { data: status } = useStatus(isbn);
   const { mutate: updateRating } = useUpdateRating();
   const { mutate: updateReadingStatus } = useUpdateStatus();
   const { mutate: updateSummary } = useUpdateSummary();
@@ -119,7 +121,6 @@ const ReadingLogPage = () => {
       },
       {
         onSuccess: () => {
-          invalidateReadingLogQuery().catch(e => console.log(e));
           queryClient.invalidateQueries({ queryKey: ['status', isbn] }).catch(e => console.log(e));
         },
         onError: e => console.log(e),
@@ -164,6 +165,7 @@ const ReadingLogPage = () => {
       <Content>
         <ReadingLogBookInfo
           readingLog={readingLog}
+          status={status ?? BookStatus.NEW}
           onRatingClick={handleRatingClick}
           onStatusClick={handleReadingStatusClick}
         />

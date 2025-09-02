@@ -97,7 +97,6 @@ export const MOCK_READINGLOG_RESPONSE: APIResponse<ReadingLogResponse> = {
     author: 'author',
     cover: 'cover',
     publisher: 'publisher',
-    status: BookStatus.READING,
     summary: 'summary',
     note: 'note',
     rating: 5,

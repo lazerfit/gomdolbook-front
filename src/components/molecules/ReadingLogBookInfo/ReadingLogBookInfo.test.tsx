@@ -13,7 +13,6 @@ const mockReadingLogResponse = {
   author: 'testAuthor',
   cover: 'testCover',
   publisher: 'testPublisher',
-  status: BookStatus.READING,
   summary: 'testSummary',
   note: 'testNotes',
   rating: 5,
@@ -28,6 +27,7 @@ describe('ReadingLogBookInfo', () => {
         onRatingClick={mockOnRatingClick}
         onStatusClick={mockOnStatusClick}
         readingLog={mockReadingLogResponse}
+        status={BookStatus.READING}
       />,
     );
   });

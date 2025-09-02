@@ -89,11 +89,12 @@ const Button = styled.button<{ $checked: boolean }>`
 
 interface Props {
   readingLog: ReadingLogResponse;
+  status: BookStatus;
   onRatingClick: (rating: number) => void;
   onStatusClick: (status: BookStatus) => void;
 }
 
-const ReadingLogBookInfo = ({ readingLog, onRatingClick, onStatusClick }: Props) => {
+const ReadingLogBookInfo = ({ readingLog, onRatingClick, status, onStatusClick }: Props) => {
   const convertTitle = (title: string) => {
     if (!title) return '';
     const [mainTitle] = title.split('-', 1);
@@ -138,7 +139,7 @@ const ReadingLogBookInfo = ({ readingLog, onRatingClick, onStatusClick }: Props)
               return (
                 <Button
                   key={option.status}
-                  $checked={readingLog?.status === option.status}
+                  $checked={status === option.status}
                   data-testid={`status-${option.status}`}
                   onClick={() => onStatusClick(option.status)}>
                   {option.label}

@@ -13,7 +13,7 @@ const SelectContainer = styled.div`
 `;
 
 const AddButton = styled(Button)`
-  border-radius: var(--border-radius-small);
+  border-radius: var(--radius-sm);
 `;
 
 const NavigateToCollectionButton = styled(Button)`

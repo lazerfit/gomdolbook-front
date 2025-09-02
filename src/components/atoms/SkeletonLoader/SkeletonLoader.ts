@@ -17,7 +17,7 @@ export const LineSkeleton = styled(CommonSkeleton)`
   width: 100%;
   height: 12px;
   margin-bottom: var(--space-1);
-  border-radius: var(--border-radius-small);
+  border-radius: var(--radius-sm);
 `;
 
 export const SquareSkeleton = styled(CommonSkeleton)`

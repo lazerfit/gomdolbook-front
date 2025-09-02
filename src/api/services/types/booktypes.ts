@@ -75,7 +75,6 @@ export interface ReadingLogResponse {
   author: string;
   cover: string;
   publisher: string;
-  status: BookStatus;
   summary: string;
   note: string;
   rating: number;

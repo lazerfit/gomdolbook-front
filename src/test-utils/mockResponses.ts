@@ -1,7 +1,6 @@
 import {
   BookResponse,
   BookSearchResponse,
-  BookStatus,
   StatusBooksResponse,
   ReadingLogResponse,
 } from '@/api/services/types/booktypes';
